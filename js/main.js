@@ -91,7 +91,7 @@ require([], function (){
                 "pulse", "fadeIn","fadeInRight", "flipInX", "lightSpeedIn","rotateInUpLeft", "slideInUp","zoomIn",
                 ],
                 len = animationNames.length,
-                randomAnimationName = animationNames[Math.ceil(Math.random() * len) - 1];
+                randomAnimationName = "pulse"; //animationNames[Math.ceil(Math.random() * len) - 1];
 
                 // Fallback (CSS3 keyframe, requestAnimationFrame)
                 if (!window.requestAnimationFrame) {

@@ -15,15 +15,34 @@
 
 
 
-<meta name="description" content="IT技术学习分享博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="战野玄黄">
-<meta property="og:url" content="http://cxuan.github.io/archives/2015/index.html">
+<meta name="description" content="MSDN对于Code Page的解释是：
+
+对于字符和 Unicode 数据，代码页是代表特定字母、数字或符号的位模式的定义（例如 0x20 代表空格，0x74 代表字符“t”）。某些数据类型为每个字符使用一个字节；每个字节的位模式可以是 256 种不同位模式之一。
+
+在做SSIS项目的Data Coversion时，经常会遇到类似这样的问题：
+ The column “xxx” cannot b">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSIS中代码页(Code Page)问题">
+<meta property="og:url" content="http://cxuan.github.io/2016/09/06/SSISCodePageProblem/index.html">
 <meta property="og:site_name" content="战野玄黄">
-<meta property="og:description" content="IT技术学习分享博客">
+<meta property="og:description" content="MSDN对于Code Page的解释是：
+
+对于字符和 Unicode 数据，代码页是代表特定字母、数字或符号的位模式的定义（例如 0x20 代表空格，0x74 代表字符“t”）。某些数据类型为每个字符使用一个字节；每个字节的位模式可以是 256 种不同位模式之一。
+
+在做SSIS项目的Data Coversion时，经常会遇到类似这样的问题：
+ The column “xxx” cannot b">
+<meta property="og:image" content="http://cxuan.github.io/img/posts/SSISCodePageProblem-1.jpeg">
+<meta property="og:image" content="http://cxuan.github.io/img/posts/SSISCodePageProblem-2.jpeg">
+<meta property="og:updated_time" content="2016-09-05T16:23:13.103Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="战野玄黄">
-<meta name="twitter:description" content="IT技术学习分享博客">
+<meta name="twitter:title" content="SSIS中代码页(Code Page)问题">
+<meta name="twitter:description" content="MSDN对于Code Page的解释是：
+
+对于字符和 Unicode 数据，代码页是代表特定字母、数字或符号的位模式的定义（例如 0x20 代表空格，0x74 代表字符“t”）。某些数据类型为每个字符使用一个字节；每个字节的位模式可以是 256 种不同位模式之一。
+
+在做SSIS项目的Data Coversion时，经常会遇到类似这样的问题：
+ The column “xxx” cannot b">
+<meta name="twitter:image" content="http://cxuan.github.io/img/posts/SSISCodePageProblem-1.jpeg">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -55,7 +74,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Archives: 2015 | 战野玄黄</title>
+<title>SSIS中代码页(Code Page)问题 | 战野玄黄</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -65,8 +84,8 @@
         fancybox: true,
         animate: true,
         isHome: false,
-        isPost: false,
-        isArchive: true,
+        isPost: true,
+        isArchive: false,
         isTag: false,
         isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
@@ -257,56 +276,196 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-SSISCodePageProblem" class="article article-type-post" itemscope itemprop="blogPost">
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2015" class="archive-year">2015</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2015/12/03/hello-world/" class="archive-article-date">
-      <time datetime="2015-12-02T16:00:00.000Z" itemprop="datePublished">12-03</time>
+    <div class="article-meta">
+      <a href="/2016/09/06/SSISCodePageProblem/" class="article-date">
+      <time datetime="2016-09-05T16:15:54.000Z" itemprop="datePublished">2016-09-06</time>
 </a>
 
 
-        </div>
-         
+    </div>
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/12/03/hello-world/">Hello World</a>
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SSIS中代码页(Code Page)问题
     </h1>
   
 
-        <div class="article-info info-on-archive">
-          
+      </header>
+      
+      <div class="article-info article-info-post">
+        
 
-          
+        
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Test/">Test</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MSBI/">MSBI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSIS/">SSIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
     </div>
 
-        </div>
         <div class="clearfix"></div>
-    </header>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>MSDN对于Code Page的解释是：</p>
+<blockquote>
+<p>对于字符和 Unicode 数据，代码页是代表特定字母、数字或符号的位模式的定义（例如 0x20 代表空格，0x74 代表字符“t”）。某些数据类型为每个字符使用一个字节；每个字节的位模式可以是 256 种不同位模式之一。</p>
+</blockquote>
+<p>在做SSIS项目的Data Coversion时，经常会遇到类似这样的问题：</p>
+<p><strong> The column “xxx” cannot be processed because more than one code page (1252 and 936) are specified… </strong></p>
+<a id="more"></a>
+<p>这个问题一般会提示在Destination控件上（如OLE DB Destination），既数据导入的目的地，同时也会提示在Data Flow Task控件上，意思是在转换匹配的时候，字符集定义的代码页多于一个。不过当Destination控件问题解决了，Data Flow Task控件上的问题就会随之解决，因为Destination控件存在于Data Flow Task控件中。</p>
+<p>关于这个问题的解决方法，网上一般的说法是将Source控件（如OLE DB Source）的AlwaysUseDefaultCodePage属性设置为true即可。<br>但我在实验中发现，直接在Visual Studio IDE右面的属性窗口设置是不起作用的，应该右键点击OLE DB Source控件，点击Show Advanced Editor…</p>
+<p><img src="/img/posts/SSISCodePageProblem-1.jpeg" alt="DataWarehouseSchemeCompare-01"></p>
+<p>在弹出的窗口中选择Component Properties，然后将在这里将属性AlwaysUseDefaultCodePage设置为true，DefaultCodePage也应为936。</p>
+<p><img src="/img/posts/SSISCodePageProblem-2.jpeg" alt="DataWarehouseSchemeCompare-01"></p>
+<p>这样设置了之后，这个问题就解决了。</p>
+<p>转自：<a href="http://www.cnblogs.com/michaelxu/archive/2009/10/14/1583111.html" target="_blank" rel="external">http://www.cnblogs.com/michaelxu/archive/2009/10/14/1583111.html</a></p>
+
+      
+    </div>
+    
   </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/09/06/SSISCodePageProblem/">SSIS中代码页(Code Page)问题</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">战野玄黄</a></p>
+        <p><span>发布时间:</span>2016-09-06, 00:15:54</p>
+        <p><span>最后更新:</span>2016-09-06, 00:23:13</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/09/06/SSISCodePageProblem/" title="SSIS中代码页(Code Page)问题">http://cxuan.github.io/2016/09/06/SSISCodePageProblem/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://cxuan.github.io/2016/09/06/SSISCodePageProblem/　　作者: 战野玄黄" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/08/26/DataWarehouseSchemeCompare/">
+                    深入对比数据仓库模式：Kimball vs Inmon
+                </a>
+            </div>
+        
+    </nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
 
     
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"SSIS中代码页(Code Page)问题　| 战野玄黄　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
 
+    
+</div>
+
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/09/06/SSISCodePageProblem/" data-title="SSIS中代码页(Code Page)问题" data-url="http://cxuan.github.io/2016/09/06/SSISCodePageProblem/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"cxuan"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/08/26/DataWarehouseSchemeCompare/" title="下一篇: 深入对比数据仓库模式：Kimball vs Inmon">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/09/06/SSISCodePageProblem/">SSIS中代码页(Code Page)问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/26/DataWarehouseSchemeCompare/">深入对比数据仓库模式：Kimball vs Inmon</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/23/Datawarehouse-10Dimension-principle/">数据仓库维度建模10大基本原则</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/20/MarkDown教程/">Markdown教程</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/03/hello-world/">Hello World</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
 </div>
       <footer id="footer">
     <div class="outer">

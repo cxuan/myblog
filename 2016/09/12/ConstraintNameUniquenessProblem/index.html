@@ -15,15 +15,23 @@
 
 
 
-<meta name="description" content="IT技术学习分享博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="战野玄黄">
-<meta property="og:url" content="http://cxuan.github.io/archives/2016/index.html">
+<meta name="description" content="使用PowerDesigner生成数据库脚本时报 Constraint name uniqueness 错误：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【PowerDesigner】Constraint name uniqueness问题及处理">
+<meta property="og:url" content="http://cxuan.github.io/2016/09/12/ConstraintNameUniquenessProblem/index.html">
 <meta property="og:site_name" content="战野玄黄">
-<meta property="og:description" content="IT技术学习分享博客">
+<meta property="og:description" content="使用PowerDesigner生成数据库脚本时报 Constraint name uniqueness 错误：">
+<meta property="og:image" content="http://cxuan.github.io/img/posts/ConstraintNameUniquenessProblem-1.png">
+<meta property="og:image" content="http://cxuan.github.io/img/posts/ConstraintNameUniquenessProblem-2.png">
+<meta property="og:image" content="http://cxuan.github.io/img/posts/ConstraintNameUniquenessProblem-3.png">
+<meta property="og:image" content="http://cxuan.github.io/img/posts/ConstraintNameUniquenessProblem-4.png">
+<meta property="og:image" content="http://cxuan.github.io/img/posts/ConstraintNameUniquenessProblem-5.png">
+<meta property="og:image" content="http://cxuan.github.io/img/posts/ConstraintNameUniquenessProblem-6.png">
+<meta property="og:updated_time" content="2016-09-12T15:43:03.518Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="战野玄黄">
-<meta name="twitter:description" content="IT技术学习分享博客">
+<meta name="twitter:title" content="【PowerDesigner】Constraint name uniqueness问题及处理">
+<meta name="twitter:description" content="使用PowerDesigner生成数据库脚本时报 Constraint name uniqueness 错误：">
+<meta name="twitter:image" content="http://cxuan.github.io/img/posts/ConstraintNameUniquenessProblem-1.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -55,7 +63,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Archives: 2016 | 战野玄黄</title>
+<title>【PowerDesigner】Constraint name uniqueness问题及处理 | 战野玄黄</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -65,8 +73,8 @@
         fancybox: true,
         animate: true,
         isHome: false,
-        isPost: false,
-        isArchive: true,
+        isPost: true,
+        isArchive: false,
         isTag: false,
         isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
@@ -257,221 +265,200 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-ConstraintNameUniquenessProblem" class="article article-type-post" itemscope itemprop="blogPost">
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2016/09/12/ConstraintNameUniquenessProblem/" class="archive-article-date">
-      <time datetime="2016-09-12T15:31:09.000Z" itemprop="datePublished">09-12</time>
+    <div class="article-meta">
+      <a href="/2016/09/12/ConstraintNameUniquenessProblem/" class="article-date">
+      <time datetime="2016-09-12T15:31:09.000Z" itemprop="datePublished">2016-09-12</time>
 </a>
 
 
-        </div>
-         
+    </div>
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/09/12/ConstraintNameUniquenessProblem/">【PowerDesigner】Constraint name uniqueness问题及处理</a>
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      【PowerDesigner】Constraint name uniqueness问题及处理
     </h1>
   
 
-        <div class="article-info info-on-archive">
-          
+      </header>
+      
+      <div class="article-info article-info-post">
+        
 
-          
+        
     <div class="article-tag tagcloud">
         <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BI/">BI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原创/">原创</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据仓库/">数据仓库</a></li></ul>
     </div>
 
-        </div>
         <div class="clearfix"></div>
-    </header>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>使用PowerDesigner生成数据库脚本时报 Constraint name uniqueness 错误：</p>
+<p><img src="/img/posts/ConstraintNameUniquenessProblem-1.png" alt="ConstraintNameUniquenessProblem-01"></p>
+<a id="more"></a>
+<p>双击每行错误，发现外键引用的名字有重复的：</p>
+<p><img src="/img/posts/ConstraintNameUniquenessProblem-2.png" alt="ConstraintNameUniquenessProblem-02"></p>
+<p>惯性去网上找解决办法，找到的主要是两个方法：</p>
+<p><strong>1.使用Automatic Correction</strong></p>
+<p>右键错误行，菜单中选择Automatic Correction，自动更正错误。</p>
+<p><img src="/img/posts/ConstraintNameUniquenessProblem-3.png" alt="ConstraintNameUniquenessProblem-03"></p>
+<p>这样Constraint name 就会自动编号处理。</p>
+<p><img src="/img/posts/ConstraintNameUniquenessProblem-4.png" alt="ConstraintNameUniquenessProblem-04"></p>
+<p><strong>2.手动修改Constraint name</strong></p>
+<p>在外键引用编辑页面，点击Constraint name最右面的那个头像，然后修改Constraint name名称就可以了。</p>
+<p><img src="/img/posts/ConstraintNameUniquenessProblem-5.png" alt="ConstraintNameUniquenessProblem-05"></p>
+<p>虽然可以解决问题，但感觉治标不治本。仔细看自动生成的Constraint name，应该是有一个模版，根据名称模板自动生成的。只要找到这个名称模板，根据自己的规则修改下不就好了。所以给出第三种处理方法。</p>
+<p><strong>3.修改引用名称模板</strong></p>
+<p>菜单项  数据库(Database)-&gt;Edit Current DBMS…<br>找到Scipt-&gt;Objects-&gt;Reference-&gt;ConstName节点，看到Value值就是自动生成的引用名称模板，具体含义就不解释了，对比下实际生成的引用名称就明白了，我改成 FK<em>%REFR% ，让自动生成的名称就是外键编辑窗口中自定义的Code名称加个FK</em>前缀就行了。</p>
+<p><img src="/img/posts/ConstraintNameUniquenessProblem-6.png" alt="ConstraintNameUniquenessProblem-06"></p>
+
+      
+    </div>
+    
   </div>
-</article>
   
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2016/09/06/21RulesForDataWarehousing/" class="archive-article-date">
-      <time datetime="2016-09-06T15:36:18.000Z" itemprop="datePublished">09-06</time>
-</a>
-
-
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/09/06/21RulesForDataWarehousing/">数据仓库设计的7个步骤，7个禁忌和7种思路</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
-          
-
-          
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BI/">BI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据仓库/">数据仓库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/09/12/ConstraintNameUniquenessProblem/">【PowerDesigner】Constraint name uniqueness问题及处理</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">战野玄黄</a></p>
+        <p><span>发布时间:</span>2016-09-12, 23:31:09</p>
+        <p><span>最后更新:</span>2016-09-12, 23:43:03</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/09/12/ConstraintNameUniquenessProblem/" title="【PowerDesigner】Constraint name uniqueness问题及处理">http://cxuan.github.io/2016/09/12/ConstraintNameUniquenessProblem/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://cxuan.github.io/2016/09/12/ConstraintNameUniquenessProblem/　　作者: 战野玄黄" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
     </div>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/09/06/21RulesForDataWarehousing/">
+                    数据仓库设计的7个步骤，7个禁忌和7种思路
+                </a>
+            </div>
+        
+    </nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2016/09/06/SSISCodePageProblem/" class="archive-article-date">
-      <time datetime="2016-09-05T16:15:54.000Z" itemprop="datePublished">09-06</time>
-</a>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
 
 
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
         </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/09/06/SSISCodePageProblem/">SSIS中代码页(Code Page)问题</a>
-    </h1>
-  
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"【PowerDesigner】Constraint name uniqueness问题及处理　| 战野玄黄　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
 
-        <div class="article-info info-on-archive">
-          
+    
+</div>
 
-          
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MSBI/">MSBI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSIS/">SSIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/09/12/ConstraintNameUniquenessProblem/" data-title="【PowerDesigner】Constraint name uniqueness问题及处理" data-url="http://cxuan.github.io/2016/09/12/ConstraintNameUniquenessProblem/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"cxuan"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/09/06/21RulesForDataWarehousing/" title="下一篇: 数据仓库设计的7个步骤，7个禁忌和7种思路">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
     </div>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2016/08/26/DataWarehouseSchemeCompare/" class="archive-article-date">
-      <time datetime="2016-08-26T15:21:19.000Z" itemprop="datePublished">08-26</time>
-</a>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/09/12/ConstraintNameUniquenessProblem/">【PowerDesigner】Constraint name uniqueness问题及处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/06/21RulesForDataWarehousing/">数据仓库设计的7个步骤，7个禁忌和7种思路</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/06/SSISCodePageProblem/">SSIS中代码页(Code Page)问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/26/DataWarehouseSchemeCompare/">深入对比数据仓库模式：Kimball vs Inmon</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/23/Datawarehouse-10Dimension-principle/">数据仓库维度建模10大基本原则</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/20/MarkDown教程/">Markdown教程</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/03/hello-world/">Hello World</a></li></ul>
 
 
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/26/DataWarehouseSchemeCompare/">深入对比数据仓库模式：Kimball vs Inmon</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
-          
-
-          
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BI/">BI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据仓库/">数据仓库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
-    </div>
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2016/08/23/Datawarehouse-10Dimension-principle/" class="archive-article-date">
-      <time datetime="2016-08-22T16:03:24.000Z" itemprop="datePublished">08-23</time>
-</a>
 
 
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/23/Datawarehouse-10Dimension-principle/">数据仓库维度建模10大基本原则</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
-          
-
-          
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BI/">BI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据仓库/">数据仓库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
-    </div>
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2016/08/20/MarkDown教程/" class="archive-article-date">
-      <time datetime="2016-08-20T07:10:24.000Z" itemprop="datePublished">08-20</time>
-</a>
-
-
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/08/20/MarkDown教程/">Markdown教程</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
-          
-
-          
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Markdown/">Markdown</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Test/">Test</a></li></ul>
-    </div>
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-
+    <script>
+        
+    </script>
 </div>
       <footer id="footer">
     <div class="outer">

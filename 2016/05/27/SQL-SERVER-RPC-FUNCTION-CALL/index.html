@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="c-xuan" />
+
+
+
+<meta name="description" content="模拟数据两台服务器，都安装有数据库，服务器A,服务器B。
+服务器B的数据库上配置有指向服务器A的数据库的链接数据库。
+服务器A的数据库Test里创建以下两个函数，一个函数返回一个表值，一个返回单个字符串值。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【SQL SERVER】OPENQUERY远程函数引用及参数传值问题">
+<meta property="og:url" content="http://cxuan.github.io/2016/05/27/SQL-SERVER-RPC-FUNCTION-CALL/index.html">
+<meta property="og:site_name" content="靛青">
+<meta property="og:description" content="模拟数据两台服务器，都安装有数据库，服务器A,服务器B。
+服务器B的数据库上配置有指向服务器A的数据库的链接数据库。
+服务器A的数据库Test里创建以下两个函数，一个函数返回一个表值，一个返回单个字符串值。">
+<meta property="og:image" content="http://cxuan.github.io/img/posts/SQL-SERVER-RPC-FUNCTION-CALL-1.jpg">
+<meta property="og:updated_time" content="2016-09-16T09:31:53.629Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【SQL SERVER】OPENQUERY远程函数引用及参数传值问题">
+<meta name="twitter:description" content="模拟数据两台服务器，都安装有数据库，服务器A,服务器B。
+服务器B的数据库上配置有指向服务器A的数据库的链接数据库。
+服务器A的数据库Test里创建以下两个函数，一个函数返回一个表值，一个返回单个字符串值。">
+<meta name="twitter:image" content="http://cxuan.github.io/img/posts/SQL-SERVER-RPC-FUNCTION-CALL-1.jpg">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="靛青" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>【SQL SERVER】OPENQUERY远程函数引用及参数传值问题 | 靛青</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?04b5ef87eb2ec9589e8227fcc877686b";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/cxuan.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">靛青</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">青，取之于藍而青于藍。</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BI/">BI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BigData/">BigData</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MSBI/">MSBI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/">Markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL-Server/">SQL Server</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSIS/">SSIS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/">Test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/原创/">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数学/">数学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据仓库/">数据仓库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/视觉图片/">视觉图片</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/转载/">转载</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.csdn.net/">CSDN</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.jianshu.com/">简书</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://opiece.me/">Chillax&#39;s Blog</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://ask.hellobi.com/blog/biwork">BIWORK</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于BI</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">c-xuan</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/cxuan.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">c-xuan</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">青，取之于藍而青于藍。</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-SQL-SERVER-RPC-FUNCTION-CALL" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/27/SQL-SERVER-RPC-FUNCTION-CALL/" class="article-date">
+      <time datetime="2016-05-26T16:00:00.000Z" itemprop="datePublished">2016-05-27</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      【SQL SERVER】OPENQUERY远程函数引用及参数传值问题
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/码路拾忆/">码路拾忆</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL-Server/">SQL Server</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原创/">原创</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="模拟数据"><a href="#模拟数据" class="headerlink" title="模拟数据"></a>模拟数据</h3><p>两台服务器，都安装有数据库，服务器A,服务器B。</p>
+<p>服务器B的数据库上配置有指向服务器A的数据库的链接数据库。</p>
+<p>服务器A的数据库Test里创建以下两个函数，一个函数返回一个表值，一个返回单个字符串值。</p>
+<a id="more"></a>
+<pre><code>CREATE FUNCTION FUN_ReturnTable
+(
+    @para VARCHAR(50)
+)
+RETURNS @table TABLE(
+    col VARCHAR(50)
+)
+AS
+BEGIN
+    INSERT INTO @table
+            ( col )
+    VALUES  ( &apos;This is Test.&apos;),
+            ( @para )
+RETURN
+END 
+
+GO 
+CREATE FUNCTION FUN_ReturnValue (@para VARCHAR(50)) RETURNS varchar(50)
+AS
+BEGIN
+        RETURN (&apos;Input para is &apos;+@para)
+END 
+GO
+</code></pre><h3 id="调用测试"><a href="#调用测试" class="headerlink" title="调用测试"></a>调用测试</h3><p>服务器A上的数据库可以执行</p>
+<pre><code>SELECT * FROM  Test.dbo.FUN_ReturnTable(&apos;haha&apos;) --返回表
+SELECT dbo.FUN_ReturnValue(&apos;haha&apos;) --返回单个值
+</code></pre><p>然后在服务器B上的数据库运行以下语句调用（假设配置的链接服务器为LS）</p>
+<pre><code>SELECT LS.Test.dbo.FUN_ReturnValue(&apos;haha&apos;)
+</code></pre><p>于是就报错了:”不允许远程函数引用 ‘LS.Test.dbo.FUN_ReturnValue’，找不到列名 ‘LS’，或者列名不明确。”</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>可以看到这样直接通过链接数据库调用是不行的。需要换个方式，改用OPENQUERY。</p>
+<pre><code>DECLARE @a VARCHAR(50)
+set @a = (select * from openquery(LS,&apos;select Test.dbo.FUN_ReturnValue(&apos;&apos;haha&apos;&apos;)&apos;))
+select @a --返回的字符串值
+
+SELECT * from openquery(LS,&apos;select * from Test.dbo.FUN_ReturnTable(&apos;&apos;haha&apos;&apos;)&apos;) --返回的表值
+</code></pre><p>以上的调用，函数的参数值是写死的，如果传一个动态参数，改成下面这样：</p>
+<pre><code>DECLARE @a VARCHAR(50)
+DECLARE @b VARCHAR(50)
+set @a = (select * from openquery(LS,&apos;select Test.dbo.FUN_ReturnValue(&apos;&apos;&apos;+@b+&apos;&apos;&apos;)&apos;))
+select @a
+</code></pre><p>是无法运行的，提示错误：</p>
+<p><img src="/img/posts/SQL-SERVER-RPC-FUNCTION-CALL-1.jpg" alt="SQL-SERVER-RPC-FUNCTION-CALL-1"></p>
+<p>这个问题我就费解了，OPENQUERY的第二个参数不能直接带有动态变量，不知道啥原因，官网上也备注说明不可以含有参数。</p>
+<p>解决方法是换种方式调用，改用EXEC的方法。</p>
+<pre><code>DECLARE @b VARCHAR(50)
+DECLARE @sql varchar(500)
+set @b = &apos;haha&apos;;
+set @sql = &apos;select a from openquery(LS,&apos;&apos;select Test.dbo.FUN_ReturnValue(&apos;&apos;&apos;&apos;&apos;+@b+&apos;&apos;&apos;&apos;&apos;) AS a&apos;&apos;)&apos;;
+exec(@sql);
+</code></pre><p>以上语句是可以执行的，输出“Input para is haha”单行的字符串。那么现在问题来了，我想将现在输出的结果赋值给一个本地变量@a，所以想当然就这样写</p>
+<pre><code>DECLARE @a VARCHAR(50)
+DECLARE @b VARCHAR(50)
+DECLARE @sql varchar(500)
+set @b = &apos;haha&apos;;
+set @sql = &apos;select a from openquery(LS,&apos;&apos;select Test.dbo.FUN_ReturnValue(&apos;&apos;&apos;&apos;&apos;+@b+&apos;&apos;&apos;&apos;&apos;) AS a&apos;&apos;)&apos;;
+set @a = exec(@sql); --是错误的，语法错误
+set @a = (select * from exec(@sql)); --是错误的，语法错误
+select @a;
+</code></pre><p>以上给@a变量赋值方法都不行。于是将@a改为表变量。</p>
+<pre><code>DECLARE @b VARCHAR(50)
+DECLARE @sql varchar(500)
+DECLARE @a table( name varchar(50))
+set @b = &apos;haha&apos;;
+set @sql = &apos;select a from openquery(LS,&apos;&apos;select Test.dbo.FUN_ReturnValue(&apos;&apos;&apos;&apos;&apos;+@b+&apos;&apos;&apos;&apos;&apos;) AS a&apos;&apos;)&apos;;
+insert into @a exec(@sql); --将结果插入表里
+select name from @a
+</code></pre><p>这样结果就保存到表变量了。调用返回表值的函数也是可以的。</p>
+<pre><code>DECLARE @b VARCHAR(50)
+DECLARE @sql varchar(500)
+DECLARE @a table( name varchar(50))
+set @b = &apos;haha&apos;;
+set @sql = &apos;select * from openquery(LS,&apos;&apos;select * from Test.dbo.FUN_ReturnTable(&apos;&apos;&apos;&apos;&apos;+@b+&apos;&apos;&apos;&apos;&apos;) AS a&apos;&apos;)&apos;; --调用表值函数。
+insert into @a exec(@sql);
+select name from @a
+</code></pre><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>1.SQL SERVER通过链接服务器是可以调用远程数据库的存储过程的。<ul>
+<li>通过 <code>exec LS.Test.dbo.testSP &#39;haha&#39;</code> 的方式，其中LS是链接服务器，Test是数据库名称。但是这种方式需要将链接服务器配置为用户RPC。</li>
+<li>通过 <code>select * from openquery(LS,&#39;exec Test.dbo.testSP &#39;&#39;haha&#39;&#39; &#39;)</code>的方式,其中LS是链接服务器，Test是数据库名称。</li>
+</ul>
+</li>
+<li>2.SQL SERVER通过链接服务器远程调用函数不能通过 <code>LS.Test.dbo.testFun(&#39;haha&#39;)</code>的方式直接调用，改用OPENQUERY的方式。</li>
+<li>3.OPENQUERY的第二个参数不能含有参数变量。如果需要传递参数，改成拼接字符串的形式，<code>EXEC</code> 命令执行字符串。</li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/05/27/SQL-SERVER-RPC-FUNCTION-CALL/">【SQL SERVER】OPENQUERY远程函数引用及参数传值问题</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">c-xuan</a></p>
+        <p><span>发布时间:</span>2016-05-27, 00:00:00</p>
+        <p><span>最后更新:</span>2016-09-16, 17:31:53</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/05/27/SQL-SERVER-RPC-FUNCTION-CALL/" title="【SQL SERVER】OPENQUERY远程函数引用及参数传值问题">http://cxuan.github.io/2016/05/27/SQL-SERVER-RPC-FUNCTION-CALL/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://cxuan.github.io/2016/05/27/SQL-SERVER-RPC-FUNCTION-CALL/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/06/05/RealEstateBISolutionCaseShare/">
+                    房地产行业商业智能解决方案分享
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/05/26/Linked-Server-RPC/">
+                    【SQL SERVER】链接数据库“无法启动分布式事务”的问题及解决
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#模拟数据"><span class="toc-number">1.</span> <span class="toc-text">模拟数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#调用测试"><span class="toc-number">2.</span> <span class="toc-text">调用测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解决方法"><span class="toc-number">3.</span> <span class="toc-text">解决方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"【SQL SERVER】OPENQUERY远程函数引用及参数传值问题　| 靛青　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/05/27/SQL-SERVER-RPC-FUNCTION-CALL/" data-title="【SQL SERVER】OPENQUERY远程函数引用及参数传值问题" data-url="http://cxuan.github.io/2016/05/27/SQL-SERVER-RPC-FUNCTION-CALL/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"cxuan"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/06/05/RealEstateBISolutionCaseShare/" title="上一篇: 房地产行业商业智能解决方案分享">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/05/26/Linked-Server-RPC/" title="下一篇: 【SQL SERVER】链接数据库“无法启动分布式事务”的问题及解决">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/09/12/ConstraintNameUniquenessProblem/">【PowerDesigner】Constraint name uniqueness问题及处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/06/21RulesForDataWarehousing/">数据仓库设计的7个步骤，7个禁忌和7种思路</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/06/SSISCodePageProblem/">SSIS中代码页(Code Page)问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/26/DataWarehouseSchemeCompare/">深入对比数据仓库模式：Kimball vs Inmon</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/23/Datawarehouse-10Dimension-principle/">数据仓库维度建模10大基本原则</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/20/MarkDown教程/">Markdown教程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/29/Foumula-TOP10/">改变世界的公式TOP10,最后一个一看就蒙圈了</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/13/SQL-GroupByAndGroupingSets/">【T-SQL】group by 和grouping sets</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/13/SSIS-GeneralAttribures/">【SSIS】几个通用属性</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/">放开那程序猿！构建业务导向的大数据云平台</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/05/RealEstateBISolutionCaseShare/">房地产行业商业智能解决方案分享</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/27/SQL-SERVER-RPC-FUNCTION-CALL/">【SQL SERVER】OPENQUERY远程函数引用及参数传值问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/26/Linked-Server-RPC/">【SQL SERVER】链接数据库“无法启动分布式事务”的问题及解决</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/25/30-Astonishing-Nature-Places-on-Earth/">令人惊叹的30个自然奇观</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/03/hello-world/">Hello World</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016 c-xuan
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 2;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

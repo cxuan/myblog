@@ -1132,7 +1132,7 @@ color
   border: none;
 }
 .archives .archive-article {
-  margin-left: 160px;
+  margin-left: 220px;
   padding: 0.5em 0;
   border-bottom: 1px solid #eee;
   border-top: 1px solid #fff;
@@ -1250,16 +1250,16 @@ color
   margin-bottom: 5px;
   position: relative;
   background: rgba(255,255,255,0.45);
-  -webkit-transition: all 0.2s ease-in;
+  -webkit-transition: all 2.2s ease-in;
 }
 .article.show {
   visibility: visible;
-  -webkit-animation: cd-bounce-1 0.6s;
-  -moz-animation: cd-bounce-1 0.6s;
-  -webkit-animation: cd-bounce-1 0.6s;
-  -moz-animation: cd-bounce-1 0.6s;
-  -ms-animation: cd-bounce-1 0.6s;
-  animation: cd-bounce-1 0.6s;
+  -webkit-animation: cd-bounce-1 2.6s;
+  -moz-animation: cd-bounce-1 2.6s;
+  -webkit-animation: cd-bounce-1 2.6s;
+  -moz-animation: cd-bounce-1 2.6s;
+  -ms-animation: cd-bounce-1 2.6s;
+  animation: cd-bounce-1 2.6s;
 }
 .article.hidden {
   visibility: hidden;
@@ -1960,7 +1960,7 @@ aside.comment-bar:active {
   border: none;
 }
 .archives .archive-article {
-  margin-left: 160px;
+  margin-left: 220px;
   padding: 0.5em 0;
   border-bottom: 1px solid #eee;
   border-top: 1px solid #fff;

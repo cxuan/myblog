@@ -15,16 +15,19 @@
 
 
 
-<meta name="description" content="IT技术学习分享博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="http://cxuan.github.io/tags/index.html">
+<meta name="description" content="不知道由于什么原因，突然发现鼠标右键没有了新建选项，想新建个文件夹都不行，而且在计算机里的“新建文件夹”也不行。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="电脑右键菜单中没有新建和在此处打开命令行选项的问题">
+<meta property="og:url" content="http://cxuan.github.io/2016/09/17/PCProblemRightKeyItem/index.html">
 <meta property="og:site_name" content="靛青">
-<meta property="og:description" content="IT技术学习分享博客">
-<meta property="og:updated_time" content="2016-08-20T07:02:43.040Z">
+<meta property="og:description" content="不知道由于什么原因，突然发现鼠标右键没有了新建选项，想新建个文件夹都不行，而且在计算机里的“新建文件夹”也不行。">
+<meta property="og:image" content="http://cxuan.github.io/img/posts/PCProblemRightKeyItem-1.png">
+<meta property="og:image" content="http://cxuan.github.io/img/posts/PCProblemRightKeyItem-1.png">
+<meta property="og:updated_time" content="2016-09-17T14:24:31.579Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tags">
-<meta name="twitter:description" content="IT技术学习分享博客">
+<meta name="twitter:title" content="电脑右键菜单中没有新建和在此处打开命令行选项的问题">
+<meta name="twitter:description" content="不知道由于什么原因，突然发现鼠标右键没有了新建选项，想新建个文件夹都不行，而且在计算机里的“新建文件夹”也不行。">
+<meta name="twitter:image" content="http://cxuan.github.io/img/posts/PCProblemRightKeyItem-1.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -56,7 +59,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>tags | 靛青</title>
+<title>电脑右键菜单中没有新建和在此处打开命令行选项的问题 | 靛青</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -66,7 +69,7 @@
         fancybox: true,
         animate: true,
         isHome: false,
-        isPost: false,
+        isPost: true,
         isArchive: false,
         isTag: false,
         isCategory: false,
@@ -254,11 +257,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="page-undefined" class="article article-type-page " itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-PCProblemRightKeyItem" class="article article-type-post " itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/tags/index.html" class="article-date">
-      <time datetime="2016-08-20T06:58:45.000Z" itemprop="datePublished">2016-08-20</time>
+      <a href="/2016/09/17/PCProblemRightKeyItem/" class="article-date">
+      <time datetime="2016-09-17T14:21:16.000Z" itemprop="datePublished">2016-09-17</time>
 </a>
 
 
@@ -273,7 +276,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      tags
+      电脑右键菜单中没有新建和在此处打开命令行选项的问题
     </h1>
   
 
@@ -281,8 +284,16 @@
       
       <div class="article-info article-info-post">
         
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/生活记录/">生活记录</a>
+    </div>
+
 
         
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原创/">原创</a></li></ul>
+    </div>
+
         <div class="clearfix"></div>
       </div>
       
@@ -290,96 +301,76 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <style>
-    .article-meta { display: none; }
-    #container .article .article-title { padding-right: 0; }
-    .article-header {
-        padding: 0;
-        padding-top: 26px;
-        border-left: none;
-        text-align: center;
-    }
-    .article-header:hover { border-left: none; }
-    .article-title { font-size: 1.6em }
-    .article-entry hr { margin: 0;}
-    .article-meta,
-    #container .article-info-post.article-info { display: none;}
-    #container .article .article-title { padding: 0; }
-</style>
+        <p>不知道由于什么原因，突然发现鼠标右键没有了新建选项，想新建个文件夹都不行，而且在计算机里的“新建文件夹”也不行。 </p>
+<a id="more"></a>
+<p><img src="/img/posts/PCProblemRightKeyItem-1.png" alt="PCProblemRightKeyItem"></p>
+<p>网上搜了下，给出以下解决方法可行，我的系统是Windows 10 的。</p>
+<p>开始菜单中搜 “cmd” 或者用 <code>Win + R</code> 快捷键打开命令行窗口，输入以下命令回车即可。</p>
+<pre><code>reg add &quot;HKEY_CLASSES_ROOT\Directory\Background\shellex\ContextMenuHandlers\New&quot; /ve /d &quot;{D969A300-E7FF-11d0-A93B-00A0C90F2719}&quot; /t REG_SZ /f
+</code></pre><p>对于一般正常的Windows系统，在文件夹空白部分按住shift键再单击鼠标右键会多出来一个“在此处打开命令”选项，这样命令行执行的路径就可以直接到你所在的文件夹中，不需要<code>cd</code>命令切换。今天莫名其妙发现这个“在此处打开命令”选项没了。</p>
+<p>网上搜罗后虽没找到解决方法，但是有另外方法打开这个命令行：<br>在文件夹中按<code>Alt+D</code>键，此时光标聚焦到上方的地址栏，再输入<code>cmd</code>回车就可以打开命令行窗口了。</p>
+<p>后来发现软媒魔方软件可以解决。打开软媒设置，在右键菜单-&gt;添加右键菜单项目中勾选“在此处打开命令窗口”就可以了。</p>
+<p><img src="/img/posts/PCProblemRightKeyItem-1.png" alt="PCProblemRightKeyItem"></p>
 
-
-    <!-- Tag Cloud Page -->
-    <hr>
-<br>
-<ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/BI印记/">BI印记</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IT科技/">IT科技</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活记录/">生活记录</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/码路拾忆/">码路拾忆</a><span class="category-list-count">4</span></li></ul>
-
-<p class="count"></p>
-
-<div class="tags">
-    <a href="/tags/BI/" style="font-size: 31.2px; color: #1a1a1a">BI</a> <a href="/tags/BigData/" style="font-size: 16px; color: #808080">BigData</a> <a href="/tags/CSS/" style="font-size: 16px; color: #808080">CSS</a> <a href="/tags/JavaScript/" style="font-size: 16px; color: #808080">JavaScript</a> <a href="/tags/MSBI/" style="font-size: 16px; color: #808080">MSBI</a> <a href="/tags/Markdown/" style="font-size: 16px; color: #808080">Markdown</a> <a href="/tags/SQL-Server/" style="font-size: 23.6px; color: #4d4d4d">SQL Server</a> <a href="/tags/SSIS/" style="font-size: 19.8px; color: #666">SSIS</a> <a href="/tags/Test/" style="font-size: 19.8px; color: #666">Test</a> <a href="/tags/jQuery/" style="font-size: 16px; color: #808080">jQuery</a> <a href="/tags/前端/" style="font-size: 16px; color: #808080">前端</a> <a href="/tags/原创/" style="font-size: 27.4px; color: #333">原创</a> <a href="/tags/数学/" style="font-size: 16px; color: #808080">数学</a> <a href="/tags/数据仓库/" style="font-size: 27.4px; color: #333">数据仓库</a> <a href="/tags/数据库/" style="font-size: 23.6px; color: #4d4d4d">数据库</a> <a href="/tags/视觉图片/" style="font-size: 16px; color: #808080">视觉图片</a> <a href="/tags/设计/" style="font-size: 16px; color: #808080">设计</a> <a href="/tags/转载/" style="font-size: 35px; color: #000">转载</a>
-</div>
-<style>
-    .category-list li{
-        display: inline-block;
-        margin: 0 1em .5em 0;
-        padding: 4px;
-        border: 1px solid lightgray;
-        font-size: 1.2rem;
-    }
-    .category-list a { color: gray; }
-    .category-list-item:hover a {
-        color: gray;
-        text-decoration: none;
-    }
-    .category-list-count {
-        margin-left: 2px;
-        font-size: .9rem;
-    }
-    .article-entry ul li:before{ display: none; }
-    .article-inner { text-align: center; }
-    .tags {
-        max-width: 42em;
-        margin: 2em auto;
-        margin-top: 0em;
-    }
-    .tags a {
-        margin-right: 1em;
-        line-height: 65px;
-        border-bottom: 1px solid gray;
-        white-space: nowrap;
-        transition: border-bottom .5s;
-    }
-    .tags a:hover {
-        border-bottom: 3px dotted gray;
-        text-decoration: none;
-    }
-    #count > span {
-        margin: auto .2em;
-        font-weight: bold;
-    }
-</style>
-
-<!-- Count tags and categories -->
-<p id="count">
-        已有<span><script>document.write($(".category-list-item").length)</script></span>个分类，
-        共计<span><script>document.write($(".tags > a").length)</script></span>个标签
-</p>
-<script>
-    $('#count').appendTo('.count');
-</script>
-
-          
-        
       
     </div>
     
   </div>
   
     
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/09/17/PCProblemRightKeyItem/">电脑右键菜单中没有新建和在此处打开命令行选项的问题</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">c-xuan</a></p>
+        <p><span>发布时间:</span>2016-09-17, 22:21:16</p>
+        <p><span>最后更新:</span>2016-09-17, 22:24:31</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/09/17/PCProblemRightKeyItem/" title="电脑右键菜单中没有新建和在此处打开命令行选项的问题">http://cxuan.github.io/2016/09/17/PCProblemRightKeyItem/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://cxuan.github.io/2016/09/17/PCProblemRightKeyItem/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
 
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/09/12/ConstraintNameUniquenessProblem/">
+                    【PowerDesigner】Constraint name uniqueness问题及处理
+                </a>
+            </div>
+        
+    </nav>
 
   
 </article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
 
 
 
@@ -397,7 +388,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"tags　| 靛青　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"电脑右键菜单中没有新建和在此处打开命令行选项的问题　| 靛青　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -410,6 +401,45 @@
 
 
 
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/09/17/PCProblemRightKeyItem/" data-title="电脑右键菜单中没有新建和在此处打开命令行选项的问题" data-url="http://cxuan.github.io/2016/09/17/PCProblemRightKeyItem/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"cxuan"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/09/12/ConstraintNameUniquenessProblem/" title="下一篇: 【PowerDesigner】Constraint name uniqueness问题及处理">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/09/17/PCProblemRightKeyItem/">电脑右键菜单中没有新建和在此处打开命令行选项的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/12/ConstraintNameUniquenessProblem/">【PowerDesigner】Constraint name uniqueness问题及处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/06/21RulesForDataWarehousing/">数据仓库设计的7个步骤，7个禁忌和7种思路</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/06/SSISCodePageProblem/">SSIS中代码页(Code Page)问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/26/DataWarehouseSchemeCompare/">深入对比数据仓库模式：Kimball vs Inmon</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/23/Datawarehouse-10Dimension-principle/">数据仓库维度建模10大基本原则</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/20/MarkDown教程/">Markdown教程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/29/Foumula-TOP10/">改变世界的公式TOP10,最后一个一看就蒙圈了</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/13/SSIS-GeneralAttribures/">【SSIS】几个通用属性</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/13/SQL-GroupByAndGroupingSets/">【T-SQL】group by 和grouping sets</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/05/RealEstateBISolutionCaseShare/">房地产行业商业智能解决方案分享</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/">放开那程序猿！构建业务导向的大数据云平台</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/27/SQL-SERVER-RPC-FUNCTION-CALL/">【SQL SERVER】OPENQUERY远程函数引用及参数传值问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/26/Linked-Server-RPC/">【SQL SERVER】链接数据库“无法启动分布式事务”的问题及解决</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/25/30-Astonishing-Nature-Places-on-Earth/">令人惊叹的30个自然奇观</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/22/JS-AddIn-PPTSlideEffect/">JS插件:类似PPT翻页过渡动画效果</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/03/hello-world/">Hello World</a></li></ul>
 
 
 

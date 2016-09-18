@@ -22,8 +22,8 @@
 <meta property="og:site_name" content="靛青">
 <meta property="og:description" content="不知道由于什么原因，突然发现鼠标右键没有了新建选项，想新建个文件夹都不行，而且在计算机里的“新建文件夹”也不行。">
 <meta property="og:image" content="http://cxuan.github.io/img/posts/PCProblemRightKeyItem-1.png">
-<meta property="og:image" content="http://cxuan.github.io/img/posts/PCProblemRightKeyItem-1.png">
-<meta property="og:updated_time" content="2016-09-17T14:24:31.579Z">
+<meta property="og:image" content="http://cxuan.github.io/img/posts/PCProblemRightKeyItem-2.png">
+<meta property="og:updated_time" content="2016-09-18T15:33:31.526Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="电脑右键菜单中没有新建和在此处打开命令行选项的问题">
 <meta name="twitter:description" content="不知道由于什么原因，突然发现鼠标右键没有了新建选项，想新建个文件夹都不行，而且在计算机里的“新建文件夹”也不行。">
@@ -303,14 +303,14 @@
           
         <p>不知道由于什么原因，突然发现鼠标右键没有了新建选项，想新建个文件夹都不行，而且在计算机里的“新建文件夹”也不行。 </p>
 <a id="more"></a>
-<p><img src="/img/posts/PCProblemRightKeyItem-1.png" alt="PCProblemRightKeyItem"></p>
+<p><img src="/img/posts/PCProblemRightKeyItem-1.png" alt="PCProblemRightKeyItem-1"></p>
 <p>网上搜了下，给出以下解决方法可行，我的系统是Windows 10 的。</p>
 <p>开始菜单中搜 “cmd” 或者用 <code>Win + R</code> 快捷键打开命令行窗口，输入以下命令回车即可。</p>
 <pre><code>reg add &quot;HKEY_CLASSES_ROOT\Directory\Background\shellex\ContextMenuHandlers\New&quot; /ve /d &quot;{D969A300-E7FF-11d0-A93B-00A0C90F2719}&quot; /t REG_SZ /f
 </code></pre><p>对于一般正常的Windows系统，在文件夹空白部分按住shift键再单击鼠标右键会多出来一个“在此处打开命令”选项，这样命令行执行的路径就可以直接到你所在的文件夹中，不需要<code>cd</code>命令切换。今天莫名其妙发现这个“在此处打开命令”选项没了。</p>
 <p>网上搜罗后虽没找到解决方法，但是有另外方法打开这个命令行：<br>在文件夹中按<code>Alt+D</code>键，此时光标聚焦到上方的地址栏，再输入<code>cmd</code>回车就可以打开命令行窗口了。</p>
 <p>后来发现软媒魔方软件可以解决。打开软媒设置，在右键菜单-&gt;添加右键菜单项目中勾选“在此处打开命令窗口”就可以了。</p>
-<p><img src="/img/posts/PCProblemRightKeyItem-1.png" alt="PCProblemRightKeyItem"></p>
+<p><img src="/img/posts/PCProblemRightKeyItem-2.png" alt="PCProblemRightKeyItem-2"></p>
 
       
     </div>
@@ -322,7 +322,7 @@
         <p><span>本文标题:</span><a href="/2016/09/17/PCProblemRightKeyItem/">电脑右键菜单中没有新建和在此处打开命令行选项的问题</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">c-xuan</a></p>
         <p><span>发布时间:</span>2016-09-17, 22:21:16</p>
-        <p><span>最后更新:</span>2016-09-17, 22:24:31</p>
+        <p><span>最后更新:</span>2016-09-18, 23:33:31</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/09/17/PCProblemRightKeyItem/" title="电脑右键菜单中没有新建和在此处打开命令行选项的问题">http://cxuan.github.io/2016/09/17/PCProblemRightKeyItem/</a>
             <span class="copy-path" data-clipboard-text="原文: http://cxuan.github.io/2016/09/17/PCProblemRightKeyItem/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -439,7 +439,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/09/17/PCProblemRightKeyItem/">电脑右键菜单中没有新建和在此处打开命令行选项的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/12/ConstraintNameUniquenessProblem/">【PowerDesigner】Constraint name uniqueness问题及处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/06/21RulesForDataWarehousing/">数据仓库设计的7个步骤，7个禁忌和7种思路</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/06/SSISCodePageProblem/">SSIS中代码页(Code Page)问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/26/DataWarehouseSchemeCompare/">深入对比数据仓库模式：Kimball vs Inmon</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/23/Datawarehouse-10Dimension-principle/">数据仓库维度建模10大基本原则</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/20/MarkDown教程/">Markdown教程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/29/Foumula-TOP10/">改变世界的公式TOP10,最后一个一看就蒙圈了</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/13/SSIS-GeneralAttribures/">【SSIS】几个通用属性</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/13/SQL-GroupByAndGroupingSets/">【T-SQL】group by 和grouping sets</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/05/RealEstateBISolutionCaseShare/">房地产行业商业智能解决方案分享</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/">放开那程序猿！构建业务导向的大数据云平台</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/27/SQL-SERVER-RPC-FUNCTION-CALL/">【SQL SERVER】OPENQUERY远程函数引用及参数传值问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/26/Linked-Server-RPC/">【SQL SERVER】链接数据库“无法启动分布式事务”的问题及解决</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/25/30-Astonishing-Nature-Places-on-Earth/">令人惊叹的30个自然奇观</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/22/JS-AddIn-PPTSlideEffect/">JS插件:类似PPT翻页过渡动画效果</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/03/hello-world/">Hello World</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/09/17/PCProblemRightKeyItem/">电脑右键菜单中没有新建和在此处打开命令行选项的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/12/ConstraintNameUniquenessProblem/">【PowerDesigner】Constraint name uniqueness问题及处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/06/21RulesForDataWarehousing/">数据仓库设计的7个步骤，7个禁忌和7种思路</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/06/SSISCodePageProblem/">SSIS中代码页(Code Page)问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/26/DataWarehouseSchemeCompare/">深入对比数据仓库模式：Kimball vs Inmon</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/23/Datawarehouse-10Dimension-principle/">数据仓库维度建模10大基本原则</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/20/MarkDown教程/">Markdown教程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/29/Foumula-TOP10/">改变世界的公式TOP10,最后一个一看就蒙圈了</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/13/SQL-GroupByAndGroupingSets/">【T-SQL】group by 和grouping sets</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/13/SSIS-GeneralAttribures/">【SSIS】几个通用属性</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/05/RealEstateBISolutionCaseShare/">房地产行业商业智能解决方案分享</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/">放开那程序猿！构建业务导向的大数据云平台</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/27/SQL-SERVER-RPC-FUNCTION-CALL/">【SQL SERVER】OPENQUERY远程函数引用及参数传值问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/26/Linked-Server-RPC/">【SQL SERVER】链接数据库“无法启动分布式事务”的问题及解决</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/25/30-Astonishing-Nature-Places-on-Earth/">令人惊叹的30个自然奇观</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/22/JS-AddIn-PPTSlideEffect/">JS插件:类似PPT翻页过渡动画效果</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/03/hello-world/">Hello World</a></li></ul>
 
 
 

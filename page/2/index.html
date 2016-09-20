@@ -260,19 +260,19 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-SSIS-GeneralAttribures" class="article article-type-post " itemscope itemprop="blogPost">
+    <article id="post-SQL-GroupByAndGroupingSets" class="article article-type-post " itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/06/13/SSIS-GeneralAttribures/" class="article-date">
+      <a href="/2016/06/13/SQL-GroupByAndGroupingSets/" class="article-date">
       <time datetime="2016-06-12T16:00:00.000Z" itemprop="datePublished">2016-06-13</time>
 </a>
 
  
-    <a href="/2016/06/13/SSIS-GeneralAttribures/#comments" title="查看评论">
+    <a href="/2016/06/13/SQL-GroupByAndGroupingSets/#comments" title="查看评论">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
         <span class="count-comment"></span>
         
-            <span class="ds-thread-count"  data-thread-key="2016/06/13/SSIS-GeneralAttribures/" ></span>
+            <span class="ds-thread-count"  data-thread-key="2016/06/13/SQL-GroupByAndGroupingSets/" ></span>
         
         
     </a>
@@ -288,7 +288,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/13/SSIS-GeneralAttribures/">【SSIS】几个通用属性</a>
+      <a class="article-title" href="/2016/06/13/SQL-GroupByAndGroupingSets/">【T-SQL】group by 和grouping sets</a>
     </h1>
   
 
@@ -298,14 +298,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>记录几个简单常用SSIS包常用属性，都是通用属性：</p>
-<ul>
-<li>1.<code>Disable</code> 设置属性为<code>true</code>是该任务不能执行</li>
-<li>2.<code>DelayValidation</code> 设置为<code>true</code>只至运行时才验证任务中的属性，在非连接状态下和为任务包输入一个外部参数值但是直到部署时才验证这种情况下会很有用。它的默认设置为<code>false</code></li>
-<li>3.<code>Description</code> 该属性描述任务包的情形。默认的值是<code>&lt;task name&gt;</code>,如果多个任务类型相同则设置为<code>&lt;task name 1&gt;</code>(数字1递增)。这个属性不是唯一的，只需要准确描述任务包项目方便其他人理解</li>
-<li>4.<code>ExecValueVariable</code> 存储任务输出的用户变量，默认的值是<code>&lt;none&gt;</code>,不输出。</li>
-<li>5.<code>FailPackageonFailure</code> 设置这个属性为<code>true</code>,当<code>package</code>中有一个任务失败那么他的上层的任务也将失败。它的上层任务可能是一个package或者container。 </li>
-</ul>
+              <p>遇到一个情况，需要在内网系统中出一个统计报表。需要根据不同条件使用多个group by语句，需要将所有聚合的数据进行union操作来完成不同维度的统计查看。<br>知道发现了在SQL  Server 2008之后引入了grouping sets这个对于group by的增强后，上面的需求实现起来就简单的多，下面我们用AdventureWork中的表作为demo来解释一下grouping sets.</p>
           
       
     </div>
@@ -314,18 +307,18 @@
       
       
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/BI印记/">BI印记</a>
+    <a class="article-category-link" href="/categories/码路拾忆/">码路拾忆</a>
     </div>
 
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BI/">BI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSIS/">SSIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL-Server/">SQL Server</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2016/06/13/SSIS-GeneralAttribures/#more">阅读全文 >></a>
+          <a href="/2016/06/13/SQL-GroupByAndGroupingSets/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>

@@ -18,18 +18,18 @@
 <meta name="description" content="遇到一个情况，需要在内网系统中出一个统计报表。需要根据不同条件使用多个group by语句，需要将所有聚合的数据进行union操作来完成不同维度的统计查看。知道发现了在SQL  Server 2008之后引入了grouping sets这个对于group by的增强后，上面的需求实现起来就简单的多，下面我们用AdventureWork中的表作为demo来解释一下grouping sets.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【T-SQL】group by 和grouping sets">
-<meta property="og:url" content="http://cxuan.github.io/2016/06/13/SQL-GroupByAndGroupingSets/index.html">
+<meta property="og:url" content="http://c-xuan.com/2016/06/13/SQL-GroupByAndGroupingSets/index.html">
 <meta property="og:site_name" content="靛青">
 <meta property="og:description" content="遇到一个情况，需要在内网系统中出一个统计报表。需要根据不同条件使用多个group by语句，需要将所有聚合的数据进行union操作来完成不同维度的统计查看。知道发现了在SQL  Server 2008之后引入了grouping sets这个对于group by的增强后，上面的需求实现起来就简单的多，下面我们用AdventureWork中的表作为demo来解释一下grouping sets.">
-<meta property="og:image" content="http://cxuan.github.io/img/posts/SQL-GroupByAndGroupingSets-1.png">
-<meta property="og:image" content="http://cxuan.github.io/img/posts/SQL-GroupByAndGroupingSets-3.png">
-<meta property="og:image" content="http://cxuan.github.io/img/posts/SQL-GroupByAndGroupingSets-5.png">
-<meta property="og:image" content="http://cxuan.github.io/img/posts/SQL-GroupByAndGroupingSets-6.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SQL-GroupByAndGroupingSets-1.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SQL-GroupByAndGroupingSets-3.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SQL-GroupByAndGroupingSets-5.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SQL-GroupByAndGroupingSets-6.png">
 <meta property="og:updated_time" content="2016-09-16T08:58:41.638Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【T-SQL】group by 和grouping sets">
 <meta name="twitter:description" content="遇到一个情况，需要在内网系统中出一个统计报表。需要根据不同条件使用多个group by语句，需要将所有聚合的数据进行union操作来完成不同维度的统计查看。知道发现了在SQL  Server 2008之后引入了grouping sets这个对于group by的增强后，上面的需求实现起来就简单的多，下面我们用AdventureWork中的表作为demo来解释一下grouping sets.">
-<meta name="twitter:image" content="http://cxuan.github.io/img/posts/SQL-GroupByAndGroupingSets-1.png">
+<meta name="twitter:image" content="http://c-xuan.com/img/posts/SQL-GroupByAndGroupingSets-1.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -331,8 +331,8 @@
         <p><span>发布时间:</span>2016-06-13, 00:00:00</p>
         <p><span>最后更新:</span>2016-09-16, 16:58:41</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/06/13/SQL-GroupByAndGroupingSets/" title="【T-SQL】group by 和grouping sets">http://cxuan.github.io/2016/06/13/SQL-GroupByAndGroupingSets/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://cxuan.github.io/2016/06/13/SQL-GroupByAndGroupingSets/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/06/13/SQL-GroupByAndGroupingSets/" title="【T-SQL】group by 和grouping sets">http://c-xuan.com/2016/06/13/SQL-GroupByAndGroupingSets/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://c-xuan.com/2016/06/13/SQL-GroupByAndGroupingSets/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -345,15 +345,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/06/13/SSIS-GeneralAttribures/">
-                    【SSIS】几个通用属性
+                <a href="/2016/06/29/Foumula-TOP10/">
+                    改变世界的公式TOP10,最后一个一看就蒙圈了
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/06/05/RealEstateBISolutionCaseShare/">
-                    房地产行业商业智能解决方案分享
+                <a href="/2016/06/13/SSIS-GeneralAttribures/">
+                    【SSIS】几个通用属性
                 </a>
             </div>
         
@@ -417,7 +417,7 @@
     
       <div class="duoshuo" id="comments">
     <div id="comment-box" ></div>
-    <div class="ds-thread" id="ds-thread" data-thread-key="2016/06/13/SQL-GroupByAndGroupingSets/" data-title="【T-SQL】group by 和grouping sets" data-url="http://cxuan.github.io/2016/06/13/SQL-GroupByAndGroupingSets/"></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/06/13/SQL-GroupByAndGroupingSets/" data-title="【T-SQL】group by 和grouping sets" data-url="http://c-xuan.com/2016/06/13/SQL-GroupByAndGroupingSets/"></div>
     <script>
         var duoshuoQuery = {short_name:"cxuan"};
         var loadComment = function(){
@@ -440,7 +440,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/06/13/SSIS-GeneralAttribures/" title="上一篇: 【SSIS】几个通用属性">
+            <a href="/2016/06/29/Foumula-TOP10/" title="上一篇: 改变世界的公式TOP10,最后一个一看就蒙圈了">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -448,13 +448,13 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/06/05/RealEstateBISolutionCaseShare/" title="下一篇: 房地产行业商业智能解决方案分享">
+            <a href="/2016/06/13/SSIS-GeneralAttribures/" title="下一篇: 【SSIS】几个通用属性">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/09/20/PlayFrameworkInit/">Play Framework 2.5 环境搭建与新建项目</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/17/PCProblemRightKeyItem/">电脑右键菜单中没有新建和在此处打开命令行选项的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/12/ConstraintNameUniquenessProblem/">【PowerDesigner】Constraint name uniqueness问题及处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/06/21RulesForDataWarehousing/">数据仓库设计的7个步骤，7个禁忌和7种思路</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/06/SSISCodePageProblem/">SSIS中代码页(Code Page)问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/26/DataWarehouseSchemeCompare/">深入对比数据仓库模式：Kimball vs Inmon</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/23/Datawarehouse-10Dimension-principle/">数据仓库维度建模10大基本原则</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/20/MarkDown教程/">Markdown教程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/29/Foumula-TOP10/">改变世界的公式TOP10,最后一个一看就蒙圈了</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/13/SSIS-GeneralAttribures/">【SSIS】几个通用属性</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/13/SQL-GroupByAndGroupingSets/">【T-SQL】group by 和grouping sets</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/05/RealEstateBISolutionCaseShare/">房地产行业商业智能解决方案分享</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/">放开那程序猿！构建业务导向的大数据云平台</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/27/SQL-SERVER-RPC-FUNCTION-CALL/">【SQL SERVER】OPENQUERY远程函数引用及参数传值问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/26/Linked-Server-RPC/">【SQL SERVER】链接数据库“无法启动分布式事务”的问题及解决</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/25/30-Astonishing-Nature-Places-on-Earth/">令人惊叹的30个自然奇观</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/22/JS-AddIn-PPTSlideEffect/">JS插件:类似PPT翻页过渡动画效果</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/03/hello-world/">Hello World</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/09/21/NoWeChatBefore/">那些年，我们没有微信</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/20/PlayFrameworkInit/">Play Framework 2.5 环境搭建与新建项目</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/17/PCProblemRightKeyItem/">电脑右键菜单中没有新建和在此处打开命令行选项的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/12/ConstraintNameUniquenessProblem/">【PowerDesigner】Constraint name uniqueness问题及处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/06/21RulesForDataWarehousing/">数据仓库设计的7个步骤，7个禁忌和7种思路</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/06/SSISCodePageProblem/">SSIS中代码页(Code Page)问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/26/DataWarehouseSchemeCompare/">深入对比数据仓库模式：Kimball vs Inmon</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/23/Datawarehouse-10Dimension-principle/">数据仓库维度建模10大基本原则</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/20/MarkDown教程/">Markdown教程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/29/Foumula-TOP10/">改变世界的公式TOP10,最后一个一看就蒙圈了</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/13/SQL-GroupByAndGroupingSets/">【T-SQL】group by 和grouping sets</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/13/SSIS-GeneralAttribures/">【SSIS】几个通用属性</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/05/RealEstateBISolutionCaseShare/">房地产行业商业智能解决方案分享</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/">放开那程序猿！构建业务导向的大数据云平台</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/27/SQL-SERVER-RPC-FUNCTION-CALL/">【SQL SERVER】OPENQUERY远程函数引用及参数传值问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/26/Linked-Server-RPC/">【SQL SERVER】链接数据库“无法启动分布式事务”的问题及解决</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/25/30-Astonishing-Nature-Places-on-Earth/">令人惊叹的30个自然奇观</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/22/JS-AddIn-PPTSlideEffect/">JS插件:类似PPT翻页过渡动画效果</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/03/hello-world/">Hello World</a></li></ul>
 
 
 

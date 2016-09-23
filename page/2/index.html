@@ -673,6 +673,83 @@
 
 
   
+    <article id="post-SSIS-Precedence-Constraint" class="article article-type-post " itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/21/SSIS-Precedence-Constraint/" class="article-date">
+      <time datetime="2016-05-20T16:00:00.000Z" itemprop="datePublished">2016-05-21</time>
+</a>
+
+ 
+    <a href="/2016/05/21/SSIS-Precedence-Constraint/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+            <span class="ds-thread-count"  data-thread-key="2016/05/21/SSIS-Precedence-Constraint/" ></span>
+        
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/21/SSIS-Precedence-Constraint/">【SSIS】中Precedence Constraint 优先约束的使用</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h3 id="开篇介绍"><a href="#开篇介绍" class="headerlink" title="开篇介绍"></a>开篇介绍</h3><p>Precedence Constraint 优先约束 - 在控制流中使用，用来链接控制流中各种 Task，Container，并且要求满足一定的条件才能执行相关联的 Task 或者 Container。 比如下图中，第一个 Execute SQL Task 叫做 Precedence-Executable 优先可执行任务，而Script Task 由于在关联箭头的下游，所以它叫做 Constrained-Executable 受约束可执行任务。关联箭头的上游任务自然先执行，关联箭头下方的这种受约束可执行任务是否能够被执行则要取决于 Precedence Constraint 的配置了。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/BI墨客/">BI墨客</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BI/">BI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSIS/">SSIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016/05/21/SSIS-Precedence-Constraint/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-hello-world" class="article article-type-post " itemscope itemprop="blogPost">
   
     <div class="article-meta">

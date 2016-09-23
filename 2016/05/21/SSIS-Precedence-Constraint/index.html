@@ -15,39 +15,50 @@
 
 
 
-<meta name="description" content="简介Play Framework是啥？引用下百度百科的说法：
-
-Play！是一个full-stack（全栈的）Java Web应用框架，包括一个简单的无状态MVC模型，具有Hibernate的对象持续，一个基于Groovy的模板引擎，以及建立一个现代Web应用所需的所有东西。
-
-当然，这个介绍是比较旧的，对于老版本的Play!，这么说没毛病。进入Play!官网看看，满眼的绿啊，有一股清新之感呐。版">
+<meta name="description" content="开篇介绍Precedence Constraint 优先约束 - 在控制流中使用，用来链接控制流中各种 Task，Container，并且要求满足一定的条件才能执行相关联的 Task 或者 Container。 比如下图中，第一个 Execute SQL Task 叫做 Precedence-Executable 优先可执行任务，而Script Task 由于在关联箭头的下游，所以它叫做 Cons">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Play Framework 2.5 环境搭建与新建项目">
-<meta property="og:url" content="http://c-xuan.com/2016/09/20/PlayFrameworkInit/index.html">
+<meta property="og:title" content="【SSIS】中Precedence Constraint 优先约束的使用">
+<meta property="og:url" content="http://c-xuan.com/2016/05/21/SSIS-Precedence-Constraint/index.html">
 <meta property="og:site_name" content="靛青">
-<meta property="og:description" content="简介Play Framework是啥？引用下百度百科的说法：
-
-Play！是一个full-stack（全栈的）Java Web应用框架，包括一个简单的无状态MVC模型，具有Hibernate的对象持续，一个基于Groovy的模板引擎，以及建立一个现代Web应用所需的所有东西。
-
-当然，这个介绍是比较旧的，对于老版本的Play!，这么说没毛病。进入Play!官网看看，满眼的绿啊，有一股清新之感呐。版">
-<meta property="og:image" content="http://c-xuan.com/img/posts/PlayFrameworkInit-1.gif">
-<meta property="og:image" content="http://c-xuan.com/img/posts/PlayFrameworkInit-2.gif">
-<meta property="og:image" content="http://c-xuan.com/img/posts/PlayFrameworkInit-3.gif">
-<meta property="og:image" content="http://c-xuan.com/img/posts/PlayFrameworkInit-4.gif">
-<meta property="og:image" content="http://c-xuan.com/img/posts/PlayFrameworkInit-5.gif">
-<meta property="og:image" content="http://c-xuan.com/img/posts/PlayFrameworkInit-6.gif">
-<meta property="og:image" content="http://c-xuan.com/img/posts/PlayFrameworkInit-7.gif">
-<meta property="og:image" content="http://c-xuan.com/img/posts/PlayFrameworkInit-8.gif">
-<meta property="og:image" content="http://c-xuan.com/img/posts/PlayFrameworkInit-9.gif">
-<meta property="og:image" content="http://c-xuan.com/img/posts/PlayFrameworkInit-10.gif">
-<meta property="og:updated_time" content="2016-09-22T16:16:20.099Z">
+<meta property="og:description" content="开篇介绍Precedence Constraint 优先约束 - 在控制流中使用，用来链接控制流中各种 Task，Container，并且要求满足一定的条件才能执行相关联的 Task 或者 Container。 比如下图中，第一个 Execute SQL Task 叫做 Precedence-Executable 优先可执行任务，而Script Task 由于在关联箭头的下游，所以它叫做 Cons">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-1.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-2.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-3.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-4.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-5.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-6.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-7.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-8.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-9.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-10.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-11.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-12.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-13.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-14.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-15.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-16.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-17.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-18.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-19.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-20.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-21.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-22.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-23.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-24.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-25.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-26.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-27.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-28.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-29.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-30.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-31.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-32.png">
+<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-33.png">
+<meta property="og:updated_time" content="2016-09-23T17:12:57.474Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Play Framework 2.5 环境搭建与新建项目">
-<meta name="twitter:description" content="简介Play Framework是啥？引用下百度百科的说法：
-
-Play！是一个full-stack（全栈的）Java Web应用框架，包括一个简单的无状态MVC模型，具有Hibernate的对象持续，一个基于Groovy的模板引擎，以及建立一个现代Web应用所需的所有东西。
-
-当然，这个介绍是比较旧的，对于老版本的Play!，这么说没毛病。进入Play!官网看看，满眼的绿啊，有一股清新之感呐。版">
-<meta name="twitter:image" content="http://c-xuan.com/img/posts/PlayFrameworkInit-1.gif">
+<meta name="twitter:title" content="【SSIS】中Precedence Constraint 优先约束的使用">
+<meta name="twitter:description" content="开篇介绍Precedence Constraint 优先约束 - 在控制流中使用，用来链接控制流中各种 Task，Container，并且要求满足一定的条件才能执行相关联的 Task 或者 Container。 比如下图中，第一个 Execute SQL Task 叫做 Precedence-Executable 优先可执行任务，而Script Task 由于在关联箭头的下游，所以它叫做 Cons">
+<meta name="twitter:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-1.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -79,7 +90,7 @@ Play！是一个full-stack（全栈的）Java Web应用框架，包括一个简�
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Play Framework 2.5 环境搭建与新建项目 | 靛青</title>
+<title>【SSIS】中Precedence Constraint 优先约束的使用 | 靛青</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -301,11 +312,11 @@ Play！是一个full-stack（全栈的）Java Web应用框架，包括一个简�
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-PlayFrameworkInit" class="article article-type-post  animated pulse " itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-SSIS-Precedence-Constraint" class="article article-type-post  animated pulse " itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/09/20/PlayFrameworkInit/" class="article-date">
-      <time datetime="2016-09-19T16:40:51.000Z" itemprop="datePublished">2016-09-20</time>
+      <a href="/2016/05/21/SSIS-Precedence-Constraint/" class="article-date">
+      <time datetime="2016-05-20T16:00:00.000Z" itemprop="datePublished">2016-05-21</time>
 </a>
 
 
@@ -320,7 +331,7 @@ Play！是一个full-stack（全栈的）Java Web应用框架，包括一个简�
         
   
     <h1 class="article-title" itemprop="name">
-      Play Framework 2.5 环境搭建与新建项目
+      【SSIS】中Precedence Constraint 优先约束的使用
     </h1>
   
 
@@ -329,13 +340,13 @@ Play！是一个full-stack（全栈的）Java Web应用框架，包括一个简�
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/码路刺客/">码路刺客</a>
+    <a class="article-category-link" href="/categories/BI墨客/">BI墨客</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Play-Framework/">Play Framework</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原创/">原创</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BI/">BI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSIS/">SSIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -345,72 +356,116 @@ Play！是一个full-stack（全栈的）Java Web应用框架，包括一个简�
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Play Framework是啥？引用下百度百科的说法：</p>
-<blockquote>
-<p>Play！是一个full-stack（全栈的）Java Web应用框架，包括一个简单的无状态MVC模型，具有Hibernate的对象持续，一个基于Groovy的模板引擎，以及建立一个现代Web应用所需的所有东西。</p>
-</blockquote>
-<p>当然，这个介绍是比较旧的，对于老版本的Play!，这么说没毛病。进入<a href="https://www.playframework.com/" target="_blank" rel="external">Play!官网</a>看看，满眼的绿啊，有一股清新之感呐。版本都到<code>2.5.8</code>了。追溯1.0版本都是在2010.07.28发布的，到现在已经有6年时间了。</p>
+        <h3 id="开篇介绍"><a href="#开篇介绍" class="headerlink" title="开篇介绍"></a>开篇介绍</h3><p>Precedence Constraint 优先约束 - 在控制流中使用，用来链接控制流中各种 Task，Container，并且要求满足一定的条件才能执行相关联的 Task 或者 Container。 比如下图中，第一个 Execute SQL Task 叫做 Precedence-Executable 优先可执行任务，而Script Task 由于在关联箭头的下游，所以它叫做 Constrained-Executable 受约束可执行任务。关联箭头的上游任务自然先执行，关联箭头下方的这种受约束可执行任务是否能够被执行则要取决于 Precedence Constraint 的配置了。</p>
 <a id="more"></a>
-<p><img src="/img/posts/PlayFrameworkInit-1.gif" alt="PlayFrameworkInit-1"></p>
-<p>其实从Play!2.3.8版本开始变化就很大了，引入了<code>activator</code>,<code>typesafe</code>,<code>SBT</code>啥啥的各种东东，一开始都不大懂这些，只要知道跟之前版本相差很远就好了。这个号称是拯救Java程序员的神器，带着一颗好(zhe)奇(teng)的心开始探索一番。</p>
-<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><h3 id="下载安装包"><a href="#下载安装包" class="headerlink" title="下载安装包"></a>下载安装包</h3><p><img src="/img/posts/PlayFrameworkInit-2.gif" alt="PlayFrameworkInit-2"></p>
-<p>进入到官网的下载界面，点击下载就可以了，一个名为<code>typesafe-activator-1.3.10-minimal.zip</code>的压缩文件，没错，这就是全部了。但是从名字里的minimal就可以看出这是个精简版的环境包，用这个有代价的噢，尤其在我大天朝。在新建项目的时候会下载各种依赖包，很多国外站点在国内访问是很慢的，所以新建项目的过程非常考验耐性。所以还是下载那个Offline Distrbution版本的，离线版本的600+M，本以为用这个离线版的会快很多，结果。。。。。。。。是谁谁应该都会吐槽，这TM不是离线的麽，下了几百兆的东西，你告我创建项目的时候还要更新和各种下载依赖包！！！！！</p>
-<p>不过突然想到一个问题，人家是离线包，我在新建项目的时候是连着网的，莫非是要把网断开么！行，我等下试试。</p>
-<h3 id="添加环境变量"><a href="#添加环境变量" class="headerlink" title="添加环境变量"></a>添加环境变量</h3><p>按正常步骤来，把下载的压缩包加压到一个目录里，比如:</p>
-<p>F:\PlayFramework\typesafe-activator-1.3.10\activator-dist-1.3.10</p>
-<p>然后进入到bin目录，复制地址栏的地址:</p>
-<p>F:\PlayFramework\typesafe-activator-1.3.10\activator-dist-1.3.10\bin</p>
-<p>把这个加到Windows的环境变量里，怎么添加我就不多讲了。</p>
-<p>添加完以后，在你想创建项目的目录下空白处按住<code>Shit</code>键，然后点鼠标右键，弹出菜单选择“在此处打开命令行”弹出命令行窗口。输入<code>activator</code>命令，然后在浏览器中打开一个说明页面的话就说明环境变量添加的没问题了。</p>
-<h3 id="小问题"><a href="#小问题" class="headerlink" title="小问题"></a>小问题</h3><p><img src="/img/posts/PlayFrameworkInit-3.gif" alt="PlayFrameworkInit-3"></p>
-<p>关于那个系统找不到文件提示：</p>
-<p><strong>ACTIVATOR_HOME=F:\PlayFramework\typesafe-activator-1.3.10\activator-dist-1.3.10<br>系统找不到文件 BIN_DIRECTORY..\conf\sbtconfig.txt。</strong></p>
-<p>这个其实没啥影响，但是非要纠结的话，可以用文本编辑器看看</p>
-<p>F:\PlayFramework\typesafe-activator-1.3.10\activator-dist-1.3.10\bin</p>
-<p>目录下的 <strong>activator.bat</strong> 文件。找到</p>
-<p><img src="/img/posts/PlayFrameworkInit-4.gif" alt="PlayFrameworkInit-4"></p>
-<pre><code>set SBT_HOME=%BIN_DIRECTORY
-</code></pre><p>这行，不知道是官方故意怎么干的还是马虎造成的错误，感觉少了个<code>%</code>，应该是</p>
-<pre><code>set SBT_HOME=%BIN_DIRECTORY%
-</code></pre><p>改成上述那样其实也会报错，因为</p>
-<p>F:\PlayFramework\typesafe-activator-1.3.10\activator-dist-1.3.10\</p>
-<p>路径下就没有conf文件夹，里面就没有sbtconfig.txt文件，要是真看着不舒服的话，就建一个conf文件夹，然后里面建一个sbtconfig.txt配置文件，然后把下面这段复制到文件里面：</p>
-<pre><code># Set the java args to high
-
--Xmx512M
-
--XX:MaxPermSize=256m
-
--XX:ReservedCodeCacheSize=128m
-
-# Set the extra SBT options
-
--Dsbt.log.format=true
-</code></pre><h2 id="项目创建和启动"><a href="#项目创建和启动" class="headerlink" title="项目创建和启动"></a>项目创建和启动</h2><h3 id="命令行方式"><a href="#命令行方式" class="headerlink" title="命令行方式"></a>命令行方式</h3><p>下面就正式用命令行创建项目了。命令行输入</p>
-<pre><code>activator new onlineTest
-</code></pre><p>onlineTest是项目名称，然后稍等下会列出一些模板名称，根据个人喜好，用Java就输入5然后回车，用Scala语言写程序的就输入6然后回车，其他的我没试，不过就是创建一个项目结构目录嘛，大概差不多。</p>
-<p><img src="/img/posts/PlayFrameworkInit-5.gif" alt="PlayFrameworkInit-5"></p>
-<p>然后就看到F:\PlayFramework目录下多了一个文件夹，名称就是你输入的项目名称。<br>继续命令行输入 </p>
-<pre><code>cd onlineTest 
-</code></pre><p>切换到项目目录下，再输入 </p>
-<pre><code>activator run 
-</code></pre><p>就会编译项目然后启动运行服务了。</p>
-<p><img src="/img/posts/PlayFrameworkInit-6.gif" alt="PlayFrameworkInit-6"></p>
-<p>得说一下，因为我之前创建过项目了，换句话说该下载的依赖包都下载了，所以很快。就启动了，在浏览器输入</p>
-<pre><code>localhost:9000
-</code></pre><p>就可以看到界面了。</p>
-<p><img src="/img/posts/PlayFrameworkInit-7.gif" alt="PlayFrameworkInit-7"></p>
-<p>但是如果是第一次创建的话，而且还是在国内没有什么破墙手段的话，对不住了您呐，先沏壶茶，嗑袋瓜子，睡个午觉，那等的花都谢了。</p>
-<p>一开始我还好奇，它下载的东西都哪去了，没往项目目录里下载，其实是往用户目录下的 <strong>.ivy2</strong> 和 <strong>.sbt</strong> 两个隐藏文件夹里下载了，如果你看到这两个文件夹的大小有变化，恭喜你，就是在下载依赖包的路上了。很有可能你一个午觉醒来发现瓦擦！中途网络下载超时启动失败了！那么同样恭喜你，换个网络或者同一个网络下再试几次。毕竟Play!框架嘛，有种被Play的赶脚。</p>
-<p><img src="/img/posts/PlayFrameworkInit-8.gif" alt="PlayFrameworkInit-8"></p>
-<p>其实我也试过像之前我说的把网络断掉，然后运行启动命令，可能还是因为我这之前下载过了依赖包，所以很快，不大清楚首次创建运行项目的时候咋样，你可以试试。</p>
-<p>唉，本来想睡觉的，但是还是想好（zhe）奇（teng）下断网会怎样，我就把用户目录下的.ivy2和.sbt两个隐藏文件夹删了，然后断开网络，重新建一个offlineTest项目试试。</p>
-<p><img src="/img/posts/PlayFrameworkInit-9.gif" alt="PlayFrameworkInit-9"></p>
-<p>得，报错了，我输入过ignore，直接停止了，不行，我有试过last，然后看到命令行窗口刷刷刷的快速往上飘各种信息。感觉有希望啊。然后又来了一个停顿</p>
-<p><img src="/img/posts/PlayFrameworkInit-10.gif" alt="PlayFrameworkInit-10"></p>
-<p>继续输入last，回车后继续刷刷刷的。。。。。好久。。。。。好想睡觉。</p>
-<p>又来了个停顿，输入last回车。。。。。等~等灯等灯~</p>
-<p>后面又输入两次last，还没完事儿。。。。。算了睡觉!!</p>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-1.png" alt="SSIS-Precedence-Constraint-1"></p>
+<p>EST_SELECT_VALUE 中的配置 </p>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-2.png" alt="SSIS-Precedence-Constraint-2"></p>
+<p>查询的结果赋值给一个字符串类型的变量，Script Task 就是显示一下这个变量的值而已。</p>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-3.png" alt="SSIS-Precedence-Constraint-3"></p>
+<p>双击绿色的线之后默认可以看到下面的这个配置，其中包括了约束与多约束的选项和配置。</p>
+<ul>
+<li>1.Evlaution Operation = Constraint  按上游 Task 执行结果决定是否执行下游 Script Task 任务（按执行结果约束）</li>
+<li>Value = Success  上游任务 EST_SELECT_VALUE 执行成功后才执行下游 Script Task </li>
+</ul>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-4.png" alt="SSIS-Precedence-Constraint-4"></p>
+<p>EST_SELECT_VALUE 执行成功后自动执行 SCE_SHOW_RESULT</p>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-5.png" alt="SSIS-Precedence-Constraint-5"></p>
+<p><strong>Value = Failure上游任务 EST_SELECT_VALUE 执行失败后才执行下游 Script Task </strong></p>
+<p>新建一个 SCR_SHOW_ERROR Script Task，里面不做任何操作。</p>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-6.png" alt="SSIS-Precedence-Constraint-6"></p>
+<p>修改 EST_SELECT_VALUE 与 SCR_SHOW_ERROR 之间的连接线，改成 Failure。</p>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-7.png" alt="SSIS-Precedence-Constraint-7"></p>
+<p>将 EST_SELECT_VALUE 中的 SQL 语句改成 SELECT 1/0 AS A，这样会发生一个除数为零的错误，但是 SCR_SHOW_ERROR 是可以被执行到的。</p>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-8.png" alt="SSIS-Precedence-Constraint-8"></p>
+<p>Value = Complete 上游任务 EST_SELECT_VALUE 无论执行成功或者失败，只要执行完毕就执行下游 Script Task </p>
+<p>新建一个 Script Task - SCR_SHOW_COMPLETE，里面不做任何操作。</p>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-9.png" alt="SSIS-Precedence-Constraint-9"></p>
+<p>修改连接线为 Complete。</p>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-10.png" alt="SSIS-Precedence-Constraint-10"></p>
+<p>当 SQL 语句为 SELECT 1/0 AS A  EST_SELECT_VALUE 执行失败时，它被执行到了。</p>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-11.png" alt="SSIS-Precedence-Constraint-11"></p>
+<p>当 SQL 语句为 SELECT 1 AS A  EST_SELECT_VALUE 执行成功时，它也被执行到了。</p>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-12.png" alt="SSIS-Precedence-Constraint-12"></p>
+<p><strong>Evlaution Operation = Expression  按表达式约束，与上游任务执行成功与否的结果无关</strong></p>
+<p>添加两个 Script Task - SCR_SHOW_EXP_EMPTY 和 SCR_SHOW_EXP_VALUE。</p>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-13.png" alt="SSIS-Precedence-Constraint-13"></p>
+<p>SCR_SHOW_EXP_EMPTY 的约束配置 -</p>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-14.png" alt="SSIS-Precedence-Constraint-14"></p>
+<p>SCR_SHOW_EXP_VALUE 中的约束配置 -</p>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-15.png" alt="SSIS-Precedence-Constraint-15"></p>
+<p>当 EST_SELECT_VALUE 中的 SQL 为 SELECT 1 AS A 时，PV_RESULT 的值为1，且 EST_SELECT_VALUE 执行成功！</p>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-16.png" alt="SSIS-Precedence-Constraint-16"></p>
+<p>当 EST_SELECT_VALUE 中的 SQL 为 SELECT 1/0 AS A 时，PV_RESULT 的值不能从 EST_SELECT_VALUE 中正常接受，使用默认值 “”，且 EST_SELECT_VALUE 执行失败！</p>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-17.png" alt="SSIS-Precedence-Constraint-17"></p>
+<p>可见 SCR_SHOW_RESULT，SCR_SHOW_ERROR，SCR_SHOW_COMPLETE 是否执行只与 EST_SELECT_VALUE 执行的结果有关( Success，Failure，Complete)，而与表达式无关。</p>
+<p>而 SCR_SHOW_EXP_EMPTY 和 SCR_SHOW_EXP_VALUE 的执行只与表达式相关，而与 EST_SELECT_VALUE 的执行结果无关。</p>
+<h3 id="执行结果-AND-表达式-和-执行结果-OR-表达式"><a href="#执行结果-AND-表达式-和-执行结果-OR-表达式" class="headerlink" title="执行结果 AND 表达式 和 执行结果 OR 表达式"></a>执行结果 AND 表达式 和 执行结果 OR 表达式</h3><p>新添加四个 Script Task</p>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-18.png" alt="SSIS-Precedence-Constraint-18"></p>
+<p>SCR_SHOW<em>SUCCESS</em>&amp;_EMPTY 中的配置要求 Expression 与 Constraint 同时成立。</p>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-19.png" alt="SSIS-Precedence-Constraint-19"></p>
+<p>SCR_SHOW_SUCCESS_OR_EMPTY 中的配置要求 Expression 与 Constraint 有一个成立。</p>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-20.png" alt="SSIS-Precedence-Constraint-20"></p>
+<p>SCR_SHOW<em>FALIURE</em>&amp;_VALUE 中的配置要求 Expression 与 Constraint 同时成立。</p>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-21.png" alt="SSIS-Precedence-Constraint-21"></p>
+<p>SCR_SHOW_FALIURE_OR_VALUE 中的配置要求 Expression 与 Constraint 有一个成立。</p>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-22.png" alt="SSIS-Precedence-Constraint-22"></p>
+<p>当 EST_SELECT_VALUE 中的 SQL 为 SELECT 1/0 AS A 时，执行状态 = Failure，PV_RESULT 为 EMPTY 空字符串。</p>
+<p>所以 SRC_SHOW_SUCCESS_OR_EMPTY 满足 PV_RESULT ==”” 条件，而 SCR_SHOW_FAILURE_OR_VALUE 满足 执行结果 = Failure。</p>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-23.png" alt="SSIS-Precedence-Constraint-23"></p>
+<p>当 EST_SELECT_VALUE 中的 SQL 为 SELECT 1 AS A 时，执行状态 = Success，PV_RESULT 为 1。</p>
+<p>所以 SRC_SHOW_SUCCESS_OR_EMPTY 满足执行状态 = SUCCESS 条件，而 SCR_SHOW_FAILURE_OR_VALUE 满足 PV_RESULT !=””。</p>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-24.png" alt="SSIS-Precedence-Constraint-24"></p>
+<h3 id="多约束的情况"><a href="#多约束的情况" class="headerlink" title="多约束的情况"></a>多约束的情况</h3><p>SCR_ALL_TRUE 受 EST_SELECT_VALUE_1 和 EST_SELECT_VALUE_2 共同影响。</p>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-25.png" alt="SSIS-Precedence-Constraint-25"></p>
+<p>默认情况下 SCR_ALL_TRUE 的两个优先约束都是如下图所示，这种多约束的情况要表示的意思是。从 EST_SELECT_VALUE_1 到 SCR_ALL_TRUE 只有一个结果就是 True 或者 False，这个 True 或者 False 是由 EST_SELECT_VALUE_1 中的 Constraint/Expression/Constraint and Expression/Constraint or Expression 最终结果得到的 - True 或 False。同样 EST_SELECT_VALUE_2 也能得到一个最终的计算结果 - True 或 False。</p>
+<p>也就是说有多个条件约束对 SCR_ALL_TRUE 起约束作用，那么如何实现两种约束共同作用于 SCR_ALL_TRUE 呢？就是下面的 Multiple Constraints 中的 Logical AND 或者 Logical OR 选项来决定的了。</p>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-26.png" alt="SSIS-Precedence-Constraint-26"></p>
+<p><strong>测试条件 1</strong></p>
+<ul>
+<li>1.EST_SELECT_VALUE_1 - SQL = SELECT 1 AS A</li>
+<li>2.EST_SELECT_VALUE_2 - SQL = SELECT 1 AS A</li>
+<li>3.Logical AND (虽然是两条约束线，但是更改其中一条，另外一条也会自动更改，也就是说必须同时为 Logical AND 或者 Logical OR)。</li>
+</ul>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-27.png" alt="SSIS-Precedence-Constraint-27"></p>
+<p><strong>测试条件 2</strong></p>
+<ul>
+<li>1.EST_SELECT_VALUE_1 - SQL = SELECT 1 AS A</li>
+<li>2.EST_SELECT_VALUE_2 - SQL = SELECT 1/0 AS A</li>
+<li>3.Logical AND</li>
+</ul>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-28.png" alt="SSIS-Precedence-Constraint-28"></p>
+<p><strong>测试条件 3</strong></p>
+<ul>
+<li>1.EST_SELECT_VALUE_1 - SQL = SELECT 1 AS A</li>
+<li>2.EST_SELECT_VALUE_2 - SQL = SELECT 1/0 AS A</li>
+<li>3.Logical OR</li>
+</ul>
+<p>线条同时变为虚线，执行成功！</p>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-29.png" alt="SSIS-Precedence-Constraint-29"></p>
+<p><strong>测试条件 4</strong></p>
+<ul>
+<li>1.EST_SELECT_VALUE_1 - SQL = SELECT 1 AS A</li>
+<li>2.EST_SELECT_VALUE_2 - SQL = SELECT 1/0   AS A  (Constraint - Completion)</li>
+<li>3.Logical OR</li>
+</ul>
+<p>线条同时变为虚线，执行成功！</p>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-30.png" alt="SSIS-Precedence-Constraint-30"></p>
+<p><strong>测试条件 5</strong></p>
+<ul>
+<li>1.EST_SELECT_VALUE_1 - SQL = SELECT 1 AS A</li>
+<li>2.EST_SELECT_VALUE_2 - SQL = SELECT 1/0   AS A  (Constraint - Completion)</li>
+<li>3.Logical AND  执行成功！</li>
+</ul>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-31.png" alt="SSIS-Precedence-Constraint-31"></p>
+<p><strong>PS 小窍门</strong></p>
+<p>为了更清楚的知道条件表达式和约束的内容，我们可以通过设置约束线的属性让这些信息显示出来，而不是通过人工注释的方式。</p>
+<p>选中 Constraint 线，修改其 ShowAnnotation 属性，将 AsNeeded 修改为 ConstraintOptions。</p>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-32.png" alt="SSIS-Precedence-Constraint-32"></p>
+<p>这样就可以清楚的看到约束中的状态判断和表达式判断了！</p>
+<p><img src="/img/posts/SSIS-Precedence-Constraint-33.png" alt="SSIS-Precedence-Constraint-33"></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>以上就是 Precedence Constraint 的全部内容！虽然感觉内容比较多，但是这些配置条件在不同的情形中的确会碰到。比如在文件归档任务中，就有类似于这样的条件约束。一种是只要前面加载数据成功就归档，一种是不管前面数据加载成功不成功只要执行完毕就执行归档操作。</p>
+<p>本文转自 微软BI 之SSIS 系列 - Precedence Constraint 详解优先约束的使用<br><a href="https://ask.hellobi.com/blog/biwork/624" target="_blank" rel="external">https://ask.hellobi.com/blog/biwork/624</a></p>
 
       
     </div>
@@ -419,13 +474,13 @@ Play！是一个full-stack（全栈的）Java Web应用框架，包括一个简�
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/09/20/PlayFrameworkInit/">Play Framework 2.5 环境搭建与新建项目</a></p>
+        <p><span>本文标题:</span><a href="/2016/05/21/SSIS-Precedence-Constraint/">【SSIS】中Precedence Constraint 优先约束的使用</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">c-xuan</a></p>
-        <p><span>发布时间:</span>2016-09-20, 00:40:51</p>
-        <p><span>最后更新:</span>2016-09-23, 00:16:20</p>
+        <p><span>发布时间:</span>2016-05-21, 00:00:00</p>
+        <p><span>最后更新:</span>2016-09-24, 01:12:57</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/09/20/PlayFrameworkInit/" title="Play Framework 2.5 环境搭建与新建项目">http://c-xuan.com/2016/09/20/PlayFrameworkInit/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://c-xuan.com/2016/09/20/PlayFrameworkInit/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/05/21/SSIS-Precedence-Constraint/" title="【SSIS】中Precedence Constraint 优先约束的使用">http://c-xuan.com/2016/05/21/SSIS-Precedence-Constraint/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://c-xuan.com/2016/05/21/SSIS-Precedence-Constraint/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -438,15 +493,15 @@ Play！是一个full-stack（全栈的）Java Web应用框架，包括一个简�
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/09/21/NoWeChatBefore/">
-                    那些年，我们没有微信
+                <a href="/2016/05/22/JS-AddIn-PPTSlideEffect/">
+                    JS插件:类似PPT翻页过渡动画效果
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/09/17/PCProblemRightKeyItem/">
-                    电脑右键菜单中没有新建和在此处打开命令行选项的问题
+                <a href="/2015/12/03/hello-world/">
+                    Hello World
                 </a>
             </div>
         
@@ -458,7 +513,7 @@ Play！是一个full-stack（全栈的）Java Web应用框架，包括一个简�
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#环境搭建"><span class="toc-number">2.</span> <span class="toc-text">环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#下载安装包"><span class="toc-number">2.1.</span> <span class="toc-text">下载安装包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加环境变量"><span class="toc-number">2.2.</span> <span class="toc-text">添加环境变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小问题"><span class="toc-number">2.3.</span> <span class="toc-text">小问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目创建和启动"><span class="toc-number">3.</span> <span class="toc-text">项目创建和启动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#命令行方式"><span class="toc-number">3.1.</span> <span class="toc-text">命令行方式</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#开篇介绍"><span class="toc-number">1.</span> <span class="toc-text">开篇介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#执行结果-AND-表达式-和-执行结果-OR-表达式"><span class="toc-number">2.</span> <span class="toc-text">执行结果 AND 表达式 和 执行结果 OR 表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多约束的情况"><span class="toc-number">3.</span> <span class="toc-text">多约束的情况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
         
     </div>
     <style>
@@ -494,7 +549,7 @@ Play！是一个full-stack（全栈的）Java Web应用框架，包括一个简�
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"Play Framework 2.5 环境搭建与新建项目　| 靛青　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"【SSIS】中Precedence Constraint 优先约束的使用　| 靛青　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -510,7 +565,7 @@ Play！是一个full-stack（全栈的）Java Web应用框架，包括一个简�
     
       <div class="duoshuo" id="comments">
     <div id="comment-box" ></div>
-    <div class="ds-thread" id="ds-thread" data-thread-key="2016/09/20/PlayFrameworkInit/" data-title="Play Framework 2.5 环境搭建与新建项目" data-url="http://c-xuan.com/2016/09/20/PlayFrameworkInit/"></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/05/21/SSIS-Precedence-Constraint/" data-title="【SSIS】中Precedence Constraint 优先约束的使用" data-url="http://c-xuan.com/2016/05/21/SSIS-Precedence-Constraint/"></div>
     <script>
         var duoshuoQuery = {short_name:"cxuan"};
         var loadComment = function(){
@@ -533,7 +588,7 @@ Play！是一个full-stack（全栈的）Java Web应用框架，包括一个简�
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/09/21/NoWeChatBefore/" title="上一篇: 那些年，我们没有微信">
+            <a href="/2016/05/22/JS-AddIn-PPTSlideEffect/" title="上一篇: JS插件:类似PPT翻页过渡动画效果">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -541,7 +596,7 @@ Play！是一个full-stack（全栈的）Java Web应用框架，包括一个简�
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/09/17/PCProblemRightKeyItem/" title="下一篇: 电脑右键菜单中没有新建和在此处打开命令行选项的问题">
+            <a href="/2015/12/03/hello-world/" title="下一篇: Hello World">
                 <i class="fa fa-angle-right"></i>
             </a>
         

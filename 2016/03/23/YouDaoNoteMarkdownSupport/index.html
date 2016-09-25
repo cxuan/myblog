@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="c-xuan" />
+
+
+
+<meta name="description" content="继有道云协作率先支持markdown语法之后，令人振奋的markdown编辑功能现已在web版有道云笔记优雅上线，移动端也已支持预览！不要着急，PC客户端也将随后支持markdown的编辑预览！
+何为Markdown？Markdown是一种轻量级的「标记语言」，通常为程序员群体所用，目前它已是全球最大的技术分享网站GitHub和技术问答网站StackOverFlow的御用书写格式。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="有道笔记支持Markdown啦">
+<meta property="og:url" content="http://c-xuan.com/2016/03/23/YouDaoNoteMarkdownSupport/index.html">
+<meta property="og:site_name" content="靛青">
+<meta property="og:description" content="继有道云协作率先支持markdown语法之后，令人振奋的markdown编辑功能现已在web版有道云笔记优雅上线，移动端也已支持预览！不要着急，PC客户端也将随后支持markdown的编辑预览！
+何为Markdown？Markdown是一种轻量级的「标记语言」，通常为程序员群体所用，目前它已是全球最大的技术分享网站GitHub和技术问答网站StackOverFlow的御用书写格式。">
+<meta property="og:image" content="http://c-xuan.com/img/posts/24.jpg">
+<meta property="og:image" content="http://c-xuan.com/img/posts/25.jpg">
+<meta property="og:image" content="http://c-xuan.com/img/posts/26.jpg">
+<meta property="og:image" content="http://c-xuan.com/img/posts/27.jpg">
+<meta property="og:image" content="http://c-xuan.com/img/posts/28.jpg">
+<meta property="og:image" content="http://c-xuan.com/img/posts/29.jpg">
+<meta property="og:image" content="http://c-xuan.com/img/posts/30.jpg">
+<meta property="og:image" content="http://c-xuan.com/img/posts/31.jpg">
+<meta property="og:image" content="http://c-xuan.com/img/posts/32.jpg">
+<meta property="og:image" content="http://c-xuan.com/img/posts/33.jpg">
+<meta property="og:image" content="http://c-xuan.com/img/posts/34.jpg">
+<meta property="og:updated_time" content="2016-09-25T12:28:54.164Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="有道笔记支持Markdown啦">
+<meta name="twitter:description" content="继有道云协作率先支持markdown语法之后，令人振奋的markdown编辑功能现已在web版有道云笔记优雅上线，移动端也已支持预览！不要着急，PC客户端也将随后支持markdown的编辑预览！
+何为Markdown？Markdown是一种轻量级的「标记语言」，通常为程序员群体所用，目前它已是全球最大的技术分享网站GitHub和技术问答网站StackOverFlow的御用书写格式。">
+<meta name="twitter:image" content="http://c-xuan.com/img/posts/24.jpg">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="靛青" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>有道笔记支持Markdown啦 | 靛青</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var isIgnoreHost = false;
+
+        if (window && window.location && window.location.host){
+            var isIgnoreHostList = 'localhost/127.0.0.1' ;
+            var hostArray = isIgnoreHostList.split("/");
+            for (x in hostArray) {
+                isIgnoreHost = (0 === window.location.host.indexOf(hostArray[x]));
+                if(isIgnoreHost) {
+                    break;
+                }
+            }
+        }
+        var _hmt = _hmt || [];
+        if (!isIgnoreHost) {
+            (function () {
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?04b5ef87eb2ec9589e8227fcc877686b";
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+            })();
+        }
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/cxuan.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">靛青</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">青，取之于藍而青于藍。</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BI/">BI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BigData/">BigData</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IT资讯/">IT资讯</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MSBI/">MSBI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/">Markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Play-Framework/">Play Framework</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL-Server/">SQL Server</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSIS/">SSIS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/">Test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jQuery/">jQuery</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pentaho/">pentaho</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端编程/">前端编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/原创/">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开源/">开源</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数学/">数学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据仓库/">数据仓库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活趣记/">生活趣记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/翻译/">翻译</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/视觉图片/">视觉图片</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/计算机基原理/">计算机基原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计/">设计</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/转载/">转载</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.csdn.net/">CSDN</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.jianshu.com/">简书</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://opiece.me/">Chillax&#39;s Blog</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://ask.hellobi.com/blog/biwork">BIWORK</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于BI</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+<footer id="footer">
+	<div class="footer-center">
+		<i class="fa fa-copyright"></i> 
+		2016 c-xuan
+	</div>
+</footer>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">c-xuan</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/cxuan.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">c-xuan</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">青，取之于藍而青于藍。</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap "><article id="post-YouDaoNoteMarkdownSupport" class="article article-type-post  animated pulse " itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/23/YouDaoNoteMarkdownSupport/" class="article-date">
+      <time datetime="2016-03-22T16:00:00.000Z" itemprop="datePublished">2016-03-23</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      有道笔记支持Markdown啦
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/IT看客/">IT看客</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IT资讯/">IT资讯</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>继有道云协作率先支持markdown语法之后，令人振奋的markdown编辑功能现已在web版有道云笔记优雅上线，移动端也已支持预览！<br>不要着急，PC客户端也将随后支持markdown的编辑预览！</p>
+<h2 id="何为Markdown？"><a href="#何为Markdown？" class="headerlink" title="何为Markdown？"></a>何为Markdown？</h2><p>Markdown是一种轻量级的<strong>「标记语言」</strong>，通常为程序员群体所用，目前它已是全球最大的技术分享网站GitHub和技术问答网站StackOverFlow的御用书写格式。</p>
+<a id="more"></a>
+<p>非技术类笔记用户，千万不要被<strong>「标记」</strong>、<strong>「语言」</strong>吓到，markdown的语法十分简单，常用的标记符号不超过十个，用于日常写作记录绰绰有余，不到半小时就能完全掌握。</p>
+<p>就是这十个不到的标记符号，却能让人优雅地沉浸式记录，专注内容而不是纠结排版，达到<strong>「心中无尘，码字入神」</strong>的境界。</p>
+<h2 id="Markdown有哪些优点？"><a href="#Markdown有哪些优点？" class="headerlink" title="Markdown有哪些优点？"></a>Markdown有哪些优点？</h2><ul>
+<li>易写：纵使文科出身的你，半小时也能完全掌握常用的markdown基本语法.</li>
+<li>易读：兼顾「什么人都能打开」和「排版样式不变」。所谓「什么人都能打开」是指，Markdown属于兼容性极强的纯文本，可以用所有文本编辑器打开，避免了「用Windows的人打不开.pages文件」的情况发生;Markdown文本轻松可转成HTML、电子书等格式，而HTML是整个万维网（web）的标记语言，也是目前主流电子书格式（EPUB、mobi、Kindle专有格式.azw）所用的标记语言。人们如果采用Markdown标注格式，对日后的文件转换工作将大有裨益。所谓「排版样式不变」是指，在转化为富文本/HTML等格式后依然可以保留原本的排版和阅读体验。不会出现「我这篇稿子是用旧版Word写的，你用新版Word看可能格式会有点问题」的情况。</li>
+</ul>
+<h2 id="利用新增markdown功能做什么？"><a href="#利用新增markdown功能做什么？" class="headerlink" title="利用新增markdown功能做什么？"></a>利用新增markdown功能做什么？</h2><ul>
+<li><strong>1.代码高亮</strong></li>
+</ul>
+<center><img src="/img/posts/24.jpg"></center>
+
+<ul>
+<li><strong>2.制作待办事项Todo list</strong></li>
+</ul>
+<center><img src="/img/posts/25.jpg"></center>
+
+<ul>
+<li><strong>3.高效绘制 流程图、序列图、甘特图、表格</strong></li>
+</ul>
+<p><strong>流程图：</strong></p>
+<center><img src="/img/posts/26.jpg"></center>
+
+<p><strong>序列图：</strong></p>
+<center><img src="/img/posts/27.jpg"></center>
+
+<p><strong>甘特图：</strong></p>
+<center><img src="/img/posts/28.jpg"></center>
+
+<p><strong>表格：</strong></p>
+<center><img src="/img/posts/29.jpg"></center>
+
+<ul>
+<li><strong>4.书写LaTeX公式</strong></li>
+</ul>
+<center><img src="/img/posts/30.jpg"></center>
+
+<p>够酷吗？？</p>
+<p>如果你是<strong>程序员</strong>，你可以用来写日志、技术文稿、记录代码片段、起草邮件</p>
+<p>如果你是<strong>科研人员/工科学生</strong>，你可以用来撰写科技论文，记录工科笔记</p>
+<p>如果你是<strong>文字工作者/热爱文字</strong>的人，你可以用来写作</p>
+<p>如果你是<strong>微信运营人员</strong>，你可以用来替微信编辑器编写微信文章</p>
+<h2 id="web版有道云笔记做到了什么？"><a href="#web版有道云笔记做到了什么？" class="headerlink" title="web版有道云笔记做到了什么？"></a>web版有道云笔记做到了什么？</h2><ul>
+<li><strong>1.实时同步预览，即看即所得</strong></li>
+</ul>
+<p>我们将笔记编辑界面一分为二，左边为编辑区，右边为预览区，两区滚动条同步。在编辑区的操作能够实时反映在预览区，方便及时调整和查看最终版面效果。</p>
+<ul>
+<li><strong>2.工具栏内置markdown语法，方便新手学习</strong></li>
+</ul>
+<p>编辑页面顶端的工具栏有对应代码，如果你是一个不熟悉markdown语法的新手，可以先尝试用编辑栏辅助操作。也可以在网上搜索「markdown语法指南」进行学习。</p>
+<p>当然，如果你觉得工具栏太打扰，点击下方分界条即可隐藏工具栏，切换到极简编辑环境。</p>
+<ul>
+<li><strong>3.实时云端保存</strong></li>
+</ul>
+<p>markdown模式继承了有道云笔记的优良传统，你每一次击键的内容都会实时保存在云端，无需担心浏览器崩溃、设备没电、突然断网等情况。对于写作者来说，更是再也不用担心因为各种原因痛失文稿的情况了。</p>
+<h2 id="web版Markdown实操指南"><a href="#web版Markdown实操指南" class="headerlink" title="web版Markdown实操指南"></a>web版Markdown实操指南</h2><ul>
+<li>1.点击“新建”按钮，可选择新建markdown文件</li>
+</ul>
+<center><img src="/img/posts/31.jpg"></center>
+
+<ul>
+<li>2.可直接通过markdown语句编辑文件，也可以使用编辑器实现格式调整</li>
+</ul>
+<center><img src="/img/posts/32.jpg"></center>
+
+<ul>
+<li>3.界面大小可点击分界条调整。<br>点击“1”处，编辑器收起；<br>点击“2”处，左侧编辑区域全屏。</li>
+</ul>
+<center><img src="/img/posts/33.jpg"></center>
+
+<p>点击后效果如配图4</p>
+<center><img src="/img/posts/34.jpg"></center>
+
+<p>转自 <a href="http://toutiao.com/a6265175131246657794/" target="_blank" rel="external">http://toutiao.com/a6265175131246657794/</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/03/23/YouDaoNoteMarkdownSupport/">有道笔记支持Markdown啦</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">c-xuan</a></p>
+        <p><span>发布时间:</span>2016-03-23, 00:00:00</p>
+        <p><span>最后更新:</span>2016-09-25, 20:28:54</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/03/23/YouDaoNoteMarkdownSupport/" title="有道笔记支持Markdown啦">http://c-xuan.com/2016/03/23/YouDaoNoteMarkdownSupport/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://c-xuan.com/2016/03/23/YouDaoNoteMarkdownSupport/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/03/23/IconForEveryday/">
+                    365cons：每天一枚图标，可免费下载
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/03/23/17JqueryTips/">
+                    17个jQuery实用技巧
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#何为Markdown？"><span class="toc-number">1.</span> <span class="toc-text">何为Markdown？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Markdown有哪些优点？"><span class="toc-number">2.</span> <span class="toc-text">Markdown有哪些优点？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用新增markdown功能做什么？"><span class="toc-number">3.</span> <span class="toc-text">利用新增markdown功能做什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web版有道云笔记做到了什么？"><span class="toc-number">4.</span> <span class="toc-text">web版有道云笔记做到了什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web版Markdown实操指南"><span class="toc-number">5.</span> <span class="toc-text">web版Markdown实操指南</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"有道笔记支持Markdown啦　| 靛青　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/03/23/YouDaoNoteMarkdownSupport/" data-title="有道笔记支持Markdown啦" data-url="http://c-xuan.com/2016/03/23/YouDaoNoteMarkdownSupport/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"cxuan"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/03/23/IconForEveryday/" title="上一篇: 365cons：每天一枚图标，可免费下载">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/03/23/17JqueryTips/" title="下一篇: 17个jQuery实用技巧">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/09/21/NoWeChatBefore/">那些年，我们没有微信</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/21/PlayFrameworkInit2/">Play Framework 2.5 环境搭建与新建项目（二）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/20/PlayFrameworkInit/">Play Framework 2.5 环境搭建与新建项目（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/17/PCProblemRightKeyItem/">电脑右键菜单中没有新建和在此处打开命令行选项的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/12/ConstraintNameUniquenessProblem/">【PowerDesigner】Constraint name uniqueness问题及处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/06/21RulesForDataWarehousing/">数据仓库设计的7个步骤，7个禁忌和7种思路</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/06/SSISCodePageProblem/">SSIS中代码页(Code Page)问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/26/DataWarehouseSchemeCompare/">深入对比数据仓库模式：Kimball vs Inmon</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/23/Datawarehouse-10Dimension-principle/">数据仓库维度建模10大基本原则</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/20/MarkDown教程/">Markdown教程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/29/Foumula-TOP10/">改变世界的公式TOP10,最后一个一看就蒙圈了</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/13/SSIS-GeneralAttribures/">【SSIS】几个通用属性</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/13/SQL-GroupByAndGroupingSets/">【T-SQL】group by 和grouping sets</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/05/RealEstateBISolutionCaseShare/">房地产行业商业智能解决方案分享</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/">放开那程序猿！构建业务导向的大数据云平台</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/27/SQL-SERVER-RPC-FUNCTION-CALL/">【SQL SERVER】OPENQUERY远程函数引用及参数传值问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/26/Linked-Server-RPC/">【SQL SERVER】链接数据库“无法启动分布式事务”的问题及解决</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/25/30-Astonishing-Nature-Places-on-Earth/">令人惊叹的30个自然奇观</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/22/JS-AddIn-PPTSlideEffect/">JS插件:类似PPT翻页过渡动画效果</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/21/SSIS-Precedence-Constraint/">【SSIS】中Precedence Constraint 优先约束的使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/16/SSIS-XMLTask-ProcessArrays/">【SSIS】中Foreach循环容器处理XML数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/15/SSIS-Web-Service/">【SSIS】使用 Web Service 以及 解析XML 数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/06/The-Art-of-Computer-Programming/">比尔·盖茨：如果你看完了这些极其难懂的书，请给我投简历！</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/06/SSIS-Template-For-SSISPackage/">【SSIS】利用SSIS模板快速开发SSIS Package</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/26/Delete-duplicate-rows-with-no-primary-key/">如何在没有主键的SQL Server表里删除重复行</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/26/codepen-top-10/">CodePen上碉堡的前端设计和代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/24/SQL-Server-2014-SSDT-Install/">SQL Server 2014的BI开发工具SSDT(以前的BIDS)安装</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/24/CSS3-transform-style-3D-Cool/">学习制作CSS3 3D旋转透视效果</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/07/SSIS-Pivot/">【SSIS】进行列转行格式的转换</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/27/AppleTV-Poster-Like/">用CSS3 & jQuery创建apple TV海报视差效果</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/23/IconForEveryday/">365cons：每天一枚图标，可免费下载</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/23/YouDaoNoteMarkdownSupport/">有道笔记支持Markdown啦</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/23/17JqueryTips/">17个jQuery实用技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/19/CSS-For-Flip-Effect/">用CSS创建翻转动画</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/17/Web-Cloud-Effect/">Web蓝天白云的极致体验</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/15/CSS-3D-Cloud/">怎样用CSS做出3D效果的云</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/13/SQL-Merge/">SQL强大的关键字Merge</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/12/AlphaGo/">关于李世石大战AlphaGo，看这一篇就足够了</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/09/Paper-Folding/">18种折纸，一起来怀念小时候吧</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/08/pentaho6-install/">Pentaho 6.0 安装与启动教程</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/03/hello-world/">Hello World</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                Posts count:41
+            </div>
+			<!--
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016 c-xuan
+            </div>
+			-->
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 2;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

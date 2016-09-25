@@ -232,7 +232,7 @@ a {
 }
 #container .left-col {
   background: rgba(255,255,255,0.85);
-  width: 330px;
+  width: 390px;
   position: fixed;
   opacity: 1;
   -webkit-transition: all 0.2s ease-in;
@@ -263,7 +263,7 @@ a {
   right: 0;
   min-height: 100%;
   background: rgba(255,255,255,0.8);
-  left: 330px;
+  left: 390px;
   width: auto;
 }
 @media screen and (max-width: 800px) {
@@ -736,7 +736,7 @@ a {
 }
 #header .header-menu li a {
   font-size: 0.875rem;
-  min-width: 330px;
+  min-width: 390px;
 }
 #header .switch-area {
   position: relative;
@@ -1082,7 +1082,7 @@ a {
 }
 .hide-labels {
   position: fixed;
-  left: 408px;
+  left: 468px;
   top: 30px;
   padding: 1px;
   border: none;
@@ -1102,7 +1102,7 @@ a {
   opacity: 1;
 }
 #post-nav-button {
-  left: 330px;
+  left: 390px;
   top: 61.8%;
 }
 #post-nav-button a {
@@ -1704,7 +1704,7 @@ li:hover {
 }
 #tocButton {
   position: fixed;
-  left: 250px;
+  left: 310px;
   top: 385px;
   font-size: 0.9em;
   font-weight: bold;
@@ -1721,7 +1721,7 @@ li:hover {
 }
 .toc-article {
   position: fixed;
-  width: 260px;
+  width: 320px;
   top: 378px;
   bottom: 1em;
   left: 0;
@@ -2323,6 +2323,9 @@ pre .javascript .function {
   opacity: 0.75;
   width: 100%;
   text-align: center;
+}
+#footer .footer-center {
+  margin: 0 auto;
 }
 #footer .footer-left {
   float: left;

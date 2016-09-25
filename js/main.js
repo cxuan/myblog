@@ -119,7 +119,6 @@ require([], function (){
 
                 var animateScope = ".body-wrap > article";
                 var $firstArticle = $(".body-wrap > article:first-child");
-                $('.body-wrap').removeClass('animated pluse');
                 if ($firstArticle.height() > $(window).height()) {
                     var animateScope = ".body-wrap > article:not(:first-child)";
                     $firstArticle.css({opacity: 1});

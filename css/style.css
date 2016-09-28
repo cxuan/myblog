@@ -726,10 +726,11 @@ a {
   max-height: 8.75rem;
   overflow: auto;
   text-align: center;
-  display: -webkit-box;
+/*display: -webkit-box;*/
   -webkit-box-orient: horizontal;
   -webkit-box-pack: center;
   -webkit-box-align: center;
+  margin-bottom: 20px;
 }
 #header .header-menu li {
   cursor: default;
@@ -759,6 +760,7 @@ a {
   transform: translate(-100%, 0);
 }
 #header .header-nav {
+  margin-top: 20px;
   width: 100%;
   position: absolute;
   -webkit-transition: -webkit-transform 0.3s ease-in;

@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://c-xuan.com/tags/index.html</loc>
+    
+    <lastmod>2016-10-11T16:26:17.391Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://c-xuan.com/2016/10/08/TimeForPKM/</loc>
     
     <lastmod>2016-10-09T14:48:25.335Z</lastmod>
@@ -306,13 +313,6 @@
     <loc>http://c-xuan.com/categories/index.html</loc>
     
     <lastmod>2016-08-20T07:03:36.815Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://c-xuan.com/tags/index.html</loc>
-    
-    <lastmod>2016-08-20T07:02:43.040Z</lastmod>
     
   </url>
   

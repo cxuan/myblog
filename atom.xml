@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://c-xuan.com/"/>
-  <updated>2016-10-09T14:48:25.335Z</updated>
+  <updated>2016-10-15T15:12:08.871Z</updated>
   <id>http://c-xuan.com/</id>
   
   <author>
@@ -14,6 +14,115 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>为什么ETL任务困难</title>
+    <link href="http://c-xuan.com/2016/10/15/WhyDifficultOnETLJob/"/>
+    <id>http://c-xuan.com/2016/10/15/WhyDifficultOnETLJob/</id>
+    <published>2016-10-15T15:04:05.000Z</published>
+    <updated>2016-10-15T15:12:08.871Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="工具繁多"><a href="#工具繁多" class="headerlink" title="工具繁多"></a>工具繁多</h3><p>从 DataStage到Kettle, ETL 工具覆盖了商业化领域和开源领域, 价格从几十万到免费,起码有几十种选择。</p>
+<p>有人要说了,选择多不是一件好事么?如果再早几年,我会同意这是好事,可到现在,我要说 NO!</p>
+<p>前面关于决策思维的博文提到一个论点:相比于普通人做出决策,专家是会直接给一种可行方案还是罗列众多方案类比优劣?</p>
+<p>答案是前者,也是我反对选择众多是好事这一论点的依据之一。</p>
+<a id="more"></a>
+<h4 id="那么选择多有什么坏处"><a href="#那么选择多有什么坏处" class="headerlink" title="那么选择多有什么坏处?"></a>那么选择多有什么坏处?</h4><ul>
+<li>基础方案混杂。各公司方案不同,甚至一个公司 ETL 环节也采用不同工具及架构,人才无法公用,维护成本高。</li>
+<li>数据项目失败案例远多于成功案例, 项目选型越复杂成功概率越低。大量公司做 BI、做大数据,甚至在没有人懂的情况下招人开工!事实上在数据领域,熟手都清楚一个现象,没有成功案例的人很难做成数据项目。很残忍的现实,但也让那些盲目投入资源跟风做项目的公司考虑冷静下来了。</li>
+<li>抬高实施门槛。现在大家都想做数据,进入大数据领域,尤其是有很多不具备该领域经验的公司想要做。那么实施前首先就是选型了,如果从三个产品选一个来做还可行的话,那么要从三十个产品中选型,这个工作本身就阻碍了数据项目的开展!</li>
+</ul>
+<h3 id="GUI工具"><a href="#GUI工具" class="headerlink" title="GUI工具"></a>GUI工具</h3><p>说到这里反对的朋友更多了,GUI 所见即所得,降低使用门槛,好处一页都写不完,作为一名数据领域从业者,我决然反对,自己都能感觉到火药味。 为了论证我的观点,这里要罗列ETL领域那些GUI的罪证了。</p>
+<h4 id="ETL工具的六大问题"><a href="#ETL工具的六大问题" class="headerlink" title="ETL工具的六大问题"></a>ETL工具的六大问题</h4><ul>
+<li>工具太大了,卡卡卡!我不是说 SSIS 之类,也不是说 Kettle 相关,我说的是他们所有人……</li>
+<li>好用的太贵, 便宜的不好用!</li>
+<li>组件式的拖拉开发,性能真的没法起来!尤其是那些依靠组件解决数据变化提取的兄弟们,你们想多了。</li>
+<li>我需要一包厕纸而已,你非要给我整个超市。在我蹲之前非得找遍整个超市!大家对比下里面的功能自己使用的比率。</li>
+<li>说 GUI 简单好用的,我强烈反对。GUI 好调试么?映射过程报错了大家要怎么办?检查源检查目标也就算了,连映射环节都要排查。除了自己设定的格式类型,还要考虑工具环节自己的转换类型,这不是增加负担么?</li>
+<li>部署,我都不想说部署了。一千个任务下来,ETL 工具别谈部署了!这时候有同学开始研究调度,有些关注数据质量,任务数量起来,想什么都是多的,保佑这混乱情况别出岔子就阿弥陀佛了。</li>
+</ul>
+<h3 id="ETL工具阻碍了设计"><a href="#ETL工具阻碍了设计" class="headerlink" title="ETL工具阻碍了设计"></a>ETL工具阻碍了设计</h3><ul>
+<li>直接用工具拉数据的项目,认真找找有没有架构设计,有没有项目文档,有没有扩展性考虑,性能考虑?或者简单点,这项目换人可能接手下来么?</li>
+<li>数据项目是团队项目,ETL 工具是个人化工具。如果多个成员不能无缝接替工作,对不起,我认为这不是数据项目。哦不对,不算是一个项目。</li>
+<li>组件报错是工具问题,转换异常跟自己没关系。工具的 bug 和我真没关系,我项目做得好好的,ETL 工具崩溃了管我什么事?遇到这种情况不说我也知道做法,崩溃了再起来跑一跑嘛,运气好数据就跑出来了。至于数据质量管理是什么这样的问题,就别问出来了。</li>
+</ul>
+<p>转自<br><a href="http://www.infotrim.cn/article/5" target="_blank" rel="external">http://www.infotrim.cn/article/5</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;工具繁多&quot;&gt;&lt;a href=&quot;#工具繁多&quot; class=&quot;headerlink&quot; title=&quot;工具繁多&quot;&gt;&lt;/a&gt;工具繁多&lt;/h3&gt;&lt;p&gt;从 DataStage到Kettle, ETL 工具覆盖了商业化领域和开源领域, 价格从几十万到免费,起码有几十种选择。&lt;/p&gt;
+&lt;p&gt;有人要说了,选择多不是一件好事么?如果再早几年,我会同意这是好事,可到现在,我要说 NO!&lt;/p&gt;
+&lt;p&gt;前面关于决策思维的博文提到一个论点:相比于普通人做出决策,专家是会直接给一种可行方案还是罗列众多方案类比优劣?&lt;/p&gt;
+&lt;p&gt;答案是前者,也是我反对选择众多是好事这一论点的依据之一。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="BI墨客" scheme="http://c-xuan.com/categories/BI%E5%A2%A8%E5%AE%A2/"/>
+    
+    
+      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
+    
+      <category term="BI" scheme="http://c-xuan.com/tags/BI/"/>
+    
+      <category term="数据仓库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>从大数据负责人招聘看决策思维</title>
+    <link href="http://c-xuan.com/2016/10/15/DecisionThoughtOnBigdata/"/>
+    <id>http://c-xuan.com/2016/10/15/DecisionThoughtOnBigdata/</id>
+    <published>2016-10-15T14:45:07.000Z</published>
+    <updated>2016-10-15T14:59:06.346Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="决策是非理性的"><a href="#决策是非理性的" class="headerlink" title="决策是非理性的"></a>决策是非理性的</h3><p>我们受到的教育是要理性思考,理性决策,信奉理性至上的思维模式。可惜的是现实并非如此,绝大多数的决策都是采用自然主义决策方式,而情景模拟又是其主流方法。对此感兴趣的朋友建议查看亚马逊近期榜单作品《如何做出正确决策:直击决策真相》了解更多。</p>
+<p>简而言之,无论是紧迫条件的救火队员还是军事要务的重大决定,决策的真相都如同我们前面介绍的方式:脑海中假设一条可行道路,一步步证明它是可行的。</p>
+<p>说到专家和普通决策的区别,大家还是要注意这个真相:专家决策都是迅速定下一条可行方案,而非拿出多套方案理性对比! </p>
+<a id="more"></a>
+<h3 id="大数据负责人的要求是什么"><a href="#大数据负责人的要求是什么" class="headerlink" title="大数据负责人的要求是什么"></a>大数据负责人的要求是什么</h3><h4 id="有成功大数据经验"><a href="#有成功大数据经验" class="headerlink" title="有成功大数据经验"></a>有成功大数据经验</h4><p>大家要注意,我举证论据,至少都是讲三点的,可我这里只给出一条。 经常查看此类招聘的朋友很容易看出来,另外两点因素是职业素养和对大数据生态的理解,我完全同意这个看法,但此处认为和我举证这一点比,其他的都完全不是问题。</p>
+<h5 id="为什么要有成功大数据经验"><a href="#为什么要有成功大数据经验" class="headerlink" title="为什么要有成功大数据经验?"></a>为什么要有成功大数据经验?</h5><ul>
+<li>1.因为招聘你去的地方通常是没有成功经验的,不然要你去干吗?</li>
+<li>2.具备成功大数据经验的人真的很少! 这里大家应该慎重考虑下,基于这个观点,跳槽、换团队是大忌。为什么?因为如果你已经有成功经验,机会根本不是问题。而你不幸没有成功经验,跳槽、换团队都不能解决你成功经验的问题。</li>
+<li>3.大数据项目的成功,不会只有一个人,但会取决于核心人物。好好珍惜现有团队,做成项目,并且不要说不懂其他同事的工作。大数据本来就是融合型工作,你永远只会自己做的一块,就不要费时间争取负责人的角色了。</li>
+</ul>
+<h5 id="为什么工作素养和-hadoop-等生态理解不重要"><a href="#为什么工作素养和-hadoop-等生态理解不重要" class="headerlink" title="为什么工作素养和 hadoop 等生态理解不重要?"></a>为什么工作素养和 hadoop 等生态理解不重要?</h5><p>这个问题起码要说三点:</p>
+<ul>
+<li>1.工作素养大部分都能做得很好,极少成为个人瓶颈不是吗?难道不是吗?</li>
+<li>2.面试要求的 hadoop、spark、storm……这些不是招聘者的本质要求,招聘你去的真正需求是能将项目做出来,做成功。至于这些细节技术方案,面试者有多少人懂得?再说了,开源系统版本迭代那么快,完全依靠这些方案要踩多少坑招聘者哪里知道?不仅如此,作为负责人是要规避让企业踩坑才合格!</li>
+<li>3.我看到好多人转向大数据,学 python 又学 R, 学 Java 又学 Scala, 学数据库又学数据仓库。这样的做法可行吗? 真心奉劝停下来冷静思考下!</li>
+</ul>
+<p>大数据是团队项目,不是单兵作战! 再说了,等你把所有学完, 企业等的花儿都谢了好么? 随便学一个感兴趣的, 找到工作再一步步深入, 各种大会、各种社区适合有经验的人、有方法的人,这些场景只要记住大家推荐的书籍回来好好学任务就完成了。</p>
+<h3 id="补偿机制的使用"><a href="#补偿机制的使用" class="headerlink" title="补偿机制的使用"></a>补偿机制的使用</h3><p>我们常说:”打一个耳光给一个苹果”,是不是耳光就没那么疼了?</p>
+<p>这不止是一个心理现象,在面试大数据负责人这样重要岗位时一样可以用于决策。</p>
+<p>通常我们做出决策时,会在自己优势领域选定方案持续推进。要么成功达到目标,要么走不下去调转方向,可最终都是能完成任务的。</p>
+<p>那么为什么就算是专家也会遇到放弃方案跳转方向的情况,一方面是我们的确会遇到各种未知的问题,另一个更重要的方面就是:我们每个人在多个维度都有优点,切记!</p>
+<p>我们总看到话术中说:”同学你工作做得不好,但你在工作过程中表现出来的沟通能力还是很强的。”类似的情况数不胜数,与其说是心理补偿机制,倒不如说展示出我们每个人其实都不只有一个优势领域!</p>
+<p>那么这和大数据负责人招聘又有什么关系呢?</p>
+<ul>
+<li>1.大数据负责人也是人,有长处也有短板。就算平时勤快对团队工作都了解, 涉及到每一块深度领域细节所知也是很有限的。</li>
+<li>2.有限的人遇到无知的需求。这里用词不太合适,但其实很多企业寻找人才时对这个领域是一片空白的。那么提出的要求自然是互联网上随处能搜集到的岗位需求模板。虽然大家都理解每个公司、每个团队做数据都有些不同之处,但对于完全不了解行情的公司只能然并卵。除了网上找模板我也想不出更好的办法了。</li>
+<li>3.有限的人要用优点补充缺点。招聘的时候发现你可视化不强,那应该展示自己数据仓库的优势了,如果发现你 hadoop 不熟,你是时候分享对 storm 的研究成果了。 大家要考虑清楚团队项目中的个人定位, 一味地追求个人什么都会,项目发展会很有限,企业也会很不放心啊。</li>
+</ul>
+<p>转自<br><a href="http://www.infotrim.cn/article/7" target="_blank" rel="external">http://www.infotrim.cn/article/7</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;决策是非理性的&quot;&gt;&lt;a href=&quot;#决策是非理性的&quot; class=&quot;headerlink&quot; title=&quot;决策是非理性的&quot;&gt;&lt;/a&gt;决策是非理性的&lt;/h3&gt;&lt;p&gt;我们受到的教育是要理性思考,理性决策,信奉理性至上的思维模式。可惜的是现实并非如此,绝大多数的决策都是采用自然主义决策方式,而情景模拟又是其主流方法。对此感兴趣的朋友建议查看亚马逊近期榜单作品《如何做出正确决策:直击决策真相》了解更多。&lt;/p&gt;
+&lt;p&gt;简而言之,无论是紧迫条件的救火队员还是军事要务的重大决定,决策的真相都如同我们前面介绍的方式:脑海中假设一条可行道路,一步步证明它是可行的。&lt;/p&gt;
+&lt;p&gt;说到专家和普通决策的区别,大家还是要注意这个真相:专家决策都是迅速定下一条可行方案,而非拿出多套方案理性对比! &lt;/p&gt;
+    
+    </summary>
+    
+      <category term="BI墨客" scheme="http://c-xuan.com/categories/BI%E5%A2%A8%E5%AE%A2/"/>
+    
+    
+      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
+    
+      <category term="BigData" scheme="http://c-xuan.com/tags/BigData/"/>
+    
+  </entry>
   
   <entry>
     <title>是时候管理你的知识了</title>
@@ -1176,6 +1285,47 @@
   </entry>
   
   <entry>
+    <title>【T-SQL】group by 和grouping sets</title>
+    <link href="http://c-xuan.com/2016/06/13/SQL-GroupByAndGroupingSets/"/>
+    <id>http://c-xuan.com/2016/06/13/SQL-GroupByAndGroupingSets/</id>
+    <published>2016-06-12T16:00:00.000Z</published>
+    <updated>2016-09-22T16:16:38.628Z</updated>
+    
+    <content type="html"><![CDATA[<p>遇到一个情况，需要在内网系统中出一个统计报表。需要根据不同条件使用多个group by语句，需要将所有聚合的数据进行union操作来完成不同维度的统计查看。<br>知道发现了在SQL  Server 2008之后引入了grouping sets这个对于group by的增强后，上面的需求实现起来就简单的多，下面我们用AdventureWork中的表作为demo来解释一下grouping sets.</p>
+<a id="more"></a>
+<p>假设我现在需要两个维度查询我的销售额度，查询T-SQL如下：</p>
+<p><img src="/img/posts/SQL-GroupByAndGroupingSets-1.png" alt="SQL-GroupByAndGroupingSets-1"></p>
+<p>而使用SQL Server 2008之后新增的grouping sets语句，仅仅需要这样写：</p>
+<p><img src="/img/posts/SQL-GroupByAndGroupingSets-3.png" alt="SQL-GroupByAndGroupingSets-3"></p>
+<p>值得注意的是，虽然上面使用grouping sets语句和多个group by语句差生的结果完全一样，但顺序完全不同。</p>
+<p>grouping  sets，仅仅是语法糖？</p>
+<p>从上面的结果来看，使用grouping  sets仅仅是一个可以少写代码的语法糖，但实际情况是，group sets在遇到多个条件时，聚合是一次性从数据库中取出所有需要的操作的数据，在内存中对数据库进行聚合操作并生成结果。而union all是多次扫描表，将返回的结果进行union操作。这也就是为什么grouping  sets和union操作所返回的数据顺序是不同的原因。</p>
+<p>下面通过查看上面两个语句的IO和CPU来进行对比：</p>
+<p><img src="/img/posts/SQL-GroupByAndGroupingSets-5.png" alt="SQL-GroupByAndGroupingSets-5"></p>
+<p>通过上面的图来看grouping sets不仅仅只是语法糖，而是从执行原理做出了改变</p>
+<p>对于grouping sets来说，还经常和grouping函数联合使用，这个函数是反应目标列是否聚合，如果聚合则返回1，否则返回0，如下：</p>
+<p><img src="/img/posts/SQL-GroupByAndGroupingSets-6.png" alt="SQL-GroupByAndGroupingSets-6"></p>
+<p>转自：<a href="http://www.cnblogs.com/CareySon/archive/2011/12/19/2293245.html" target="_blank" rel="external">http://www.cnblogs.com/CareySon/archive/2011/12/19/2293245.html</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;遇到一个情况，需要在内网系统中出一个统计报表。需要根据不同条件使用多个group by语句，需要将所有聚合的数据进行union操作来完成不同维度的统计查看。&lt;br&gt;知道发现了在SQL  Server 2008之后引入了grouping sets这个对于group by的增强后，上面的需求实现起来就简单的多，下面我们用AdventureWork中的表作为demo来解释一下grouping sets.&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="码路刺客" scheme="http://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
+    
+    
+      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
+    
+      <category term="SQL Server" scheme="http://c-xuan.com/tags/SQL-Server/"/>
+    
+      <category term="数据库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+  </entry>
+  
+  <entry>
     <title>【SSIS】几个通用属性</title>
     <link href="http://c-xuan.com/2016/06/13/SSIS-GeneralAttribures/"/>
     <id>http://c-xuan.com/2016/06/13/SSIS-GeneralAttribures/</id>
@@ -1222,47 +1372,6 @@
       <category term="BI" scheme="http://c-xuan.com/tags/BI/"/>
     
       <category term="SSIS" scheme="http://c-xuan.com/tags/SSIS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【T-SQL】group by 和grouping sets</title>
-    <link href="http://c-xuan.com/2016/06/13/SQL-GroupByAndGroupingSets/"/>
-    <id>http://c-xuan.com/2016/06/13/SQL-GroupByAndGroupingSets/</id>
-    <published>2016-06-12T16:00:00.000Z</published>
-    <updated>2016-09-22T16:16:38.628Z</updated>
-    
-    <content type="html"><![CDATA[<p>遇到一个情况，需要在内网系统中出一个统计报表。需要根据不同条件使用多个group by语句，需要将所有聚合的数据进行union操作来完成不同维度的统计查看。<br>知道发现了在SQL  Server 2008之后引入了grouping sets这个对于group by的增强后，上面的需求实现起来就简单的多，下面我们用AdventureWork中的表作为demo来解释一下grouping sets.</p>
-<a id="more"></a>
-<p>假设我现在需要两个维度查询我的销售额度，查询T-SQL如下：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-1.png" alt="SQL-GroupByAndGroupingSets-1"></p>
-<p>而使用SQL Server 2008之后新增的grouping sets语句，仅仅需要这样写：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-3.png" alt="SQL-GroupByAndGroupingSets-3"></p>
-<p>值得注意的是，虽然上面使用grouping sets语句和多个group by语句差生的结果完全一样，但顺序完全不同。</p>
-<p>grouping  sets，仅仅是语法糖？</p>
-<p>从上面的结果来看，使用grouping  sets仅仅是一个可以少写代码的语法糖，但实际情况是，group sets在遇到多个条件时，聚合是一次性从数据库中取出所有需要的操作的数据，在内存中对数据库进行聚合操作并生成结果。而union all是多次扫描表，将返回的结果进行union操作。这也就是为什么grouping  sets和union操作所返回的数据顺序是不同的原因。</p>
-<p>下面通过查看上面两个语句的IO和CPU来进行对比：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-5.png" alt="SQL-GroupByAndGroupingSets-5"></p>
-<p>通过上面的图来看grouping sets不仅仅只是语法糖，而是从执行原理做出了改变</p>
-<p>对于grouping sets来说，还经常和grouping函数联合使用，这个函数是反应目标列是否聚合，如果聚合则返回1，否则返回0，如下：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-6.png" alt="SQL-GroupByAndGroupingSets-6"></p>
-<p>转自：<a href="http://www.cnblogs.com/CareySon/archive/2011/12/19/2293245.html" target="_blank" rel="external">http://www.cnblogs.com/CareySon/archive/2011/12/19/2293245.html</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;遇到一个情况，需要在内网系统中出一个统计报表。需要根据不同条件使用多个group by语句，需要将所有聚合的数据进行union操作来完成不同维度的统计查看。&lt;br&gt;知道发现了在SQL  Server 2008之后引入了grouping sets这个对于group by的增强后，上面的需求实现起来就简单的多，下面我们用AdventureWork中的表作为demo来解释一下grouping sets.&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="码路刺客" scheme="http://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
-    
-    
-      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
-      <category term="SQL Server" scheme="http://c-xuan.com/tags/SQL-Server/"/>
-    
-      <category term="数据库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
   </entry>
   
@@ -1514,165 +1623,6 @@ select name from @a
       <category term="SQL Server" scheme="http://c-xuan.com/tags/SQL-Server/"/>
     
       <category term="数据库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>令人惊叹的30个自然奇观</title>
-    <link href="http://c-xuan.com/2016/05/25/30-Astonishing-Nature-Places-on-Earth/"/>
-    <id>http://c-xuan.com/2016/05/25/30-Astonishing-Nature-Places-on-Earth/</id>
-    <published>2016-05-24T16:00:00.000Z</published>
-    <updated>2016-09-22T16:13:02.075Z</updated>
-    
-    <content type="html"><![CDATA[<p>经常在旅行的时候，你会发现大自然鬼斧神工下的美景，尽管有时候都让人怀疑那是真的，但我们美丽的星球就真的让奇迹发生了。今天，我们搜集了30个地球上不可思议的景观分享给大家。 </p>
-<h5 id="Pink-Lake-Hillier-Australia"><a href="#Pink-Lake-Hillier-Australia" class="headerlink" title="Pink Lake Hillier, Australia"></a><a href="https://en.wikipedia.org/wiki/Lake_Hillier" target="_blank" rel="external">Pink Lake Hillier, Australia</a></h5><p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-1.jpg" alt="30-Astonishing-Nature-Places-on-Earth-1"></p>
-<a id="more"></a>
-<h5 id="Giant-crystal-cave-in-Nacia-Mexico"><a href="#Giant-crystal-cave-in-Nacia-Mexico" class="headerlink" title="Giant crystal cave in Nacia, Mexico"></a><a href="http://en.wikipedia.org/wiki/Cave_of_the_Crystals" target="_blank" rel="external">Giant crystal cave in Nacia, Mexico</a></h5><p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-2.jpg" alt="30-Astonishing-Nature-Places-on-Earth-2"></p>
-<h5 id="Shimmering-shores-of-Vaadhoo-Maldives"><a href="#Shimmering-shores-of-Vaadhoo-Maldives" class="headerlink" title="Shimmering shores of Vaadhoo, Maldives"></a>Shimmering shores of Vaadhoo, Maldives</h5><p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-3.jpg" alt="30-Astonishing-Nature-Places-on-Earth-3"></p>
-<h5 id="Giant-clouds-over-Beijing"><a href="#Giant-clouds-over-Beijing" class="headerlink" title="Giant clouds over Beijing"></a>Giant clouds over Beijing</h5><p>这个也算啊？</p>
-<p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-4.jpg" alt="30-Astonishing-Nature-Places-on-Earth-4"></p>
-<p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-5.jpg" alt="30-Astonishing-Nature-Places-on-Earth-5"></p>
-<h5 id="Natural-salt-water-fountain-off-the-coast-of-Oregon"><a href="#Natural-salt-water-fountain-off-the-coast-of-Oregon" class="headerlink" title="Natural salt water fountain off the coast of Oregon"></a><a href="http://en.wikipedia.org/wiki/Cape_Perpetua" target="_blank" rel="external">Natural salt water fountain off the coast of Oregon</a></h5><p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-6.jpg" alt="30-Astonishing-Nature-Places-on-Earth-6"></p>
-<h5 id="Reflective-salt-flats-in-Bolivia"><a href="#Reflective-salt-flats-in-Bolivia" class="headerlink" title="Reflective salt flats in Bolivia"></a><a href="http://en.wikipedia.org/wiki/Salar_de_Uyuni" target="_blank" rel="external">Reflective salt flats in Bolivia</a></h5><p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-7.jpg" alt="30-Astonishing-Nature-Places-on-Earth-7"></p>
-<h5 id="National-Park-Hitachi-Japan"><a href="#National-Park-Hitachi-Japan" class="headerlink" title="National Park Hitachi, Japan"></a><a href="National Park Hitachi, Japan">National Park Hitachi, Japan</a></h5><p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-8.jpg" alt="30-Astonishing-Nature-Places-on-Earth-8"></p>
-<h5 id="Mount-Roraima-joint-Venezuela-Guyana-and-Brazil"><a href="#Mount-Roraima-joint-Venezuela-Guyana-and-Brazil" class="headerlink" title="Mount Roraima (joint Venezuela, Guyana and Brazil)"></a><a href="http://en.wikipedia.org/wiki/Mount_Roraima" target="_blank" rel="external">Mount Roraima (joint Venezuela, Guyana and Brazil)</a></h5><p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-9.jpg" alt="30-Astonishing-Nature-Places-on-Earth-9"></p>
-<h5 id="Frozen-air-bubbles-in-Abraham-Lake"><a href="#Frozen-air-bubbles-in-Abraham-Lake" class="headerlink" title="Frozen air bubbles in Abraham Lake"></a><a href="http://en.wikipedia.org/wiki/Abraham_Lake" target="_blank" rel="external">Frozen air bubbles in Abraham Lake</a></h5><p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-10.jpg" alt="30-Astonishing-Nature-Places-on-Earth-10"></p>
-<h5 id="Beautiful-sandstone-formations-in-Arizona"><a href="#Beautiful-sandstone-formations-in-Arizona" class="headerlink" title="Beautiful sandstone formations in Arizona"></a>Beautiful sandstone formations in Arizona</h5><p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-11.jpg" alt="30-Astonishing-Nature-Places-on-Earth-11"></p>
-<h5 id="Underground-natural-springs-in-Mexico"><a href="#Underground-natural-springs-in-Mexico" class="headerlink" title="Underground natural springs in Mexico"></a>Underground natural springs in Mexico</h5><p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-12.jpg" alt="30-Astonishing-Nature-Places-on-Earth-12"></p>
-<h5 id="Isle-of-Skye-Hebrides-Scotland"><a href="#Isle-of-Skye-Hebrides-Scotland" class="headerlink" title="Isle of Skye (Hebrides, Scotland)"></a><a href="http://en.wikipedia.org/wiki/Skye" target="_blank" rel="external">Isle of Skye (Hebrides, Scotland)</a></h5><p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-13.jpg" alt="30-Astonishing-Nature-Places-on-Earth-13"></p>
-<h5 id="Rainbow-Eucalyptus-trees-in-Kailua-Hawaii"><a href="#Rainbow-Eucalyptus-trees-in-Kailua-Hawaii" class="headerlink" title="Rainbow Eucalyptus trees in Kailua, Hawaii"></a>Rainbow Eucalyptus trees in Kailua, Hawaii</h5><p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-14.jpg" alt="30-Astonishing-Nature-Places-on-Earth-14"></p>
-<p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-15.jpg" alt="30-Astonishing-Nature-Places-on-Earth-15"></p>
-<h5 id="The-Blood-Falls-in-Antarctica"><a href="#The-Blood-Falls-in-Antarctica" class="headerlink" title="The Blood Falls in Antarctica"></a><a href="http://en.wikipedia.org/wiki/Blood_Falls" target="_blank" rel="external">The Blood Falls in Antarctica</a></h5><p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-16.jpg" alt="30-Astonishing-Nature-Places-on-Earth-16"></p>
-<h5 id="Tunnel-of-Love-Ukraine"><a href="#Tunnel-of-Love-Ukraine" class="headerlink" title="Tunnel of Love, Ukraine"></a><a href="http://en.wikipedia.org/wiki/Klevan" target="_blank" rel="external">Tunnel of Love, Ukraine</a></h5><p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-17.jpg" alt="30-Astonishing-Nature-Places-on-Earth-17"></p>
-<h5 id="White-beaches-harbor-Australia"><a href="#White-beaches-harbor-Australia" class="headerlink" title="White beaches harbor, Australia"></a>White beaches harbor, Australia</h5><p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-18.jpg" alt="30-Astonishing-Nature-Places-on-Earth-18"></p>
-<h5 id="The-underwater-forest-of-Lake-Kaindy"><a href="#The-underwater-forest-of-Lake-Kaindy" class="headerlink" title="The underwater forest of Lake Kaindy"></a><a href="http://en.wikipedia.org/wiki/Lake_Kaindy" target="_blank" rel="external">The underwater forest of Lake Kaindy</a></h5><p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-19.jpg" alt="30-Astonishing-Nature-Places-on-Earth-19"></p>
-<p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-20.jpg" alt="30-Astonishing-Nature-Places-on-Earth-20"></p>
-<h5 id="Volcanic-Lightning-in-Kyushu"><a href="#Volcanic-Lightning-in-Kyushu" class="headerlink" title="Volcanic Lightning in Kyushu"></a>Volcanic Lightning in Kyushu</h5><p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-21.jpg" alt="30-Astonishing-Nature-Places-on-Earth-21"></p>
-<p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-22.jpg" alt="30-Astonishing-Nature-Places-on-Earth-22"></p>
-<h5 id="The-cave-of-the-mountain-river-in-the-province-of-Quang-Binh-Vietnam"><a href="#The-cave-of-the-mountain-river-in-the-province-of-Quang-Binh-Vietnam" class="headerlink" title="The cave of the mountain river in the province of Quang Binh, Vietnam"></a><a href="http://en.wikipedia.org/wiki/S%C6%A1n_%C4%90o%C3%B2ng_Cave" target="_blank" rel="external">The cave of the mountain river in the province of Quang Binh, Vietnam</a></h5><p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-23.jpg" alt="30-Astonishing-Nature-Places-on-Earth-23"></p>
-<h5 id="Great-Blue-Hole-Belize-Central-America"><a href="#Great-Blue-Hole-Belize-Central-America" class="headerlink" title="Great Blue Hole, Belize (Central America)"></a><a href="http://en.wikipedia.org/wiki/Great_Blue_Hole" target="_blank" rel="external">Great Blue Hole, Belize (Central America)</a></h5><p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-24.jpg" alt="30-Astonishing-Nature-Places-on-Earth-24"></p>
-<h5 id="Colorful-Chinese-mountains-Zhangye-Danxia"><a href="#Colorful-Chinese-mountains-Zhangye-Danxia" class="headerlink" title="Colorful Chinese mountains, Zhangye Danxia"></a>Colorful Chinese mountains, Zhangye Danxia</h5><p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-30.jpg" alt="30-Astonishing-Nature-Places-on-Earth-30"></p>
-<h5 id="Light-pillars-over-Moscow"><a href="#Light-pillars-over-Moscow" class="headerlink" title="Light pillars over Moscow"></a>Light pillars over Moscow</h5><p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-25.jpg" alt="30-Astonishing-Nature-Places-on-Earth-25"></p>
-<h5 id="Fingal’s-Cave-Isle-of-Staffa-Scotland"><a href="#Fingal’s-Cave-Isle-of-Staffa-Scotland" class="headerlink" title="Fingal’s Cave, Isle of Staffa, Scotland"></a><a href="http://en.wikipedia.org/wiki/Fingal%27s_Cave" target="_blank" rel="external">Fingal’s Cave, Isle of Staffa, Scotland</a></h5><p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-26.jpg" alt="30-Astonishing-Nature-Places-on-Earth-26"></p>
-<h5 id="Mendenhall-Ice-Caves-in-Juneau-Alaska-USA"><a href="#Mendenhall-Ice-Caves-in-Juneau-Alaska-USA" class="headerlink" title="Mendenhall Ice Caves in Juneau, Alaska (USA)"></a><a href="http://en.wikipedia.org/wiki/Mendenhall_Glacier" target="_blank" rel="external">Mendenhall Ice Caves in Juneau, Alaska (USA)</a></h5><p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-27.jpg" alt="30-Astonishing-Nature-Places-on-Earth-27"></p>
-<h5 id="Spiderweb-cocooned-trees-in-Pakistan"><a href="#Spiderweb-cocooned-trees-in-Pakistan" class="headerlink" title="Spiderweb cocooned trees in Pakistan"></a>Spiderweb cocooned trees in Pakistan</h5><p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-28.jpg" alt="30-Astonishing-Nature-Places-on-Earth-28"></p>
-<p><img src="/img/posts/30-Astonishing-Nature-Places-on-Earth-29.jpg" alt="30-Astonishing-Nature-Places-on-Earth-29"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;经常在旅行的时候，你会发现大自然鬼斧神工下的美景，尽管有时候都让人怀疑那是真的，但我们美丽的星球就真的让奇迹发生了。今天，我们搜集了30个地球上不可思议的景观分享给大家。 &lt;/p&gt;
-&lt;h5 id=&quot;Pink-Lake-Hillier-Australia&quot;&gt;&lt;a href=&quot;#Pink-Lake-Hillier-Australia&quot; class=&quot;headerlink&quot; title=&quot;Pink Lake Hillier, Australia&quot;&gt;&lt;/a&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Lake_Hillier&quot;&gt;Pink Lake Hillier, Australia&lt;/a&gt;&lt;/h5&gt;&lt;p&gt;&lt;img src=&quot;/img/posts/30-Astonishing-Nature-Places-on-Earth-1.jpg&quot; alt=&quot;30-Astonishing-Nature-Places-on-Earth-1&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="生活点滴" scheme="http://c-xuan.com/categories/%E7%94%9F%E6%B4%BB%E7%82%B9%E6%BB%B4/"/>
-    
-    
-      <category term="视觉图片" scheme="http://c-xuan.com/tags/%E8%A7%86%E8%A7%89%E5%9B%BE%E7%89%87/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JS插件:类似PPT翻页过渡动画效果</title>
-    <link href="http://c-xuan.com/2016/05/22/JS-AddIn-PPTSlideEffect/"/>
-    <id>http://c-xuan.com/2016/05/22/JS-AddIn-PPTSlideEffect/</id>
-    <published>2016-05-21T16:00:00.000Z</published>
-    <updated>2016-09-22T16:14:15.501Z</updated>
-    
-    <content type="html"><![CDATA[<p>bespoke-fx是一款类似PPT演示稿效果的JavaScript幻灯片插件。该幻灯片可以使用键盘的左右方向键来前后切换，它内置了23种CSS3动画过渡效果，非常实用。</p>
-<p><img src="/img/posts/JS-AddIn-PPTSlideEffect.jpg" alt="JS-AddIn-PPTSlideEffect"></p>
-<a id="more"></a>
-<p><a href="http://www.htmleaf.com/Demo/201605203497.html" target="_blank" rel="external">查看DEMO</a></p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>可以通过 npm 或 bower 来安装在该插件。</p>
-<pre><code>$ bower install bespoke-fx
-$ npm install bespoke-fx    
-</code></pre><h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><p>该插件基于bespoke.js插件，使用时先要引入bespoke.js文件，再引入bespoke-fx.js文件。另外还需要引入main.css和animations.css样式文件。</p>
-<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;path/to/main.css&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;path/to/animations.css&quot;&gt;
-&lt;script src=&quot;js/bespoke.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;js/bespoke-fx.js&quot;&gt;&lt;/script&gt;
-</code></pre><p>该幻灯片插件的基本HTML结构如下：</p>
-<pre><code>&lt;article&gt;
-  &lt;section&gt;Slide 1&lt;/section&gt;
-  &lt;section&gt;Slide 2&lt;/section&gt;
-  &lt;section&gt;Slide 3&lt;/section&gt;
-&lt;/article&gt;              
-</code></pre><p><strong>初始化插件</strong></p>
-<p>可以使用下面的方法来初始化该幻灯片插件。</p>
-<pre><code>bespoke.horizontal.from(&apos;article&apos;, {
-  fx: true
-});
-</code></pre><p>或者传入配置参数：</p>
-<pre><code>bespoke.vertical.from(&apos;article&apos;, {
-  fx: {
-    direction: &quot;vertical&quot;,
-    transition: &quot;cube&quot;,
-    reverse: true
-  }
-});
-</code></pre><h3 id="配置参数"><a href="#配置参数" class="headerlink" title="配置参数"></a>配置参数</h3><p>bespoke-fx幻灯片插件的配置参数如下：</p>
-<ul>
-<li>direction：动画的方向，可以是：horizontal 或 vertical。</li>
-<li>transition：指定过渡动画的类型，参考下面的多行过渡类型描述。</li>
-<li>reverse：设置为true强迫执行反向动画。</li>
-</ul>
-<p><strong>过渡动画</strong></p>
-<p>可用的CSS3动画过渡动画如下：</p>
-<ul>
-<li>move</li>
-<li>move-fade</li>
-<li>move-both-fade</li>
-<li>move-different-easing</li>
-<li>scale-down-out-move-in</li>
-<li>move-out-scale-up</li>
-<li>scale-up-up</li>
-<li>scale-down-up</li>
-<li>glue</li>
-<li>flip</li>
-<li>fall</li>
-<li>newspaper</li>
-<li>push</li>
-<li>pull</li>
-<li>fold</li>
-<li>unfold</li>
-<li>room</li>
-<li>cube</li>
-<li>carousel</li>
-<li>sides</li>
-<li>slide</li>
-</ul>
-<p><strong>设置单独幻灯片的参数</strong></p>
-<p>你可以通过<code>data-bespoke-transition</code>、<code>data-bespoke-direction</code>和<code>data-bespoke-reverse</code>来为某个幻灯片slide设置单独的参数。例如：</p>
-<pre><code>&lt;section data-bespoke-fx-transition=&quot;cube&quot;
-  data-bespoke-fx-direction=&quot;vertical&quot;
-  data-bespoke-fx-reverse=&quot;true&quot;&gt;Slide
-&lt;/section&gt;
-</code></pre><p>bespoke-fx幻灯片插件的github地址为：<a href="https://github.com/ebow/bespoke-fx" target="_blank" rel="external">https://github.com/ebow/bespoke-fx</a>.</p>
-<p>转自 JQuery之家<br><a href="http://www.htmleaf.com/jQuery/Slideshow-Scroller/201605203496.html" target="_blank" rel="external">http://www.htmleaf.com/jQuery/Slideshow-Scroller/201605203496.html</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;bespoke-fx是一款类似PPT演示稿效果的JavaScript幻灯片插件。该幻灯片可以使用键盘的左右方向键来前后切换，它内置了23种CSS3动画过渡效果，非常实用。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/img/posts/JS-AddIn-PPTSlideEffect.jpg&quot; alt=&quot;JS-AddIn-PPTSlideEffect&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="码路刺客" scheme="http://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
-    
-    
-      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
-      <category term="jQuery" scheme="http://c-xuan.com/tags/jQuery/"/>
-    
-      <category term="JavaScript" scheme="http://c-xuan.com/tags/JavaScript/"/>
-    
-      <category term="CSS" scheme="http://c-xuan.com/tags/CSS/"/>
-    
-      <category term="设计" scheme="http://c-xuan.com/tags/%E8%AE%BE%E8%AE%A1/"/>
-    
-      <category term="前端" scheme="http://c-xuan.com/tags/%E5%89%8D%E7%AB%AF/"/>
     
   </entry>
   

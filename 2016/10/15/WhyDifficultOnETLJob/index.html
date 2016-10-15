@@ -15,26 +15,25 @@
 
 
 
-<meta name="description" content="问题描述当在SQL SERVER数据库里配置了Linded Server(链接数据库)时，就有可能有通过链接数据库调用其他服务器上的数据库的存储过程的需求，可是在还没有进行配置之前就会报出这样的错误：“该伙伴事务管理器已经禁止了它对远程/网络事务的支持，无法启动分布式事务”、“未将服务器配置为RPC”。在网上搜索了下，结合自己的情况整理了一下。">
+<meta name="description" content="工具繁多从 DataStage到Kettle, ETL 工具覆盖了商业化领域和开源领域, 价格从几十万到免费,起码有几十种选择。
+有人要说了,选择多不是一件好事么?如果再早几年,我会同意这是好事,可到现在,我要说 NO!
+前面关于决策思维的博文提到一个论点:相比于普通人做出决策,专家是会直接给一种可行方案还是罗列众多方案类比优劣?
+答案是前者,也是我反对选择众多是好事这一论点的依据之一。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【SQL SERVER】链接数据库“无法启动分布式事务”的问题及解决">
-<meta property="og:url" content="http://c-xuan.com/2016/05/26/Linked-Server-RPC/index.html">
+<meta property="og:title" content="为什么ETL任务困难">
+<meta property="og:url" content="http://c-xuan.com/2016/10/15/WhyDifficultOnETLJob/index.html">
 <meta property="og:site_name" content="靛青">
-<meta property="og:description" content="问题描述当在SQL SERVER数据库里配置了Linded Server(链接数据库)时，就有可能有通过链接数据库调用其他服务器上的数据库的存储过程的需求，可是在还没有进行配置之前就会报出这样的错误：“该伙伴事务管理器已经禁止了它对远程/网络事务的支持，无法启动分布式事务”、“未将服务器配置为RPC”。在网上搜索了下，结合自己的情况整理了一下。">
-<meta property="og:image" content="http://c-xuan.com/img/posts/Linked-Server-RPC-8.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/Linked-Server-RPC-9.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/Linked-Server-RPC-1.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/Linked-Server-RPC-2.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/Linked-Server-RPC-3.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/Linked-Server-RPC-4.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/Linked-Server-RPC-5.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/Linked-Server-RPC-6.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/Linked-Server-RPC-7.jpg">
-<meta property="og:updated_time" content="2016-09-22T16:14:24.740Z">
+<meta property="og:description" content="工具繁多从 DataStage到Kettle, ETL 工具覆盖了商业化领域和开源领域, 价格从几十万到免费,起码有几十种选择。
+有人要说了,选择多不是一件好事么?如果再早几年,我会同意这是好事,可到现在,我要说 NO!
+前面关于决策思维的博文提到一个论点:相比于普通人做出决策,专家是会直接给一种可行方案还是罗列众多方案类比优劣?
+答案是前者,也是我反对选择众多是好事这一论点的依据之一。">
+<meta property="og:updated_time" content="2016-10-15T15:12:08.871Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【SQL SERVER】链接数据库“无法启动分布式事务”的问题及解决">
-<meta name="twitter:description" content="问题描述当在SQL SERVER数据库里配置了Linded Server(链接数据库)时，就有可能有通过链接数据库调用其他服务器上的数据库的存储过程的需求，可是在还没有进行配置之前就会报出这样的错误：“该伙伴事务管理器已经禁止了它对远程/网络事务的支持，无法启动分布式事务”、“未将服务器配置为RPC”。在网上搜索了下，结合自己的情况整理了一下。">
-<meta name="twitter:image" content="http://c-xuan.com/img/posts/Linked-Server-RPC-8.jpg">
+<meta name="twitter:title" content="为什么ETL任务困难">
+<meta name="twitter:description" content="工具繁多从 DataStage到Kettle, ETL 工具覆盖了商业化领域和开源领域, 价格从几十万到免费,起码有几十种选择。
+有人要说了,选择多不是一件好事么?如果再早几年,我会同意这是好事,可到现在,我要说 NO!
+前面关于决策思维的博文提到一个论点:相比于普通人做出决策,专家是会直接给一种可行方案还是罗列众多方案类比优劣?
+答案是前者,也是我反对选择众多是好事这一论点的依据之一。">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -66,7 +65,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>【SQL SERVER】链接数据库“无法启动分布式事务”的问题及解决 | 靛青</title>
+<title>为什么ETL任务困难 | 靛青</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -328,11 +327,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap "><article id="post-Linked-Server-RPC" class="article article-type-post  animated pulse " itemscope itemprop="blogPost">
+      <div class="body-wrap "><article id="post-WhyDifficultOnETLJob" class="article article-type-post  animated pulse " itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/05/26/Linked-Server-RPC/" class="article-date">
-      <time datetime="2016-05-25T16:00:00.000Z" itemprop="datePublished">2016-05-26</time>
+      <a href="/2016/10/15/WhyDifficultOnETLJob/" class="article-date">
+      <time datetime="2016-10-15T15:04:05.000Z" itemprop="datePublished">2016-10-15</time>
 </a>
 
 
@@ -347,7 +346,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      【SQL SERVER】链接数据库“无法启动分布式事务”的问题及解决
+      为什么ETL任务困难
     </h1>
   
 
@@ -356,13 +355,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/码路刺客/">码路刺客</a>
+    <a class="article-category-link" href="/categories/BI墨客/">BI墨客</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL-Server/">SQL Server</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原创/">原创</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BI/">BI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据仓库/">数据仓库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -372,29 +371,31 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>当在SQL SERVER数据库里配置了Linded Server(链接数据库)时，就有可能有通过链接数据库调用其他服务器上的数据库的存储过程的需求，可是在还没有进行配置之前就会报出这样的错误：“该伙伴事务管理器已经禁止了它对远程/网络事务的支持，无法启动分布式事务”、“未将服务器配置为RPC”。在网上搜索了下，结合自己的情况整理了一下。</p>
+        <h3 id="工具繁多"><a href="#工具繁多" class="headerlink" title="工具繁多"></a>工具繁多</h3><p>从 DataStage到Kettle, ETL 工具覆盖了商业化领域和开源领域, 价格从几十万到免费,起码有几十种选择。</p>
+<p>有人要说了,选择多不是一件好事么?如果再早几年,我会同意这是好事,可到现在,我要说 NO!</p>
+<p>前面关于决策思维的博文提到一个论点:相比于普通人做出决策,专家是会直接给一种可行方案还是罗列众多方案类比优劣?</p>
+<p>答案是前者,也是我反对选择众多是好事这一论点的依据之一。</p>
 <a id="more"></a>
-<p><img src="/img/posts/Linked-Server-RPC-8.jpg" alt="Linked-Server-RPC-8"></p>
-<p><img src="/img/posts/Linked-Server-RPC-9.jpg" alt="Linked-Server-RPC-9"></p>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p><strong>数据库服务器属性设置</strong></p>
-<p>在本地数据库与远程数据库都对数据库服务器属性进行设置，勾选【需要将分布式事务用户服务器到服务器的通信】。</p>
-<p><img src="/img/posts/Linked-Server-RPC-1.jpg" alt="Linked-Server-RPC-1"></p>
-<p><strong>启动MSDTC服务</strong></p>
-<p>在本地数据库的服务器与远程数据库的服务器上开启如下服务：<br>MSDTC服务提供分布式事务服务，如果要在数据库中使用分布式事务，必须在参与的双方服务器启动MSDTC（Distributed Transaction Coordinator）服务。</p>
-<p><strong>打开135端口</strong></p>
-<p>在本地数据库的服务器与远程数据库的服务器上开启此端口。<br>MSDTC服务依赖于RPC（Remote Procedure Call (RPC)）服务,RPC使用135端口，保证RPC服务启动，如果服务器有防火墙，保证135端口不被防火墙挡住。（这里我在Win Server 2008 r2里开启进出站端口规则，没起作用，就直接关掉防火墙然后解决了）</p>
-<p><strong>MSDTC设置</strong></p>
-<p>在本地数据库的服务器与远程数据库的服务器上设置如下：<br>打开“控制面板——管理工具――组件服务”，以此打开“组件服务――计算机——我的电脑——本地DTC”，右键属性，切换到【安全】选项卡，设置下面这些东东。</p>
-<p><img src="/img/posts/Linked-Server-RPC-2.jpg" alt="Linked-Server-RPC-2"></p>
-<p><img src="/img/posts/Linked-Server-RPC-3.jpg" alt="Linked-Server-RPC-3"></p>
-<p><strong>配置RPC</strong></p>
-<p>如果报“未将服务器配置为RPC”的错误，需要右键配置的链接服务器，打开属性窗口，切换到【服务器选项】选项卡，将RPC,RPC Out更改为true.</p>
-<p><img src="/img/posts/Linked-Server-RPC-4.jpg" alt="Linked-Server-RPC-4"></p>
-<p>这里我在改的时候报出这样的错误：“不允许对系统目录进行即系更新”。于是乎在网上搜罗解决方法，但是看着都挺麻烦，我的方法挺简单。</p>
-<p><img src="/img/posts/Linked-Server-RPC-5.jpg" alt="Linked-Server-RPC-5"></p>
-<p>右键链接数据库，【编写链接服务器脚本为】，【CREATE到】，【新查询编辑器窗口】，在出现的脚本中找到这两句，把false改成true，然后运行这两句命令就可以了。</p>
-<p><img src="/img/posts/Linked-Server-RPC-6.jpg" alt="Linked-Server-RPC-6"></p>
-<p><img src="/img/posts/Linked-Server-RPC-7.jpg" alt="Linked-Server-RPC-7"></p>
+<h4 id="那么选择多有什么坏处"><a href="#那么选择多有什么坏处" class="headerlink" title="那么选择多有什么坏处?"></a>那么选择多有什么坏处?</h4><ul>
+<li>基础方案混杂。各公司方案不同,甚至一个公司 ETL 环节也采用不同工具及架构,人才无法公用,维护成本高。</li>
+<li>数据项目失败案例远多于成功案例, 项目选型越复杂成功概率越低。大量公司做 BI、做大数据,甚至在没有人懂的情况下招人开工!事实上在数据领域,熟手都清楚一个现象,没有成功案例的人很难做成数据项目。很残忍的现实,但也让那些盲目投入资源跟风做项目的公司考虑冷静下来了。</li>
+<li>抬高实施门槛。现在大家都想做数据,进入大数据领域,尤其是有很多不具备该领域经验的公司想要做。那么实施前首先就是选型了,如果从三个产品选一个来做还可行的话,那么要从三十个产品中选型,这个工作本身就阻碍了数据项目的开展!</li>
+</ul>
+<h3 id="GUI工具"><a href="#GUI工具" class="headerlink" title="GUI工具"></a>GUI工具</h3><p>说到这里反对的朋友更多了,GUI 所见即所得,降低使用门槛,好处一页都写不完,作为一名数据领域从业者,我决然反对,自己都能感觉到火药味。 为了论证我的观点,这里要罗列ETL领域那些GUI的罪证了。</p>
+<h4 id="ETL工具的六大问题"><a href="#ETL工具的六大问题" class="headerlink" title="ETL工具的六大问题"></a>ETL工具的六大问题</h4><ul>
+<li>工具太大了,卡卡卡!我不是说 SSIS 之类,也不是说 Kettle 相关,我说的是他们所有人……</li>
+<li>好用的太贵, 便宜的不好用!</li>
+<li>组件式的拖拉开发,性能真的没法起来!尤其是那些依靠组件解决数据变化提取的兄弟们,你们想多了。</li>
+<li>我需要一包厕纸而已,你非要给我整个超市。在我蹲之前非得找遍整个超市!大家对比下里面的功能自己使用的比率。</li>
+<li>说 GUI 简单好用的,我强烈反对。GUI 好调试么?映射过程报错了大家要怎么办?检查源检查目标也就算了,连映射环节都要排查。除了自己设定的格式类型,还要考虑工具环节自己的转换类型,这不是增加负担么?</li>
+<li>部署,我都不想说部署了。一千个任务下来,ETL 工具别谈部署了!这时候有同学开始研究调度,有些关注数据质量,任务数量起来,想什么都是多的,保佑这混乱情况别出岔子就阿弥陀佛了。</li>
+</ul>
+<h3 id="ETL工具阻碍了设计"><a href="#ETL工具阻碍了设计" class="headerlink" title="ETL工具阻碍了设计"></a>ETL工具阻碍了设计</h3><ul>
+<li>直接用工具拉数据的项目,认真找找有没有架构设计,有没有项目文档,有没有扩展性考虑,性能考虑?或者简单点,这项目换人可能接手下来么?</li>
+<li>数据项目是团队项目,ETL 工具是个人化工具。如果多个成员不能无缝接替工作,对不起,我认为这不是数据项目。哦不对,不算是一个项目。</li>
+<li>组件报错是工具问题,转换异常跟自己没关系。工具的 bug 和我真没关系,我项目做得好好的,ETL 工具崩溃了管我什么事?遇到这种情况不说我也知道做法,崩溃了再起来跑一跑嘛,运气好数据就跑出来了。至于数据质量管理是什么这样的问题,就别问出来了。</li>
+</ul>
+<p>转自<br><a href="http://www.infotrim.cn/article/5" target="_blank" rel="external">http://www.infotrim.cn/article/5</a></p>
 
       
     </div>
@@ -403,13 +404,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/05/26/Linked-Server-RPC/">【SQL SERVER】链接数据库“无法启动分布式事务”的问题及解决</a></p>
+        <p><span>本文标题:</span><a href="/2016/10/15/WhyDifficultOnETLJob/">为什么ETL任务困难</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">c-xuan</a></p>
-        <p><span>发布时间:</span>2016-05-26, 00:00:00</p>
-        <p><span>最后更新:</span>2016-09-23, 00:14:24</p>
+        <p><span>发布时间:</span>2016-10-15, 23:04:05</p>
+        <p><span>最后更新:</span>2016-10-15, 23:12:08</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/05/26/Linked-Server-RPC/" title="【SQL SERVER】链接数据库“无法启动分布式事务”的问题及解决">http://c-xuan.com/2016/05/26/Linked-Server-RPC/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://c-xuan.com/2016/05/26/Linked-Server-RPC/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/10/15/WhyDifficultOnETLJob/" title="为什么ETL任务困难">http://c-xuan.com/2016/10/15/WhyDifficultOnETLJob/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://c-xuan.com/2016/10/15/WhyDifficultOnETLJob/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -421,16 +422,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/05/27/SQL-SERVER-RPC-FUNCTION-CALL/">
-                    【SQL SERVER】OPENQUERY远程函数引用及参数传值问题
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/05/25/30-Astonishing-Nature-Places-on-Earth/">
-                    令人惊叹的30个自然奇观
+                <a href="/2016/10/15/DecisionThoughtOnBigdata/">
+                    从大数据负责人招聘看决策思维
                 </a>
             </div>
         
@@ -442,7 +437,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#问题描述"><span class="toc-number">1.</span> <span class="toc-text">问题描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解决方法"><span class="toc-number">2.</span> <span class="toc-text">解决方法</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#工具繁多"><span class="toc-number">1.</span> <span class="toc-text">工具繁多</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#那么选择多有什么坏处"><span class="toc-number">1.1.</span> <span class="toc-text">那么选择多有什么坏处?</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GUI工具"><span class="toc-number">2.</span> <span class="toc-text">GUI工具</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ETL工具的六大问题"><span class="toc-number">2.1.</span> <span class="toc-text">ETL工具的六大问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ETL工具阻碍了设计"><span class="toc-number">3.</span> <span class="toc-text">ETL工具阻碍了设计</span></a></li></ol>
         
     </div>
     <style>
@@ -478,7 +473,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"【SQL SERVER】链接数据库“无法启动分布式事务”的问题及解决　| 靛青　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"为什么ETL任务困难　| 靛青　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -494,7 +489,7 @@
     
       <div class="duoshuo" id="comments">
     <div id="comment-box" ></div>
-    <div class="ds-thread" id="ds-thread" data-thread-key="2016/05/26/Linked-Server-RPC/" data-title="【SQL SERVER】链接数据库“无法启动分布式事务”的问题及解决" data-url="http://c-xuan.com/2016/05/26/Linked-Server-RPC/"></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/10/15/WhyDifficultOnETLJob/" data-title="为什么ETL任务困难" data-url="http://c-xuan.com/2016/10/15/WhyDifficultOnETLJob/"></div>
     <script>
         var duoshuoQuery = {short_name:"cxuan"};
         var loadComment = function(){
@@ -517,15 +512,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/05/27/SQL-SERVER-RPC-FUNCTION-CALL/" title="上一篇: 【SQL SERVER】OPENQUERY远程函数引用及参数传值问题">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/05/25/30-Astonishing-Nature-Places-on-Earth/" title="下一篇: 令人惊叹的30个自然奇观">
+            <a href="/2016/10/15/DecisionThoughtOnBigdata/" title="下一篇: 从大数据负责人招聘看决策思维">
                 <i class="fa fa-angle-right"></i>
             </a>
         

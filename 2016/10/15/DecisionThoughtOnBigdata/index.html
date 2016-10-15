@@ -15,26 +15,22 @@
 
 
 
-<meta name="description" content="问题描述当在SQL SERVER数据库里配置了Linded Server(链接数据库)时，就有可能有通过链接数据库调用其他服务器上的数据库的存储过程的需求，可是在还没有进行配置之前就会报出这样的错误：“该伙伴事务管理器已经禁止了它对远程/网络事务的支持，无法启动分布式事务”、“未将服务器配置为RPC”。在网上搜索了下，结合自己的情况整理了一下。">
+<meta name="description" content="决策是非理性的我们受到的教育是要理性思考,理性决策,信奉理性至上的思维模式。可惜的是现实并非如此,绝大多数的决策都是采用自然主义决策方式,而情景模拟又是其主流方法。对此感兴趣的朋友建议查看亚马逊近期榜单作品《如何做出正确决策:直击决策真相》了解更多。
+简而言之,无论是紧迫条件的救火队员还是军事要务的重大决定,决策的真相都如同我们前面介绍的方式:脑海中假设一条可行道路,一步步证明它是可行的。
+说到专">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【SQL SERVER】链接数据库“无法启动分布式事务”的问题及解决">
-<meta property="og:url" content="http://c-xuan.com/2016/05/26/Linked-Server-RPC/index.html">
+<meta property="og:title" content="从大数据负责人招聘看决策思维">
+<meta property="og:url" content="http://c-xuan.com/2016/10/15/DecisionThoughtOnBigdata/index.html">
 <meta property="og:site_name" content="靛青">
-<meta property="og:description" content="问题描述当在SQL SERVER数据库里配置了Linded Server(链接数据库)时，就有可能有通过链接数据库调用其他服务器上的数据库的存储过程的需求，可是在还没有进行配置之前就会报出这样的错误：“该伙伴事务管理器已经禁止了它对远程/网络事务的支持，无法启动分布式事务”、“未将服务器配置为RPC”。在网上搜索了下，结合自己的情况整理了一下。">
-<meta property="og:image" content="http://c-xuan.com/img/posts/Linked-Server-RPC-8.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/Linked-Server-RPC-9.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/Linked-Server-RPC-1.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/Linked-Server-RPC-2.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/Linked-Server-RPC-3.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/Linked-Server-RPC-4.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/Linked-Server-RPC-5.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/Linked-Server-RPC-6.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/Linked-Server-RPC-7.jpg">
-<meta property="og:updated_time" content="2016-09-22T16:14:24.740Z">
+<meta property="og:description" content="决策是非理性的我们受到的教育是要理性思考,理性决策,信奉理性至上的思维模式。可惜的是现实并非如此,绝大多数的决策都是采用自然主义决策方式,而情景模拟又是其主流方法。对此感兴趣的朋友建议查看亚马逊近期榜单作品《如何做出正确决策:直击决策真相》了解更多。
+简而言之,无论是紧迫条件的救火队员还是军事要务的重大决定,决策的真相都如同我们前面介绍的方式:脑海中假设一条可行道路,一步步证明它是可行的。
+说到专">
+<meta property="og:updated_time" content="2016-10-15T14:59:06.346Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【SQL SERVER】链接数据库“无法启动分布式事务”的问题及解决">
-<meta name="twitter:description" content="问题描述当在SQL SERVER数据库里配置了Linded Server(链接数据库)时，就有可能有通过链接数据库调用其他服务器上的数据库的存储过程的需求，可是在还没有进行配置之前就会报出这样的错误：“该伙伴事务管理器已经禁止了它对远程/网络事务的支持，无法启动分布式事务”、“未将服务器配置为RPC”。在网上搜索了下，结合自己的情况整理了一下。">
-<meta name="twitter:image" content="http://c-xuan.com/img/posts/Linked-Server-RPC-8.jpg">
+<meta name="twitter:title" content="从大数据负责人招聘看决策思维">
+<meta name="twitter:description" content="决策是非理性的我们受到的教育是要理性思考,理性决策,信奉理性至上的思维模式。可惜的是现实并非如此,绝大多数的决策都是采用自然主义决策方式,而情景模拟又是其主流方法。对此感兴趣的朋友建议查看亚马逊近期榜单作品《如何做出正确决策:直击决策真相》了解更多。
+简而言之,无论是紧迫条件的救火队员还是军事要务的重大决定,决策的真相都如同我们前面介绍的方式:脑海中假设一条可行道路,一步步证明它是可行的。
+说到专">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -66,7 +62,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>【SQL SERVER】链接数据库“无法启动分布式事务”的问题及解决 | 靛青</title>
+<title>从大数据负责人招聘看决策思维 | 靛青</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -328,11 +324,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap "><article id="post-Linked-Server-RPC" class="article article-type-post  animated pulse " itemscope itemprop="blogPost">
+      <div class="body-wrap "><article id="post-DecisionThoughtOnBigdata" class="article article-type-post  animated pulse " itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/05/26/Linked-Server-RPC/" class="article-date">
-      <time datetime="2016-05-25T16:00:00.000Z" itemprop="datePublished">2016-05-26</time>
+      <a href="/2016/10/15/DecisionThoughtOnBigdata/" class="article-date">
+      <time datetime="2016-10-15T14:45:07.000Z" itemprop="datePublished">2016-10-15</time>
 </a>
 
 
@@ -347,7 +343,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      【SQL SERVER】链接数据库“无法启动分布式事务”的问题及解决
+      从大数据负责人招聘看决策思维
     </h1>
   
 
@@ -356,13 +352,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/码路刺客/">码路刺客</a>
+    <a class="article-category-link" href="/categories/BI墨客/">BI墨客</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL-Server/">SQL Server</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原创/">原创</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BigData/">BigData</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -372,29 +368,35 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>当在SQL SERVER数据库里配置了Linded Server(链接数据库)时，就有可能有通过链接数据库调用其他服务器上的数据库的存储过程的需求，可是在还没有进行配置之前就会报出这样的错误：“该伙伴事务管理器已经禁止了它对远程/网络事务的支持，无法启动分布式事务”、“未将服务器配置为RPC”。在网上搜索了下，结合自己的情况整理了一下。</p>
+        <h3 id="决策是非理性的"><a href="#决策是非理性的" class="headerlink" title="决策是非理性的"></a>决策是非理性的</h3><p>我们受到的教育是要理性思考,理性决策,信奉理性至上的思维模式。可惜的是现实并非如此,绝大多数的决策都是采用自然主义决策方式,而情景模拟又是其主流方法。对此感兴趣的朋友建议查看亚马逊近期榜单作品《如何做出正确决策:直击决策真相》了解更多。</p>
+<p>简而言之,无论是紧迫条件的救火队员还是军事要务的重大决定,决策的真相都如同我们前面介绍的方式:脑海中假设一条可行道路,一步步证明它是可行的。</p>
+<p>说到专家和普通决策的区别,大家还是要注意这个真相:专家决策都是迅速定下一条可行方案,而非拿出多套方案理性对比! </p>
 <a id="more"></a>
-<p><img src="/img/posts/Linked-Server-RPC-8.jpg" alt="Linked-Server-RPC-8"></p>
-<p><img src="/img/posts/Linked-Server-RPC-9.jpg" alt="Linked-Server-RPC-9"></p>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p><strong>数据库服务器属性设置</strong></p>
-<p>在本地数据库与远程数据库都对数据库服务器属性进行设置，勾选【需要将分布式事务用户服务器到服务器的通信】。</p>
-<p><img src="/img/posts/Linked-Server-RPC-1.jpg" alt="Linked-Server-RPC-1"></p>
-<p><strong>启动MSDTC服务</strong></p>
-<p>在本地数据库的服务器与远程数据库的服务器上开启如下服务：<br>MSDTC服务提供分布式事务服务，如果要在数据库中使用分布式事务，必须在参与的双方服务器启动MSDTC（Distributed Transaction Coordinator）服务。</p>
-<p><strong>打开135端口</strong></p>
-<p>在本地数据库的服务器与远程数据库的服务器上开启此端口。<br>MSDTC服务依赖于RPC（Remote Procedure Call (RPC)）服务,RPC使用135端口，保证RPC服务启动，如果服务器有防火墙，保证135端口不被防火墙挡住。（这里我在Win Server 2008 r2里开启进出站端口规则，没起作用，就直接关掉防火墙然后解决了）</p>
-<p><strong>MSDTC设置</strong></p>
-<p>在本地数据库的服务器与远程数据库的服务器上设置如下：<br>打开“控制面板——管理工具――组件服务”，以此打开“组件服务――计算机——我的电脑——本地DTC”，右键属性，切换到【安全】选项卡，设置下面这些东东。</p>
-<p><img src="/img/posts/Linked-Server-RPC-2.jpg" alt="Linked-Server-RPC-2"></p>
-<p><img src="/img/posts/Linked-Server-RPC-3.jpg" alt="Linked-Server-RPC-3"></p>
-<p><strong>配置RPC</strong></p>
-<p>如果报“未将服务器配置为RPC”的错误，需要右键配置的链接服务器，打开属性窗口，切换到【服务器选项】选项卡，将RPC,RPC Out更改为true.</p>
-<p><img src="/img/posts/Linked-Server-RPC-4.jpg" alt="Linked-Server-RPC-4"></p>
-<p>这里我在改的时候报出这样的错误：“不允许对系统目录进行即系更新”。于是乎在网上搜罗解决方法，但是看着都挺麻烦，我的方法挺简单。</p>
-<p><img src="/img/posts/Linked-Server-RPC-5.jpg" alt="Linked-Server-RPC-5"></p>
-<p>右键链接数据库，【编写链接服务器脚本为】，【CREATE到】，【新查询编辑器窗口】，在出现的脚本中找到这两句，把false改成true，然后运行这两句命令就可以了。</p>
-<p><img src="/img/posts/Linked-Server-RPC-6.jpg" alt="Linked-Server-RPC-6"></p>
-<p><img src="/img/posts/Linked-Server-RPC-7.jpg" alt="Linked-Server-RPC-7"></p>
+<h3 id="大数据负责人的要求是什么"><a href="#大数据负责人的要求是什么" class="headerlink" title="大数据负责人的要求是什么"></a>大数据负责人的要求是什么</h3><h4 id="有成功大数据经验"><a href="#有成功大数据经验" class="headerlink" title="有成功大数据经验"></a>有成功大数据经验</h4><p>大家要注意,我举证论据,至少都是讲三点的,可我这里只给出一条。 经常查看此类招聘的朋友很容易看出来,另外两点因素是职业素养和对大数据生态的理解,我完全同意这个看法,但此处认为和我举证这一点比,其他的都完全不是问题。</p>
+<h5 id="为什么要有成功大数据经验"><a href="#为什么要有成功大数据经验" class="headerlink" title="为什么要有成功大数据经验?"></a>为什么要有成功大数据经验?</h5><ul>
+<li>1.因为招聘你去的地方通常是没有成功经验的,不然要你去干吗?</li>
+<li>2.具备成功大数据经验的人真的很少! 这里大家应该慎重考虑下,基于这个观点,跳槽、换团队是大忌。为什么?因为如果你已经有成功经验,机会根本不是问题。而你不幸没有成功经验,跳槽、换团队都不能解决你成功经验的问题。</li>
+<li>3.大数据项目的成功,不会只有一个人,但会取决于核心人物。好好珍惜现有团队,做成项目,并且不要说不懂其他同事的工作。大数据本来就是融合型工作,你永远只会自己做的一块,就不要费时间争取负责人的角色了。</li>
+</ul>
+<h5 id="为什么工作素养和-hadoop-等生态理解不重要"><a href="#为什么工作素养和-hadoop-等生态理解不重要" class="headerlink" title="为什么工作素养和 hadoop 等生态理解不重要?"></a>为什么工作素养和 hadoop 等生态理解不重要?</h5><p>这个问题起码要说三点:</p>
+<ul>
+<li>1.工作素养大部分都能做得很好,极少成为个人瓶颈不是吗?难道不是吗?</li>
+<li>2.面试要求的 hadoop、spark、storm……这些不是招聘者的本质要求,招聘你去的真正需求是能将项目做出来,做成功。至于这些细节技术方案,面试者有多少人懂得?再说了,开源系统版本迭代那么快,完全依靠这些方案要踩多少坑招聘者哪里知道?不仅如此,作为负责人是要规避让企业踩坑才合格!</li>
+<li>3.我看到好多人转向大数据,学 python 又学 R, 学 Java 又学 Scala, 学数据库又学数据仓库。这样的做法可行吗? 真心奉劝停下来冷静思考下!</li>
+</ul>
+<p>大数据是团队项目,不是单兵作战! 再说了,等你把所有学完, 企业等的花儿都谢了好么? 随便学一个感兴趣的, 找到工作再一步步深入, 各种大会、各种社区适合有经验的人、有方法的人,这些场景只要记住大家推荐的书籍回来好好学任务就完成了。</p>
+<h3 id="补偿机制的使用"><a href="#补偿机制的使用" class="headerlink" title="补偿机制的使用"></a>补偿机制的使用</h3><p>我们常说:”打一个耳光给一个苹果”,是不是耳光就没那么疼了?</p>
+<p>这不止是一个心理现象,在面试大数据负责人这样重要岗位时一样可以用于决策。</p>
+<p>通常我们做出决策时,会在自己优势领域选定方案持续推进。要么成功达到目标,要么走不下去调转方向,可最终都是能完成任务的。</p>
+<p>那么为什么就算是专家也会遇到放弃方案跳转方向的情况,一方面是我们的确会遇到各种未知的问题,另一个更重要的方面就是:我们每个人在多个维度都有优点,切记!</p>
+<p>我们总看到话术中说:”同学你工作做得不好,但你在工作过程中表现出来的沟通能力还是很强的。”类似的情况数不胜数,与其说是心理补偿机制,倒不如说展示出我们每个人其实都不只有一个优势领域!</p>
+<p>那么这和大数据负责人招聘又有什么关系呢?</p>
+<ul>
+<li>1.大数据负责人也是人,有长处也有短板。就算平时勤快对团队工作都了解, 涉及到每一块深度领域细节所知也是很有限的。</li>
+<li>2.有限的人遇到无知的需求。这里用词不太合适,但其实很多企业寻找人才时对这个领域是一片空白的。那么提出的要求自然是互联网上随处能搜集到的岗位需求模板。虽然大家都理解每个公司、每个团队做数据都有些不同之处,但对于完全不了解行情的公司只能然并卵。除了网上找模板我也想不出更好的办法了。</li>
+<li>3.有限的人要用优点补充缺点。招聘的时候发现你可视化不强,那应该展示自己数据仓库的优势了,如果发现你 hadoop 不熟,你是时候分享对 storm 的研究成果了。 大家要考虑清楚团队项目中的个人定位, 一味地追求个人什么都会,项目发展会很有限,企业也会很不放心啊。</li>
+</ul>
+<p>转自<br><a href="http://www.infotrim.cn/article/7" target="_blank" rel="external">http://www.infotrim.cn/article/7</a></p>
 
       
     </div>
@@ -403,13 +405,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/05/26/Linked-Server-RPC/">【SQL SERVER】链接数据库“无法启动分布式事务”的问题及解决</a></p>
+        <p><span>本文标题:</span><a href="/2016/10/15/DecisionThoughtOnBigdata/">从大数据负责人招聘看决策思维</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">c-xuan</a></p>
-        <p><span>发布时间:</span>2016-05-26, 00:00:00</p>
-        <p><span>最后更新:</span>2016-09-23, 00:14:24</p>
+        <p><span>发布时间:</span>2016-10-15, 22:45:07</p>
+        <p><span>最后更新:</span>2016-10-15, 22:59:06</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/05/26/Linked-Server-RPC/" title="【SQL SERVER】链接数据库“无法启动分布式事务”的问题及解决">http://c-xuan.com/2016/05/26/Linked-Server-RPC/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://c-xuan.com/2016/05/26/Linked-Server-RPC/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/10/15/DecisionThoughtOnBigdata/" title="从大数据负责人招聘看决策思维">http://c-xuan.com/2016/10/15/DecisionThoughtOnBigdata/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://c-xuan.com/2016/10/15/DecisionThoughtOnBigdata/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -422,15 +424,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/05/27/SQL-SERVER-RPC-FUNCTION-CALL/">
-                    【SQL SERVER】OPENQUERY远程函数引用及参数传值问题
+                <a href="/2016/10/15/WhyDifficultOnETLJob/">
+                    为什么ETL任务困难
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/05/25/30-Astonishing-Nature-Places-on-Earth/">
-                    令人惊叹的30个自然奇观
+                <a href="/2016/10/08/TimeForPKM/">
+                    是时候管理你的知识了
                 </a>
             </div>
         
@@ -442,7 +444,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#问题描述"><span class="toc-number">1.</span> <span class="toc-text">问题描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解决方法"><span class="toc-number">2.</span> <span class="toc-text">解决方法</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#决策是非理性的"><span class="toc-number">1.</span> <span class="toc-text">决策是非理性的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#大数据负责人的要求是什么"><span class="toc-number">2.</span> <span class="toc-text">大数据负责人的要求是什么</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#有成功大数据经验"><span class="toc-number">2.1.</span> <span class="toc-text">有成功大数据经验</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#为什么要有成功大数据经验"><span class="toc-number">2.1.1.</span> <span class="toc-text">为什么要有成功大数据经验?</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#为什么工作素养和-hadoop-等生态理解不重要"><span class="toc-number">2.1.2.</span> <span class="toc-text">为什么工作素养和 hadoop 等生态理解不重要?</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#补偿机制的使用"><span class="toc-number">3.</span> <span class="toc-text">补偿机制的使用</span></a></li></ol>
         
     </div>
     <style>
@@ -478,7 +480,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"【SQL SERVER】链接数据库“无法启动分布式事务”的问题及解决　| 靛青　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"从大数据负责人招聘看决策思维　| 靛青　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -494,7 +496,7 @@
     
       <div class="duoshuo" id="comments">
     <div id="comment-box" ></div>
-    <div class="ds-thread" id="ds-thread" data-thread-key="2016/05/26/Linked-Server-RPC/" data-title="【SQL SERVER】链接数据库“无法启动分布式事务”的问题及解决" data-url="http://c-xuan.com/2016/05/26/Linked-Server-RPC/"></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/10/15/DecisionThoughtOnBigdata/" data-title="从大数据负责人招聘看决策思维" data-url="http://c-xuan.com/2016/10/15/DecisionThoughtOnBigdata/"></div>
     <script>
         var duoshuoQuery = {short_name:"cxuan"};
         var loadComment = function(){
@@ -517,7 +519,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/05/27/SQL-SERVER-RPC-FUNCTION-CALL/" title="上一篇: 【SQL SERVER】OPENQUERY远程函数引用及参数传值问题">
+            <a href="/2016/10/15/WhyDifficultOnETLJob/" title="上一篇: 为什么ETL任务困难">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -525,7 +527,7 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/05/25/30-Astonishing-Nature-Places-on-Earth/" title="下一篇: 令人惊叹的30个自然奇观">
+            <a href="/2016/10/08/TimeForPKM/" title="下一篇: 是时候管理你的知识了">
                 <i class="fa fa-angle-right"></i>
             </a>
         

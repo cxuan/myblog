@@ -228,11 +228,11 @@ a {
 }
 #container #mobile-nav #header .header-menu li {
   display: inline-block;
-  margin: 3px;
+  margin: 0px -9px;
 }
 #container .left-col {
   background: rgba(255,255,255,0.85);
-  width: 390px;
+  width: 330px;
   position: fixed;
   opacity: 1;
   -webkit-transition: all 0.2s ease-in;
@@ -262,7 +262,7 @@ a {
   right: 0;
   min-height: 100%;
   background: rgba(255,255,255,0.8);
-  left: 390px;
+  left: 330px;
   width: auto;
 }
 @media screen and (max-width: 800px) {
@@ -347,7 +347,7 @@ a {
   #container .article .article-title {
     display: block;
     margin: 0;
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: bold;
   }
   #container .article .article-meta {
@@ -504,6 +504,9 @@ a {
   #container .toc-article a {
     color: #767676;
   }
+  #container li.toc-item {
+    line-height: 1.2;
+  }
   #container .copyright {
     width: 90%;
     padding: 0.5em 0.8em;
@@ -573,7 +576,7 @@ a {
   margin: 0 auto;
   position: relative;
   overflow: hidden;
-  background: #88acdb;
+  background: #fff;
   -webkit-box-orient: horizontal;
   -webkit-box-pack: center;
   -webkit-box-align: center;
@@ -1141,7 +1144,7 @@ a {
 }
 .hide-labels {
   position: fixed;
-  left: 468px;
+  left: 408px;
   top: 30px;
   padding: 1px;
   border: none;
@@ -1161,7 +1164,7 @@ a {
   opacity: 1;
 }
 #post-nav-button {
-  left: 390px;
+  left: 330px;
   top: 61.8%;
 }
 #post-nav-button a {
@@ -1191,6 +1194,19 @@ color
 }
 .post-list li:hover a {
   color: #88acdb;
+}
+.ui-tooltip {
+  padding: 6px;
+  max-width: 30em;
+  -webkit-box-shadow: 0 0 0.8em rgba(0,0,0,0.6);
+  box-shadow: 0 0 0.8em rgba(0,0,0,0.6);
+  color: #fff;
+  font-family: "Lucida Grande", Verdana, "Helvetica Neue", Arial, "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
+  font-size: 0.9em;
+  background: rgba(0,0,0,0.65);
+}
+body .ui-tooltip {
+  border: 1px solid #fff;
 }
 .pace .pace-progress {
   background: #77b6ff;
@@ -1763,7 +1779,7 @@ li:hover {
 }
 #tocButton {
   position: fixed;
-  left: 310px;
+  left: 250px;
   top: 385px;
   font-size: 0.9em;
   font-weight: bold;
@@ -1780,7 +1796,7 @@ li:hover {
 }
 .toc-article {
   position: fixed;
-  width: 320px;
+  width: 260px;
   top: 378px;
   bottom: 1em;
   left: 0;
@@ -1845,6 +1861,20 @@ li:hover {
 #toc ol.toc ol.toc-child {
   padding-left: 1.25em;
   margin: 4px 0;
+}
+#toc a.toc-link {
+  display: inline-block;
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+#toc li.toc-item {
+  line-height: 1.45em;
+}
+#toc li.toc-item > i {
+  position: relative;
+  bottom: 0.35em;
 }
 .copyright {
   width: 85%;

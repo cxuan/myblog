@@ -139,6 +139,12 @@ define([], function(){
         }, false);
     };
 
+    var homepageShow = function(){
+        if (window.location.pathname == '/'){
+            //$('.article-entry');
+            //console.dir(document.getElementsByClassName('article-entry'));
+        }
+    }
     return{
         init: function(){
             //构造函数需要的参数
@@ -149,6 +155,7 @@ define([], function(){
             combine();
             bindDOM();
             resetTags();
+            homepageShow();
         }
     }
 })

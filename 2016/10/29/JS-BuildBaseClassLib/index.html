@@ -15,28 +15,25 @@
 
 
 
-<meta name="description" content="###前言
-在之前的章节中，我们已经不依赖jQuery，单纯地用JavaScript封装了很多方法，这个时候，你一定会想，这些经常使用的方法能不能单独整理成一个js文件呢？
+<meta name="description" content="前言在之前的章节中，我们已经不依赖jQuery，单纯地用JavaScript封装了很多方法，这个时候，你一定会想，这些经常使用的方法能不能单独整理成一个js文件呢？
 当然可以，封装本来就是干这个用的。放在一个单独js文件里固然不错，其实我们也可以单独整一个js类库，一方面可以锻炼一下自己封装方法的能力，另一方面，也可以将自己学到的东西做一个整理。
-出于这个目的，本文将介绍如何封装一个简单的">
+出于这个目的，本文将介绍如何封装一个简单的js类库">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaScript :零基础打造自己的类库">
 <meta property="og:url" content="http://c-xuan.com/2016/10/29/JS-BuildBaseClassLib/index.html">
 <meta property="og:site_name" content="靛青">
-<meta property="og:description" content="###前言
-在之前的章节中，我们已经不依赖jQuery，单纯地用JavaScript封装了很多方法，这个时候，你一定会想，这些经常使用的方法能不能单独整理成一个js文件呢？
+<meta property="og:description" content="前言在之前的章节中，我们已经不依赖jQuery，单纯地用JavaScript封装了很多方法，这个时候，你一定会想，这些经常使用的方法能不能单独整理成一个js文件呢？
 当然可以，封装本来就是干这个用的。放在一个单独js文件里固然不错，其实我们也可以单独整一个js类库，一方面可以锻炼一下自己封装方法的能力，另一方面，也可以将自己学到的东西做一个整理。
-出于这个目的，本文将介绍如何封装一个简单的">
+出于这个目的，本文将介绍如何封装一个简单的js类库">
 <meta property="og:image" content="http://c-xuan.com/img/posts/JS-BuildBaseClassLib-1.gif">
 <meta property="og:image" content="http://c-xuan.com/img/posts/JS-BuildBaseClassLib-2.gif">
 <meta property="og:image" content="http://c-xuan.com/img/posts/JS-BuildBaseClassLib-3.gif">
-<meta property="og:updated_time" content="2016-10-29T06:08:04.105Z">
+<meta property="og:updated_time" content="2016-10-29T14:17:07.739Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript :零基础打造自己的类库">
-<meta name="twitter:description" content="###前言
-在之前的章节中，我们已经不依赖jQuery，单纯地用JavaScript封装了很多方法，这个时候，你一定会想，这些经常使用的方法能不能单独整理成一个js文件呢？
+<meta name="twitter:description" content="前言在之前的章节中，我们已经不依赖jQuery，单纯地用JavaScript封装了很多方法，这个时候，你一定会想，这些经常使用的方法能不能单独整理成一个js文件呢？
 当然可以，封装本来就是干这个用的。放在一个单独js文件里固然不错，其实我们也可以单独整一个js类库，一方面可以锻炼一下自己封装方法的能力，另一方面，也可以将自己学到的东西做一个整理。
-出于这个目的，本文将介绍如何封装一个简单的">
+出于这个目的，本文将介绍如何封装一个简单的js类库">
 <meta name="twitter:image" content="http://c-xuan.com/img/posts/JS-BuildBaseClassLib-1.gif">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -395,13 +392,11 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>###前言</p>
-<p>在之前的章节中，我们已经不依赖jQuery，单纯地用JavaScript封装了很多方法，这个时候，你一定会想，这些经常使用的方法能不能单独整理成一个js文件呢？</p>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在之前的章节中，我们已经不依赖jQuery，单纯地用JavaScript封装了很多方法，这个时候，你一定会想，这些经常使用的方法能不能单独整理成一个js文件呢？</p>
 <p>当然可以，封装本来就是干这个用的。放在一个单独js文件里固然不错，其实我们也可以单独整一个js类库，一方面可以锻炼一下自己封装方法的能力，另一方面，也可以将自己学到的东西做一个整理。</p>
 <p>出于这个目的，本文将介绍如何封装一个简单的js类库。（当然，只是开一个头，熟悉一下js基础而已。实际使用的话我感觉完全没有必要，因为jQuery已经很强大了，直接使用第三方的就可以）</p>
 <a id="more"></a>
-<p>###总体设计</p>
-<p>所谓的js库，其实也就是一个js文件，我思前想后，决定取个名字叫“miniQuery”,是不是山寨的味道十足呢？哈，请不要在意这些小细节。</p>
+<h3 id="总体设计"><a href="#总体设计" class="headerlink" title="总体设计"></a>总体设计</h3><p>所谓的js库，其实也就是一个js文件，我思前想后，决定取个名字叫“miniQuery”,是不是山寨的味道十足呢？哈，请不要在意这些小细节。</p>
 <p>大概的设计如下：</p>
 <ul>
 <li>1.扩展方法的兼容（主要写一些兼容的扩展方法，比如 forEach 方法等）</li>
@@ -413,15 +408,13 @@
 <p>我们定义一个extend_base方法，里面主要对js内置对象的api做了一些兼容性补充，目前还不完善，只有寥寥几个方法。当然，如果你不考虑IE678的话，那么基本上不需要这一部分了。</p>
 <p>定义完成后立即调用。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">extend_base();</div></pre></td></tr></table></figure>
-<p>###工具包整合</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// ------------------------ 工具包---------------------------------//</span></div><div class="line"><span class="keyword">var</span> utils = &#123;</div><div class="line">            <span class="attr">center</span> : <span class="function"><span class="keyword">function</span>(<span class="params">dom</span>)</span>&#123;</div><div class="line">                dom.style.position = <span class="string">'absolute'</span>;</div><div class="line">                dom.style.top = <span class="string">'50%'</span>;</div><div class="line">                dom.style.left = <span class="string">'50%'</span>;</div><div class="line">                dom.style[<span class="string">'margin-top'</span>] = - dom.offsetHeight / <span class="number">2</span> + <span class="string">'px'</span>;</div><div class="line">                dom.style[<span class="string">'margin-left'</span>] = - dom.offsetWidth / <span class="number">2</span> + <span class="string">'px'</span>;</div><div class="line">            &#125;,</div><div class="line">        </div><div class="line">            <span class="comment">/** dom相关 * */</span></div><div class="line">            isDom : ( <span class="keyword">typeof</span> HTMLElement === <span class="string">'object'</span> ) ?</div><div class="line">                <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</div><div class="line">                    <span class="keyword">return</span> obj <span class="keyword">instanceof</span> HTMLElement;</div><div class="line">                &#125; :</div><div class="line">                <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</div><div class="line">                    <span class="keyword">return</span> obj &amp;&amp; <span class="keyword">typeof</span> obj === <span class="string">'object'</span> &amp;&amp; obj.nodeType === <span class="number">1</span> &amp;&amp; <span class="keyword">typeof</span> obj.nodeName === <span class="string">'string'</span>;</div><div class="line">                &#125; ,</div><div class="line">             </div><div class="line">            <span class="comment">/** 数组相关 * */</span></div><div class="line">            isArray : <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</div><div class="line">                <span class="keyword">return</span> obj.constructor.toString().indexOf(<span class="string">'Array'</span>) != <span class="number">-1</span>;</div><div class="line">            &#125;</div><div class="line">            </div><div class="line">        &#125;</div></pre></td></tr></table></figure>
+<h3 id="工具包整合"><a href="#工具包整合" class="headerlink" title="工具包整合"></a>工具包整合</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// ------------------------ 工具包---------------------------------//</span></div><div class="line"><span class="keyword">var</span> utils = &#123;</div><div class="line">            <span class="attr">center</span> : <span class="function"><span class="keyword">function</span>(<span class="params">dom</span>)</span>&#123;</div><div class="line">                dom.style.position = <span class="string">'absolute'</span>;</div><div class="line">                dom.style.top = <span class="string">'50%'</span>;</div><div class="line">                dom.style.left = <span class="string">'50%'</span>;</div><div class="line">                dom.style[<span class="string">'margin-top'</span>] = - dom.offsetHeight / <span class="number">2</span> + <span class="string">'px'</span>;</div><div class="line">                dom.style[<span class="string">'margin-left'</span>] = - dom.offsetWidth / <span class="number">2</span> + <span class="string">'px'</span>;</div><div class="line">            &#125;,</div><div class="line">        </div><div class="line">            <span class="comment">/** dom相关 * */</span></div><div class="line">            isDom : ( <span class="keyword">typeof</span> HTMLElement === <span class="string">'object'</span> ) ?</div><div class="line">                <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</div><div class="line">                    <span class="keyword">return</span> obj <span class="keyword">instanceof</span> HTMLElement;</div><div class="line">                &#125; :</div><div class="line">                <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</div><div class="line">                    <span class="keyword">return</span> obj &amp;&amp; <span class="keyword">typeof</span> obj === <span class="string">'object'</span> &amp;&amp; obj.nodeType === <span class="number">1</span> &amp;&amp; <span class="keyword">typeof</span> obj.nodeName === <span class="string">'string'</span>;</div><div class="line">                &#125; ,</div><div class="line">             </div><div class="line">            <span class="comment">/** 数组相关 * */</span></div><div class="line">            isArray : <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</div><div class="line">                <span class="keyword">return</span> obj.constructor.toString().indexOf(<span class="string">'Array'</span>) != <span class="number">-1</span>;</div><div class="line">            &#125;</div><div class="line">            </div><div class="line">        &#125;</div></pre></td></tr></table></figure>
 <ul>
 <li>center ：控制dom元素相对于父盒子居中</li>
 <li>isDom ：判断是否为dom元素</li>
 <li>isArray ：判断是否为数组</li>
 </ul>
-<p>###miniQuery总体设计</p>
-<p>终于到miniQuery了，在写代码之前，先简单说一下自执行函数。<br>可能你在很多书上，或者下载的源码里面，经常会看到这样的代码：</p>
+<h3 id="miniQuery总体设计"><a href="#miniQuery总体设计" class="headerlink" title="miniQuery总体设计"></a>miniQuery总体设计</h3><p>终于到miniQuery了，在写代码之前，先简单说一下自执行函数。<br>可能你在很多书上，或者下载的源码里面，经常会看到这样的代码：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    </div><div class="line">&#125;)();</div></pre></td></tr></table></figure>
 <p>这样子你或许觉得很奇怪，没事，我们一起来分析。</p>
 <p>在js中，你如果把函数看作一个数据类型，和其他语言中的 Integer， Float ， String等等一样，就会理解很多事情了。当然，其实在js中，函数本身就是一个对象，不然的话就不会出现call方法了。因为只有对象才可以调用方法嘛。不过，大部分情况下，你把函数理解为数据类型就可以了。</p>
@@ -476,8 +469,7 @@
 <p>如果你觉得每次写miniQuery太麻烦，那么我们可以给它换一个名字，比如 $</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">win</span>)</span>&#123;</div><div class="line">   </div><div class="line">   <span class="keyword">var</span> miniQuery = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    alert(<span class="string">'Hello miniQuery!'</span>);</div><div class="line">   &#125;</div><div class="line">   </div><div class="line">   </div><div class="line">   win.$ = miniQuery;</div><div class="line">   </div><div class="line">&#125;)(<span class="built_in">window</span>);</div><div class="line"></div><div class="line">$();</div></pre></td></tr></table></figure>
 <p>这样就差不多了。</p>
-<p>###miniQuery 包裹对象</p>
-<p>我们先弄来一个测试用的网页：</p>
+<h3 id="miniQuery-包裹对象"><a href="#miniQuery-包裹对象" class="headerlink" title="miniQuery 包裹对象"></a>miniQuery 包裹对象</h3><p>我们先弄来一个测试用的网页：</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.wrap</span> &#123;</div><div class="line">    <span class="attribute">width</span>:<span class="number">80px</span>;</div><div class="line">    <span class="attribute">height</span>:<span class="number">80px</span>;</div><div class="line">    <span class="attribute">background</span>:darkslateblue;</div><div class="line">    <span class="attribute">margin</span>:<span class="number">20px</span>;</div><div class="line">    <span class="attribute">border-radius</span>: <span class="number">2px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">'boxes'</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">'box1'</span> <span class="attr">class</span>=<span class="string">'wrap'</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">'box2'</span> <span class="attr">class</span>=<span class="string">'wrap'</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">'box3'</span> <span class="attr">class</span>=<span class="string">'wrap'</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>举一个例子，现在我们要获取id为box1的盒子，并把它的背景色改为红色。</p>
@@ -550,7 +542,7 @@
         <p><span>本文标题:</span><a href="/2016/10/29/JS-BuildBaseClassLib/">JavaScript :零基础打造自己的类库</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">c-xuan</a></p>
         <p><span>发布时间:</span>2016-10-29, 13:31:39</p>
-        <p><span>最后更新:</span>2016-10-29, 14:08:04</p>
+        <p><span>最后更新:</span>2016-10-29, 22:17:07</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/10/29/JS-BuildBaseClassLib/" title="JavaScript :零基础打造自己的类库">http://c-xuan.com/2016/10/29/JS-BuildBaseClassLib/</a>
             <span class="copy-path" data-clipboard-text="原文: http://c-xuan.com/2016/10/29/JS-BuildBaseClassLib/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -580,7 +572,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总体设计"><span class="toc-number">2.</span> <span class="toc-text">总体设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工具包整合"><span class="toc-number">3.</span> <span class="toc-text">工具包整合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#miniQuery总体设计"><span class="toc-number">4.</span> <span class="toc-text">miniQuery总体设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#miniQuery-包裹对象"><span class="toc-number">5.</span> <span class="toc-text">miniQuery 包裹对象</span></a></li></ol>
         
     </div>
     <style>

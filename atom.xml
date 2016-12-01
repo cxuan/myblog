@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://c-xuan.com/"/>
-  <updated>2016-10-29T14:22:45.059Z</updated>
+  <updated>2016-12-01T15:55:20.677Z</updated>
   <id>http://c-xuan.com/</id>
   
   <author>
@@ -14,6 +14,147 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>从事技术，坚持写博客的好处？</title>
+    <link href="http://c-xuan.com/2016/12/01/BenifitOfWritingBlog/"/>
+    <id>http://c-xuan.com/2016/12/01/BenifitOfWritingBlog/</id>
+    <published>2016-12-01T15:38:04.000Z</published>
+    <updated>2016-12-01T15:55:20.677Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><ul>
+<li>1.写博客的担心</li>
+</ul>
+<p>今天来谈谈,写博客对我的益处,说起写博客,其实我写博客的时间不长,也就10来个月时间;之前工作的时候,看到同事每天晚上写博客,当时觉得很奇怪,就觉得写这个东西,非常浪费时间,自己知道的好的技术或者是好的技术解决思路,如果分享出去,不是被别人学去了吗等等一系列问题.</p>
+<ul>
+<li>2.自己的经历</li>
+</ul>
+<p>等写了一段时间博客时,慢慢发现,其实之前的担心的完全没必要,你会的东西,精通的知识,即使分享出去,别人也未必能学的会,即时要学会学透,也是要花费时间和精力的,所以这种担心我们大可不必.人还是要有点分享和谦虚精神的,仅仅是这种只进不出的思想,我想你也很难有的发展!那么写博客10来个时间里,通过写博客给自己带来了哪些方面的提升呢?下面我就结合自己经力来给大家做个详细的总结. </p>
+<a id="more"></a>
+<h2 id="写博客的好处"><a href="#写博客的好处" class="headerlink" title="写博客的好处"></a>写博客的好处</h2><p>下面我就大家来做一个详细的分析.以思维导图的形式给大家列举一下,写博客这10来个月时间里,给我带来了哪些变化.</p>
+<ul>
+<li>1.没写博客的原因</li>
+</ul>
+<center><img src="/img/posts/BenifitOfWritingBlog-1.jpg"></center>
+
+<p>下面也对当初写博客时担心,给大家一一分析.</p>
+<ul>
+<li>1.1 浪费时间</li>
+</ul>
+<p>如果你刚开始写博客,你可能会有这样的担心,觉得他很浪费时间,需要花时间去思考,去总结,去整理成章,这一系列过程都是要花费很多时间.当你渐渐养成写博客习惯时,就会慢慢意识到这是花费时间,而不是所谓的浪费时间!</p>
+<ul>
+<li>1.2. 工作太忙,没时间去写</li>
+</ul>
+<p>这是最无能为力的，有热情的程序员是不会总以这个理由推脱的。习惯成自然!</p>
+<ul>
+<li>1.3.怕自己的技术被别人学去</li>
+</ul>
+<p>这个完全没必要去担心,你会的别人也未必会,即使你分享出去,别人也未必学的会!人还是要有点分享精神的!</p>
+<ul>
+<li>1.4.懒于思考,疏于总结</li>
+</ul>
+<p>这个是最致命的,事情的成败在于此!吃一堑长一智,能力都是在思考和总结中得带长足进步的!</p>
+<ul>
+<li>1.5.想写,但不知道该写些什么?</li>
+</ul>
+<p>这其实是一种思考总结能力的欠缺。大胆迈出第一步,慢慢来,就把它当做每天发微信动态一样,把它变成一种常态。</p>
+<ul>
+<li>1.6.技术含量低,写出来没意义</li>
+</ul>
+<p>写博客不一定要写出多么牛逼的文章,只要是自己所悟所思所想就行,记录自己知识点滴的不足,例如,今天我一个变量用错了,我也可以把它写出来,自己的博客无关他人怎么看.事实上，除了你的挚友和亲人，没有人会那么在意你，这些担心都是庸人自扰。知识是自己的事,我总结我进步!</p>
+<ul>
+<li>2.最初的想法</li>
+</ul>
+<p>我为什么要写博客呢?其实当时的想法非常简单,仅仅是想把自己当天工作中学到的知识及解决问题的思路,整理记录下来,方便自己日后工作用到的时候能够翻翻,快速的找到.原因就这么简单.</p>
+<ul>
+<li>3.最后的好处</li>
+</ul>
+<center><img src="/img/posts/BenifitOfWritingBlog-2.jpg"></center>
+
+<p>那么问题来了,写博客有什么好处呢,能让一个人坚持这么久?下面我就给大家一一做个解释.</p>
+<ul>
+<li>3.1.加深对技术点的理解</li>
+</ul>
+<p>每天写博客,可以加深对技术点的理解,假如工作中,对某个技术点运用的不熟,当你通过博客的形式写出来,这个过程中,遇到不懂的知识点,你就会查阅相关的资料,弄明白他.</p>
+<ul>
+<li>3.2.自己日后用到</li>
+</ul>
+<p>就相当于笔记本一样,把重要的东西都记录下来,等哪天在遇到同样的问题,我们可以翻阅他.确实偶尔会用到，但频率不会那么高；因为你遇到过一次，解决了之后记忆能保存很长时间，除非又过了一段时间后又遇到这个问题；或者问题解决方案比较复杂，不是简单一次就能记住的。</p>
+<ul>
+<li>3.3.获得阅读量,得到认可</li>
+</ul>
+<p>当一篇文章,获得更多人阅读时或者是被各大网站转发时,往往就会有一种喜悦感,一种得到认可的感觉,写文章的动力就随之而来了.</p>
+<ul>
+<li>3.4.成就感</li>
+</ul>
+<p>当你的文章被大量阅读时,是不是很有成就感?当别人对你的文章称赞的时,是不是有某种成就感,继续写下去的<br>冲动?当你的文章被大量转发,被收录,是不是也有成就感?</p>
+<ul>
+<li>3.5.一点小虚荣</li>
+</ul>
+<p>当你遇到一个问题，搜索结果是自己的博客文章；当你的同事遇到问题，搜索结果是你的文章；当你的名称出现在全球最大中文IT社区的博客首页上；每个月博客网给你送书,是否感到一种无比的欣喜?你是不是有那么一点小小的虚荣心和自豪感呢？</p>
+<ul>
+<li>3.6.提高自己思维能力</li>
+</ul>
+<p>博客写多了,你的逻辑思维是不是很强了;解决问题的思路更加清晰了;技术文档是不是轻易的就写出来了.可以时刻保持思考的习惯,不至于思想比较僵化.可以提高解决问题的思维角度,有利于我们作为程序员的长远发展!</p>
+<ul>
+<li>3.7.提高自己的写作水平</li>
+</ul>
+<p>这个，确实有一定的帮助；但对于程序方面的文档来说，文字是一方面，画图是另一方面（思维导图，关系图，架构图之类的）。不过目前也就普通的文档还行，招投标文档感觉写起来还是有难度。</p>
+<ul>
+<li>3.8.为自己的人生留下只言片语</li>
+</ul>
+<p>就像日志一样,人生总有回味的地方吧.你不能说你做了10来年的技术,10年来的技术积累在哪,总要留下点只言片语.人生需要回味!<br>这同时也是是一个知识积累的过程，但更重的是为自己的人生留下一点痕迹。你也可以把它当成写日志，只不过是程序员体的语言,在IT圈子里，如果有人问起我关于某个技术，文字是不容易撒谎的。翻阅自己以前写的博客，很容易找到自己的成长轨迹.</p>
+<ul>
+<li>3.9.提高自己的知名度</li>
+</ul>
+<p>现在自己只是个无名的程序员,对这个倒没啥感觉</p>
+<ul>
+<li>3.10.养成有始有终的好习惯</li>
+</ul>
+<p>每天写日志,私密的东西,始终是自己一个人看,对我而言很难坚持下去,;而技术就不一样了,一篇博客人人都可以去看,好就点个赞,就评论一下,分享给大家!</p>
+<ul>
+<li>3.11.结交志同道合的朋友</li>
+</ul>
+<p>这个可以有,看你文章的人,大部分都是跟你从事同一领域的人,交流多了,进步也快了!</p>
+<ul>
+<li>3.12.碎片化学习</li>
+</ul>
+<p>你是否有这样的困惑？通过网络确实能够学习到很多东西，但从网上学到的东西大都是零零散散的，不系统，好像学了很多东西，又好像什么都没学到，或者学过之后又忘了，这该怎么办？有个博客就很简单了，我们可以把学习的知识按自己的结构整理记录下来，方便日后查阅巩固。</p>
+<ul>
+<li>3.13.使自己成为技术大牛</li>
+</ul>
+<p>这个真的可以做到,写博客,在相同的时间里, 带给自己能力的提升要比别人要快很多,不过这也是个循序渐进的过程,非一日之寒!</p>
+<ul>
+<li>3.14.分享与学习</li>
+</ul>
+<p>什么意思呢？也就是随着你的分享越来越多， 可能会出现一批技术的追随者、崇拜者。当然，我的技术还远远没达到那个层次，这也就是为什么是分享与学习；也就是说，你分享的内容如果有说的不对的地方，考虑的不周的地方，角度不全面的地方，热心的小伙伴会帮你指出来！这样就通过你的分享，产生沟通与交流的介质，从而学习更多的知识。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总之写博客,对一个技术人员来讲,益处很大,最自己能力,技能,知识的提升都有很大的帮助,在这里大家要记住写博客是非常花费时间的,注意这里说的是花费时间而不是浪费时间,我觉得花费时间去写博客是值得的!</p>
+<p>最后希望那些想想写博客而没有坚持写下去的人,继续坚持写下去,坚持了就有收获.而那些没有写博客的人.给自己找个自己写博客的理由不需要太复杂太充分，正如我的简简单单就可以.</p>
+<p>坚持下去!</p>
+<p>转自:<a href="http://www.toutiao.com/a6308960007249559810/" target="_blank" rel="external">http://www.toutiao.com/a6308960007249559810/</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;摘要&quot;&gt;&lt;a href=&quot;#摘要&quot; class=&quot;headerlink&quot; title=&quot;摘要&quot;&gt;&lt;/a&gt;摘要&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;1.写博客的担心&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;今天来谈谈,写博客对我的益处,说起写博客,其实我写博客的时间不长,也就10来个月时间;之前工作的时候,看到同事每天晚上写博客,当时觉得很奇怪,就觉得写这个东西,非常浪费时间,自己知道的好的技术或者是好的技术解决思路,如果分享出去,不是被别人学去了吗等等一系列问题.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;2.自己的经历&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;等写了一段时间博客时,慢慢发现,其实之前的担心的完全没必要,你会的东西,精通的知识,即使分享出去,别人也未必能学的会,即时要学会学透,也是要花费时间和精力的,所以这种担心我们大可不必.人还是要有点分享和谦虚精神的,仅仅是这种只进不出的思想,我想你也很难有的发展!那么写博客10来个时间里,通过写博客给自己带来了哪些方面的提升呢?下面我就结合自己经力来给大家做个详细的总结. &lt;/p&gt;
+    
+    </summary>
+    
+      <category term="随笔感悟" scheme="http://c-xuan.com/categories/%E9%9A%8F%E7%AC%94%E6%84%9F%E6%82%9F/"/>
+    
+    
+      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
+    
+      <category term="知识管理" scheme="http://c-xuan.com/tags/%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86/"/>
+    
+  </entry>
   
   <entry>
     <title>JavaScript :零基础打造自己的类库</title>
@@ -225,11 +366,11 @@
       <category term="BI墨客" scheme="http://c-xuan.com/categories/BI%E5%A2%A8%E5%AE%A2/"/>
     
     
-      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
       <category term="BI" scheme="http://c-xuan.com/tags/BI/"/>
     
       <category term="数据仓库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/"/>
+    
+      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
     
   </entry>
   
@@ -330,9 +471,9 @@
       <category term="随笔感悟" scheme="http://c-xuan.com/categories/%E9%9A%8F%E7%AC%94%E6%84%9F%E6%82%9F/"/>
     
     
-      <category term="原创" scheme="http://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
-    
       <category term="知识管理" scheme="http://c-xuan.com/tags/%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86/"/>
+    
+      <category term="原创" scheme="http://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
     
   </entry>
   
@@ -663,11 +804,11 @@
       <category term="BI墨客" scheme="http://c-xuan.com/categories/BI%E5%A2%A8%E5%AE%A2/"/>
     
     
-      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
       <category term="BI" scheme="http://c-xuan.com/tags/BI/"/>
     
       <category term="数据仓库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/"/>
+    
+      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
     
   </entry>
   
@@ -1174,11 +1315,11 @@
       <category term="BI墨客" scheme="http://c-xuan.com/categories/BI%E5%A2%A8%E5%AE%A2/"/>
     
     
-      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
       <category term="BI" scheme="http://c-xuan.com/tags/BI/"/>
     
       <category term="数据仓库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/"/>
+    
+      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
     
   </entry>
   
@@ -1245,11 +1386,11 @@
       <category term="BI墨客" scheme="http://c-xuan.com/categories/BI%E5%A2%A8%E5%AE%A2/"/>
     
     
-      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
       <category term="BI" scheme="http://c-xuan.com/tags/BI/"/>
     
       <category term="数据仓库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/"/>
+    
+      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
     
   </entry>
   
@@ -1490,9 +1631,9 @@
       <category term="BI墨客" scheme="http://c-xuan.com/categories/BI%E5%A2%A8%E5%AE%A2/"/>
     
     
-      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
       <category term="BI" scheme="http://c-xuan.com/tags/BI/"/>
+    
+      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
     
       <category term="SSIS" scheme="http://c-xuan.com/tags/SSIS/"/>
     
@@ -1533,9 +1674,52 @@
     
       <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
     
+      <category term="数据库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
       <category term="SQL Server" scheme="http://c-xuan.com/tags/SQL-Server/"/>
     
-      <category term="数据库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+  </entry>
+  
+  <entry>
+    <title>放开那程序猿！构建业务导向的大数据云平台</title>
+    <link href="http://c-xuan.com/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/"/>
+    <id>http://c-xuan.com/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/</id>
+    <published>2016-06-04T16:00:00.000Z</published>
+    <updated>2016-09-22T16:13:16.702Z</updated>
+    
+    <content type="html"><![CDATA[<p>按数据处理方式及使用目标，企业级IT系统可分为OLTP和OLAP系统。简而言之，OLTP系统生产数据，OLAP系统加工数据。从数据到智慧的转换金字塔上看，OLTP系统实现了底层的数据产生和存储以及面向事务的信息整合，在这之上的各层就要依赖OLAP系统了。OLAP概念源自决策支持系统（DSS），企业中的数据仓库、数据集市、统计报表、驾驶舱、数据挖掘等都属于OLAP体系。其中，数据仓库和数据集市主要实现信息整合，一般统称为数据整合平台。统计报表、驾驶舱、数据挖掘进一步利用数据整合平台的成果，帮助用户发现知识并最终形成智慧。 </p>
+<a id="more"></a>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-1.png" alt="BuildBusinessOrientedBigDataCloudPlatform-1"></p>
+<p>OLAP系统的主要用户是分析人员和管理人员，目标是支持管理决策，依据是企业生产经营过程中产生的全量数据，是一个按目标使用场景对数据进行加工、利用的过程。这过程一般可以划分五个阶段：业务部门定义需求；IT部门根据需求获取并整合相关数据；IT部门根据需求设计分析模型；IT部门开发实施并发布；业务部门应用并衡量实际成效。在传统的数据基础和技术环境下，这个周期可能要经历较漫长的时间。还在建设OLAP体系的情况自不必多说，即便已建成OLAP体系统，要及时响应业务部门的需求也是较困难的，而且很有可能最终的交付质量不能达到需求方的预期。</p>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-2.png" alt="BuildBusinessOrientedBigDataCloudPlatform-2"></p>
+<p>下图是目前较常见的OLAP体系简图，上游系统指那些OLTP系统，是数据源。数据整合平台包括ODS、数据仓库、数据集市等，主要实现数据整合。下游系统指那些利用数据整合平台成果的系统，包括统计报表、驾驶舱、数据挖掘等。其中，数据整合平台承上启下，在整个OLAP体系中非常重要。按照目前较普遍的架构，从上游到下游的数据流向，至少分为同构层、整合层、应用层。其中同构层在模型上基本与上游接入数据源基本保持一致，整合层一般会采用高范式模型进行数据整合，应用层面向下游具体应用采用星型模型。这个架构是在Inmon帮和Kimball派十几年如一日的不断撕逼和妥协中演进出来的，应该是一种最佳实践。但随着互联网+大数据时代到来，对数据应用有着更高效、更深入的要求，这种架构本身固有的缺点被不断放大。</p>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-3.png" alt="BuildBusinessOrientedBigDataCloudPlatform-3"></p>
+<p><strong>开发周期长</strong></p>
+<p>为了避免因上游系统接入模型的变化而导致数据整合平台模型的被动调整，整合层建模时一般会采用较高范式实现高内聚、低耦合，ER实体较多、关系复杂。这样就增加了ETL设计、开发以及测试的复杂度，同时ETL程序执行效率也低。业务部门提出的需求，IT首先由下至上逐层对模型进行分析，即便只需在应用层开发，基于上述原因也需要一周以上。如果涉及要改动整合层，开发周期要一个月左右，业务部门显然是不能接受的。最后的结局不用猜都知道，苦逼的程序猿只能再一次强睁熊猫眼天天加班赶工。但是故事并没有到此结束，马上一个意想不到但细细想想又是顺理成章的伴生问题发生了。</p>
+<p><strong>架构迅速变坏</strong></p>
+<p>在日复一日的高压下，程序猿只能另辟蹊径为自己减负。既然工作量是由于数据模型和层次的复杂性引起的，那最有效的减少工作量的方法无非就是：1、绕过整合层，数据直接从同构层到应用层。2、还是从通过整合层，但使用面向应用的自建模型。无论哪种方法，都使整合层形同虚设，从同构层到应用层形成一个个数据井道。虽然单个开发任务的开发时间缩短了，但各数据井道之间无法复用，所以总的开发时间绝对要更多，而且后期的维护工作将是一场噩梦。</p>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-4.png" alt="BuildBusinessOrientedBigDataCloudPlatform-4"></p>
+<p><strong>效率低</strong></p>
+<p>架构变坏后，数据一致性无法保证，大量数据重复存储，大量指标重复计算，ETL作业数急剧上升，数据整合平台效率自然会越来越差。即便架构还能保持，但随着时间的推移，数据量及业务需求不断增加，架构上倾向分割出更多的层次，以便实现更多的复用。随着层次的增加，数据迁移的路径就变长了，长久以往也难逃低效率的宿命。</p>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-5.png" alt="BuildBusinessOrientedBigDataCloudPlatform-5"></p>
+<p>再回顾下OLAP数据应用的五个阶段，从业务提出需求到业务应用验证形成闭环，这过程是由IT导向推动的，IT首先与业务讨论分析需求，在业务模型层面中达成共识，然后再映射到系统模型，实现对来自上游系统的数据进行加工处理，最后通过OLAP系统将结果在业务语境中展现给用户，之前讨论的所有弊病都此有关。而对于像银行、保险等发展较成熟的行业，其业务语境、模型是较稳定的，支持业务开展的上游IT系统的系统模型也应该是相对稳定的，因此业务模型和系统模型间能形成较稳定的映射关系。这样只要能达到足够细的粒度，就能实现操纵业务模型来改变系统模型的目的。而业务模型又能被业务所能理解，因此这个闭环过程就可以完全由业务导向不需要IT的参与，整个过程可以简化为：业务设计模型，业务应用验证。</p>
+<p>文／season7（简书作者）<br>原文链接：<a href="http://www.jianshu.com/p/d55d8eeac219" target="_blank" rel="external">http://www.jianshu.com/p/d55d8eeac219</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;按数据处理方式及使用目标，企业级IT系统可分为OLTP和OLAP系统。简而言之，OLTP系统生产数据，OLAP系统加工数据。从数据到智慧的转换金字塔上看，OLTP系统实现了底层的数据产生和存储以及面向事务的信息整合，在这之上的各层就要依赖OLAP系统了。OLAP概念源自决策支持系统（DSS），企业中的数据仓库、数据集市、统计报表、驾驶舱、数据挖掘等都属于OLAP体系。其中，数据仓库和数据集市主要实现信息整合，一般统称为数据整合平台。统计报表、驾驶舱、数据挖掘进一步利用数据整合平台的成果，帮助用户发现知识并最终形成智慧。 &lt;/p&gt;
+    
+    </summary>
+    
+      <category term="BI墨客" scheme="http://c-xuan.com/categories/BI%E5%A2%A8%E5%AE%A2/"/>
+    
+    
+      <category term="BI" scheme="http://c-xuan.com/tags/BI/"/>
+    
+      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
+    
+      <category term="BigData" scheme="http://c-xuan.com/tags/BigData/"/>
     
   </entry>
   
@@ -1577,167 +1761,9 @@
       <category term="BI墨客" scheme="http://c-xuan.com/categories/BI%E5%A2%A8%E5%AE%A2/"/>
     
     
-      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
       <category term="BI" scheme="http://c-xuan.com/tags/BI/"/>
     
-  </entry>
-  
-  <entry>
-    <title>放开那程序猿！构建业务导向的大数据云平台</title>
-    <link href="http://c-xuan.com/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/"/>
-    <id>http://c-xuan.com/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/</id>
-    <published>2016-06-04T16:00:00.000Z</published>
-    <updated>2016-09-22T16:13:16.702Z</updated>
-    
-    <content type="html"><![CDATA[<p>按数据处理方式及使用目标，企业级IT系统可分为OLTP和OLAP系统。简而言之，OLTP系统生产数据，OLAP系统加工数据。从数据到智慧的转换金字塔上看，OLTP系统实现了底层的数据产生和存储以及面向事务的信息整合，在这之上的各层就要依赖OLAP系统了。OLAP概念源自决策支持系统（DSS），企业中的数据仓库、数据集市、统计报表、驾驶舱、数据挖掘等都属于OLAP体系。其中，数据仓库和数据集市主要实现信息整合，一般统称为数据整合平台。统计报表、驾驶舱、数据挖掘进一步利用数据整合平台的成果，帮助用户发现知识并最终形成智慧。 </p>
-<a id="more"></a>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-1.png" alt="BuildBusinessOrientedBigDataCloudPlatform-1"></p>
-<p>OLAP系统的主要用户是分析人员和管理人员，目标是支持管理决策，依据是企业生产经营过程中产生的全量数据，是一个按目标使用场景对数据进行加工、利用的过程。这过程一般可以划分五个阶段：业务部门定义需求；IT部门根据需求获取并整合相关数据；IT部门根据需求设计分析模型；IT部门开发实施并发布；业务部门应用并衡量实际成效。在传统的数据基础和技术环境下，这个周期可能要经历较漫长的时间。还在建设OLAP体系的情况自不必多说，即便已建成OLAP体系统，要及时响应业务部门的需求也是较困难的，而且很有可能最终的交付质量不能达到需求方的预期。</p>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-2.png" alt="BuildBusinessOrientedBigDataCloudPlatform-2"></p>
-<p>下图是目前较常见的OLAP体系简图，上游系统指那些OLTP系统，是数据源。数据整合平台包括ODS、数据仓库、数据集市等，主要实现数据整合。下游系统指那些利用数据整合平台成果的系统，包括统计报表、驾驶舱、数据挖掘等。其中，数据整合平台承上启下，在整个OLAP体系中非常重要。按照目前较普遍的架构，从上游到下游的数据流向，至少分为同构层、整合层、应用层。其中同构层在模型上基本与上游接入数据源基本保持一致，整合层一般会采用高范式模型进行数据整合，应用层面向下游具体应用采用星型模型。这个架构是在Inmon帮和Kimball派十几年如一日的不断撕逼和妥协中演进出来的，应该是一种最佳实践。但随着互联网+大数据时代到来，对数据应用有着更高效、更深入的要求，这种架构本身固有的缺点被不断放大。</p>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-3.png" alt="BuildBusinessOrientedBigDataCloudPlatform-3"></p>
-<p><strong>开发周期长</strong></p>
-<p>为了避免因上游系统接入模型的变化而导致数据整合平台模型的被动调整，整合层建模时一般会采用较高范式实现高内聚、低耦合，ER实体较多、关系复杂。这样就增加了ETL设计、开发以及测试的复杂度，同时ETL程序执行效率也低。业务部门提出的需求，IT首先由下至上逐层对模型进行分析，即便只需在应用层开发，基于上述原因也需要一周以上。如果涉及要改动整合层，开发周期要一个月左右，业务部门显然是不能接受的。最后的结局不用猜都知道，苦逼的程序猿只能再一次强睁熊猫眼天天加班赶工。但是故事并没有到此结束，马上一个意想不到但细细想想又是顺理成章的伴生问题发生了。</p>
-<p><strong>架构迅速变坏</strong></p>
-<p>在日复一日的高压下，程序猿只能另辟蹊径为自己减负。既然工作量是由于数据模型和层次的复杂性引起的，那最有效的减少工作量的方法无非就是：1、绕过整合层，数据直接从同构层到应用层。2、还是从通过整合层，但使用面向应用的自建模型。无论哪种方法，都使整合层形同虚设，从同构层到应用层形成一个个数据井道。虽然单个开发任务的开发时间缩短了，但各数据井道之间无法复用，所以总的开发时间绝对要更多，而且后期的维护工作将是一场噩梦。</p>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-4.png" alt="BuildBusinessOrientedBigDataCloudPlatform-4"></p>
-<p><strong>效率低</strong></p>
-<p>架构变坏后，数据一致性无法保证，大量数据重复存储，大量指标重复计算，ETL作业数急剧上升，数据整合平台效率自然会越来越差。即便架构还能保持，但随着时间的推移，数据量及业务需求不断增加，架构上倾向分割出更多的层次，以便实现更多的复用。随着层次的增加，数据迁移的路径就变长了，长久以往也难逃低效率的宿命。</p>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-5.png" alt="BuildBusinessOrientedBigDataCloudPlatform-5"></p>
-<p>再回顾下OLAP数据应用的五个阶段，从业务提出需求到业务应用验证形成闭环，这过程是由IT导向推动的，IT首先与业务讨论分析需求，在业务模型层面中达成共识，然后再映射到系统模型，实现对来自上游系统的数据进行加工处理，最后通过OLAP系统将结果在业务语境中展现给用户，之前讨论的所有弊病都此有关。而对于像银行、保险等发展较成熟的行业，其业务语境、模型是较稳定的，支持业务开展的上游IT系统的系统模型也应该是相对稳定的，因此业务模型和系统模型间能形成较稳定的映射关系。这样只要能达到足够细的粒度，就能实现操纵业务模型来改变系统模型的目的。而业务模型又能被业务所能理解，因此这个闭环过程就可以完全由业务导向不需要IT的参与，整个过程可以简化为：业务设计模型，业务应用验证。</p>
-<p>文／season7（简书作者）<br>原文链接：<a href="http://www.jianshu.com/p/d55d8eeac219" target="_blank" rel="external">http://www.jianshu.com/p/d55d8eeac219</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;按数据处理方式及使用目标，企业级IT系统可分为OLTP和OLAP系统。简而言之，OLTP系统生产数据，OLAP系统加工数据。从数据到智慧的转换金字塔上看，OLTP系统实现了底层的数据产生和存储以及面向事务的信息整合，在这之上的各层就要依赖OLAP系统了。OLAP概念源自决策支持系统（DSS），企业中的数据仓库、数据集市、统计报表、驾驶舱、数据挖掘等都属于OLAP体系。其中，数据仓库和数据集市主要实现信息整合，一般统称为数据整合平台。统计报表、驾驶舱、数据挖掘进一步利用数据整合平台的成果，帮助用户发现知识并最终形成智慧。 &lt;/p&gt;
-    
-    </summary>
-    
-      <category term="BI墨客" scheme="http://c-xuan.com/categories/BI%E5%A2%A8%E5%AE%A2/"/>
-    
-    
       <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
-      <category term="BI" scheme="http://c-xuan.com/tags/BI/"/>
-    
-      <category term="BigData" scheme="http://c-xuan.com/tags/BigData/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【SQL SERVER】OPENQUERY远程函数引用及参数传值问题</title>
-    <link href="http://c-xuan.com/2016/05/27/SQL-SERVER-RPC-FUNCTION-CALL/"/>
-    <id>http://c-xuan.com/2016/05/27/SQL-SERVER-RPC-FUNCTION-CALL/</id>
-    <published>2016-05-26T16:00:00.000Z</published>
-    <updated>2016-09-22T16:16:46.648Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="模拟数据"><a href="#模拟数据" class="headerlink" title="模拟数据"></a>模拟数据</h3><p>两台服务器，都安装有数据库，服务器A,服务器B。</p>
-<p>服务器B的数据库上配置有指向服务器A的数据库的链接数据库。</p>
-<p>服务器A的数据库Test里创建以下两个函数，一个函数返回一个表值，一个返回单个字符串值。</p>
-<a id="more"></a>
-<pre><code>CREATE FUNCTION FUN_ReturnTable
-(
-    @para VARCHAR(50)
-)
-RETURNS @table TABLE(
-    col VARCHAR(50)
-)
-AS
-BEGIN
-    INSERT INTO @table
-            ( col )
-    VALUES  ( &apos;This is Test.&apos;),
-            ( @para )
-RETURN
-END 
-
-GO 
-CREATE FUNCTION FUN_ReturnValue (@para VARCHAR(50)) RETURNS varchar(50)
-AS
-BEGIN
-        RETURN (&apos;Input para is &apos;+@para)
-END 
-GO
-</code></pre><h3 id="调用测试"><a href="#调用测试" class="headerlink" title="调用测试"></a>调用测试</h3><p>服务器A上的数据库可以执行</p>
-<pre><code>SELECT * FROM  Test.dbo.FUN_ReturnTable(&apos;haha&apos;) --返回表
-SELECT dbo.FUN_ReturnValue(&apos;haha&apos;) --返回单个值
-</code></pre><p>然后在服务器B上的数据库运行以下语句调用（假设配置的链接服务器为LS）</p>
-<pre><code>SELECT LS.Test.dbo.FUN_ReturnValue(&apos;haha&apos;)
-</code></pre><p>于是就报错了:”不允许远程函数引用 ‘LS.Test.dbo.FUN_ReturnValue’，找不到列名 ‘LS’，或者列名不明确。”</p>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>可以看到这样直接通过链接数据库调用是不行的。需要换个方式，改用OPENQUERY。</p>
-<pre><code>DECLARE @a VARCHAR(50)
-set @a = (select * from openquery(LS,&apos;select Test.dbo.FUN_ReturnValue(&apos;&apos;haha&apos;&apos;)&apos;))
-select @a --返回的字符串值
-
-SELECT * from openquery(LS,&apos;select * from Test.dbo.FUN_ReturnTable(&apos;&apos;haha&apos;&apos;)&apos;) --返回的表值
-</code></pre><p>以上的调用，函数的参数值是写死的，如果传一个动态参数，改成下面这样：</p>
-<pre><code>DECLARE @a VARCHAR(50)
-DECLARE @b VARCHAR(50)
-set @a = (select * from openquery(LS,&apos;select Test.dbo.FUN_ReturnValue(&apos;&apos;&apos;+@b+&apos;&apos;&apos;)&apos;))
-select @a
-</code></pre><p>是无法运行的，提示错误：</p>
-<p><img src="/img/posts/SQL-SERVER-RPC-FUNCTION-CALL-1.jpg" alt="SQL-SERVER-RPC-FUNCTION-CALL-1"></p>
-<p>这个问题我就费解了，OPENQUERY的第二个参数不能直接带有动态变量，不知道啥原因，官网上也备注说明不可以含有参数。</p>
-<p>解决方法是换种方式调用，改用EXEC的方法。</p>
-<pre><code>DECLARE @b VARCHAR(50)
-DECLARE @sql varchar(500)
-set @b = &apos;haha&apos;;
-set @sql = &apos;select a from openquery(LS,&apos;&apos;select Test.dbo.FUN_ReturnValue(&apos;&apos;&apos;&apos;&apos;+@b+&apos;&apos;&apos;&apos;&apos;) AS a&apos;&apos;)&apos;;
-exec(@sql);
-</code></pre><p>以上语句是可以执行的，输出“Input para is haha”单行的字符串。那么现在问题来了，我想将现在输出的结果赋值给一个本地变量@a，所以想当然就这样写</p>
-<pre><code>DECLARE @a VARCHAR(50)
-DECLARE @b VARCHAR(50)
-DECLARE @sql varchar(500)
-set @b = &apos;haha&apos;;
-set @sql = &apos;select a from openquery(LS,&apos;&apos;select Test.dbo.FUN_ReturnValue(&apos;&apos;&apos;&apos;&apos;+@b+&apos;&apos;&apos;&apos;&apos;) AS a&apos;&apos;)&apos;;
-set @a = exec(@sql); --是错误的，语法错误
-set @a = (select * from exec(@sql)); --是错误的，语法错误
-select @a;
-</code></pre><p>以上给@a变量赋值方法都不行。于是将@a改为表变量。</p>
-<pre><code>DECLARE @b VARCHAR(50)
-DECLARE @sql varchar(500)
-DECLARE @a table( name varchar(50))
-set @b = &apos;haha&apos;;
-set @sql = &apos;select a from openquery(LS,&apos;&apos;select Test.dbo.FUN_ReturnValue(&apos;&apos;&apos;&apos;&apos;+@b+&apos;&apos;&apos;&apos;&apos;) AS a&apos;&apos;)&apos;;
-insert into @a exec(@sql); --将结果插入表里
-select name from @a
-</code></pre><p>这样结果就保存到表变量了。调用返回表值的函数也是可以的。</p>
-<pre><code>DECLARE @b VARCHAR(50)
-DECLARE @sql varchar(500)
-DECLARE @a table( name varchar(50))
-set @b = &apos;haha&apos;;
-set @sql = &apos;select * from openquery(LS,&apos;&apos;select * from Test.dbo.FUN_ReturnTable(&apos;&apos;&apos;&apos;&apos;+@b+&apos;&apos;&apos;&apos;&apos;) AS a&apos;&apos;)&apos;; --调用表值函数。
-insert into @a exec(@sql);
-select name from @a
-</code></pre><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
-<li>1.SQL SERVER通过链接服务器是可以调用远程数据库的存储过程的。<ul>
-<li>通过 <code>exec LS.Test.dbo.testSP &#39;haha&#39;</code> 的方式，其中LS是链接服务器，Test是数据库名称。但是这种方式需要将链接服务器配置为用户RPC。</li>
-<li>通过 <code>select * from openquery(LS,&#39;exec Test.dbo.testSP &#39;&#39;haha&#39;&#39; &#39;)</code>的方式,其中LS是链接服务器，Test是数据库名称。</li>
-</ul>
-</li>
-<li>2.SQL SERVER通过链接服务器远程调用函数不能通过 <code>LS.Test.dbo.testFun(&#39;haha&#39;)</code>的方式直接调用，改用OPENQUERY的方式。</li>
-<li>3.OPENQUERY的第二个参数不能含有参数变量。如果需要传递参数，改成拼接字符串的形式，<code>EXEC</code> 命令执行字符串。</li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;模拟数据&quot;&gt;&lt;a href=&quot;#模拟数据&quot; class=&quot;headerlink&quot; title=&quot;模拟数据&quot;&gt;&lt;/a&gt;模拟数据&lt;/h3&gt;&lt;p&gt;两台服务器，都安装有数据库，服务器A,服务器B。&lt;/p&gt;
-&lt;p&gt;服务器B的数据库上配置有指向服务器A的数据库的链接数据库。&lt;/p&gt;
-&lt;p&gt;服务器A的数据库Test里创建以下两个函数，一个函数返回一个表值，一个返回单个字符串值。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="码路刺客" scheme="http://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
-    
-    
-      <category term="原创" scheme="http://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
-    
-      <category term="SQL Server" scheme="http://c-xuan.com/tags/SQL-Server/"/>
-    
-      <category term="数据库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
   </entry>
   

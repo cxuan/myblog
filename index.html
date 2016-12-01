@@ -344,6 +344,83 @@
 </nav>
       <div class="body-wrap ">
   
+    <article id="post-SQLAddColumnNote" class="article article-type-post " itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/12/02/SQLAddColumnNote/" class="article-date">
+      <time datetime="2016-12-01T16:01:43.000Z" itemprop="datePublished">2016-12-02</time>
+</a>
+
+ 
+    <a href="/2016/12/02/SQLAddColumnNote/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+            <span class="ds-thread-count"  data-thread-key="2016/12/02/SQLAddColumnNote/" ></span>
+        
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/02/SQLAddColumnNote/">【SQL Server】编辑、修改字段说明（备注）</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">sp_addextendedproperty</div><div class="line">    [ @name = ] &#123; <span class="string">'property_name'</span> &#125;</div><div class="line">    [ , [ @value = ] &#123; <span class="string">'value'</span> &#125; </div><div class="line">        [ , [ @level0type = ] &#123; <span class="string">'level0_object_type'</span> &#125; </div><div class="line">                    , [ @level0name = ] &#123; <span class="string">'level0_object_name'</span> &#125; </div><div class="line">                [ , [ @level1type = ] &#123; <span class="string">'level1_object_type'</span> &#125; </div><div class="line">                                    , [ @level1name = ] &#123; <span class="string">'level1_object_name'</span> &#125; </div><div class="line">                        [ , [ @level2type = ] &#123; <span class="string">'level2_object_type'</span> &#125; </div><div class="line">                                                    , [ @level2name = ] &#123; <span class="string">'level2_object_name'</span> &#125; </div><div class="line">                        ] </div><div class="line">                ]</div><div class="line">        ] </div><div class="line">    ]</div></pre></td></tr></table></figure>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/码路刺客/">码路刺客</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL-Server/">SQL Server</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016/12/02/SQLAddColumnNote/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-BenifitOfWritingBlog" class="article article-type-post " itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -1296,86 +1373,6 @@
 
 
   
-    <article id="post-DataWarehouseSchemeCompare" class="article article-type-post " itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/08/26/DataWarehouseSchemeCompare/" class="article-date">
-      <time datetime="2016-08-26T15:21:19.000Z" itemprop="datePublished">2016-08-26</time>
-</a>
-
- 
-    <a href="/2016/08/26/DataWarehouseSchemeCompare/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-            <span class="ds-thread-count"  data-thread-key="2016/08/26/DataWarehouseSchemeCompare/" ></span>
-        
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/08/26/DataWarehouseSchemeCompare/">深入对比数据仓库模式：Kimball vs Inmon</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><blockquote>
-<p>毛主席曾经说：实践若不以革命理论为指南，就会变成盲目的实践。</p>
-</blockquote>
-<p>Kimball和Inmon是两种主流的数据仓库方法论，分别由 Ralph Kimbal大神 和 Bill Inmon大神提出，在实际数据仓库建设中，业界往往会相互借鉴使用两种开发模式。本文将详细介绍 Kimball 和 Inmon 理论在实际数据仓库建设中的应用与对比,通过数据仓库理论武装数据仓库实践。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/BI墨客/">BI墨客</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BI/">BI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据仓库/">数据仓库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/08/26/DataWarehouseSchemeCompare/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1386,7 +1383,7 @@
     <div class="outer">
         <div id="footer-info">
             <div class="footer-left">
-                Posts count:46
+                Posts count:47
             </div>
 			<!--
             <div class="footer-left">

@@ -15,21 +15,16 @@
 
 
 
-<meta name="description" content="遇到一个情况，需要在内网系统中出一个统计报表。需要根据不同条件使用多个group by语句，需要将所有聚合的数据进行union操作来完成不同维度的统计查看。知道发现了在SQL  Server 2008之后引入了grouping sets这个对于group by的增强后，上面的需求实现起来就简单的多，下面我们用AdventureWork中的表作为demo来解释一下grouping sets.">
+<meta name="description" content="语法12345678910111213sp_addextendedproperty    [ @name = ] &amp;#123; &apos;property_name&apos; &amp;#125;    [ , [ @value = ] &amp;#123; &apos;value&apos; &amp;#125;         [ , [ @level0type = ] &amp;#123; &apos;level0_object_type&apos; &amp;#125;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【T-SQL】group by 和grouping sets">
-<meta property="og:url" content="http://c-xuan.com/2016/06/13/SQL-GroupByAndGroupingSets/index.html">
+<meta property="og:title" content="【SQL Server】编辑、修改字段说明（备注）">
+<meta property="og:url" content="http://c-xuan.com/2016/12/02/SQLAddColumnNote/index.html">
 <meta property="og:site_name" content="靛青">
-<meta property="og:description" content="遇到一个情况，需要在内网系统中出一个统计报表。需要根据不同条件使用多个group by语句，需要将所有聚合的数据进行union操作来完成不同维度的统计查看。知道发现了在SQL  Server 2008之后引入了grouping sets这个对于group by的增强后，上面的需求实现起来就简单的多，下面我们用AdventureWork中的表作为demo来解释一下grouping sets.">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SQL-GroupByAndGroupingSets-1.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SQL-GroupByAndGroupingSets-3.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SQL-GroupByAndGroupingSets-5.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SQL-GroupByAndGroupingSets-6.png">
-<meta property="og:updated_time" content="2016-09-22T16:16:38.628Z">
+<meta property="og:description" content="语法12345678910111213sp_addextendedproperty    [ @name = ] &amp;#123; &apos;property_name&apos; &amp;#125;    [ , [ @value = ] &amp;#123; &apos;value&apos; &amp;#125;         [ , [ @level0type = ] &amp;#123; &apos;level0_object_type&apos; &amp;#125;">
+<meta property="og:updated_time" content="2016-12-01T16:13:05.593Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【T-SQL】group by 和grouping sets">
-<meta name="twitter:description" content="遇到一个情况，需要在内网系统中出一个统计报表。需要根据不同条件使用多个group by语句，需要将所有聚合的数据进行union操作来完成不同维度的统计查看。知道发现了在SQL  Server 2008之后引入了grouping sets这个对于group by的增强后，上面的需求实现起来就简单的多，下面我们用AdventureWork中的表作为demo来解释一下grouping sets.">
-<meta name="twitter:image" content="http://c-xuan.com/img/posts/SQL-GroupByAndGroupingSets-1.png">
+<meta name="twitter:title" content="【SQL Server】编辑、修改字段说明（备注）">
+<meta name="twitter:description" content="语法12345678910111213sp_addextendedproperty    [ @name = ] &amp;#123; &apos;property_name&apos; &amp;#125;    [ , [ @value = ] &amp;#123; &apos;value&apos; &amp;#125;         [ , [ @level0type = ] &amp;#123; &apos;level0_object_type&apos; &amp;#125;">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -61,7 +56,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>【T-SQL】group by 和grouping sets | 靛青</title>
+<title>【SQL Server】编辑、修改字段说明（备注） | 靛青</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -343,11 +338,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap "><article id="post-SQL-GroupByAndGroupingSets" class="article article-type-post  animated pulse " itemscope itemprop="blogPost">
+      <div class="body-wrap "><article id="post-SQLAddColumnNote" class="article article-type-post  animated pulse " itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/06/13/SQL-GroupByAndGroupingSets/" class="article-date">
-      <time datetime="2016-06-12T16:00:00.000Z" itemprop="datePublished">2016-06-13</time>
+      <a href="/2016/12/02/SQLAddColumnNote/" class="article-date">
+      <time datetime="2016-12-01T16:01:43.000Z" itemprop="datePublished">2016-12-02</time>
 </a>
 
 
@@ -362,7 +357,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      【T-SQL】group by 和grouping sets
+      【SQL Server】编辑、修改字段说明（备注）
     </h1>
   
 
@@ -387,21 +382,32 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>遇到一个情况，需要在内网系统中出一个统计报表。需要根据不同条件使用多个group by语句，需要将所有聚合的数据进行union操作来完成不同维度的统计查看。<br>知道发现了在SQL  Server 2008之后引入了grouping sets这个对于group by的增强后，上面的需求实现起来就简单的多，下面我们用AdventureWork中的表作为demo来解释一下grouping sets.</p>
+        <h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">sp_addextendedproperty</div><div class="line">    [ @name = ] &#123; <span class="string">'property_name'</span> &#125;</div><div class="line">    [ , [ @value = ] &#123; <span class="string">'value'</span> &#125; </div><div class="line">        [ , [ @level0type = ] &#123; <span class="string">'level0_object_type'</span> &#125; </div><div class="line">                    , [ @level0name = ] &#123; <span class="string">'level0_object_name'</span> &#125; </div><div class="line">                [ , [ @level1type = ] &#123; <span class="string">'level1_object_type'</span> &#125; </div><div class="line">                                    , [ @level1name = ] &#123; <span class="string">'level1_object_name'</span> &#125; </div><div class="line">                        [ , [ @level2type = ] &#123; <span class="string">'level2_object_type'</span> &#125; </div><div class="line">                                                    , [ @level2name = ] &#123; <span class="string">'level2_object_name'</span> &#125; </div><div class="line">                        ] </div><div class="line">                ]</div><div class="line">        ] </div><div class="line">    ]</div></pre></td></tr></table></figure>
 <a id="more"></a>
-<p>假设我现在需要两个维度查询我的销售额度，查询T-SQL如下：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-1.png" alt="SQL-GroupByAndGroupingSets-1"></p>
-<p>而使用SQL Server 2008之后新增的grouping sets语句，仅仅需要这样写：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-3.png" alt="SQL-GroupByAndGroupingSets-3"></p>
-<p>值得注意的是，虽然上面使用grouping sets语句和多个group by语句差生的结果完全一样，但顺序完全不同。</p>
-<p>grouping  sets，仅仅是语法糖？</p>
-<p>从上面的结果来看，使用grouping  sets仅仅是一个可以少写代码的语法糖，但实际情况是，group sets在遇到多个条件时，聚合是一次性从数据库中取出所有需要的操作的数据，在内存中对数据库进行聚合操作并生成结果。而union all是多次扫描表，将返回的结果进行union操作。这也就是为什么grouping  sets和union操作所返回的数据顺序是不同的原因。</p>
-<p>下面通过查看上面两个语句的IO和CPU来进行对比：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-5.png" alt="SQL-GroupByAndGroupingSets-5"></p>
-<p>通过上面的图来看grouping sets不仅仅只是语法糖，而是从执行原理做出了改变</p>
-<p>对于grouping sets来说，还经常和grouping函数联合使用，这个函数是反应目标列是否聚合，如果聚合则返回1，否则返回0，如下：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-6.png" alt="SQL-GroupByAndGroupingSets-6"></p>
-<p>转自：<a href="http://www.cnblogs.com/CareySon/archive/2011/12/19/2293245.html" target="_blank" rel="external">http://www.cnblogs.com/CareySon/archive/2011/12/19/2293245.html</a></p>
+<h3 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h3><p>为了指定扩展属性，SQL Server 数据库中的对象分为三个级别（0、1 和 2）。级别 0 是最高级别，定义为包含在数据库作用域中的对象。级别 1 的对象包含在架构作用域或用户作用域中，而级别 ２ 的对象包含在级别 1 对象中。可以为这些级别中任一级别的对象定义扩展属性。</p>
+<p>引用某个级别中的对象必须用拥有或包含它们的更高级别对象的名称进行限制。例如，当将扩展属性添加到表列（级别 2）时，还必须指定包含该列的表名（级别 1）以及包含该表的架构（级别 0）。</p>
+<p>有关对象及其有效的级别 0、1 和 2 类型的完整列表，请参阅对数据库对象使用扩展属性。如果所有对象类型和名称都为空，则属性属于当前数据库本身。对于系统对象、用户定义数据库的作用域以外的对象或者未在 Arguments 中作为有效输入列出的对象，不允许使用扩展属性。</p>
+<h3 id="架构与用户"><a href="#架构与用户" class="headerlink" title="架构与用户"></a>架构与用户</h3><p>在 SQL Server 的早期版本中，用户拥有表、视图和触发器之类的数据库对象。因此，允许将扩展属性添加到这些对象之一以及将用户名指定为级别 0 类型。但在 SQL Server 2005 中，数据库对象包含在架构中。它们独立于拥有架构的用户。在 SQL Server 2005 中，我们建议不要在将扩展属性应用于数据库对象时指定 USER 作为级别 0 类型，因为这会导致名称解析不明确。例如，假定用户 Mary 拥有两个架构（Mary 和 MySchema），并且这两个架构都包含名为 MyTable 的表。如果 Mary 将扩展属性添加到表 MyTable 并指定 @level0type = N’USER’、@level0name = Mary，则扩展属性应用于哪个表并不明确。为了保持向后兼容，SQL Server 将属性应用于名为 Mary 的架构所包含的表。有关用户与架构的详细信息，请参阅用户架构分离。</p>
+<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><p><code>[ @name ] = { &#39;property_name&#39; }</code></p>
+<p>要添加的属性的名称。property_name 的数据类型为 sysname，不能为 NULL。名称还可以包括空格或非字母数字字符串以及二进制值。</p>
+<p><code>[ @value = ] { &#39;value&#39; }</code></p>
+<p>要与属性关联的值。value 的数据类型为 sql_variant，默认值为 NULL。value 的大小不能超过 7,500 个字节。</p>
+<p><code>[ @level0type = ] { &#39;level0_object_type&#39; }</code></p>
+<p>级别 0 对象的类型。level0_object_type 的数据类型为 varchar(128)，默认值为 NULL。<br>有效的输入包括：ASSEMBLY、CONTRACT、EVENT NOTIFICATION、FILEGROUP、MESSAGE TYPE、PARTITION FUNCTION、PARTITION SCHEME、REMOTE SERVICE BINDING、ROUTE、SCHEMA、SERVICE、USER、TRIGGER、TYPE 和 NULL。<br>重要事项：</p>
+<p>作为级别 0 类型的 USER 和 TYPE 将在 SQL Server 的未来版本中删除。请避免在新的开发工作中使用这些功能，并考虑修改当前使用这些功能的应用程序。改用 SCHEMA 代替 USER 作为级别 0 类型。对于 TYPE，请使用 SCHEMA 作为级别 0 类型，使用 TYPE 作为级别 1 类型。</p>
+<p><code>[ @level0name = ] { &#39;level0_object_name&#39; }</code></p>
+<p>所指定的级别 0 对象类型的名称。level0_object_name 的数据类型为 sysname，默认值为 NULL。</p>
+<p><code>[ @level1type = ] { &#39;level1_object_type&#39; }</code></p>
+<p>级别 1 对象的类型。level1_object_type 的数据类型为 varchar(128)，默认值为 NULL。有效的输入包括：AGGREGATE、DEFAULT、FUNCTION、LOGICAL FILE NAME、PROCEDURE、QUEUE、RULE、SYNONYM、TABLE、TYPE、VIEW、XML SCHEMA COLLECTION 和 NULL。</p>
+<p><code>[ @level1name = ] { &#39;level1_object_name&#39; }</code></p>
+<p>所指定的级别 1 对象类型的名称。level1_object_name 的数据类型为 sysname，默认值为 NULL。</p>
+<p><code>[ @level2type = ] { &#39;level2_object_type&#39; }</code></p>
+<p>级别 2 对象的类型。level2_object_type 的数据类型为 varchar(128)，默认值为 NULL。有效的输入包括：COLUMN、CONSTRAINT、EVENT NOTIFICATION、INDEX、PARAMETER、TRIGGER 和 NULL。</p>
+<p><code>[ @level2name = ] { &#39;level2_object_name&#39; }</code></p>
+<p>所指定的级别 2 对象类型的名称。level2_object_name 的数据类型为 sysname，默认值为 NULL。</p>
+<h3 id="返回代码值"><a href="#返回代码值" class="headerlink" title="返回代码值"></a>返回代码值</h3><p>0（成功）或 1（失败）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">EXEC sys.sp_addextendedproperty @name=N&apos;MS_Description&apos;, @value=N&apos;0:取消,1:已到,2:未到,3:预订违约&apos; ,@level0type=N&apos;SCHEMA&apos;, @level0name=N&apos;dbo&apos;, @level1type=N&apos;TABLE&apos;, @level1name=N&apos;Tab_Passenger&apos;, @level2type=N&apos;COLUMN&apos;, @level2name=N&apos;PassengerState&apos;</div><div class="line">-表及字段描述信息处理示例</div><div class="line"></div><div class="line">--创建表</div><div class="line">create table 表(a1 varchar(10),a2 char(2))</div><div class="line"></div><div class="line">--为表添加描述信息</div><div class="line">EXECUTE sp_addextendedproperty N&apos;MS_Description&apos;, &apos;人员信息表&apos;, N&apos;user&apos;, N&apos;dbo&apos;, N&apos;table&apos;, N&apos;表&apos;, NULL, NULL</div><div class="line"></div><div class="line">--为字段a1添加描述信息</div><div class="line">EXECUTE sp_addextendedproperty N&apos;MS_Description&apos;, &apos;姓名&apos;, N&apos;user&apos;, N&apos;dbo&apos;, N&apos;table&apos;, N&apos;表&apos;, N&apos;column&apos;, N&apos;a1&apos;</div><div class="line"></div><div class="line">--为字段a2添加描述信息</div><div class="line">EXECUTE sp_addextendedproperty N&apos;MS_Description&apos;, &apos;性别&apos;, N&apos;user&apos;, N&apos;dbo&apos;, N&apos;table&apos;, N&apos;表&apos;, N&apos;column&apos;, N&apos;a2&apos;</div><div class="line"></div><div class="line">--更新表中列a1的描述属性：</div><div class="line">EXEC sp_updateextendedproperty &apos;MS_Description&apos;,&apos;字段1&apos;,&apos;user&apos;,dbo,&apos;table&apos;,&apos;表&apos;,&apos;column&apos;,a1</div><div class="line"></div><div class="line">--删除表中列a1的描述属性：</div><div class="line">EXEC sp_dropextendedproperty &apos;MS_Description&apos;,&apos;user&apos;,dbo,&apos;table&apos;,&apos;表&apos;,&apos;column&apos;,a1</div><div class="line"></div><div class="line">--删除测试</div><div class="line">drop table 表</div></pre></td></tr></table></figure>
+<p>转自:<a href="http://blog.csdn.net/zanychou/article/details/7403336" target="_blank" rel="external">http://blog.csdn.net/zanychou/article/details/7403336</a></p>
 
       
     </div>
@@ -410,13 +416,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/06/13/SQL-GroupByAndGroupingSets/">【T-SQL】group by 和grouping sets</a></p>
+        <p><span>本文标题:</span><a href="/2016/12/02/SQLAddColumnNote/">【SQL Server】编辑、修改字段说明（备注）</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">c-xuan</a></p>
-        <p><span>发布时间:</span>2016-06-13, 00:00:00</p>
-        <p><span>最后更新:</span>2016-09-23, 00:16:38</p>
+        <p><span>发布时间:</span>2016-12-02, 00:01:43</p>
+        <p><span>最后更新:</span>2016-12-02, 00:13:05</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/06/13/SQL-GroupByAndGroupingSets/" title="【T-SQL】group by 和grouping sets">http://c-xuan.com/2016/06/13/SQL-GroupByAndGroupingSets/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://c-xuan.com/2016/06/13/SQL-GroupByAndGroupingSets/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/12/02/SQLAddColumnNote/" title="【SQL Server】编辑、修改字段说明（备注）">http://c-xuan.com/2016/12/02/SQLAddColumnNote/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://c-xuan.com/2016/12/02/SQLAddColumnNote/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -428,16 +434,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/06/13/SSIS-GeneralAttribures/">
-                    【SSIS】几个通用属性
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/">
-                    放开那程序猿！构建业务导向的大数据云平台
+                <a href="/2016/12/01/BenifitOfWritingBlog/">
+                    从事技术，坚持写博客的好处？
                 </a>
             </div>
         
@@ -449,7 +449,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#语法"><span class="toc-number">1.</span> <span class="toc-text">语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#备注"><span class="toc-number">2.</span> <span class="toc-text">备注</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#架构与用户"><span class="toc-number">3.</span> <span class="toc-text">架构与用户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参数"><span class="toc-number">4.</span> <span class="toc-text">参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#返回代码值"><span class="toc-number">5.</span> <span class="toc-text">返回代码值</span></a></li></ol>
         
     </div>
     <style>
@@ -485,7 +485,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"【T-SQL】group by 和grouping sets　| 靛青　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"【SQL Server】编辑、修改字段说明（备注）　| 靛青　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -501,7 +501,7 @@
     
       <div class="duoshuo" id="comments">
     <div id="comment-box" ></div>
-    <div class="ds-thread" id="ds-thread" data-thread-key="2016/06/13/SQL-GroupByAndGroupingSets/" data-title="【T-SQL】group by 和grouping sets" data-url="http://c-xuan.com/2016/06/13/SQL-GroupByAndGroupingSets/"></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/12/02/SQLAddColumnNote/" data-title="【SQL Server】编辑、修改字段说明（备注）" data-url="http://c-xuan.com/2016/12/02/SQLAddColumnNote/"></div>
     <script>
         var duoshuoQuery = {short_name:"cxuan"};
         var loadComment = function(){
@@ -524,15 +524,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/06/13/SSIS-GeneralAttribures/" title="上一篇: 【SSIS】几个通用属性">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/" title="下一篇: 放开那程序猿！构建业务导向的大数据云平台">
+            <a href="/2016/12/01/BenifitOfWritingBlog/" title="下一篇: 从事技术，坚持写博客的好处？">
                 <i class="fa fa-angle-right"></i>
             </a>
         

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://c-xuan.com/"/>
-  <updated>2016-12-01T15:55:20.677Z</updated>
+  <updated>2016-12-01T16:13:05.593Z</updated>
   <id>http://c-xuan.com/</id>
   
   <author>
@@ -14,6 +14,58 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【SQL Server】编辑、修改字段说明（备注）</title>
+    <link href="http://c-xuan.com/2016/12/02/SQLAddColumnNote/"/>
+    <id>http://c-xuan.com/2016/12/02/SQLAddColumnNote/</id>
+    <published>2016-12-01T16:01:43.000Z</published>
+    <updated>2016-12-01T16:13:05.593Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">sp_addextendedproperty</div><div class="line">    [ @name = ] &#123; <span class="string">'property_name'</span> &#125;</div><div class="line">    [ , [ @value = ] &#123; <span class="string">'value'</span> &#125; </div><div class="line">        [ , [ @level0type = ] &#123; <span class="string">'level0_object_type'</span> &#125; </div><div class="line">                    , [ @level0name = ] &#123; <span class="string">'level0_object_name'</span> &#125; </div><div class="line">                [ , [ @level1type = ] &#123; <span class="string">'level1_object_type'</span> &#125; </div><div class="line">                                    , [ @level1name = ] &#123; <span class="string">'level1_object_name'</span> &#125; </div><div class="line">                        [ , [ @level2type = ] &#123; <span class="string">'level2_object_type'</span> &#125; </div><div class="line">                                                    , [ @level2name = ] &#123; <span class="string">'level2_object_name'</span> &#125; </div><div class="line">                        ] </div><div class="line">                ]</div><div class="line">        ] </div><div class="line">    ]</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h3><p>为了指定扩展属性，SQL Server 数据库中的对象分为三个级别（0、1 和 2）。级别 0 是最高级别，定义为包含在数据库作用域中的对象。级别 1 的对象包含在架构作用域或用户作用域中，而级别 ２ 的对象包含在级别 1 对象中。可以为这些级别中任一级别的对象定义扩展属性。</p>
+<p>引用某个级别中的对象必须用拥有或包含它们的更高级别对象的名称进行限制。例如，当将扩展属性添加到表列（级别 2）时，还必须指定包含该列的表名（级别 1）以及包含该表的架构（级别 0）。</p>
+<p>有关对象及其有效的级别 0、1 和 2 类型的完整列表，请参阅对数据库对象使用扩展属性。如果所有对象类型和名称都为空，则属性属于当前数据库本身。对于系统对象、用户定义数据库的作用域以外的对象或者未在 Arguments 中作为有效输入列出的对象，不允许使用扩展属性。</p>
+<h3 id="架构与用户"><a href="#架构与用户" class="headerlink" title="架构与用户"></a>架构与用户</h3><p>在 SQL Server 的早期版本中，用户拥有表、视图和触发器之类的数据库对象。因此，允许将扩展属性添加到这些对象之一以及将用户名指定为级别 0 类型。但在 SQL Server 2005 中，数据库对象包含在架构中。它们独立于拥有架构的用户。在 SQL Server 2005 中，我们建议不要在将扩展属性应用于数据库对象时指定 USER 作为级别 0 类型，因为这会导致名称解析不明确。例如，假定用户 Mary 拥有两个架构（Mary 和 MySchema），并且这两个架构都包含名为 MyTable 的表。如果 Mary 将扩展属性添加到表 MyTable 并指定 @level0type = N’USER’、@level0name = Mary，则扩展属性应用于哪个表并不明确。为了保持向后兼容，SQL Server 将属性应用于名为 Mary 的架构所包含的表。有关用户与架构的详细信息，请参阅用户架构分离。</p>
+<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><p><code>[ @name ] = { &#39;property_name&#39; }</code></p>
+<p>要添加的属性的名称。property_name 的数据类型为 sysname，不能为 NULL。名称还可以包括空格或非字母数字字符串以及二进制值。</p>
+<p><code>[ @value = ] { &#39;value&#39; }</code></p>
+<p>要与属性关联的值。value 的数据类型为 sql_variant，默认值为 NULL。value 的大小不能超过 7,500 个字节。</p>
+<p><code>[ @level0type = ] { &#39;level0_object_type&#39; }</code></p>
+<p>级别 0 对象的类型。level0_object_type 的数据类型为 varchar(128)，默认值为 NULL。<br>有效的输入包括：ASSEMBLY、CONTRACT、EVENT NOTIFICATION、FILEGROUP、MESSAGE TYPE、PARTITION FUNCTION、PARTITION SCHEME、REMOTE SERVICE BINDING、ROUTE、SCHEMA、SERVICE、USER、TRIGGER、TYPE 和 NULL。<br>重要事项：</p>
+<p>作为级别 0 类型的 USER 和 TYPE 将在 SQL Server 的未来版本中删除。请避免在新的开发工作中使用这些功能，并考虑修改当前使用这些功能的应用程序。改用 SCHEMA 代替 USER 作为级别 0 类型。对于 TYPE，请使用 SCHEMA 作为级别 0 类型，使用 TYPE 作为级别 1 类型。</p>
+<p><code>[ @level0name = ] { &#39;level0_object_name&#39; }</code></p>
+<p>所指定的级别 0 对象类型的名称。level0_object_name 的数据类型为 sysname，默认值为 NULL。</p>
+<p><code>[ @level1type = ] { &#39;level1_object_type&#39; }</code></p>
+<p>级别 1 对象的类型。level1_object_type 的数据类型为 varchar(128)，默认值为 NULL。有效的输入包括：AGGREGATE、DEFAULT、FUNCTION、LOGICAL FILE NAME、PROCEDURE、QUEUE、RULE、SYNONYM、TABLE、TYPE、VIEW、XML SCHEMA COLLECTION 和 NULL。</p>
+<p><code>[ @level1name = ] { &#39;level1_object_name&#39; }</code></p>
+<p>所指定的级别 1 对象类型的名称。level1_object_name 的数据类型为 sysname，默认值为 NULL。</p>
+<p><code>[ @level2type = ] { &#39;level2_object_type&#39; }</code></p>
+<p>级别 2 对象的类型。level2_object_type 的数据类型为 varchar(128)，默认值为 NULL。有效的输入包括：COLUMN、CONSTRAINT、EVENT NOTIFICATION、INDEX、PARAMETER、TRIGGER 和 NULL。</p>
+<p><code>[ @level2name = ] { &#39;level2_object_name&#39; }</code></p>
+<p>所指定的级别 2 对象类型的名称。level2_object_name 的数据类型为 sysname，默认值为 NULL。</p>
+<h3 id="返回代码值"><a href="#返回代码值" class="headerlink" title="返回代码值"></a>返回代码值</h3><p>0（成功）或 1（失败）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">EXEC sys.sp_addextendedproperty @name=N&apos;MS_Description&apos;, @value=N&apos;0:取消,1:已到,2:未到,3:预订违约&apos; ,@level0type=N&apos;SCHEMA&apos;, @level0name=N&apos;dbo&apos;, @level1type=N&apos;TABLE&apos;, @level1name=N&apos;Tab_Passenger&apos;, @level2type=N&apos;COLUMN&apos;, @level2name=N&apos;PassengerState&apos;</div><div class="line">-表及字段描述信息处理示例</div><div class="line"></div><div class="line">--创建表</div><div class="line">create table 表(a1 varchar(10),a2 char(2))</div><div class="line"></div><div class="line">--为表添加描述信息</div><div class="line">EXECUTE sp_addextendedproperty N&apos;MS_Description&apos;, &apos;人员信息表&apos;, N&apos;user&apos;, N&apos;dbo&apos;, N&apos;table&apos;, N&apos;表&apos;, NULL, NULL</div><div class="line"></div><div class="line">--为字段a1添加描述信息</div><div class="line">EXECUTE sp_addextendedproperty N&apos;MS_Description&apos;, &apos;姓名&apos;, N&apos;user&apos;, N&apos;dbo&apos;, N&apos;table&apos;, N&apos;表&apos;, N&apos;column&apos;, N&apos;a1&apos;</div><div class="line"></div><div class="line">--为字段a2添加描述信息</div><div class="line">EXECUTE sp_addextendedproperty N&apos;MS_Description&apos;, &apos;性别&apos;, N&apos;user&apos;, N&apos;dbo&apos;, N&apos;table&apos;, N&apos;表&apos;, N&apos;column&apos;, N&apos;a2&apos;</div><div class="line"></div><div class="line">--更新表中列a1的描述属性：</div><div class="line">EXEC sp_updateextendedproperty &apos;MS_Description&apos;,&apos;字段1&apos;,&apos;user&apos;,dbo,&apos;table&apos;,&apos;表&apos;,&apos;column&apos;,a1</div><div class="line"></div><div class="line">--删除表中列a1的描述属性：</div><div class="line">EXEC sp_dropextendedproperty &apos;MS_Description&apos;,&apos;user&apos;,dbo,&apos;table&apos;,&apos;表&apos;,&apos;column&apos;,a1</div><div class="line"></div><div class="line">--删除测试</div><div class="line">drop table 表</div></pre></td></tr></table></figure>
+<p>转自:<a href="http://blog.csdn.net/zanychou/article/details/7403336" target="_blank" rel="external">http://blog.csdn.net/zanychou/article/details/7403336</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;语法&quot;&gt;&lt;a href=&quot;#语法&quot; class=&quot;headerlink&quot; title=&quot;语法&quot;&gt;&lt;/a&gt;语法&lt;/h3&gt;&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;sp_addextendedproperty&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    [ @name = ] &amp;#123; &lt;span class=&quot;string&quot;&gt;&#39;property_name&#39;&lt;/span&gt; &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    [ , [ @value = ] &amp;#123; &lt;span class=&quot;string&quot;&gt;&#39;value&#39;&lt;/span&gt; &amp;#125; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        [ , [ @level0type = ] &amp;#123; &lt;span class=&quot;string&quot;&gt;&#39;level0_object_type&#39;&lt;/span&gt; &amp;#125; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;                    , [ @level0name = ] &amp;#123; &lt;span class=&quot;string&quot;&gt;&#39;level0_object_name&#39;&lt;/span&gt; &amp;#125; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;                [ , [ @level1type = ] &amp;#123; &lt;span class=&quot;string&quot;&gt;&#39;level1_object_type&#39;&lt;/span&gt; &amp;#125; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;                                    , [ @level1name = ] &amp;#123; &lt;span class=&quot;string&quot;&gt;&#39;level1_object_name&#39;&lt;/span&gt; &amp;#125; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;                        [ , [ @level2type = ] &amp;#123; &lt;span class=&quot;string&quot;&gt;&#39;level2_object_type&#39;&lt;/span&gt; &amp;#125; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;                                                    , [ @level2name = ] &amp;#123; &lt;span class=&quot;string&quot;&gt;&#39;level2_object_name&#39;&lt;/span&gt; &amp;#125; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;                        ] &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;                ]&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        ] &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ]&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="码路刺客" scheme="http://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
+    
+    
+      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
+    
+      <category term="数据库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+      <category term="SQL Server" scheme="http://c-xuan.com/tags/SQL-Server/"/>
+    
+  </entry>
   
   <entry>
     <title>从事技术，坚持写博客的好处？</title>
@@ -1720,50 +1772,6 @@
       <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
     
       <category term="BigData" scheme="http://c-xuan.com/tags/BigData/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>房地产行业商业智能解决方案分享</title>
-    <link href="http://c-xuan.com/2016/06/05/RealEstateBISolutionCaseShare/"/>
-    <id>http://c-xuan.com/2016/06/05/RealEstateBISolutionCaseShare/</id>
-    <published>2016-06-04T16:00:00.000Z</published>
-    <updated>2016-09-22T16:16:30.349Z</updated>
-    
-    <content type="html"><![CDATA[<p>中国地产行业经过了20多年的发展，房地产行业整合已成大势所趋，逐步由区域开发转变为集团化的跨地区综合开发商。然而，对于处在超常规速度发展的房地产企业来说，其面临的挑战也是超常规的。首先，房地产企业要在有限的资金和人力条件下，同一时间，对全国区域范围内的多个项目做出科学的决策，以及进行合理地资源平衡，这是一项非常复杂的系统工程。另外，由单个区域开发到全国跨地区开发所带来的管理上的复杂程度也是呈几何级数增长的。这就对企业在项目进度控制、现金流管理等方面提出了更加精细的要求。 </p>
-<a id="more"></a>
-<p>针对此情况，企业的信息化管理急需优化升级，新的方案要做到既不影响现有应用系统运行，又能对全公司数据进行精细化集中分析处理。商业智能正是这样一个优秀的解决方案，其自动灵活，准确及时的特性可以帮助企业将数据处理的工作重点从原本的数据整合转移到数据分析上来。</p>
-<p>在以往的实施案例中我们发现，对于房地产这种行业背景深厚，数据产量又大的行业，数据的处理和分析能力是商业智能软件必须具备的重要特性。数据体量大，分支结构复杂，调度频率高都是巨大的挑战。像国内某地产巨头利用了商业智能软件FineBI得天独厚的稳定性和大数据处理优势，从以下几个方面解决了问题：</p>
-<p><strong>1、构建决策驾驶舱</strong></p>
-<p>商业智能系统支持多种数据库数据源，比如Oracle，sql server，DB2等等，以及Excel，txt，XML文件数据源，系统对于读取的数据源可以进行ETL转换以适应分析需求。</p>
-<p>其次，商业智能由于其优秀的自动建模特性，能避免业务人员对数据库内容的深入了解，减少与技术人员的反复沟通，大大降低时间成本。</p>
-<p>此外，以往传统的报表数据呈现方式缺乏灵活性和直观性，利用商业智能的各种图表，比如柱形图、折线图、饼图还有适用于地产行业的地图、仪表盘、环形图，以图形的方式直观展现数据，多维度多关联决策分析，辅助决策。</p>
-<p><strong>2、实时销售管理</strong></p>
-<p>房地产的销售往往具有形式多样，周期长，工作复杂的特点，其销售数据往往具有很强的实时性。如果利用商业智能平台进行各类销售分析，比如销售、回款、应收款、可售库存、推盘、动态成本、杜邦分析、资金计划等各类细分主题的分析，可以更好地从数据中观测销售过程出现的问题，例如哪里的楼盘销量低，哪里的楼盘回款率低</p>
-<p><img src="/img/posts/RealEstateBISolutionCaseShare-1.jpg" alt="RealEstateBISolutionCaseShare-1"></p>
-<p><strong>3、精确市场定位，合理开发</strong></p>
-<p>商业智能系统不仅可以分析企业内部的各项业务数据，还可以应用到企业外部环境，比如分析一个或多个地区的人口分布，住房条件，交通情况，土地利用率等，这些数据往往在决策调整方面具有引导性，帮助企业在后续开发中因地制宜地制定方案，如户型档次，楼层高低设置等，做到由内而外，由外之内的信息互通。</p>
-<p><img src="/img/posts/RealEstateBISolutionCaseShare-2.jpg" alt="RealEstateBISolutionCaseShare-2"></p>
-<p><strong>4、创新挖掘客户需求</strong></p>
-<p>地产销售的对象复杂多样，而房地产依靠客户需求盈利，因此，对客户的分析至关重要。利用商业智能系统我们可以实现客户消费行为的分析，从客户的年龄，地域，收入水平，教育情况，消费方式，喜好等方面进行分析，帮助营销人员找出影响消费者的机会与方式，实现对不同层次用户的精准营销。</p>
-<p><strong>5、房地产行业的营销利器</strong></p>
-<p>房地产行业，营销为重，商业智能系统可以帮助企业市场销售团队进行销售量的增长与人均可支配收入回归分析、个人购买与集团购买房地产比重的拟合与分析、房地产销售波动率回归分析等，实时发现市场发展趋势的变化，以做到及时调整营销策略，优化销售模式。</p>
-<p><img src="/img/posts/RealEstateBISolutionCaseShare-3.jpg" alt="RealEstateBISolutionCaseShare-3"></p>
-<p>原文链接：<a href="http://www.jianshu.com/p/30f32bf773d1" target="_blank" rel="external">http://www.jianshu.com/p/30f32bf773d1</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;中国地产行业经过了20多年的发展，房地产行业整合已成大势所趋，逐步由区域开发转变为集团化的跨地区综合开发商。然而，对于处在超常规速度发展的房地产企业来说，其面临的挑战也是超常规的。首先，房地产企业要在有限的资金和人力条件下，同一时间，对全国区域范围内的多个项目做出科学的决策，以及进行合理地资源平衡，这是一项非常复杂的系统工程。另外，由单个区域开发到全国跨地区开发所带来的管理上的复杂程度也是呈几何级数增长的。这就对企业在项目进度控制、现金流管理等方面提出了更加精细的要求。 &lt;/p&gt;
-    
-    </summary>
-    
-      <category term="BI墨客" scheme="http://c-xuan.com/categories/BI%E5%A2%A8%E5%AE%A2/"/>
-    
-    
-      <category term="BI" scheme="http://c-xuan.com/tags/BI/"/>
-    
-      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
     
   </entry>
   

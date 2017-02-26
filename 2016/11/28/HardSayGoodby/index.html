@@ -15,50 +15,21 @@
 
 
 
-<meta name="description" content="开篇介绍Precedence Constraint 优先约束 - 在控制流中使用，用来链接控制流中各种 Task，Container，并且要求满足一定的条件才能执行相关联的 Task 或者 Container。 比如下图中，第一个 Execute SQL Task 叫做 Precedence-Executable 优先可执行任务，而Script Task 由于在关联箭头的下游，所以它叫做 Cons">
+<meta name="description" content="还有一天，购买的服务器就要到期了，并没有续期的打算，意味着在服务器上运行的这个Solo博客就停掉了。其实也没有什么大不了的事情，只是想来这一路没有为自己能够坚持而愧疚。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【SSIS】中Precedence Constraint 优先约束的使用">
-<meta property="og:url" content="http://c-xuan.com/2016/05/21/SSIS-Precedence-Constraint/index.html">
+<meta property="og:title" content="再见Solo，谢谢!">
+<meta property="og:url" content="http://c-xuan.com/2016/11/28/HardSayGoodby/index.html">
 <meta property="og:site_name" content="靛青">
-<meta property="og:description" content="开篇介绍Precedence Constraint 优先约束 - 在控制流中使用，用来链接控制流中各种 Task，Container，并且要求满足一定的条件才能执行相关联的 Task 或者 Container。 比如下图中，第一个 Execute SQL Task 叫做 Precedence-Executable 优先可执行任务，而Script Task 由于在关联箭头的下游，所以它叫做 Cons">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-1.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-2.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-3.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-4.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-5.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-6.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-7.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-8.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-9.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-10.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-11.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-12.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-13.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-14.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-15.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-16.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-17.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-18.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-19.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-20.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-21.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-22.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-23.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-24.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-25.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-26.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-27.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-28.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-29.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-30.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-31.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-32.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-33.png">
-<meta property="og:updated_time" content="2016-09-23T17:12:57.474Z">
+<meta property="og:description" content="还有一天，购买的服务器就要到期了，并没有续期的打算，意味着在服务器上运行的这个Solo博客就停掉了。其实也没有什么大不了的事情，只是想来这一路没有为自己能够坚持而愧疚。">
+<meta property="og:image" content="http://c-xuan.com/img/posts/HardSayGoodbye-1.jpeg">
+<meta property="og:image" content="http://c-xuan.com/img/posts/HardSayGoodbye-2.jpeg">
+<meta property="og:image" content="http://c-xuan.com/img/posts/HardSayGoodbye-3.jpeg">
+<meta property="og:image" content="http://c-xuan.com/img/posts/HardSayGoodbye-4.jpeg">
+<meta property="og:updated_time" content="2017-02-26T10:30:45.708Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【SSIS】中Precedence Constraint 优先约束的使用">
-<meta name="twitter:description" content="开篇介绍Precedence Constraint 优先约束 - 在控制流中使用，用来链接控制流中各种 Task，Container，并且要求满足一定的条件才能执行相关联的 Task 或者 Container。 比如下图中，第一个 Execute SQL Task 叫做 Precedence-Executable 优先可执行任务，而Script Task 由于在关联箭头的下游，所以它叫做 Cons">
-<meta name="twitter:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-1.png">
+<meta name="twitter:title" content="再见Solo，谢谢!">
+<meta name="twitter:description" content="还有一天，购买的服务器就要到期了，并没有续期的打算，意味着在服务器上运行的这个Solo博客就停掉了。其实也没有什么大不了的事情，只是想来这一路没有为自己能够坚持而愧疚。">
+<meta name="twitter:image" content="http://c-xuan.com/img/posts/HardSayGoodbye-1.jpeg">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -90,7 +61,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>【SSIS】中Precedence Constraint 优先约束的使用 | 靛青</title>
+<title>再见Solo，谢谢! | 靛青</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -372,11 +343,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap "><article id="post-SSIS-Precedence-Constraint" class="article article-type-post  animated pulse " itemscope itemprop="blogPost">
+      <div class="body-wrap "><article id="post-HardSayGoodby" class="article article-type-post  animated pulse " itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/05/21/SSIS-Precedence-Constraint/" class="article-date">
-      <time datetime="2016-05-20T16:00:00.000Z" itemprop="datePublished">2016-05-21</time>
+      <a href="/2016/11/28/HardSayGoodby/" class="article-date">
+      <time datetime="2016-11-27T16:00:00.000Z" itemprop="datePublished">2016-11-28</time>
 </a>
 
 
@@ -391,7 +362,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      【SSIS】中Precedence Constraint 优先约束的使用
+      再见Solo，谢谢!
     </h1>
   
 
@@ -400,13 +371,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/BI墨客/">BI墨客</a>
+    <a class="article-category-link" href="/categories/随笔感悟/">随笔感悟</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BI/">BI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSIS/">SSIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原创/">原创</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/知识管理/">知识管理</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -416,116 +387,23 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h3 id="开篇介绍"><a href="#开篇介绍" class="headerlink" title="开篇介绍"></a>开篇介绍</h3><p>Precedence Constraint 优先约束 - 在控制流中使用，用来链接控制流中各种 Task，Container，并且要求满足一定的条件才能执行相关联的 Task 或者 Container。 比如下图中，第一个 Execute SQL Task 叫做 Precedence-Executable 优先可执行任务，而Script Task 由于在关联箭头的下游，所以它叫做 Constrained-Executable 受约束可执行任务。关联箭头的上游任务自然先执行，关联箭头下方的这种受约束可执行任务是否能够被执行则要取决于 Precedence Constraint 的配置了。</p>
+        <center><img src="/img/posts/HardSayGoodbye-1.jpeg"></center>
+
+<p>还有一天，购买的服务器就要到期了，并没有续期的打算，意味着在服务器上运行的这个Solo博客就停掉了。其实也没有什么大不了的事情，只是想来这一路没有为自己能够坚持而愧疚。</p>
 <a id="more"></a>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-1.png" alt="SSIS-Precedence-Constraint-1"></p>
-<p>EST_SELECT_VALUE 中的配置 </p>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-2.png" alt="SSIS-Precedence-Constraint-2"></p>
-<p>查询的结果赋值给一个字符串类型的变量，Script Task 就是显示一下这个变量的值而已。</p>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-3.png" alt="SSIS-Precedence-Constraint-3"></p>
-<p>双击绿色的线之后默认可以看到下面的这个配置，其中包括了约束与多约束的选项和配置。</p>
-<ul>
-<li>1.Evlaution Operation = Constraint  按上游 Task 执行结果决定是否执行下游 Script Task 任务（按执行结果约束）</li>
-<li>Value = Success  上游任务 EST_SELECT_VALUE 执行成功后才执行下游 Script Task </li>
-</ul>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-4.png" alt="SSIS-Precedence-Constraint-4"></p>
-<p>EST_SELECT_VALUE 执行成功后自动执行 SCE_SHOW_RESULT</p>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-5.png" alt="SSIS-Precedence-Constraint-5"></p>
-<p><strong>Value = Failure上游任务 EST_SELECT_VALUE 执行失败后才执行下游 Script Task </strong></p>
-<p>新建一个 SCR_SHOW_ERROR Script Task，里面不做任何操作。</p>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-6.png" alt="SSIS-Precedence-Constraint-6"></p>
-<p>修改 EST_SELECT_VALUE 与 SCR_SHOW_ERROR 之间的连接线，改成 Failure。</p>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-7.png" alt="SSIS-Precedence-Constraint-7"></p>
-<p>将 EST_SELECT_VALUE 中的 SQL 语句改成 SELECT 1/0 AS A，这样会发生一个除数为零的错误，但是 SCR_SHOW_ERROR 是可以被执行到的。</p>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-8.png" alt="SSIS-Precedence-Constraint-8"></p>
-<p>Value = Complete 上游任务 EST_SELECT_VALUE 无论执行成功或者失败，只要执行完毕就执行下游 Script Task </p>
-<p>新建一个 Script Task - SCR_SHOW_COMPLETE，里面不做任何操作。</p>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-9.png" alt="SSIS-Precedence-Constraint-9"></p>
-<p>修改连接线为 Complete。</p>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-10.png" alt="SSIS-Precedence-Constraint-10"></p>
-<p>当 SQL 语句为 SELECT 1/0 AS A  EST_SELECT_VALUE 执行失败时，它被执行到了。</p>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-11.png" alt="SSIS-Precedence-Constraint-11"></p>
-<p>当 SQL 语句为 SELECT 1 AS A  EST_SELECT_VALUE 执行成功时，它也被执行到了。</p>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-12.png" alt="SSIS-Precedence-Constraint-12"></p>
-<p><strong>Evlaution Operation = Expression  按表达式约束，与上游任务执行成功与否的结果无关</strong></p>
-<p>添加两个 Script Task - SCR_SHOW_EXP_EMPTY 和 SCR_SHOW_EXP_VALUE。</p>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-13.png" alt="SSIS-Precedence-Constraint-13"></p>
-<p>SCR_SHOW_EXP_EMPTY 的约束配置 -</p>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-14.png" alt="SSIS-Precedence-Constraint-14"></p>
-<p>SCR_SHOW_EXP_VALUE 中的约束配置 -</p>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-15.png" alt="SSIS-Precedence-Constraint-15"></p>
-<p>当 EST_SELECT_VALUE 中的 SQL 为 SELECT 1 AS A 时，PV_RESULT 的值为1，且 EST_SELECT_VALUE 执行成功！</p>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-16.png" alt="SSIS-Precedence-Constraint-16"></p>
-<p>当 EST_SELECT_VALUE 中的 SQL 为 SELECT 1/0 AS A 时，PV_RESULT 的值不能从 EST_SELECT_VALUE 中正常接受，使用默认值 “”，且 EST_SELECT_VALUE 执行失败！</p>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-17.png" alt="SSIS-Precedence-Constraint-17"></p>
-<p>可见 SCR_SHOW_RESULT，SCR_SHOW_ERROR，SCR_SHOW_COMPLETE 是否执行只与 EST_SELECT_VALUE 执行的结果有关( Success，Failure，Complete)，而与表达式无关。</p>
-<p>而 SCR_SHOW_EXP_EMPTY 和 SCR_SHOW_EXP_VALUE 的执行只与表达式相关，而与 EST_SELECT_VALUE 的执行结果无关。</p>
-<h3 id="执行结果-AND-表达式-和-执行结果-OR-表达式"><a href="#执行结果-AND-表达式-和-执行结果-OR-表达式" class="headerlink" title="执行结果 AND 表达式 和 执行结果 OR 表达式"></a>执行结果 AND 表达式 和 执行结果 OR 表达式</h3><p>新添加四个 Script Task</p>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-18.png" alt="SSIS-Precedence-Constraint-18"></p>
-<p>SCR_SHOW<em>SUCCESS</em>&amp;_EMPTY 中的配置要求 Expression 与 Constraint 同时成立。</p>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-19.png" alt="SSIS-Precedence-Constraint-19"></p>
-<p>SCR_SHOW_SUCCESS_OR_EMPTY 中的配置要求 Expression 与 Constraint 有一个成立。</p>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-20.png" alt="SSIS-Precedence-Constraint-20"></p>
-<p>SCR_SHOW<em>FALIURE</em>&amp;_VALUE 中的配置要求 Expression 与 Constraint 同时成立。</p>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-21.png" alt="SSIS-Precedence-Constraint-21"></p>
-<p>SCR_SHOW_FALIURE_OR_VALUE 中的配置要求 Expression 与 Constraint 有一个成立。</p>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-22.png" alt="SSIS-Precedence-Constraint-22"></p>
-<p>当 EST_SELECT_VALUE 中的 SQL 为 SELECT 1/0 AS A 时，执行状态 = Failure，PV_RESULT 为 EMPTY 空字符串。</p>
-<p>所以 SRC_SHOW_SUCCESS_OR_EMPTY 满足 PV_RESULT ==”” 条件，而 SCR_SHOW_FAILURE_OR_VALUE 满足 执行结果 = Failure。</p>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-23.png" alt="SSIS-Precedence-Constraint-23"></p>
-<p>当 EST_SELECT_VALUE 中的 SQL 为 SELECT 1 AS A 时，执行状态 = Success，PV_RESULT 为 1。</p>
-<p>所以 SRC_SHOW_SUCCESS_OR_EMPTY 满足执行状态 = SUCCESS 条件，而 SCR_SHOW_FAILURE_OR_VALUE 满足 PV_RESULT !=””。</p>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-24.png" alt="SSIS-Precedence-Constraint-24"></p>
-<h3 id="多约束的情况"><a href="#多约束的情况" class="headerlink" title="多约束的情况"></a>多约束的情况</h3><p>SCR_ALL_TRUE 受 EST_SELECT_VALUE_1 和 EST_SELECT_VALUE_2 共同影响。</p>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-25.png" alt="SSIS-Precedence-Constraint-25"></p>
-<p>默认情况下 SCR_ALL_TRUE 的两个优先约束都是如下图所示，这种多约束的情况要表示的意思是。从 EST_SELECT_VALUE_1 到 SCR_ALL_TRUE 只有一个结果就是 True 或者 False，这个 True 或者 False 是由 EST_SELECT_VALUE_1 中的 Constraint/Expression/Constraint and Expression/Constraint or Expression 最终结果得到的 - True 或 False。同样 EST_SELECT_VALUE_2 也能得到一个最终的计算结果 - True 或 False。</p>
-<p>也就是说有多个条件约束对 SCR_ALL_TRUE 起约束作用，那么如何实现两种约束共同作用于 SCR_ALL_TRUE 呢？就是下面的 Multiple Constraints 中的 Logical AND 或者 Logical OR 选项来决定的了。</p>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-26.png" alt="SSIS-Precedence-Constraint-26"></p>
-<p><strong>测试条件 1</strong></p>
-<ul>
-<li>1.EST_SELECT_VALUE_1 - SQL = SELECT 1 AS A</li>
-<li>2.EST_SELECT_VALUE_2 - SQL = SELECT 1 AS A</li>
-<li>3.Logical AND (虽然是两条约束线，但是更改其中一条，另外一条也会自动更改，也就是说必须同时为 Logical AND 或者 Logical OR)。</li>
-</ul>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-27.png" alt="SSIS-Precedence-Constraint-27"></p>
-<p><strong>测试条件 2</strong></p>
-<ul>
-<li>1.EST_SELECT_VALUE_1 - SQL = SELECT 1 AS A</li>
-<li>2.EST_SELECT_VALUE_2 - SQL = SELECT 1/0 AS A</li>
-<li>3.Logical AND</li>
-</ul>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-28.png" alt="SSIS-Precedence-Constraint-28"></p>
-<p><strong>测试条件 3</strong></p>
-<ul>
-<li>1.EST_SELECT_VALUE_1 - SQL = SELECT 1 AS A</li>
-<li>2.EST_SELECT_VALUE_2 - SQL = SELECT 1/0 AS A</li>
-<li>3.Logical OR</li>
-</ul>
-<p>线条同时变为虚线，执行成功！</p>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-29.png" alt="SSIS-Precedence-Constraint-29"></p>
-<p><strong>测试条件 4</strong></p>
-<ul>
-<li>1.EST_SELECT_VALUE_1 - SQL = SELECT 1 AS A</li>
-<li>2.EST_SELECT_VALUE_2 - SQL = SELECT 1/0   AS A  (Constraint - Completion)</li>
-<li>3.Logical OR</li>
-</ul>
-<p>线条同时变为虚线，执行成功！</p>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-30.png" alt="SSIS-Precedence-Constraint-30"></p>
-<p><strong>测试条件 5</strong></p>
-<ul>
-<li>1.EST_SELECT_VALUE_1 - SQL = SELECT 1 AS A</li>
-<li>2.EST_SELECT_VALUE_2 - SQL = SELECT 1/0   AS A  (Constraint - Completion)</li>
-<li>3.Logical AND  执行成功！</li>
-</ul>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-31.png" alt="SSIS-Precedence-Constraint-31"></p>
-<p><strong>PS 小窍门</strong></p>
-<p>为了更清楚的知道条件表达式和约束的内容，我们可以通过设置约束线的属性让这些信息显示出来，而不是通过人工注释的方式。</p>
-<p>选中 Constraint 线，修改其 ShowAnnotation 属性，将 AsNeeded 修改为 ConstraintOptions。</p>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-32.png" alt="SSIS-Precedence-Constraint-32"></p>
-<p>这样就可以清楚的看到约束中的状态判断和表达式判断了！</p>
-<p><img src="/img/posts/SSIS-Precedence-Constraint-33.png" alt="SSIS-Precedence-Constraint-33"></p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>以上就是 Precedence Constraint 的全部内容！虽然感觉内容比较多，但是这些配置条件在不同的情形中的确会碰到。比如在文件归档任务中，就有类似于这样的条件约束。一种是只要前面加载数据成功就归档，一种是不管前面数据加载成功不成功只要执行完毕就执行归档操作。</p>
-<p>本文转自 微软BI 之SSIS 系列 - Precedence Constraint 详解优先约束的使用<br><a href="https://ask.hellobi.com/blog/biwork/624" target="_blank" rel="external">https://ask.hellobi.com/blog/biwork/624</a></p>
+<p>购买服务器的初衷就是想有一个自己部署的博客，当然有CSDN这些非常优秀的博客平台，上面的大牛资源很多，在上面写东西分享东西会更好些，自己搞个服务器运行个博客，还没什么人去看，无外乎为了装个X罢了。没错，是这样的，但是坦白讲这个X装的并不好。每当在网上搜索解决问题的方法的时候，链接到一些不错的个人博客，看到那随着时光而留下的一篇篇印记，就很是羡慕，看得出那一路的积累、总结与成长。</p>
+<center><img src="/img/posts/HardSayGoodbye-2.jpeg"></center>
+
+<p>记得服务器是去年双十一优惠买的阿里云服务器，单核1G内存。买之前还买了域名。那时候刚知道有WP(Wordpress)不久，这个相信很多人都知道，一个很不错的开源的博客与内容展示平台，用PHP写的，在互联网世界还是很流行的(还记得嘛，PHP是世界上最好的语言)。所以起初是部署的WP的博客，所以就要搞一个MySql+PHP的运行环境，自然不用说，用集成的XAMPP就好了。</p>
+<p>但是后来让我换成了现在用的Solo，并不是因为Wordpress不好，Wordpress还是很不错的，功能很完善，还有各种插件皮肤可以用，由于买的服务器配置比较低，1G的内存，本身运行了Win Server 2012在运行其他的显得比较勉强，经常出现PHP运行环境不稳定崩溃的现象。所以想到有没有一些比较轻量级的博客平台，也不记得怎么找到的Solo，觉着挺好，按个JAVA环境，就可以独立启动运行。功能上也够用，还可以将博客同步到黑客派。当然也折腾了一下皮肤，修改了默认皮肤的一些样式。</p>
+<center><img src="/img/posts/HardSayGoodbye-3.jpeg"></center>
+
+<p>其实大部分文章都是转来的，平时搜东西的时候觉得挺好就转载一下，偶尔也把自己遇到的一些问题整理记录下来放出去。必须得承认，自己整理的东西会让自己更加印象深刻，在整理成博客的时候会让你理清思路，还可以练习你的表达。我还得承认我的写作能力巅峰时期应该在高中，高考后再没那时的水准。大学里论文什么的虽然字数多，但怎么出来的你懂得。</p>
+<p>大概是在8月份，开始比较深入了解Git，自然就少不了GitHub，后来了解到在Github上可以发布静态网页的博客，遂折腾了一段时间，觉得还是蛮神奇的，用nodejs生成静态网页在同步到Github，还可以练习Git命令，所以就用Hexo搭了一个github静态博客<a href="http://c-xuan.com">c-xuan.com</a>。当然它并没有B3log那么方便，每次更新博客都要push。而且还得想办法解决多个地方发布的同步问题。但好处也显而易见，不需要独立的服务器，注册一个Github账号即可。有没有即功能齐全又不需要独立服务器的？有，像博客园、CSDN、简书等等都不错。</p>
+<center><img src="/img/posts/HardSayGoodbye-4.jpeg"></center>
+
+<p>最后我想说的是，选择什么样的平台发布自己的博客并不需要太过在意，适合自己的就是最好的，无论什么工具，目的都是总结自己的经历，分享自己的历程。我们庆幸自己生活在一个互联网的时代，这是一个最好的时代，我们可以随心所欲在浩瀚的网络中学到自己想要的东西。另外，就是坚持，其实坚持并不是胜利，坚持到底才是胜利，坚持着去写些东西，让岁月在互联网上留下点痕迹。诚然，网络是一个虚拟的世界，想必我们都已离不开这个世界，学着在这个世界里让自己更快成长。看到过这样一句话：有些人你可能忘了，但输入法还记得。就像很多事情你也忘了，但可能会有这样一个地方会让你回忆起什么(我说的不是朋友圈)。愿你迷茫时都可以找回来时的路。</p>
+<p>PS:感谢Solo开源博客平台，感谢B3log团队。</p>
 
       
     </div>
@@ -534,13 +412,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/05/21/SSIS-Precedence-Constraint/">【SSIS】中Precedence Constraint 优先约束的使用</a></p>
+        <p><span>本文标题:</span><a href="/2016/11/28/HardSayGoodby/">再见Solo，谢谢!</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">c-xuan</a></p>
-        <p><span>发布时间:</span>2016-05-21, 00:00:00</p>
-        <p><span>最后更新:</span>2016-09-24, 01:12:57</p>
+        <p><span>发布时间:</span>2016-11-28, 00:00:00</p>
+        <p><span>最后更新:</span>2017-02-26, 18:30:45</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/05/21/SSIS-Precedence-Constraint/" title="【SSIS】中Precedence Constraint 优先约束的使用">http://c-xuan.com/2016/05/21/SSIS-Precedence-Constraint/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://c-xuan.com/2016/05/21/SSIS-Precedence-Constraint/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/11/28/HardSayGoodby/" title="再见Solo，谢谢!">http://c-xuan.com/2016/11/28/HardSayGoodby/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://c-xuan.com/2016/11/28/HardSayGoodby/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -553,15 +431,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/05/22/JS-AddIn-PPTSlideEffect/">
-                    JS插件:类似PPT翻页过渡动画效果
+                <a href="/2016/12/01/BenifitOfWritingBlog/">
+                    从事技术，坚持写博客的好处？
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/05/16/SSIS-XMLTask-ProcessArrays/">
-                    【SSIS】中Foreach循环容器处理XML数据
+                <a href="/2016/10/29/JS-BuildBaseClassLib/">
+                    JavaScript :零基础打造自己的类库
                 </a>
             </div>
         
@@ -573,7 +451,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#开篇介绍"><span class="toc-number">1.</span> <span class="toc-text">开篇介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#执行结果-AND-表达式-和-执行结果-OR-表达式"><span class="toc-number">2.</span> <span class="toc-text">执行结果 AND 表达式 和 执行结果 OR 表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多约束的情况"><span class="toc-number">3.</span> <span class="toc-text">多约束的情况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+            
         
     </div>
     <style>
@@ -609,7 +487,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"【SSIS】中Precedence Constraint 优先约束的使用　| 靛青　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"再见Solo，谢谢!　| 靛青　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -625,7 +503,7 @@
     
       <div class="duoshuo" id="comments">
     <div id="comment-box" ></div>
-    <div class="ds-thread" id="ds-thread" data-thread-key="2016/05/21/SSIS-Precedence-Constraint/" data-title="【SSIS】中Precedence Constraint 优先约束的使用" data-url="http://c-xuan.com/2016/05/21/SSIS-Precedence-Constraint/"></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/11/28/HardSayGoodby/" data-title="再见Solo，谢谢!" data-url="http://c-xuan.com/2016/11/28/HardSayGoodby/"></div>
     <script>
         var duoshuoQuery = {short_name:"cxuan"};
         var loadComment = function(){
@@ -648,7 +526,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/05/22/JS-AddIn-PPTSlideEffect/" title="上一篇: JS插件:类似PPT翻页过渡动画效果">
+            <a href="/2016/12/01/BenifitOfWritingBlog/" title="上一篇: 从事技术，坚持写博客的好处？">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -656,7 +534,7 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/05/16/SSIS-XMLTask-ProcessArrays/" title="下一篇: 【SSIS】中Foreach循环容器处理XML数据">
+            <a href="/2016/10/29/JS-BuildBaseClassLib/" title="下一篇: JavaScript :零基础打造自己的类库">
                 <i class="fa fa-angle-right"></i>
             </a>
         

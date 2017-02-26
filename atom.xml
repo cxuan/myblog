@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://c-xuan.com/"/>
-  <updated>2016-12-01T16:13:05.593Z</updated>
+  <updated>2017-02-26T10:14:26.853Z</updated>
   <id>http://c-xuan.com/</id>
   
   <author>
@@ -14,6 +14,103 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>宽表和窄表的建设该如何选择？</title>
+    <link href="http://c-xuan.com/2017/01/03/wide-table-thinking/"/>
+    <id>http://c-xuan.com/2017/01/03/wide-table-thinking/</id>
+    <published>2017-01-02T16:00:00.000Z</published>
+    <updated>2017-02-26T10:14:26.853Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>宽表从字面意义上讲就是字段比较多的数据库表。通常是指业务主题相关的指标、维度、属性关联在一起的一张数据库表。由于把不同的内容都放在同一张表存储，宽表已经不符合三范式的模型设计规范，随之带来的主要坏处就是数据的大量冗余，与之相对应的好处就是查询性能的提高与便捷。这种宽表的设计广泛应用于数据挖掘模型训练前的数据准备，通过把相关字段放在同一张表中，可以大大提高数据挖掘模型训练过程中迭代计算时的效率问题。<br>————百度百科</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="宽表和窄表的建设该如何选择？"><a href="#宽表和窄表的建设该如何选择？" class="headerlink" title="宽表和窄表的建设该如何选择？"></a>宽表和窄表的建设该如何选择？</h3><p>这个问题相信纠结了很多从是数据库开发、数据仓库开发和后台开发人员；单单考虑这个问题，难给出一个绝对的答案；本人从事数据仓库开发工作到现在已经有一年半时间了，对于这个问题，我也曾经纠结过，但是是否有绝对的答案呢？事实上任何东西都没有绝对的说法。</p>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>考虑这样的一个问题，一个公司有这样的一个需求：</p>
+<p>设计销售领域的订单事实表，该事实表应该包含哪些维度和度量？事实表和维表该分别如何去设计？</p>
+<p>好了，我们把关键信息拿出来，首先我们要有维度包括：销售员、销售员所属部门、下订单的时间；度量：销售量；</p>
+<p>那么，订单事实表，其实就是一个商品销售的清单。</p>
+<h3 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h3><p>依照这个思路，我们建立的第一个模型可能是以下这样的：</p>
+<center><img src="/img/posts/wide-table-thinking-1.gif"></center>
+
+<p>单单看上去，貌似是符合我们的问题的需要，而且符合数据库的范式设计：没有冗余字段；但是情况真的就是这样吗？</p>
+<p>答案是否定的，确实对于一般的OLTP系统而言这样的表设计确实减少了冗余和，增删改查等操作也很方便，但是往往对于我们的统计系统、OLAP、数据挖掘而言，情况却并非如此，举个例子：我们要统计每个部门各自的销售量为多少？那么对于上表,sql是这样的：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> a.*,b.sid <span class="keyword">into</span> #dep_saleser <span class="keyword">from</span> department a,saleser_dim b <span class="keyword">on</span> a.dep_id = b.dep_id;</div><div class="line"><span class="keyword">select</span> <span class="keyword">count</span>(<span class="number">1</span>),a.dep_name <span class="keyword">from</span> #dep_saleser a,order_fact b <span class="keyword">on</span> a.sid=b.sid <span class="keyword">group</span> <span class="keyword">by</span> a.dep_name;</div></pre></td></tr></table></figure>
+<p>对于这么一个简单的需求已经要写两了sql去实现了，其实数据库表模型的的设计是灵活的，我们完全可以根据我们的业务去设计我们的数据表；考虑到部门和销售员可以是同属于销售者这个维度，只是他们是有上下级别关系的。</p>
+<h3 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h3><p>那么依照这个思路，我们的模型可以建立为下面这样：</p>
+<center><img src="/img/posts/wide-table-thinking-2.gif"></center>
+
+<p>那么统计每个部门各自的销售量，可以用如下sql去实现：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> <span class="keyword">count</span>(<span class="number">1</span>),a.dep_name <span class="keyword">from</span> saleser_dim a,order_fact b</div><div class="line"><span class="keyword">on</span> a.sid=b.sid <span class="keyword">group</span> <span class="keyword">by</span> a.dep_name;</div></pre></td></tr></table></figure>
+<p>确实对于这个模型而言，有些情况下会出现冗余（填写用户，没有填写部门，填写部门没填写用户），但是对于提取数统计的逻辑又相对来说要简单了好多。</p>
+<h3 id="方案三"><a href="#方案三" class="headerlink" title="方案三"></a>方案三</h3><p>考虑到要实现取数简单，我们还可以想出另外一种方法：</p>
+<center><img src="/img/posts/wide-table-thinking-3.gif"></center>
+
+<p>看上去好像不错哦~~，取数据也就一句sql就搞掂了，但是却是最最槽糕的情况，有可能一个销售员，前几天登记的部门是a，但是其实他的所属于的部门为b，那么对于上面这个模型，我们得改动销售员和订单表；而对于上面的其他两个模型都仅仅需要改动一张表就行了，造成查询数据部一致往往也就是这种数据模型所造成的。</p>
+<p>所谓的宽表就是字段比较多的表，包含的维度层次比较多，造成冗余也比较多，毁范式设计，但是利于取数统计，而窄表往往对于OLTP比较合适，符合范式设计原则。</p>
+<p>转自<a href="http://www.cnblogs.com/super-d2/p/3384938.html" target="_blank" rel="external">http://www.cnblogs.com/super-d2/p/3384938.html</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;宽表从字面意义上讲就是字段比较多的数据库表。通常是指业务主题相关的指标、维度、属性关联在一起的一张数据库表。由于把不同的内容都放在同一张表存储，宽表已经不符合三范式的模型设计规范，随之带来的主要坏处就是数据的大量冗余，与之相对应的好处就是查询性能的提高与便捷。这种宽表的设计广泛应用于数据挖掘模型训练前的数据准备，通过把相关字段放在同一张表中，可以大大提高数据挖掘模型训练过程中迭代计算时的效率问题。&lt;br&gt;————百度百科&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="BI墨客" scheme="http://c-xuan.com/categories/BI%E5%A2%A8%E5%AE%A2/"/>
+    
+    
+      <category term="数据仓库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/"/>
+    
+      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>再见Solo，谢谢!</title>
+    <link href="http://c-xuan.com/2017/01/03/HardSayGoodby/"/>
+    <id>http://c-xuan.com/2017/01/03/HardSayGoodby/</id>
+    <published>2017-01-02T16:00:00.000Z</published>
+    <updated>2017-02-26T10:13:31.246Z</updated>
+    
+    <content type="html"><![CDATA[<center><img src="/img/posts/HardSayGoodbye-1.jpeg"></center>
+
+<p>还有一天，购买的服务器就要到期了，并没有续期的打算，意味着在服务器上运行的这个Solo博客就停掉了。其实也没有什么大不了的事情，只是想来这一路没有为自己能够坚持而愧疚。</p>
+<a id="more"></a>
+<p>购买服务器的初衷就是想有一个自己部署的博客，当然有CSDN这些非常优秀的博客平台，上面的大牛资源很多，在上面写东西分享东西会更好些，自己搞个服务器运行个博客，还没什么人去看，无外乎为了装个X罢了。没错，是这样的，但是坦白讲这个X装的并不好。每当在网上搜索解决问题的方法的时候，链接到一些不错的个人博客，看到那随着时光而留下的一篇篇印记，就很是羡慕，看得出那一路的积累、总结与成长。</p>
+<center><img src="/img/posts/HardSayGoodbye-2.jpeg"></center>
+
+<p>记得服务器是去年双十一优惠买的阿里云服务器，单核1G内存。买之前还买了域名。那时候刚知道有WP(Wordpress)不久，这个相信很多人都知道，一个很不错的开源的博客与内容展示平台，用PHP写的，在互联网世界还是很流行的(还记得嘛，PHP是世界上最好的语言)。所以起初是部署的WP的博客，所以就要搞一个MySql+PHP的运行环境，自然不用说，用集成的XAMPP就好了。</p>
+<p>但是后来让我换成了现在用的Solo，并不是因为Wordpress不好，Wordpress还是很不错的，功能很完善，还有各种插件皮肤可以用，由于买的服务器配置比较低，1G的内存，本身运行了Win Server 2012在运行其他的显得比较勉强，经常出现PHP运行环境不稳定崩溃的现象。所以想到有没有一些比较轻量级的博客平台，也不记得怎么找到的Solo，觉着挺好，按个JAVA环境，就可以独立启动运行。功能上也够用，还可以将博客同步到黑客派。当然也折腾了一下皮肤，修改了默认皮肤的一些样式。</p>
+<center><img src="/img/posts/HardSayGoodbye-3.jpeg"></center>
+
+<p>其实大部分文章都是转来的，平时搜东西的时候觉得挺好就转载一下，偶尔也把自己遇到的一些问题整理记录下来放出去。必须得承认，自己整理的东西会让自己更加印象深刻，在整理成博客的时候会让你理清思路，还可以练习你的表达。我还得承认我的写作能力巅峰时期应该在高中，高考后再没那时的水准。大学里论文什么的虽然字数多，但怎么出来的你懂得。</p>
+<p>大概是在8月份，开始比较深入了解Git，自然就少不了GitHub，后来了解到在Github上可以发布静态网页的博客，遂折腾了一段时间，觉得还是蛮神奇的，用nodejs生成静态网页在同步到Github，还可以练习Git命令，所以就用Hexo搭了一个github静态博客<a href="http://c-xuan.com">c-xuan.com</a>。当然它并没有B3log那么方便，每次更新博客都要push。而且还得想办法解决多个地方发布的同步问题。但好处也显而易见，不需要独立的服务器，注册一个Github账号即可。有没有即功能齐全又不需要独立服务器的？有，像博客园、CSDN、简书等等都不错。</p>
+<center><img src="/img/posts/HardSayGoodbye-4.jpeg"></center>
+
+<p>最后我想说的是，选择什么样的平台发布自己的博客并不需要太过在意，适合自己的就是最好的，无论什么工具，目的都是总结自己的经历，分享自己的历程。我们庆幸自己生活在一个互联网的时代，这是一个最好的时代，我们可以随心所欲在浩瀚的网络中学到自己想要的东西。另外，就是坚持，其实坚持并不是胜利，坚持到底才是胜利，坚持着去写些东西，让岁月在互联网上留下点痕迹。诚然，网络是一个虚拟的世界，想必我们都已离不开这个世界，学着在这个世界里让自己更快成长。看到过这样一句话：有些人你可能忘了，但输入法还记得。就像很多事情你也忘了，但可能会有这样一个地方会让你回忆起什么(我说的不是朋友圈)。愿你迷茫时都可以找回来时的路。</p>
+<p>PS:感谢Solo开源博客平台，感谢B3log团队。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;center&gt;&lt;img src=&quot;/img/posts/HardSayGoodbye-1.jpeg&quot;&gt;&lt;/img&gt;&lt;/center&gt;
+
+&lt;p&gt;还有一天，购买的服务器就要到期了，并没有续期的打算，意味着在服务器上运行的这个Solo博客就停掉了。其实也没有什么大不了的事情，只是想来这一路没有为自己能够坚持而愧疚。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="随笔感悟" scheme="http://c-xuan.com/categories/%E9%9A%8F%E7%AC%94%E6%84%9F%E6%82%9F/"/>
+    
+    
+      <category term="原创" scheme="http://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+      <category term="知识管理" scheme="http://c-xuan.com/tags/%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86/"/>
+    
+  </entry>
   
   <entry>
     <title>【SQL Server】编辑、修改字段说明（备注）</title>
@@ -61,9 +158,9 @@
     
       <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
     
-      <category term="数据库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
       <category term="SQL Server" scheme="http://c-xuan.com/tags/SQL-Server/"/>
+    
+      <category term="数据库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
   </entry>
   
@@ -523,9 +620,9 @@
       <category term="随笔感悟" scheme="http://c-xuan.com/categories/%E9%9A%8F%E7%AC%94%E6%84%9F%E6%82%9F/"/>
     
     
-      <category term="知识管理" scheme="http://c-xuan.com/tags/%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86/"/>
-    
       <category term="原创" scheme="http://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+      <category term="知识管理" scheme="http://c-xuan.com/tags/%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86/"/>
     
   </entry>
   
@@ -1688,90 +1785,6 @@
       <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
     
       <category term="SSIS" scheme="http://c-xuan.com/tags/SSIS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【T-SQL】group by 和grouping sets</title>
-    <link href="http://c-xuan.com/2016/06/13/SQL-GroupByAndGroupingSets/"/>
-    <id>http://c-xuan.com/2016/06/13/SQL-GroupByAndGroupingSets/</id>
-    <published>2016-06-12T16:00:00.000Z</published>
-    <updated>2016-09-22T16:16:38.628Z</updated>
-    
-    <content type="html"><![CDATA[<p>遇到一个情况，需要在内网系统中出一个统计报表。需要根据不同条件使用多个group by语句，需要将所有聚合的数据进行union操作来完成不同维度的统计查看。<br>知道发现了在SQL  Server 2008之后引入了grouping sets这个对于group by的增强后，上面的需求实现起来就简单的多，下面我们用AdventureWork中的表作为demo来解释一下grouping sets.</p>
-<a id="more"></a>
-<p>假设我现在需要两个维度查询我的销售额度，查询T-SQL如下：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-1.png" alt="SQL-GroupByAndGroupingSets-1"></p>
-<p>而使用SQL Server 2008之后新增的grouping sets语句，仅仅需要这样写：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-3.png" alt="SQL-GroupByAndGroupingSets-3"></p>
-<p>值得注意的是，虽然上面使用grouping sets语句和多个group by语句差生的结果完全一样，但顺序完全不同。</p>
-<p>grouping  sets，仅仅是语法糖？</p>
-<p>从上面的结果来看，使用grouping  sets仅仅是一个可以少写代码的语法糖，但实际情况是，group sets在遇到多个条件时，聚合是一次性从数据库中取出所有需要的操作的数据，在内存中对数据库进行聚合操作并生成结果。而union all是多次扫描表，将返回的结果进行union操作。这也就是为什么grouping  sets和union操作所返回的数据顺序是不同的原因。</p>
-<p>下面通过查看上面两个语句的IO和CPU来进行对比：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-5.png" alt="SQL-GroupByAndGroupingSets-5"></p>
-<p>通过上面的图来看grouping sets不仅仅只是语法糖，而是从执行原理做出了改变</p>
-<p>对于grouping sets来说，还经常和grouping函数联合使用，这个函数是反应目标列是否聚合，如果聚合则返回1，否则返回0，如下：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-6.png" alt="SQL-GroupByAndGroupingSets-6"></p>
-<p>转自：<a href="http://www.cnblogs.com/CareySon/archive/2011/12/19/2293245.html" target="_blank" rel="external">http://www.cnblogs.com/CareySon/archive/2011/12/19/2293245.html</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;遇到一个情况，需要在内网系统中出一个统计报表。需要根据不同条件使用多个group by语句，需要将所有聚合的数据进行union操作来完成不同维度的统计查看。&lt;br&gt;知道发现了在SQL  Server 2008之后引入了grouping sets这个对于group by的增强后，上面的需求实现起来就简单的多，下面我们用AdventureWork中的表作为demo来解释一下grouping sets.&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="码路刺客" scheme="http://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
-    
-    
-      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
-      <category term="数据库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-      <category term="SQL Server" scheme="http://c-xuan.com/tags/SQL-Server/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>放开那程序猿！构建业务导向的大数据云平台</title>
-    <link href="http://c-xuan.com/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/"/>
-    <id>http://c-xuan.com/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/</id>
-    <published>2016-06-04T16:00:00.000Z</published>
-    <updated>2016-09-22T16:13:16.702Z</updated>
-    
-    <content type="html"><![CDATA[<p>按数据处理方式及使用目标，企业级IT系统可分为OLTP和OLAP系统。简而言之，OLTP系统生产数据，OLAP系统加工数据。从数据到智慧的转换金字塔上看，OLTP系统实现了底层的数据产生和存储以及面向事务的信息整合，在这之上的各层就要依赖OLAP系统了。OLAP概念源自决策支持系统（DSS），企业中的数据仓库、数据集市、统计报表、驾驶舱、数据挖掘等都属于OLAP体系。其中，数据仓库和数据集市主要实现信息整合，一般统称为数据整合平台。统计报表、驾驶舱、数据挖掘进一步利用数据整合平台的成果，帮助用户发现知识并最终形成智慧。 </p>
-<a id="more"></a>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-1.png" alt="BuildBusinessOrientedBigDataCloudPlatform-1"></p>
-<p>OLAP系统的主要用户是分析人员和管理人员，目标是支持管理决策，依据是企业生产经营过程中产生的全量数据，是一个按目标使用场景对数据进行加工、利用的过程。这过程一般可以划分五个阶段：业务部门定义需求；IT部门根据需求获取并整合相关数据；IT部门根据需求设计分析模型；IT部门开发实施并发布；业务部门应用并衡量实际成效。在传统的数据基础和技术环境下，这个周期可能要经历较漫长的时间。还在建设OLAP体系的情况自不必多说，即便已建成OLAP体系统，要及时响应业务部门的需求也是较困难的，而且很有可能最终的交付质量不能达到需求方的预期。</p>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-2.png" alt="BuildBusinessOrientedBigDataCloudPlatform-2"></p>
-<p>下图是目前较常见的OLAP体系简图，上游系统指那些OLTP系统，是数据源。数据整合平台包括ODS、数据仓库、数据集市等，主要实现数据整合。下游系统指那些利用数据整合平台成果的系统，包括统计报表、驾驶舱、数据挖掘等。其中，数据整合平台承上启下，在整个OLAP体系中非常重要。按照目前较普遍的架构，从上游到下游的数据流向，至少分为同构层、整合层、应用层。其中同构层在模型上基本与上游接入数据源基本保持一致，整合层一般会采用高范式模型进行数据整合，应用层面向下游具体应用采用星型模型。这个架构是在Inmon帮和Kimball派十几年如一日的不断撕逼和妥协中演进出来的，应该是一种最佳实践。但随着互联网+大数据时代到来，对数据应用有着更高效、更深入的要求，这种架构本身固有的缺点被不断放大。</p>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-3.png" alt="BuildBusinessOrientedBigDataCloudPlatform-3"></p>
-<p><strong>开发周期长</strong></p>
-<p>为了避免因上游系统接入模型的变化而导致数据整合平台模型的被动调整，整合层建模时一般会采用较高范式实现高内聚、低耦合，ER实体较多、关系复杂。这样就增加了ETL设计、开发以及测试的复杂度，同时ETL程序执行效率也低。业务部门提出的需求，IT首先由下至上逐层对模型进行分析，即便只需在应用层开发，基于上述原因也需要一周以上。如果涉及要改动整合层，开发周期要一个月左右，业务部门显然是不能接受的。最后的结局不用猜都知道，苦逼的程序猿只能再一次强睁熊猫眼天天加班赶工。但是故事并没有到此结束，马上一个意想不到但细细想想又是顺理成章的伴生问题发生了。</p>
-<p><strong>架构迅速变坏</strong></p>
-<p>在日复一日的高压下，程序猿只能另辟蹊径为自己减负。既然工作量是由于数据模型和层次的复杂性引起的，那最有效的减少工作量的方法无非就是：1、绕过整合层，数据直接从同构层到应用层。2、还是从通过整合层，但使用面向应用的自建模型。无论哪种方法，都使整合层形同虚设，从同构层到应用层形成一个个数据井道。虽然单个开发任务的开发时间缩短了，但各数据井道之间无法复用，所以总的开发时间绝对要更多，而且后期的维护工作将是一场噩梦。</p>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-4.png" alt="BuildBusinessOrientedBigDataCloudPlatform-4"></p>
-<p><strong>效率低</strong></p>
-<p>架构变坏后，数据一致性无法保证，大量数据重复存储，大量指标重复计算，ETL作业数急剧上升，数据整合平台效率自然会越来越差。即便架构还能保持，但随着时间的推移，数据量及业务需求不断增加，架构上倾向分割出更多的层次，以便实现更多的复用。随着层次的增加，数据迁移的路径就变长了，长久以往也难逃低效率的宿命。</p>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-5.png" alt="BuildBusinessOrientedBigDataCloudPlatform-5"></p>
-<p>再回顾下OLAP数据应用的五个阶段，从业务提出需求到业务应用验证形成闭环，这过程是由IT导向推动的，IT首先与业务讨论分析需求，在业务模型层面中达成共识，然后再映射到系统模型，实现对来自上游系统的数据进行加工处理，最后通过OLAP系统将结果在业务语境中展现给用户，之前讨论的所有弊病都此有关。而对于像银行、保险等发展较成熟的行业，其业务语境、模型是较稳定的，支持业务开展的上游IT系统的系统模型也应该是相对稳定的，因此业务模型和系统模型间能形成较稳定的映射关系。这样只要能达到足够细的粒度，就能实现操纵业务模型来改变系统模型的目的。而业务模型又能被业务所能理解，因此这个闭环过程就可以完全由业务导向不需要IT的参与，整个过程可以简化为：业务设计模型，业务应用验证。</p>
-<p>文／season7（简书作者）<br>原文链接：<a href="http://www.jianshu.com/p/d55d8eeac219" target="_blank" rel="external">http://www.jianshu.com/p/d55d8eeac219</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;按数据处理方式及使用目标，企业级IT系统可分为OLTP和OLAP系统。简而言之，OLTP系统生产数据，OLAP系统加工数据。从数据到智慧的转换金字塔上看，OLTP系统实现了底层的数据产生和存储以及面向事务的信息整合，在这之上的各层就要依赖OLAP系统了。OLAP概念源自决策支持系统（DSS），企业中的数据仓库、数据集市、统计报表、驾驶舱、数据挖掘等都属于OLAP体系。其中，数据仓库和数据集市主要实现信息整合，一般统称为数据整合平台。统计报表、驾驶舱、数据挖掘进一步利用数据整合平台的成果，帮助用户发现知识并最终形成智慧。 &lt;/p&gt;
-    
-    </summary>
-    
-      <category term="BI墨客" scheme="http://c-xuan.com/categories/BI%E5%A2%A8%E5%AE%A2/"/>
-    
-    
-      <category term="BI" scheme="http://c-xuan.com/tags/BI/"/>
-    
-      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
-      <category term="BigData" scheme="http://c-xuan.com/tags/BigData/"/>
     
   </entry>
   

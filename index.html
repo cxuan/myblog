@@ -344,6 +344,238 @@
 </nav>
       <div class="body-wrap ">
   
+    <article id="post-tree-table-store3" class="article article-type-post " itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/03/06/tree-table-store3/" class="article-date">
+      <time datetime="2017-03-06T15:50:20.000Z" itemprop="datePublished">2017-03-06</time>
+</a>
+
+ 
+    <a href="/2017/03/06/tree-table-store3/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+            <span class="ds-thread-count"  data-thread-key="2017/03/06/tree-table-store3/" ></span>
+        
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/06/tree-table-store3/">树形结构数据存储方案（三）：闭包表</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>将Closure Table翻译成闭包表不知道是否合适，闭包表的思路和物化路径差不多，都是空间换时间，Closure Table，一种更为彻底的全路径结构，分别记录路径上相关结点的全展开形式。能明晰任意两结点关系而无须多余查询，级联删除和结点移动也很方便。但是它的存储开销会大一些，除了表示结点的Meta信息，还需要一张专用的关系表。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/码路刺客/">码路刺客</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/03/06/tree-table-store3/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-tree-table-store2" class="article article-type-post " itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/03/06/tree-table-store2/" class="article-date">
+      <time datetime="2017-03-06T15:40:20.000Z" itemprop="datePublished">2017-03-06</time>
+</a>
+
+ 
+    <a href="/2017/03/06/tree-table-store2/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+            <span class="ds-thread-count"  data-thread-key="2017/03/06/tree-table-store2/" ></span>
+        
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/06/tree-table-store2/">树形结构数据存储方案（二）： 物化路径</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>前一篇文章介绍了比较简单的邻接列表模式，物化路径其实更加容易理解，其实就是在创建节点时，将节点的完整路径进行记录。以下图为例：</p>
+<center><img src="/img/posts/tree-table-store2-1.gif"></img></center>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/码路刺客/">码路刺客</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/03/06/tree-table-store2/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-tree-table-store1" class="article article-type-post " itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/03/06/tree-table-store1/" class="article-date">
+      <time datetime="2017-03-06T15:31:20.000Z" itemprop="datePublished">2017-03-06</time>
+</a>
+
+ 
+    <a href="/2017/03/06/tree-table-store1/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+            <span class="ds-thread-count"  data-thread-key="2017/03/06/tree-table-store1/" ></span>
+        
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/06/tree-table-store1/">树型结构数据存储方案（一）：邻接列表模式</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>在程序开发中，我们常遇到用树型结构来表示某些数据间的关系，如企业的组织架构、商品的分类、操作栏目等，目前的关系型数据库都是以二维表的形式记录存储数据，而树型结构的数据如需存入二维表就必须进行Schema设计。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/码路刺客/">码路刺客</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/03/06/tree-table-store1/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-wide-table-thinking" class="article article-type-post " itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -1136,242 +1368,6 @@
 
 
   
-    <article id="post-PlayFrameworkInit" class="article article-type-post " itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/09/20/PlayFrameworkInit/" class="article-date">
-      <time datetime="2016-09-19T16:40:51.000Z" itemprop="datePublished">2016-09-20</time>
-</a>
-
- 
-    <a href="/2016/09/20/PlayFrameworkInit/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-            <span class="ds-thread-count"  data-thread-key="2016/09/20/PlayFrameworkInit/" ></span>
-        
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/20/PlayFrameworkInit/">Play Framework 2.5 环境搭建与新建项目（一）</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Play Framework是啥？引用下百度百科的说法：</p>
-<blockquote>
-<p>Play！是一个full-stack（全栈的）Java Web应用框架，包括一个简单的无状态MVC模型，具有Hibernate的对象持续，一个基于Groovy的模板引擎，以及建立一个现代Web应用所需的所有东西。</p>
-</blockquote>
-<p>当然，这个介绍是比较旧的，对于老版本的Play!，这么说没毛病。进入<a href="https://www.playframework.com/">Play!官网</a>看看，满眼的绿啊，有一股清新之感呐。版本都到<code>2.5.8</code>了。追溯1.0版本都是在2010.07.28发布的，到现在已经有6年时间了。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/码路刺客/">码路刺客</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Play-Framework/">Play Framework</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原创/">原创</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/09/20/PlayFrameworkInit/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-PCProblemRightKeyItem" class="article article-type-post " itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/09/17/PCProblemRightKeyItem/" class="article-date">
-      <time datetime="2016-09-17T14:21:16.000Z" itemprop="datePublished">2016-09-17</time>
-</a>
-
- 
-    <a href="/2016/09/17/PCProblemRightKeyItem/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-            <span class="ds-thread-count"  data-thread-key="2016/09/17/PCProblemRightKeyItem/" ></span>
-        
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/17/PCProblemRightKeyItem/">电脑右键菜单中没有新建和在此处打开命令行选项的问题</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>不知道由于什么原因，突然发现鼠标右键没有了新建选项，想新建个文件夹都不行，而且在计算机里的“新建文件夹”也不行。 </p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/生活点滴/">生活点滴</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原创/">原创</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/09/17/PCProblemRightKeyItem/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-ConstraintNameUniquenessProblem" class="article article-type-post " itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/09/12/ConstraintNameUniquenessProblem/" class="article-date">
-      <time datetime="2016-09-12T15:31:09.000Z" itemprop="datePublished">2016-09-12</time>
-</a>
-
- 
-    <a href="/2016/09/12/ConstraintNameUniquenessProblem/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-            <span class="ds-thread-count"  data-thread-key="2016/09/12/ConstraintNameUniquenessProblem/" ></span>
-        
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/12/ConstraintNameUniquenessProblem/">【PowerDesigner】Constraint name uniqueness问题及处理</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>使用PowerDesigner生成数据库脚本时报 Constraint name uniqueness 错误：</p>
-<p><img src="/img/posts/ConstraintNameUniquenessProblem-1.png" alt="ConstraintNameUniquenessProblem-01"></p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/BI墨客/">BI墨客</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BI/">BI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原创/">原创</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据仓库/">数据仓库</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/09/12/ConstraintNameUniquenessProblem/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1382,7 +1378,7 @@
     <div class="outer">
         <div id="footer-info">
             <div class="footer-left">
-                Posts count:49
+                Posts count:52
             </div>
 			<!--
             <div class="footer-left">

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://c-xuan.com/"/>
-  <updated>2017-02-26T10:14:26.853Z</updated>
+  <updated>2017-03-06T16:05:44.650Z</updated>
   <id>http://c-xuan.com/</id>
   
   <author>
@@ -14,6 +14,152 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>树形结构数据存储方案（三）：闭包表</title>
+    <link href="http://c-xuan.com/2017/03/06/tree-table-store3/"/>
+    <id>http://c-xuan.com/2017/03/06/tree-table-store3/</id>
+    <published>2017-03-06T15:50:20.000Z</published>
+    <updated>2017-03-06T16:05:44.650Z</updated>
+    
+    <content type="html"><![CDATA[<p>将Closure Table翻译成闭包表不知道是否合适，闭包表的思路和物化路径差不多，都是空间换时间，Closure Table，一种更为彻底的全路径结构，分别记录路径上相关结点的全展开形式。能明晰任意两结点关系而无须多余查询，级联删除和结点移动也很方便。但是它的存储开销会大一些，除了表示结点的Meta信息，还需要一张专用的关系表。</p>
+<a id="more"></a>
+<p>以下图举例数据举例：</p>
+<center><img src="/img/posts/tree-table-store3-1.gif"></center>
+
+<p>创建主表：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> nodeInfo (</div><div class="line">node_id <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</div><div class="line">node_name <span class="built_in">VARCHAR</span> (<span class="number">255</span>),</div><div class="line">PRIMARY <span class="keyword">KEY</span> (<span class="string">`node_id`</span>)</div><div class="line">) <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span> = utf8;</div></pre></td></tr></table></figure>
+<p>创建关系表：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> nodeRelationship (</div><div class="line">ancestor <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</div><div class="line">descendant <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</div><div class="line">distance <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</div><div class="line">PRIMARY <span class="keyword">KEY</span> (ancestor, descendant)</div><div class="line">) <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span> = utf8;</div></pre></td></tr></table></figure>
+<p>其中</p>
+<ul>
+<li>Ancestor代表祖先节点</li>
+<li>Descendant代表后代节点</li>
+<li>Distance 祖先距离后代的距离</li>
+</ul>
+<p>添加数据（创建存储过程）</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> DEFINER = <span class="string">`root`</span>@<span class="string">`localhost`</span> <span class="keyword">PROCEDURE</span> <span class="string">`AddNode`</span>(<span class="string">`_parent_name`</span> <span class="built_in">varchar</span>(<span class="number">255</span>),<span class="string">`_node_name`</span> <span class="built_in">varchar</span>(<span class="number">255</span>))</div><div class="line"><span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">DECLARE</span> _ancestor <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">DECLARE</span> _descendant <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">DECLARE</span> _parent <span class="built_in">INT</span>;</div><div class="line">IF NOT EXISTS(<span class="keyword">SELECT</span> node_id <span class="keyword">From</span> nodeinfo <span class="keyword">WHERE</span> node_name = _node_name)</div><div class="line"><span class="keyword">THEN</span></div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> nodeinfo (node_name) <span class="keyword">VALUES</span>(_node_name);</div><div class="line"><span class="keyword">SET</span> _descendant = (<span class="keyword">SELECT</span> node_id <span class="keyword">FROM</span> nodeinfo <span class="keyword">WHERE</span> node_name = _node_name);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> noderelationship (ancestor,descendant,distance) <span class="keyword">VALUES</span>(_descendant,_descendant,<span class="number">0</span>);</div><div class="line">IF EXISTS (<span class="keyword">SELECT</span> node_id <span class="keyword">FROM</span> nodeinfo <span class="keyword">WHERE</span> node_name = _parent_name)</div><div class="line"><span class="keyword">THEN</span></div><div class="line"><span class="keyword">SET</span> _parent = (<span class="keyword">SELECT</span> node_id <span class="keyword">FROM</span> nodeinfo <span class="keyword">WHERE</span> node_name = _parent_name);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> noderelationship (ancestor,descendant,distance) <span class="keyword">SELECT</span> ancestor,_descendant,distance+<span class="number">1</span> <span class="keyword">from</span> noderelationship <span class="keyword">where</span> descendant = _parent;</div><div class="line"><span class="keyword">END</span> <span class="keyword">IF</span>;</div><div class="line"><span class="keyword">END</span> <span class="keyword">IF</span>;</div><div class="line"><span class="keyword">END</span>;</div></pre></td></tr></table></figure>
+<p>完成后2张表的数据大致是这样的：（注意：每个节点都有一条到其本身的记录。）</p>
+<center><img src="/img/posts/tree-table-store3-2.gif"></center>
+
+<p>查询Fruit下所有的子节点：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span></div><div class="line">n3.node_name</div><div class="line"><span class="keyword">FROM</span></div><div class="line">nodeinfo n1</div><div class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> noderelationship n2 <span class="keyword">ON</span> n1.node_id = n2.ancestor</div><div class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> nodeinfo n3 <span class="keyword">ON</span> n2.descendant = n3.node_id</div><div class="line"><span class="keyword">WHERE</span></div><div class="line">n1.node_name = <span class="string">'Fruit'</span></div><div class="line"><span class="keyword">AND</span> n2.distance != <span class="number">0</span></div></pre></td></tr></table></figure>
+<p>查询Fruit下直属子节点</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span></div><div class="line">n3.node_name</div><div class="line"><span class="keyword">FROM</span></div><div class="line">nodeinfo n1</div><div class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> noderelationship n2 <span class="keyword">ON</span> n1.node_id = n2.ancestor</div><div class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> nodeinfo n3 <span class="keyword">ON</span> n2.descendant = n3.node_id</div><div class="line"><span class="keyword">WHERE</span></div><div class="line">n1.node_name = <span class="string">'Fruit'</span></div><div class="line"><span class="keyword">AND</span> n2.distance = <span class="number">1</span></div></pre></td></tr></table></figure>
+<p>查询Fruit所处的层级：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span></div><div class="line">n2.*, n3.node_name</div><div class="line"><span class="keyword">FROM</span></div><div class="line">nodeinfo n1</div><div class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> noderelationship n2 <span class="keyword">ON</span> n1.node_id = n2.descendant</div><div class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> nodeinfo n3 <span class="keyword">ON</span> n2.ancestor = n3.node_id</div><div class="line"><span class="keyword">WHERE</span></div><div class="line">n1.node_name = <span class="string">'Fruit'</span></div><div class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span></div><div class="line">n2.distance <span class="keyword">DESC</span></div></pre></td></tr></table></figure>
+<p>另外要删除节点也非常的简单，这里就不再做过多的阐述。<br>参考链接：</p>
+<p>  ● <a href="https://coderwall.com/p/lixing/closure-tables-for-browsing-trees-in-sql" target="_blank" rel="external">https://coderwall.com/p/lixing/closure-tables-for-browsing-trees-in-sql</a></p>
+<p>转自<a href="https://www.biaodianfu.com/closure-table.html" target="_blank" rel="external">https://www.biaodianfu.com/closure-table.html</a></p>
+<p>作者：标点符</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;将Closure Table翻译成闭包表不知道是否合适，闭包表的思路和物化路径差不多，都是空间换时间，Closure Table，一种更为彻底的全路径结构，分别记录路径上相关结点的全展开形式。能明晰任意两结点关系而无须多余查询，级联删除和结点移动也很方便。但是它的存储开销会大一些，除了表示结点的Meta信息，还需要一张专用的关系表。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="码路刺客" scheme="http://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
+    
+    
+      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
+    
+      <category term="数据库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>树形结构数据存储方案（二）： 物化路径</title>
+    <link href="http://c-xuan.com/2017/03/06/tree-table-store2/"/>
+    <id>http://c-xuan.com/2017/03/06/tree-table-store2/</id>
+    <published>2017-03-06T15:40:20.000Z</published>
+    <updated>2017-03-06T15:58:06.312Z</updated>
+    
+    <content type="html"><![CDATA[<p>前一篇文章介绍了比较简单的邻接列表模式，物化路径其实更加容易理解，其实就是在创建节点时，将节点的完整路径进行记录。以下图为例：</p>
+<center><img src="/img/posts/tree-table-store2-1.gif"></center>
+
+<a id="more"></a>
+<p>按照Path Enumeration 进行存储后的结果如下：</p>
+<center><img src="/img/posts/tree-table-store2-2.gif"></center>
+
+<p>此种方案借助了unix文件目录的思想，主要时以空间换时间。<br>查询某一节点下的所有子节点:（以Fruit为例）</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SET</span> @<span class="keyword">path</span> = (<span class="keyword">SELECT</span> <span class="keyword">path</span> <span class="keyword">FROM</span> pathTree <span class="keyword">WHERE</span> node_name = <span class="string">'Fruit'</span>);</div><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> pathTree <span class="keyword">WHERE</span> <span class="keyword">path</span> <span class="keyword">like</span> <span class="keyword">CONCAT</span>(@<span class="keyword">path</span>,<span class="string">'/%'</span>);</div></pre></td></tr></table></figure>
+<p>如何查询直属子节点？需要采用MySQL的正则表达式查询：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SET</span> @<span class="keyword">path</span> = (<span class="keyword">SELECT</span> <span class="keyword">path</span> <span class="keyword">FROM</span> pathTree <span class="keyword">WHERE</span> node_name = <span class="string">'Fruit'</span>);</div><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> pathTree <span class="keyword">WHERE</span> <span class="keyword">path</span> REGEXP <span class="keyword">CONCAT</span>(@<span class="keyword">path</span>,<span class="string">'/'</span>,<span class="string">'[0-9]$'</span>);</div></pre></td></tr></table></figure>
+<p>查询任意节点的所有上级：（以Yellow为例）：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SET</span> @<span class="keyword">path</span> = (<span class="keyword">SELECT</span> <span class="keyword">path</span> <span class="keyword">FROM</span> pathTree <span class="keyword">WHERE</span> node_name = <span class="string">'Yellow'</span>);</div><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> pathTree <span class="keyword">WHERE</span> @<span class="keyword">path</span> <span class="keyword">LIKE</span> <span class="keyword">CONCAT</span>(<span class="keyword">path</span>, <span class="string">'%'</span>) <span class="keyword">AND</span> <span class="keyword">path</span> &lt;&gt; @<span class="keyword">path</span>;</div></pre></td></tr></table></figure>
+<p>插入新增数据：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SET</span> @parent_path = ( <span class="keyword">SELECT</span> <span class="keyword">path</span> <span class="keyword">FROM</span> pathTree <span class="keyword">WHERE</span> node_name = <span class="string">'Fruit'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> pathtree (<span class="keyword">path</span>,node_name) <span class="keyword">VALUES</span> (<span class="keyword">CONCAT</span>(@parent_path,<span class="string">'/'</span>,<span class="keyword">LAST_INSERT_ID</span>()+<span class="number">1</span>),<span class="string">'White'</span>)</div></pre></td></tr></table></figure>
+<p>此方案的缺点是树的层级太深有可能会超过PATH字段的长度，所以其能支持的最大深度并非无限的。</p>
+<p>如果层级数量是确定的，可以再将所有的列都展开，如下图，比较试用于类似行政区划、生物分类法（界、门、纲、目、科、属、种）这些层级确定的内容。</p>
+<center><img src="/img/posts/tree-table-store2-3.gif"></center>
+
+<p>转自<a href="https://www.biaodianfu.com/path-enumeration.html" target="_blank" rel="external">https://www.biaodianfu.com/path-enumeration.html</a></p>
+<p>作者：标点符</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;前一篇文章介绍了比较简单的邻接列表模式，物化路径其实更加容易理解，其实就是在创建节点时，将节点的完整路径进行记录。以下图为例：&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;/img/posts/tree-table-store2-1.gif&quot;&gt;&lt;/img&gt;&lt;/center&gt;
+    
+    </summary>
+    
+      <category term="码路刺客" scheme="http://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
+    
+    
+      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
+    
+      <category term="数据库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>树型结构数据存储方案（一）：邻接列表模式</title>
+    <link href="http://c-xuan.com/2017/03/06/tree-table-store1/"/>
+    <id>http://c-xuan.com/2017/03/06/tree-table-store1/</id>
+    <published>2017-03-06T15:31:20.000Z</published>
+    <updated>2017-03-06T15:43:21.565Z</updated>
+    
+    <content type="html"><![CDATA[<p>在程序开发中，我们常遇到用树型结构来表示某些数据间的关系，如企业的组织架构、商品的分类、操作栏目等，目前的关系型数据库都是以二维表的形式记录存储数据，而树型结构的数据如需存入二维表就必须进行Schema设计。</p>
+<a id="more"></a>
+<p>最近对此方面比较感兴趣，专门做下梳理，如下为常见的树型结构的数据：</p>
+<center><img src="/img/posts/tree-table-store1-1.gif"></center>
+
+<p>其中最简单的方法是：Adjacency List（邻接列表模式）。简单的说是根据节点之间的继承关系，显现的描述某一节点的父节点，从而建立二位的关系表。表结构通常设计为{Node_id,Parent_id}，如下图：</p>
+<center><img src="/img/posts/tree-table-store1-2.gif"></center>
+
+<p>使用连接表的大致代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="comment">// $parent is the parent of the children we want to see</span></div><div class="line"><span class="comment">// $level is increased when we go deeper into the tree,</span></div><div class="line"><span class="comment">// used to display a nice indented tree</span></div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">display_children</span><span class="params">($parent, $level)</span> </span></div><div class="line">&#123;</div><div class="line"> <span class="comment">// 获得一个 父节点 $parent 的所有子节点</span></div><div class="line"> $result = mysql_query(<span class="string">'SELECT name FROM tree WHERE parent="'</span>.$parent.<span class="string">'";'</span>);</div><div class="line"> </div><div class="line"> <span class="comment">// 显示每个子节点</span></div><div class="line"> <span class="keyword">while</span> ($row = mysql_fetch_array($result)) </div><div class="line"> &#123;</div><div class="line"> <span class="comment">// 缩进显示节点名称</span></div><div class="line"> <span class="keyword">echo</span> str_repeat(<span class="string">' '</span>,$level).$row[<span class="string">'name'</span>].<span class="string">"\n"</span>;</div><div class="line"> </div><div class="line"> <span class="comment">//再次调用这个函数显示子节点的子节点</span></div><div class="line"> </div><div class="line"> display_children($row[<span class="string">'name'</span>], $level+<span class="number">1</span>);</div><div class="line"> &#125;</div><div class="line">&#125;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<p>对整个结构的根节点（Food）使用这个函数就可以打印出整个多级树结构，由于Food是根节点它的父节点是空的，所以这样调用: display_children(”,0)。将显示整个树的内容。如果你只想显示整个结构中的一部分，比如说水果部分，就可以这样调用：</p>
+<p>display_children(‘Fruit’,0);</p>
+<p>几乎使用同样的方法我们可以知道从根节点到任意节点的路径。比如 Cherry 的路径是　”Food &gt;; Fruit &gt;; Red”。 为了得到这样的一个路径我们需要从最深的一级”Cherry”开始， 查询得到它的父节点”Red”把它添加到路径中， 然后我们再查询Red的父节点并把它也添加到路径中，以此类推直到最高层的”Food”<br>以下是代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="comment">// $node 是那个最深的节点</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">get_path</span><span class="params">($node)</span> </span></div><div class="line">&#123;</div><div class="line"> <span class="comment">// 查询这个节点的父节点</span></div><div class="line"> $result = mysql_query(<span class="string">'SELECT parent FROM tree '</span>.</div><div class="line"> <span class="string">'WHERE name="'</span>.$node.<span class="string">'";'</span>);</div><div class="line"> $row = mysql_fetch_array($result);</div><div class="line"> </div><div class="line"> <span class="comment">// 用一个数组保存路径</span></div><div class="line"> $path = <span class="keyword">array</span>();</div><div class="line"> </div><div class="line"> <span class="comment">// 如果不是根节点则继续向上查询</span></div><div class="line"> <span class="comment">// (根节点没有父节点)</span></div><div class="line"> <span class="keyword">if</span> ($row[<span class="string">'parent'</span>]!=<span class="string">''</span>) </div><div class="line"> &#123;</div><div class="line"> <span class="comment">// the last part of the path to $node, is the name</span></div><div class="line"> <span class="comment">// of the parent of $node</span></div><div class="line"> $path[] = $row[<span class="string">'parent'</span>];</div><div class="line"> </div><div class="line"> <span class="comment">// we should add the path to the parent of this node</span></div><div class="line"> <span class="comment">// to the path</span></div><div class="line"> $path = array_merge(get_path($row[<span class="string">'parent'</span>]), $path);</div><div class="line"> &#125;</div><div class="line"> </div><div class="line"> <span class="comment">// return the path</span></div><div class="line"> <span class="keyword">return</span> $path;</div><div class="line">&#125;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+<p>如果对”Cherry”使用这个函数：print_r(get_path(‘Cherry’))，就会得到这样的一个数组了：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">Array</span> </div><div class="line">( </div><div class="line"> [<span class="number">0</span>] =&gt;; Food </div><div class="line"> [<span class="number">1</span>] =&gt;; Fruit </div><div class="line"> [<span class="number">2</span>] =&gt;; Red </div><div class="line">)</div></pre></td></tr></table></figure>
+<p>这种方案的优点很明显：结构简单易懂，由于互相之间的关系只由一个parent_id维护，所以增删改都是非常容易，只需要改动和他直接相关的记录就可以。缺点当然也是非常的突出：由于直接地记录了节点之间的继承关系，因此对Tree的任何CRUD操作都将是低效的，这主要归根于频繁的“递归”操作，递归过程不断地访问数据库，每次数据库IO都会有时间开销。举个例子，如果想要返回所有水果，也就是水果的所有子孙节点，看似很简单的操作，就需要用到一堆递归。当然，这种方案并非没有用武之地，在树的层级比较少的时候就非常实用，在邻接列表模式的基础上还可以拓展的是平面表，区别是将节点的level和当前节点的顺序也放入表中，比较适合类似评论等场景，具体的表结构类似这样，这里就不再深入阐述。</p>
+<center><img src="/img/posts/tree-table-store1-3.gif"></center>
+
+<p>参考链接：<br>  ● <a href="http://salman-w.blogspot.com/2012/08/php-adjacency-list-hierarchy-tree-traversal.html" target="_blank" rel="external">http://salman-w.blogspot.com/2012/08/php-adjacency-list-hierarchy-tree-traversal.html</a><br>  ● <a href="https://packagist.org/search/?tags=adjacency%20list" target="_blank" rel="external">https://packagist.org/search/?tags=adjacency%20list</a></p>
+<p>转自<a href="https://www.biaodianfu.com/adjacency-list.html" target="_blank" rel="external">https://www.biaodianfu.com/adjacency-list.html</a></p>
+<p>作者：标点符</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在程序开发中，我们常遇到用树型结构来表示某些数据间的关系，如企业的组织架构、商品的分类、操作栏目等，目前的关系型数据库都是以二维表的形式记录存储数据，而树型结构的数据如需存入二维表就必须进行Schema设计。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="码路刺客" scheme="http://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
+    
+    
+      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
+    
+      <category term="数据库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+  </entry>
   
   <entry>
     <title>宽表和窄表的建设该如何选择？</title>
@@ -1540,251 +1686,6 @@
       <category term="数据仓库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/"/>
     
       <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Markdown教程</title>
-    <link href="http://c-xuan.com/2016/08/20/MarkDown%E6%95%99%E7%A8%8B/"/>
-    <id>http://c-xuan.com/2016/08/20/MarkDown教程/</id>
-    <published>2016-08-20T07:10:24.000Z</published>
-    <updated>2016-09-22T16:15:26.506Z</updated>
-    
-    <content type="html"><![CDATA[<p>本Markdown编辑器使用<a href="https://github.com/benweet/stackedit" target="_blank" rel="external">StackEdit</a>修改而来，用它写博客，将会带来全新的体验哦：</p>
-<ul>
-<li><strong>Markdown和扩展Markdown简洁的语法</strong></li>
-<li><strong>代码块高亮</strong></li>
-<li><strong>图片链接和图片上传</strong></li>
-<li><strong><em>LaTex</em>数学公式</strong></li>
-<li><strong>UML序列图和流程图</strong></li>
-<li><strong>离线写博客</strong></li>
-<li><strong>导入导出Markdown文件</strong></li>
-<li><strong>丰富的快捷键</strong><a id="more"></a>
-</li>
-</ul>
-<hr>
-<h2 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h2><ul>
-<li>加粗    <code>Ctrl + B</code> </li>
-<li>斜体    <code>Ctrl + I</code> </li>
-<li>引用    <code>Ctrl + Q</code></li>
-<li>插入链接    <code>Ctrl + L</code></li>
-<li>插入代码    <code>Ctrl + K</code></li>
-<li>插入图片    <code>Ctrl + G</code></li>
-<li>提升标题    <code>Ctrl + H</code></li>
-<li>有序列表    <code>Ctrl + O</code></li>
-<li>无序列表    <code>Ctrl + U</code></li>
-<li>横线    <code>Ctrl + R</code></li>
-<li>撤销    <code>Ctrl + Z</code></li>
-<li>重做    <code>Ctrl + Y</code></li>
-</ul>
-<h2 id="Markdown及扩展"><a href="#Markdown及扩展" class="headerlink" title="Markdown及扩展"></a>Markdown及扩展</h2><blockquote>
-<p>Markdown 是一种轻量级标记语言，它允许人们使用易读易写的纯文本格式编写文档，然后转换成格式丰富的HTML页面。    —— <a href="https://zh.wikipedia.org/wiki/Markdown" target="_blank"> [ 维基百科 ]</a></p>
-</blockquote>
-<p>使用简单的符号标识不同的标题，将某些文字标记为<strong>粗体</strong>或者<em>斜体</em>，创建一个<a href="http://www.csdn.net" target="_blank" rel="external">链接</a>等，详细语法参考帮助？。</p>
-<p>本编辑器支持 <strong>Markdown Extra</strong> , 　扩展了很多好用的功能。具体请参考<a href="https://github.com/jmcmanus/pagedown-extra" title="Pagedown Extra" target="_blank" rel="external">Github</a>.  </p>
-<h3 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h3><p><strong>Markdown　Extra</strong>　表格语法：</p>
-<table>
-<thead>
-<tr>
-<th>项目</th>
-<th>价格</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Computer</td>
-<td>$1600</td>
-</tr>
-<tr>
-<td>Phone</td>
-<td>$12</td>
-</tr>
-<tr>
-<td>Pipe</td>
-<td>$1</td>
-</tr>
-</tbody>
-</table>
-<p>可以使用冒号来定义对齐方式：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">项目</th>
-<th style="text-align:right">价格</th>
-<th style="text-align:center">数量</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">Computer</td>
-<td style="text-align:right">1600 元</td>
-<td style="text-align:center">5</td>
-</tr>
-<tr>
-<td style="text-align:left">Phone</td>
-<td style="text-align:right">12 元</td>
-<td style="text-align:center">12</td>
-</tr>
-<tr>
-<td style="text-align:left">Pipe</td>
-<td style="text-align:right">1 元</td>
-<td style="text-align:center">234</td>
-</tr>
-</tbody>
-</table>
-<p>###定义列表</p>
-<p><strong>Markdown　Extra</strong>　定义列表语法：<br>项目１<br>项目２<br>:   定义 A<br>:   定义 B</p>
-<p>项目３<br>:   定义 C</p>
-<p>:   定义 D</p>
-<pre><code>&gt; 定义D内容
-</code></pre><h3 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h3><p>代码块语法遵循标准markdown代码，例如：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@requires_authorization</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">somefunc</span><span class="params">(param1=<span class="string">''</span>, param2=<span class="number">0</span>)</span>:</span></div><div class="line">    <span class="string">'''A docstring'''</span></div><div class="line">    <span class="keyword">if</span> param1 &gt; param2: <span class="comment"># interesting</span></div><div class="line">        <span class="keyword">print</span> <span class="string">'Greater'</span></div><div class="line">    <span class="keyword">return</span> (param2 - param1 + <span class="number">1</span>) <span class="keyword">or</span> <span class="keyword">None</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SomeClass</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>message = <span class="string">'''interpreter</span></div><div class="line"><span class="meta">... </span>prompt'''</div></pre></td></tr></table></figure></p>
-<p>###脚注<br>生成一个脚注[^footnote].<br>  [^footnote]: 这里是 <strong>脚注</strong> 的 <em>内容</em>.</p>
-<h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p>用 <code>[TOC]</code>来生成目录：</p>
-<p>[TOC]</p>
-<h3 id="数学公式"><a href="#数学公式" class="headerlink" title="数学公式"></a>数学公式</h3><p>使用MathJax渲染<em>LaTex</em> 数学公式，详见<a href="http://math.stackexchange.com/" target="_blank" rel="external">math.stackexchange.com</a>.</p>
-<ul>
-<li>行内公式，数学公式为：$\Gamma(n) = (n-1)!\quad\forall n\in\mathbb N$。</li>
-<li>块级公式：</li>
-</ul>
-<p>$$    x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a} $$</p>
-<p>更多LaTex语法请参考 <a href="http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference" target="_blank" rel="external">这儿</a>.</p>
-<h3 id="UML-图"><a href="#UML-图" class="headerlink" title="UML 图:"></a>UML 图:</h3><p>可以渲染序列图：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">张三-&gt;李四: 嘿，小四儿, 写博客了没?</div><div class="line">Note right of 李四: 李四愣了一下，说：</div><div class="line">李四--&gt;张三: 忙得吐血，哪有时间写。</div></pre></td></tr></table></figure>
-<p>或者流程图：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">st=&gt;start: 开始</div><div class="line">e=&gt;end: 结束</div><div class="line">op=&gt;operation: 我的操作</div><div class="line">cond=&gt;condition: 确认？</div><div class="line"></div><div class="line">st-&gt;op-&gt;cond</div><div class="line">cond(yes)-&gt;e</div><div class="line">cond(no)-&gt;op</div></pre></td></tr></table></figure>
-<ul>
-<li>关于 <strong>序列图</strong> 语法，参考 <a href="http://bramp.github.io/js-sequence-diagrams/" target="_blank" rel="external">这儿</a>,</li>
-<li>关于 <strong>流程图</strong> 语法，参考 <a href="http://adrai.github.io/flowchart.js/" target="_blank" rel="external">这儿</a>.</li>
-</ul>
-<h2 id="离线写博客"><a href="#离线写博客" class="headerlink" title="离线写博客"></a>离线写博客</h2><p>即使用户在没有网络的情况下，也可以通过本编辑器离线写博客（直接在曾经使用过的浏览器中输入<a href="http://write.blog.csdn.net/mdeditor" target="_blank" rel="external">write.blog.csdn.net/mdeditor</a>即可。<strong>Markdown编辑器</strong>使用浏览器离线存储将内容保存在本地。</p>
-<p>用户写博客的过程中，内容实时保存在浏览器缓存中，在用户关闭浏览器或者其它异常情况下，内容不会丢失。用户再次打开浏览器时，会显示上次用户正在编辑的没有发表的内容。</p>
-<p>博客发表后，本地缓存将被删除。　</p>
-<p>用户可以选择 <i class="icon-disk"></i> 把正在写的博客保存到服务器草稿箱，即使换浏览器或者清除缓存，内容也不会丢失。</p>
-<blockquote>
-<p><strong>注意：</strong>虽然浏览器存储大部分时候都比较可靠，但为了您的数据安全，在联网后，<strong>请务必及时发表或者保存到服务器草稿箱</strong>。</p>
-</blockquote>
-<p>##浏览器兼容</p>
-<ol>
-<li>目前，本编辑器对Chrome浏览器支持最为完整。建议大家使用较新版本的Chrome。</li>
-<li>IE９以下不支持</li>
-<li>IE９，１０，１１存在以下问题<ol>
-<li>不支持离线功能</li>
-<li>IE9不支持文件导入导出</li>
-<li>IE10不支持拖拽文件导入</li>
-</ol>
-</li>
-</ol>
-<hr>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;本Markdown编辑器使用&lt;a href=&quot;https://github.com/benweet/stackedit&quot;&gt;StackEdit&lt;/a&gt;修改而来，用它写博客，将会带来全新的体验哦：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Markdown和扩展Markdown简洁的语法&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;代码块高亮&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;图片链接和图片上传&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;&lt;em&gt;LaTex&lt;/em&gt;数学公式&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;UML序列图和流程图&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;离线写博客&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;导入导出Markdown文件&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;丰富的快捷键&lt;/strong&gt;
-    
-    </summary>
-    
-      <category term="IT看客" scheme="http://c-xuan.com/categories/IT%E7%9C%8B%E5%AE%A2/"/>
-    
-    
-      <category term="Markdown" scheme="http://c-xuan.com/tags/Markdown/"/>
-    
-      <category term="Test" scheme="http://c-xuan.com/tags/Test/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>改变世界的公式TOP10,最后一个一看就蒙圈了</title>
-    <link href="http://c-xuan.com/2016/06/29/Foumula-TOP10/"/>
-    <id>http://c-xuan.com/2016/06/29/Foumula-TOP10/</id>
-    <published>2016-06-28T16:00:00.000Z</published>
-    <updated>2016-09-22T16:13:58.675Z</updated>
-    
-    <content type="html"><![CDATA[<p>很多人不喜欢数学，因为他们觉得数学伤脑筋，可是，我们有很多的发明、创造都跟数学有关。</p>
-<p>英国科学期刊《物理世界》曾让读者投票评选了“最伟大的公式”，最终榜上有名的十个公式既有无人不知的1+1=2，又有著名的E=mc2；既有简单的-圆周公式，又有复杂的欧拉公式……</p>
-<p>很多人不喜欢数学，因为他们觉得数学伤脑筋，可是，我们有很多的发明、创造都跟数学有关。</p>
-<p>英国科学期刊《物理世界》曾让读者投票评选了“最伟大的公式”，最终榜上有名的十个公式既有无人不知的1+1=2，又有著名的E=mc2；既有简单的-圆周公式，又有复杂的欧拉公式……</p>
-<p><img src="/img/posts/Foumula-TOP10-1.jpg" alt="Foumula-TOP10-1"></p>
-<a id="more"></a>
-<p><img src="/img/posts/Foumula-TOP10-2.jpg" alt="Foumula-TOP10-2"><br><img src="/img/posts/Foumula-TOP10-3.jpg" alt="Foumula-TOP10-3"><br><img src="/img/posts/Foumula-TOP10-4.jpg" alt="Foumula-TOP10-4"><br><img src="/img/posts/Foumula-TOP10-5.jpg" alt="Foumula-TOP10-5"><br><img src="/img/posts/Foumula-TOP10-6.jpg" alt="Foumula-TOP10-6"><br><img src="/img/posts/Foumula-TOP10-7.jpg" alt="Foumula-TOP10-7"><br><img src="/img/posts/Foumula-TOP10-8.jpg" alt="Foumula-TOP10-8"><br><img src="/img/posts/Foumula-TOP10-9.jpg" alt="Foumula-TOP10-9"><br><img src="/img/posts/Foumula-TOP10-10.jpg" alt="Foumula-TOP10-10"></p>
-<p>这个公式的巧妙之处在于，它没有任何多余的内容，将数学中最基本的e、i、pie放在了同一个式子中，同时加入了数学也是哲学中最重要的0和1，再以简单的加号相连。<br>高斯曾经说：“一个人第一次看到这个公式而不感到它的魅力，他不可能成为数学家。”</p>
-<p><img src="/img/posts/Foumula-TOP10-11.jpg" alt="Foumula-TOP10-11"><br><img src="/img/posts/Foumula-TOP10-12.jpg" alt="Foumula-TOP10-12"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;很多人不喜欢数学，因为他们觉得数学伤脑筋，可是，我们有很多的发明、创造都跟数学有关。&lt;/p&gt;
-&lt;p&gt;英国科学期刊《物理世界》曾让读者投票评选了“最伟大的公式”，最终榜上有名的十个公式既有无人不知的1+1=2，又有著名的E=mc2；既有简单的-圆周公式，又有复杂的欧拉公式……&lt;/p&gt;
-&lt;p&gt;很多人不喜欢数学，因为他们觉得数学伤脑筋，可是，我们有很多的发明、创造都跟数学有关。&lt;/p&gt;
-&lt;p&gt;英国科学期刊《物理世界》曾让读者投票评选了“最伟大的公式”，最终榜上有名的十个公式既有无人不知的1+1=2，又有著名的E=mc2；既有简单的-圆周公式，又有复杂的欧拉公式……&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/img/posts/Foumula-TOP10-1.jpg&quot; alt=&quot;Foumula-TOP10-1&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="生活点滴" scheme="http://c-xuan.com/categories/%E7%94%9F%E6%B4%BB%E7%82%B9%E6%BB%B4/"/>
-    
-    
-      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
-      <category term="数学" scheme="http://c-xuan.com/tags/%E6%95%B0%E5%AD%A6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【SSIS】几个通用属性</title>
-    <link href="http://c-xuan.com/2016/06/13/SSIS-GeneralAttribures/"/>
-    <id>http://c-xuan.com/2016/06/13/SSIS-GeneralAttribures/</id>
-    <published>2016-06-12T16:00:00.000Z</published>
-    <updated>2016-09-22T16:17:02.471Z</updated>
-    
-    <content type="html"><![CDATA[<p>记录几个简单常用SSIS包常用属性，都是通用属性：</p>
-<ul>
-<li>1.<code>Disable</code> 设置属性为<code>true</code>是该任务不能执行</li>
-<li>2.<code>DelayValidation</code> 设置为<code>true</code>只至运行时才验证任务中的属性，在非连接状态下和为任务包输入一个外部参数值但是直到部署时才验证这种情况下会很有用。它的默认设置为<code>false</code></li>
-<li>3.<code>Description</code> 该属性描述任务包的情形。默认的值是<code>&lt;task name&gt;</code>,如果多个任务类型相同则设置为<code>&lt;task name 1&gt;</code>(数字1递增)。这个属性不是唯一的，只需要准确描述任务包项目方便其他人理解</li>
-<li>4.<code>ExecValueVariable</code> 存储任务输出的用户变量，默认的值是<code>&lt;none&gt;</code>,不输出。</li>
-<li>5.<code>FailPackageonFailure</code> 设置这个属性为<code>true</code>,当<code>package</code>中有一个任务失败那么他的上层的任务也将失败。它的上层任务可能是一个package或者container。 </li>
-</ul>
-<a id="more"></a>
-<ul>
-<li>6.ID 自动为每个任务产生的唯一ID,是一个GUID形式的字符串</li>
-<li>7.<code>IsolationLevel</code> 如果设置了事务模式，那么可以设置事务的隔离级别。事务的隔离级别有好几种：读取提交<code>ReadCommitted</code>，重复读<code>ReapeatableRead</code>,串行化的<code>Seralizable</code>，不设置的<code>Unapecified</code>，快照<code>Snapshot</code>。默认的属性使串行化的。这些选项依据SQL Server的事务而来。</li>
-<li>8.<code>LoggingMode</code> 设置任务的支持记录模式。可选值有：使用父任务设置<code>UseParentSetting</code>，可用<code>Enable</code>,不可用<code>Disabled</code>。默认值是使用父任务设置，意思是告诉任务使用上层task的日志记录模式。</li>
-<li>9.<code>Name</code> 该属性和任务相关联，默认的值是<code>&lt;task name&gt;</code>，如果有多个相同类型的任务可以设置<code>&lt;task name1&gt;</code>(数字1自增)。作为一个ssis设计值，应该时常修改这个属性，使得它更具有可读性，但是它必须在这个package中必须是唯一。</li>
-<li>10.<code>TransctionOption</code>:设置task的事务属性。他的值可以使不支持<code>NotSupported</code>，支持<code>Supported</code>，根据需要的<code>Required</code>。默认的设置是支持的，使得整个任务中可以使用事务。</li>
-</ul>
-<p>转自 指尖流淌<br><a href="http://www.cnblogs.com/zhijianliutang/archive/2012/04/25/2470546.html" target="_blank" rel="external">http://www.cnblogs.com/zhijianliutang/archive/2012/04/25/2470546.html</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;记录几个简单常用SSIS包常用属性，都是通用属性：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;1.&lt;code&gt;Disable&lt;/code&gt; 设置属性为&lt;code&gt;true&lt;/code&gt;是该任务不能执行&lt;/li&gt;
-&lt;li&gt;2.&lt;code&gt;DelayValidation&lt;/code&gt; 设置为&lt;code&gt;true&lt;/code&gt;只至运行时才验证任务中的属性，在非连接状态下和为任务包输入一个外部参数值但是直到部署时才验证这种情况下会很有用。它的默认设置为&lt;code&gt;false&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;3.&lt;code&gt;Description&lt;/code&gt; 该属性描述任务包的情形。默认的值是&lt;code&gt;&amp;lt;task name&amp;gt;&lt;/code&gt;,如果多个任务类型相同则设置为&lt;code&gt;&amp;lt;task name 1&amp;gt;&lt;/code&gt;(数字1递增)。这个属性不是唯一的，只需要准确描述任务包项目方便其他人理解&lt;/li&gt;
-&lt;li&gt;4.&lt;code&gt;ExecValueVariable&lt;/code&gt; 存储任务输出的用户变量，默认的值是&lt;code&gt;&amp;lt;none&amp;gt;&lt;/code&gt;,不输出。&lt;/li&gt;
-&lt;li&gt;5.&lt;code&gt;FailPackageonFailure&lt;/code&gt; 设置这个属性为&lt;code&gt;true&lt;/code&gt;,当&lt;code&gt;package&lt;/code&gt;中有一个任务失败那么他的上层的任务也将失败。它的上层任务可能是一个package或者container。 &lt;/li&gt;
-&lt;/ul&gt;
-    
-    </summary>
-    
-      <category term="BI墨客" scheme="http://c-xuan.com/categories/BI%E5%A2%A8%E5%AE%A2/"/>
-    
-    
-      <category term="BI" scheme="http://c-xuan.com/tags/BI/"/>
-    
-      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
-      <category term="SSIS" scheme="http://c-xuan.com/tags/SSIS/"/>
     
   </entry>
   

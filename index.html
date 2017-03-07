@@ -344,6 +344,163 @@
 </nav>
       <div class="body-wrap ">
   
+    <article id="post-tree-table-store5" class="article article-type-post " itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/03/07/tree-table-store5/" class="article-date">
+      <time datetime="2017-03-07T15:44:08.000Z" itemprop="datePublished">2017-03-07</time>
+</a>
+
+ 
+    <a href="/2017/03/07/tree-table-store5/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+            <span class="ds-thread-count"  data-thread-key="2017/03/07/tree-table-store5/" ></span>
+        
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/07/tree-table-store5/">树形结构数据存储方案（五）：区间嵌套</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>前面的一篇文章介绍了左右值编码，不知道大家注意到了没有，如果数据庞大，每次更新都需要更新差不多全表，效率较低没有更好的方式？今天我们就来研究下区间嵌套法。</p>
+<p><strong>区间嵌套法原理</strong></p>
+<p>如果节点区间<code>[clft, crgt]</code>与<code>[plft, prgt]</code>存在如下关系：<code>plft &lt;= clft and crgt &gt;= prgt</code>，则<code>[clft, crgt]</code>区间里的点是<code>[plft, prgt]</code>的子节点。基于此假设我们就可以通过对区间的不断的向下划来获取新的区间。举例：如果在区间<code>[plft, prgt]</code>中存在一个空白区间<code>[lft1, rgt1]</code>，如果要加入一个<code>[plft,lft1]</code>、<code>[rgt1,prgt]</code>同级的区间，只需插入节点：<code>[(2*lft1+rgt1)/3</code>,  <code>(rgt1+2*lft)/3]</code>。在添加完节点后我们还留下<code>[lft1,(2*lft1+rgt1)/3]</code>和 <code>[(rgt1+2*lft)/3,rgt1]</code>两个空余的空间用来添加更多的子节点。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/码路刺客/">码路刺客</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/03/07/tree-table-store5/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-tree-table-store4" class="article article-type-post " itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/03/07/tree-table-store4/" class="article-date">
+      <time datetime="2017-03-07T15:34:08.000Z" itemprop="datePublished">2017-03-07</time>
+</a>
+
+ 
+    <a href="/2017/03/07/tree-table-store4/#comments" title="查看评论">
+        <i class="fa fa-comments-o" aria-hidden="true"></i>
+        <span class="count-comment"></span>
+        
+            <span class="ds-thread-count"  data-thread-key="2017/03/07/tree-table-store4/" ></span>
+        
+        
+    </a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/07/tree-table-store4/">树形结构数据存储方案（四）：左右值编码</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>在基于数据库的一般应用中，查询的需求总要大于删除和修改。为了避免对于树形结构查询时的“递归”过程，基于Tree的前序遍历设计一种全新的无递归查询、无限分组的左右值编码方案，来保存该树的数据。</p>
+<center><img src="/img/posts/tree-table-store4-1.gif"></img></center>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/码路刺客/">码路刺客</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/03/07/tree-table-store4/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-tree-table-store3" class="article article-type-post " itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -1211,166 +1368,9 @@
 
 
   
-    <article id="post-NoWeChatBefore" class="article article-type-post " itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/09/21/NoWeChatBefore/" class="article-date">
-      <time datetime="2016-09-21T14:41:16.000Z" itemprop="datePublished">2016-09-21</time>
-</a>
-
- 
-    <a href="/2016/09/21/NoWeChatBefore/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-            <span class="ds-thread-count"  data-thread-key="2016/09/21/NoWeChatBefore/" ></span>
-        
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/21/NoWeChatBefore/">那些年，我们没有微信</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p><img src="/img/posts/NoWeChatBefore-1.jpg" alt="NoWeChatBefore-1"></p>
-<p>你朋友圈的第一条状态是什么时间？<br>我的第一条状态来自2012年12月6日，我是个比较愚钝的人，那天之前我用的还是诺基亚E63，红色的全键盘手机，大学男朋友送的，上学时候超酷。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/生活点滴/">生活点滴</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/09/21/NoWeChatBefore/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-PlayFrameworkInit2" class="article article-type-post " itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/09/21/PlayFrameworkInit2/" class="article-date">
-      <time datetime="2016-09-21T13:18:31.000Z" itemprop="datePublished">2016-09-21</time>
-</a>
-
- 
-    <a href="/2016/09/21/PlayFrameworkInit2/#comments" title="查看评论">
-        <i class="fa fa-comments-o" aria-hidden="true"></i>
-        <span class="count-comment"></span>
-        
-            <span class="ds-thread-count"  data-thread-key="2016/09/21/PlayFrameworkInit2/" ></span>
-        
-        
-    </a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/21/PlayFrameworkInit2/">Play Framework 2.5 环境搭建与新建项目（二）</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h2 id="activator-ui-方式"><a href="#activator-ui-方式" class="headerlink" title="activator ui 方式"></a>activator ui 方式</h2><p>打开命令行窗口，输入以下命令：</p>
-<pre><code>activator ui
-</code></pre>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/码路刺客/">码路刺客</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Play-Framework/">Play Framework</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原创/">原创</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/09/21/PlayFrameworkInit2/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 </div>
@@ -1378,7 +1378,7 @@
     <div class="outer">
         <div id="footer-info">
             <div class="footer-left">
-                Posts count:52
+                Posts count:54
             </div>
 			<!--
             <div class="footer-left">

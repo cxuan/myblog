@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://c-xuan.com/"/>
-  <updated>2017-03-06T16:05:44.650Z</updated>
+  <updated>2017-03-07T16:11:16.129Z</updated>
   <id>http://c-xuan.com/</id>
   
   <author>
@@ -14,6 +14,157 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>树形结构数据存储方案（五）：区间嵌套</title>
+    <link href="http://c-xuan.com/2017/03/07/tree-table-store5/"/>
+    <id>http://c-xuan.com/2017/03/07/tree-table-store5/</id>
+    <published>2017-03-07T15:44:08.000Z</published>
+    <updated>2017-03-07T16:11:16.129Z</updated>
+    
+    <content type="html"><![CDATA[<p>前面的一篇文章介绍了左右值编码，不知道大家注意到了没有，如果数据庞大，每次更新都需要更新差不多全表，效率较低没有更好的方式？今天我们就来研究下区间嵌套法。</p>
+<p><strong>区间嵌套法原理</strong></p>
+<p>如果节点区间<code>[clft, crgt]</code>与<code>[plft, prgt]</code>存在如下关系：<code>plft &lt;= clft and crgt &gt;= prgt</code>，则<code>[clft, crgt]</code>区间里的点是<code>[plft, prgt]</code>的子节点。基于此假设我们就可以通过对区间的不断的向下划来获取新的区间。举例：如果在区间<code>[plft, prgt]</code>中存在一个空白区间<code>[lft1, rgt1]</code>，如果要加入一个<code>[plft,lft1]</code>、<code>[rgt1,prgt]</code>同级的区间，只需插入节点：<code>[(2*lft1+rgt1)/3</code>,  <code>(rgt1+2*lft)/3]</code>。在添加完节点后我们还留下<code>[lft1,(2*lft1+rgt1)/3]</code>和 <code>[(rgt1+2*lft)/3,rgt1]</code>两个空余的空间用来添加更多的子节点。</p>
+<a id="more"></a>
+<center><img src="/img/posts/tree-table-store5-1.gif"></center>
+
+<p>如果我们把区间放在二位平面上，把<code>rgt</code>当成是x轴，<code>lft</code>当做是y轴，纳闷嵌套的区间数差不多是这样的：</p>
+<center><img src="/img/posts/tree-table-store5-2.gif"></center>
+
+<p>每个节点<code>[lft, rgt]</code>拥有的子节点都被包含在<code>y &gt;= lft &amp; x &lt;= rgt</code>中。同时<code>y &gt;= clft &amp; x &lt;= crgt</code>所在的空间也是<code>y &gt;= plft  &amp; x &lt;= prgt</code>的子集。另外由于新增的右区间都小于已有的左区间，所以新增的节点均在y=x这条直线以下。</p>
+<p><strong>区间嵌套法实现</strong></p>
+<p>了解了区间嵌套法的原理后，接下来我们就要考虑如何实现他，原则上初始的区间使用任何区间都是可以的，这里我们使用的是[0,1]作为根区间。</p>
+<center><img src="/img/posts/tree-table-store5-3.gif"></center>
+
+<p>首先，我们在XY平面上定义2个点。深度优先集合点和广度有限集合点，针对点<code>&lt;x=1,y=1/2&gt;</code>的深度优先集合点为<code>&lt;x=1,y=1&gt;</code>，广度优先集合点为<code>&lt;x=1/2,y=1/2&gt;</code>。接下来我们定义第一个子节点的位置为父节点和深度优先集合点的中间点。兄弟节点则为前一个子节点到广度优先集合点的中间点，如上图所示，节点1.2的位置为<code>&lt;x=3/4, y=5/8&gt;</code>。</p>
+<p>另外仔细看我们可以看到点与点之间的关系。另外如果我们知道x和y的和，我们就能反推出x,y的值（具体的逻辑是什么，我现在也还没有搞懂，有知道的朋友可以帮忙解释下）。</p>
+<p>我们以节点<code>&lt;x=3/4, y=5/8&gt;</code>为例，我们可以得到他的和为11/8。</p>
+<p>我们定义11为分子（numerator），8为分母（denominator），则x点的分子为：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> DEFINER = <span class="string">`root`</span>@<span class="string">`localhost`</span> <span class="keyword">FUNCTION</span> <span class="string">`x_numer`</span>(<span class="string">`numer`</span> <span class="built_in">int</span>,<span class="string">`denom`</span> <span class="built_in">int</span>)</div><div class="line"><span class="keyword">RETURNS</span> <span class="built_in">int</span>(<span class="number">11</span>)</div><div class="line"><span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">DECLARE</span> ret_num <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">DECLARE</span> ret_den <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">SET</span> ret_num := numer+<span class="number">1</span>;</div><div class="line"><span class="keyword">SET</span> ret_den := denom*<span class="number">2</span>;</div><div class="line">WHILE floor(ret_num/2) = ret_num/2 <span class="keyword">DO</span></div><div class="line"><span class="keyword">SET</span> ret_num := ret_num/<span class="number">2</span>;</div><div class="line"><span class="keyword">SET</span> ret_den := ret_den/<span class="number">2</span>;</div><div class="line"><span class="keyword">END</span> <span class="keyword">WHILE</span>;</div><div class="line">RETURN ret_num;</div><div class="line"><span class="keyword">END</span>;</div></pre></td></tr></table></figure>
+<p>x点的分母为：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> DEFINER = <span class="string">`root`</span>@<span class="string">`localhost`</span> <span class="keyword">FUNCTION</span> <span class="string">`x_ denom`</span>(<span class="string">`numer`</span> <span class="built_in">int</span>,<span class="string">`denom`</span> <span class="built_in">int</span>)</div><div class="line"><span class="keyword">RETURNS</span> <span class="built_in">int</span>(<span class="number">11</span>)</div><div class="line"><span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">DECLARE</span> ret_num <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">DECLARE</span> ret_den <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">SET</span> ret_num := numer+<span class="number">1</span>;</div><div class="line"><span class="keyword">SET</span> ret_den := denom*<span class="number">2</span>;</div><div class="line">WHILE floor(ret_num/2) = ret_num/2 <span class="keyword">DO</span></div><div class="line"><span class="keyword">SET</span> ret_num := ret_num/<span class="number">2</span>;</div><div class="line"><span class="keyword">SET</span> ret_den := ret_den/<span class="number">2</span>;</div><div class="line"><span class="keyword">END</span> <span class="keyword">WHILE</span>;</div><div class="line">RETURN ret_den;</div><div class="line"><span class="keyword">END</span>;</div></pre></td></tr></table></figure>
+<p>Y点的分子:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">CREATE DEFINER = `root`@`localhost` FUNCTION `y_numer`(`numer` int,`denom` int)</div><div class="line">RETURNS int(11)</div><div class="line">BEGIN</div><div class="line">DECLARE num INT;</div><div class="line">DECLARE den INT;</div><div class="line">SET num := x_numer(numer, denom);</div><div class="line">SET den := x_denom(numer, denom);</div><div class="line">WHILE den &lt; denom DO</div><div class="line">SET num := num*2;</div><div class="line">SET den := den*2;</div><div class="line">END WHILE;</div><div class="line">SET num := (numer - num);</div><div class="line">WHILE floor(num/2) = num/2 DO</div><div class="line">SET num := num/2;</div><div class="line">SET den := den/2;</div><div class="line">END WHILE;</div><div class="line">RETURN num;</div><div class="line">END;</div></pre></td></tr></table></figure>
+<p>Y 的分母：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">CREATE DEFINER = `root`@`localhost` FUNCTION `y_denom`(`numer` int,`denom` int)</div><div class="line">RETURNS int(11)</div><div class="line">BEGIN</div><div class="line">DECLARE num INT;</div><div class="line">DECLARE den INT;</div><div class="line">SET num := x_numer(numer, denom);</div><div class="line">SET den := x_denom(numer, denom);</div><div class="line">WHILE den &lt; denom DO</div><div class="line">SET num := num*2;</div><div class="line">SET den := den*2;</div><div class="line">END WHILE;</div><div class="line">SET num := (numer - num);</div><div class="line">WHILE floor(num/2) = num/2 DO</div><div class="line">SET num := num/2;</div><div class="line">SET den := den/2;</div><div class="line">END WHILE;</div><div class="line">RETURN den;</div><div class="line">END;</div></pre></td></tr></table></figure>
+<p>接下来我们来测试下，X与Y是否能解码出来：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span></div><div class="line"><span class="keyword">CONCAT</span>(x_numer (<span class="number">11</span>, <span class="number">8</span>),<span class="string">'/'</span>,x_denom (<span class="number">11</span>, <span class="number">8</span>)) <span class="keyword">AS</span> X,</div><div class="line"><span class="keyword">CONCAT</span>(y_numer (<span class="number">11</span>, <span class="number">8</span>),<span class="string">'/'</span>,y_denom (<span class="number">11</span>, <span class="number">8</span>)) <span class="keyword">AS</span> Y</div></pre></td></tr></table></figure>
+<center><img src="/img/posts/tree-table-store5-4.gif"></center>
+
+<p>结果与节点1.2的位置为<code>&lt;x=3/4, y=5/8&gt;</code>完全一致。现在我们知道只需要一个分数即可表示平面上的一个点。</p>
+<p>如有已经有分数11/8如何获取该节点的父节点？(如果分子为3，则代表其为根节点)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> DEFINER = <span class="string">`root`</span>@<span class="string">`localhost`</span> <span class="keyword">FUNCTION</span> <span class="string">`parent_numer`</span>(<span class="string">`numer`</span> <span class="built_in">int</span>,<span class="string">`denom`</span> <span class="built_in">int</span>)</div><div class="line"><span class="keyword">RETURNS</span> <span class="built_in">int</span>(<span class="number">11</span>)</div><div class="line"><span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">DECLARE</span> ret_num <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">DECLARE</span> ret_den <span class="built_in">INT</span>;</div><div class="line">IF numer=3 THEN</div><div class="line">RETURN denom/2;</div><div class="line"><span class="keyword">END</span> <span class="keyword">IF</span>;</div><div class="line"><span class="keyword">SET</span> ret_num := (numer<span class="number">-1</span>)/<span class="number">2</span>;</div><div class="line"><span class="keyword">SET</span> ret_den := denom/<span class="number">2</span>;</div><div class="line">WHILE floor((ret_num-1)/4) = (ret_num-1)/4 <span class="keyword">DO</span></div><div class="line"><span class="keyword">SET</span> ret_num := (ret_num+<span class="number">1</span>)/<span class="number">2</span>;</div><div class="line"><span class="keyword">SET</span> ret_den := ret_den/<span class="number">2</span>;</div><div class="line"><span class="keyword">END</span> <span class="keyword">WHILE</span>;</div><div class="line">RETURN ret_num;</div><div class="line"><span class="keyword">END</span>;</div><div class="line"></div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">CONCAT</span>(parent_numer(<span class="number">11</span>,<span class="number">8</span>),<span class="string">'/'</span>,parent_denom(<span class="number">11</span>,<span class="number">8</span>)) <span class="keyword">AS</span> <span class="keyword">parent</span></div></pre></td></tr></table></figure>
+<p>计算当前节点在同级所在的位置：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> DEFINER = <span class="string">`root`</span>@<span class="string">`localhost`</span> <span class="keyword">FUNCTION</span> <span class="string">`parent_denom`</span>(<span class="string">`numer`</span> <span class="built_in">int</span>,<span class="string">`denom`</span> <span class="built_in">int</span>)</div><div class="line"><span class="keyword">RETURNS</span> <span class="built_in">int</span>(<span class="number">11</span>)</div><div class="line"><span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">DECLARE</span> ret_num <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">DECLARE</span> ret_den <span class="built_in">INT</span>;</div><div class="line">IF numer=3 THEN</div><div class="line">RETURN NULL;</div><div class="line"><span class="keyword">END</span> <span class="keyword">IF</span>;</div><div class="line"><span class="keyword">SET</span> ret_num := (numer<span class="number">-1</span>)/<span class="number">2</span>;</div><div class="line"><span class="keyword">SET</span> ret_den := denom/<span class="number">2</span>;</div><div class="line">WHILE floor((ret_num-1)/4) = (ret_num-1)/4 <span class="keyword">DO</span></div><div class="line"><span class="keyword">SET</span> ret_num := (ret_num+<span class="number">1</span>)/<span class="number">2</span>;</div><div class="line"><span class="keyword">SET</span> ret_den := ret_den/<span class="number">2</span>;</div><div class="line"><span class="keyword">END</span> <span class="keyword">WHILE</span>;</div><div class="line">RETURN ret_den;</div><div class="line"><span class="keyword">END</span>;</div></pre></td></tr></table></figure>
+<p>有了查询父节点的方法及当前节点所在同级中的位置的方法，即可通过这两个的组合，将节点的路径给计算出来。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> DEFINER = <span class="string">`root`</span>@<span class="string">`localhost`</span> <span class="keyword">FUNCTION</span> <span class="string">`path`</span>(<span class="string">`numer`</span> <span class="built_in">int</span>,<span class="string">`denom`</span> <span class="built_in">int</span>)</div><div class="line"><span class="keyword">RETURNS</span> <span class="built_in">varchar</span>(<span class="number">255</span>)</div><div class="line"><span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">IF</span> numer <span class="keyword">is</span> <span class="literal">NULL</span> <span class="keyword">THEN</span></div><div class="line"><span class="keyword">RETURN</span> <span class="string">''</span>;</div><div class="line"><span class="keyword">END</span> <span class="keyword">IF</span>;</div><div class="line">RETURN path(parent_numer(numer, denom),parent_denom(numer, denom))|| ‘.’ || sibling_number(numer, denom);</div><div class="line"><span class="keyword">END</span>;</div></pre></td></tr></table></figure>
+<p>按照以上方法添加后进行测试，返回<br><strong>[Err] 1424 – Recursive stored functions and triggers are not allowed.</strong>即MySQL的自定义函数不支持递归查询。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> DEFINER = <span class="string">`root`</span>@<span class="string">`localhost`</span> <span class="keyword">FUNCTION</span> <span class="string">`path`</span>(<span class="string">`numer`</span> <span class="built_in">int</span>,<span class="string">`denom`</span> <span class="built_in">int</span>)</div><div class="line"><span class="keyword">RETURNS</span> <span class="built_in">varchar</span>(<span class="number">255</span>)</div><div class="line"><span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">DECLARE</span> numer_temp <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">DECLARE</span> denom_temp <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">DECLARE</span> path_result <span class="built_in">VARCHAR</span>(<span class="number">255</span>);</div><div class="line"><span class="keyword">DECLARE</span> path_temp <span class="built_in">VARCHAR</span>(<span class="number">255</span>);</div><div class="line"><span class="keyword">DECLARE</span> sn <span class="built_in">VARCHAR</span>(<span class="number">255</span>);</div><div class="line"><span class="keyword">SET</span> path_temp := <span class="string">''</span>;</div><div class="line">WHILE numer IS NOT NULL <span class="keyword">DO</span></div><div class="line"><span class="keyword">IF</span> path_temp = <span class="string">''</span></div><div class="line"><span class="keyword">THEN</span></div><div class="line"><span class="keyword">SET</span> path_result := sibling_number(numer, denom);</div><div class="line">ELSE</div><div class="line"><span class="keyword">SET</span> path_result := <span class="keyword">CONCAT</span>(sibling_number(numer, denom),<span class="string">'.'</span>,path_temp);</div><div class="line"><span class="keyword">END</span> <span class="keyword">IF</span>;</div><div class="line"><span class="keyword">SET</span> path_temp := path_result;</div><div class="line"><span class="keyword">SET</span> numer_temp := parent_numer(numer, denom);</div><div class="line"><span class="keyword">SET</span> denom_temp := parent_denom(numer, denom);</div><div class="line"><span class="keyword">SET</span> numer := numer_temp;</div><div class="line"><span class="keyword">SET</span> denom := denom_temp;</div><div class="line"><span class="keyword">END</span> <span class="keyword">WHILE</span>;</div><div class="line">RETURN path_result;</div><div class="line"><span class="keyword">END</span>;</div></pre></td></tr></table></figure>
+<p><code>SELECT path (11, 8)</code>的结果为 1.2</p>
+<p>计算节点层级的方法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> DEFINER = <span class="string">`root`</span>@<span class="string">`localhost`</span> <span class="keyword">FUNCTION</span> <span class="string">`node_level`</span>(<span class="string">`numer`</span> <span class="built_in">int</span>,<span class="string">`denom`</span> <span class="built_in">int</span>)</div><div class="line"><span class="keyword">RETURNS</span> <span class="built_in">int</span>(<span class="number">11</span>)</div><div class="line"><span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">DECLARE</span> ret_num <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">DECLARE</span> ret_den <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">DECLARE</span> ret <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">SET</span> ret =<span class="number">1</span>;</div><div class="line">IF numer=3 THEN</div><div class="line">return 1;</div><div class="line"><span class="keyword">END</span> <span class="keyword">IF</span>;</div><div class="line">WHILE numer!=3 <span class="keyword">DO</span></div><div class="line"><span class="keyword">SET</span> ret_num := parent_numer(numer, denom);</div><div class="line"><span class="keyword">SET</span> ret_den := parent_denom(numer, denom);</div><div class="line"><span class="keyword">SET</span> numer := ret_num;</div><div class="line"><span class="keyword">SET</span> denom := ret_den;</div><div class="line"><span class="keyword">SET</span> ret := ret + <span class="number">1</span>;</div><div class="line"><span class="keyword">END</span> <span class="keyword">WHILE</span>;</div><div class="line">RETURN ret;</div><div class="line"><span class="keyword">END</span>;</div></pre></td></tr></table></figure>
+<p>我们知道了如何将编码过的节点转成目录形式，如何逆转呢？以下是方法：</p>
+<p>先添加2个辅助函数：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> DEFINER = <span class="string">`root`</span>@<span class="string">`localhost`</span> <span class="keyword">FUNCTION</span> <span class="string">`child_numer`</span>(<span class="string">`num`</span> <span class="built_in">int</span>,<span class="string">`den`</span> <span class="built_in">int</span>,<span class="string">`child`</span> <span class="built_in">int</span>)</div><div class="line"><span class="keyword">RETURNS</span> <span class="built_in">int</span>(<span class="number">11</span>)</div><div class="line"><span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">RETURN</span> <span class="keyword">num</span> * <span class="keyword">power</span>(<span class="number">2</span>, <span class="keyword">child</span>) + <span class="number">3</span> - <span class="keyword">power</span>(<span class="number">2</span>, <span class="keyword">child</span>);</div><div class="line"><span class="keyword">END</span>;</div></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> DEFINER = <span class="string">`root`</span>@<span class="string">`localhost`</span> <span class="keyword">FUNCTION</span> <span class="string">`child_denom`</span>(<span class="string">`num`</span> <span class="built_in">int</span>,<span class="string">`den`</span> <span class="built_in">int</span>,<span class="string">`child`</span> <span class="built_in">int</span>)</div><div class="line"><span class="keyword">RETURNS</span> <span class="built_in">int</span>(<span class="number">11</span>)</div><div class="line"><span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">RETURN</span> den*<span class="keyword">power</span>(<span class="number">2</span>, <span class="keyword">child</span>);</div><div class="line"><span class="keyword">END</span>;</div></pre></td></tr></table></figure>
+<p>再来编写逆转函数：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">CREATE DEFINER = `root`@`localhost` FUNCTION `path_numer`(`path` varchar(255))</div><div class="line">RETURNS int(11)</div><div class="line">BEGIN</div><div class="line">DECLARE num INT;</div><div class="line">DECLARE den INT;</div><div class="line">DECLARE postfix VARCHAR(255);</div><div class="line">DECLARE sibling VARCHAR(255);</div><div class="line">SET num := 1;</div><div class="line">SET den := 1;</div><div class="line">SET postfix := CONCAT(path,'.');</div><div class="line">WHILE length(postfix) &gt; 1 DO</div><div class="line">SET sibling := SUBSTR(postfix, 1, instr(postfix,'.')-1);</div><div class="line">SET postfix := SUBSTR(postfix, instr(postfix,'.')+1);</div><div class="line">SET num := child_numer(num,den,sibling+0);</div><div class="line">SET den := child_denom(num,den,sibling+0);</div><div class="line">END WHILE;</div><div class="line">RETURN num;</div><div class="line">END;</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">CREATE DEFINER = `root`@`localhost` FUNCTION `path_denom`(`path` varchar(255))</div><div class="line">RETURNS int(11)</div><div class="line">BEGIN</div><div class="line">DECLARE num INT;</div><div class="line">DECLARE den INT;</div><div class="line">DECLARE postfix VARCHAR(255);</div><div class="line">DECLARE sibling VARCHAR(255);</div><div class="line">SET num := 1;</div><div class="line">SET den := 1;</div><div class="line">SET postfix := CONCAT(path,'.');</div><div class="line">WHILE length(postfix) &gt; 1 DO</div><div class="line">SET sibling := SUBSTR(postfix, 1, instr(postfix,'.')-1);</div><div class="line">SET postfix := SUBSTR(postfix, instr(postfix,'.')+1);</div><div class="line">SET num := child_numer(num,den,sibling+0);</div><div class="line">SET den := child_denom(num,den,sibling+0);</div><div class="line">END WHILE;</div><div class="line">RETURN den;</div><div class="line">END;</div></pre></td></tr></table></figure>
+<p><code>select CONCAT(path_numer(‘2.1.3′),’/’,path_denom(‘2.1.3’))</code>结果为51/64</p>
+<p>参考资料：<br>  ● <a href="http://www.rampant-books.com/art_vadim_nested_sets_sql_trees.htm" target="_blank" rel="external">http://www.rampant-books.com/art_vadim_nested_sets_sql_trees.htm</a></p>
+<p>转自<a href="https://www.biaodianfu.com/nested-intervals.html" target="_blank" rel="external">https://www.biaodianfu.com/nested-intervals.html</a></p>
+<p>作者：标点符</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;前面的一篇文章介绍了左右值编码，不知道大家注意到了没有，如果数据庞大，每次更新都需要更新差不多全表，效率较低没有更好的方式？今天我们就来研究下区间嵌套法。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;区间嵌套法原理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;如果节点区间&lt;code&gt;[clft, crgt]&lt;/code&gt;与&lt;code&gt;[plft, prgt]&lt;/code&gt;存在如下关系：&lt;code&gt;plft &amp;lt;= clft and crgt &amp;gt;= prgt&lt;/code&gt;，则&lt;code&gt;[clft, crgt]&lt;/code&gt;区间里的点是&lt;code&gt;[plft, prgt]&lt;/code&gt;的子节点。基于此假设我们就可以通过对区间的不断的向下划来获取新的区间。举例：如果在区间&lt;code&gt;[plft, prgt]&lt;/code&gt;中存在一个空白区间&lt;code&gt;[lft1, rgt1]&lt;/code&gt;，如果要加入一个&lt;code&gt;[plft,lft1]&lt;/code&gt;、&lt;code&gt;[rgt1,prgt]&lt;/code&gt;同级的区间，只需插入节点：&lt;code&gt;[(2*lft1+rgt1)/3&lt;/code&gt;,  &lt;code&gt;(rgt1+2*lft)/3]&lt;/code&gt;。在添加完节点后我们还留下&lt;code&gt;[lft1,(2*lft1+rgt1)/3]&lt;/code&gt;和 &lt;code&gt;[(rgt1+2*lft)/3,rgt1]&lt;/code&gt;两个空余的空间用来添加更多的子节点。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="码路刺客" scheme="http://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
+    
+    
+      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
+    
+      <category term="数据库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>树形结构数据存储方案（四）：左右值编码</title>
+    <link href="http://c-xuan.com/2017/03/07/tree-table-store4/"/>
+    <id>http://c-xuan.com/2017/03/07/tree-table-store4/</id>
+    <published>2017-03-07T15:34:08.000Z</published>
+    <updated>2017-03-07T16:12:54.036Z</updated>
+    
+    <content type="html"><![CDATA[<p>在基于数据库的一般应用中，查询的需求总要大于删除和修改。为了避免对于树形结构查询时的“递归”过程，基于Tree的前序遍历设计一种全新的无递归查询、无限分组的左右值编码方案，来保存该树的数据。</p>
+<center><img src="/img/posts/tree-table-store4-1.gif"></center>
+
+<a id="more"></a>
+<p>第一次看见这种表结构，相信大部分人都不清楚左值（Lft）和右值（Rgt）是如何计算出来的，而且这种表设计似乎并没有保存父子节点的继承关系。但当你用手指指着表中的数字从1数到18，你应该会发现点什么吧。对，你手指移动的顺序就是对这棵树进行前序遍历的顺序，如下图所示。当我们从根节点Food左侧开始，标记为1，并沿前序遍历的方向，依次在遍历的路径上标注数字，最后我们回到了根节点Food，并在右边写上了18。</p>
+<center><img src="/img/posts/tree-table-store4-2.gif"></center>
+
+<p>依据此设计，我们可以推断出所有左值大于2，并且右值小于11的节点都是Fruit的后续节点，整棵树的结构通过左值和右值存储了下来。然而，这还不够，我们的目的是能够对树进行CRUD操作，即需要构造出与之配套的相关算法。按照深度优先，由左到右的原则遍历整个树，从1开始给每个节点标注上left值和right值，并将这两个值存入对应的name之中。</p>
+<p>如何查询？</p>
+<p>1、获取某个节点下的所有子孙节点，以Fruit为例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Tree <span class="keyword">WHERE</span> Lft &gt; <span class="number">2</span> <span class="keyword">AND</span> Lft &lt; <span class="number">11</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> Lft <span class="keyword">ASC</span></div></pre></td></tr></table></figure>
+<p>2、获取子孙节点总数<br>子孙总数 = (右值–左值–1)/2，以Fruit为例，其子孙总数为：(11–2–1)/2 = 4</p>
+<p>3、 获取节点在树中所处的层数，以Fruit为例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(*) <span class="keyword">FROM</span> Tree <span class="keyword">WHERE</span> Lft &lt;= <span class="number">2</span> <span class="keyword">AND</span> Rgt &gt;=<span class="number">11</span></div></pre></td></tr></table></figure>
+<p>4、 获取当前节点所在路径，以Fruit为例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Tree <span class="keyword">WHERE</span> Lft &lt;= <span class="number">2</span> <span class="keyword">AND</span> Rgt &gt;=<span class="number">11</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> Lft <span class="keyword">ASC</span></div></pre></td></tr></table></figure>
+<p>在日常的处理中我们经常还会遇到的需要获取某一个节点的直属上级、同级、直属下级。为了更好的描述层级关系，我们可以为Tree建立一个视图，添加一个层次列，该列数值可以编写一个自定义函数来计算：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">FUNCTION</span> <span class="string">`CountLayer`</span>(<span class="string">`_node_id`</span> <span class="built_in">int</span>)</div><div class="line"><span class="keyword">RETURNS</span> <span class="built_in">int</span>(<span class="number">11</span>)</div><div class="line"><span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">DECLARE</span> _result <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">DECLARE</span> _lft <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">DECLARE</span> _rgt <span class="built_in">INT</span>;</div><div class="line">IF EXISTS(<span class="keyword">SELECT</span> Node_id <span class="keyword">FROM</span> Tree <span class="keyword">WHERE</span> Node_id = _node_id)</div><div class="line"><span class="keyword">THEN</span></div><div class="line"><span class="keyword">SELECT</span> Lft,Rgt <span class="keyword">FROM</span> Tree <span class="keyword">WHERE</span> Node_id = _node_id <span class="keyword">INTO</span> _lft,_rgt;</div><div class="line"><span class="keyword">SET</span> _result = (<span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(<span class="number">1</span>) <span class="keyword">FROM</span> Tree <span class="keyword">WHERE</span> Lft &lt;= _lft <span class="keyword">AND</span> Rgt &gt;= _rgt); </div><div class="line">RETURN _result;</div><div class="line">ELSE</div><div class="line">RETURN 0;</div><div class="line"><span class="keyword">END</span> <span class="keyword">IF</span>;</div><div class="line"><span class="keyword">END</span>;</div></pre></td></tr></table></figure>
+<p>在添加完函数以后，我们创建一个a视图，添加新的层次列：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">VIEW</span> <span class="string">`NewView`</span><span class="keyword">AS</span> </div><div class="line"><span class="keyword">SELECT</span> Node_id, <span class="keyword">Name</span>, Lft, Rgt, CountLayer(Node_id) <span class="keyword">AS</span> Layer <span class="keyword">FROM</span> Tree <span class="keyword">ORDER</span> <span class="keyword">BY</span> Lft ;</div></pre></td></tr></table></figure>
+<p>5、 获取当前节点父节点,以Fruit为例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> treeview <span class="keyword">WHERE</span> Lft &lt;= <span class="number">2</span> <span class="keyword">AND</span> Rgt &gt;=<span class="number">11</span> <span class="keyword">AND</span> Layer=<span class="number">1</span></div></pre></td></tr></table></figure>
+<p>6、 获取所有直属子节点，以Fruit为例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> treeview <span class="keyword">WHERE</span> Lft <span class="keyword">BETWEEN</span> <span class="number">2</span> <span class="keyword">AND</span> <span class="number">11</span> <span class="keyword">AND</span> Layer=<span class="number">3</span></div></pre></td></tr></table></figure>
+<p>7、 获取所有兄弟节点，以Fruit为例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> treeview <span class="keyword">WHERE</span> Rgt &gt; <span class="number">11</span> <span class="keyword">AND</span> Rgt &lt; (<span class="keyword">SELECT</span> Rgt <span class="keyword">FROM</span> treeview <span class="keyword">WHERE</span> Lft &lt;= <span class="number">2</span> <span class="keyword">AND</span> Rgt &gt;=<span class="number">11</span> <span class="keyword">AND</span> Layer=<span class="number">1</span>) <span class="keyword">AND</span> Layer=<span class="number">2</span></div></pre></td></tr></table></figure>
+<p>8、 返回所有叶子节点</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Tree <span class="keyword">WHERE</span> Rgt = Lft + <span class="number">1</span></div></pre></td></tr></table></figure>
+<p><strong>如何创建树？如何新增数据？</strong></p>
+<p>上面已经介绍了如何检索结果，那么如何才能增加新的节点呢？Nested set 最重要是一定要有一个根节点作为所有节点的起点，而且通常这个节点是不被使用的。为了便于控制查询级别，在建表的时候建议添加parent_id配合之联结列表方式一起使用。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> <span class="string">`Tree`</span> (</div><div class="line"><span class="string">`node_id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</div><div class="line"><span class="string">`parent_id`</span> <span class="built_in">int</span>(<span class="number">10</span>) <span class="keyword">UNSIGNED</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,</div><div class="line"><span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</div><div class="line"><span class="string">`lft`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,</div><div class="line"><span class="string">`rgt`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,</div><div class="line">PRIMARY <span class="keyword">KEY</span> (<span class="string">`node_id`</span>),</div><div class="line"><span class="keyword">KEY</span> <span class="string">`idx_left_right`</span> (<span class="string">`lft`</span>,<span class="string">`rgt`</span>)</div><div class="line">) <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</div></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`Tree`</span> (parent_id,<span class="keyword">name</span>,lft,rgt) <span class="keyword">VALUES</span> ( <span class="number">0</span>,<span class="string">'Food'</span>,<span class="number">1</span>,<span class="number">2</span>)</div></pre></td></tr></table></figure>
+<p>添加子节点（子节点起始处），以在Food下添加子节点Fruit为例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">LOCK</span> <span class="keyword">TABLE</span> Tree WRITE;</div><div class="line"><span class="keyword">SELECT</span> @parent_id := node_id, @myLeft := lft <span class="keyword">FROM</span> Tree <span class="keyword">WHERE</span> <span class="keyword">name</span> = <span class="string">'Food'</span>;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> rgt = rgt + <span class="number">2</span> <span class="keyword">WHERE</span> rgt &gt; @myLeft;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> lft = lft + <span class="number">2</span> <span class="keyword">WHERE</span> lft &gt; @myLeft;</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> Tree(parent_id, <span class="keyword">name</span>, lft, rgt) <span class="keyword">VALUES</span>(@parent_id, <span class="string">'Fruit'</span>, @myLeft + <span class="number">1</span>, @myLeft + <span class="number">2</span>);</div><div class="line"><span class="keyword">UNLOCK</span> <span class="keyword">TABLES</span>;</div></pre></td></tr></table></figure>
+<p>如需在末尾追加就需要以下方式进行（以在Red下添加Apple为例）：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">LOCK</span> <span class="keyword">TABLE</span> Tree WRITE;</div><div class="line"><span class="keyword">SELECT</span> @parent_id := node_id , @myRight := rgt <span class="keyword">FROM</span> Tree <span class="keyword">WHERE</span> <span class="keyword">name</span> = <span class="string">'Red'</span>;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> rgt = rgt + <span class="number">2</span> <span class="keyword">WHERE</span> rgt &gt;= @myRight;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> lft = lft + <span class="number">2</span> <span class="keyword">WHERE</span> lft &gt; @myRight;</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> Tree(parent_id, <span class="keyword">name</span>, lft, rgt) <span class="keyword">VALUES</span>(@parent_id, <span class="string">'Apple'</span>, @myRight, @myRight + <span class="number">1</span>);</div><div class="line"><span class="keyword">UNLOCK</span> <span class="keyword">TABLES</span>;</div></pre></td></tr></table></figure>
+<p>在节点A后面添加同级节点（以在Yellow后面添加Green为例）</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">LOCK</span> <span class="keyword">TABLE</span> Tree WRITE;</div><div class="line"><span class="keyword">SELECT</span> @parent_id := parent_id , @myRight := rgt <span class="keyword">FROM</span> Tree <span class="keyword">WHERE</span> <span class="keyword">name</span> = <span class="string">'Yellow'</span>;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> rgt = rgt + <span class="number">2</span> <span class="keyword">WHERE</span> rgt &gt; @myRight;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> lft = lft + <span class="number">2</span> <span class="keyword">WHERE</span> lft &gt; @myRight;</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> Tree(parent_id, <span class="keyword">name</span>, lft, rgt) <span class="keyword">VALUES</span>(@parent_id, <span class="string">'Green'</span>, @myRight+<span class="number">1</span>, @myRight+<span class="number">2</span>);</div><div class="line"><span class="keyword">UNLOCK</span> <span class="keyword">TABLES</span>;</div></pre></td></tr></table></figure>
+<p>以上讨论的添加节点指的都是添加末端节点，即插入的这个节点不是当前已存在节点的父节点。如果需要插入非末端节点要怎么办呢？<br>这个过程可以将流程分为2步，首先新增节点，接下里再将需要的节点移到新增的节点下级。节点移动方法(以将Apple移到Yellow中为例)：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">LOCK</span> <span class="keyword">TABLE</span> Tree WRITE;</div><div class="line"><span class="keyword">SELECT</span> @nodeId := node_id , @myLeft := lft , @myRight := rgt <span class="keyword">FROM</span> Tree <span class="keyword">WHERE</span> <span class="keyword">name</span> = <span class="string">'Apple'</span>;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> lft = lft - (@myRight - @myLeft) - <span class="number">1</span> <span class="keyword">WHERE</span> lft &gt; @myRight;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> rgt = rgt - (@myRight - @myLeft) - <span class="number">1</span> <span class="keyword">WHERE</span> rgt &gt; @myRight;</div><div class="line"><span class="keyword">SELECT</span> @parent_id := node_id , @<span class="keyword">Left</span> := lft , @<span class="keyword">Right</span> := rgt <span class="keyword">FROM</span> Tree <span class="keyword">WHERE</span> <span class="keyword">name</span> = <span class="string">'Yellow'</span>;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> lft = lft + (@myRight - @myLeft) + <span class="number">1</span> <span class="keyword">WHERE</span> lft &gt; @<span class="keyword">Left</span>;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> rgt = rgt + (@myRight - @myLeft) + <span class="number">1</span> <span class="keyword">WHERE</span> lft &gt; @<span class="keyword">Left</span>;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> parent_id = @parent_id <span class="keyword">WHERE</span> <span class="keyword">name</span> = node_id = @nodeId;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> lft = @<span class="keyword">Left</span> + lft - @myLeft + <span class="number">1</span>, rgt = @<span class="keyword">Left</span> + lft - @myLeft + <span class="number">1</span> + (@myRight - @myLeft) <span class="keyword">WHERE</span> lft &gt;= @myLeft <span class="keyword">AND</span> rgt &lt;= @myRight;</div><div class="line"><span class="keyword">UNLOCK</span> <span class="keyword">TABLES</span>;</div></pre></td></tr></table></figure>
+<p><strong>删除节点（包含子节点）</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">LOCK</span> <span class="keyword">TABLE</span> Tree WRITE;</div><div class="line"><span class="keyword">SELECT</span> @myLeft := lft , @myRight := rgt <span class="keyword">FROM</span> Tree <span class="keyword">WHERE</span> <span class="keyword">name</span> = <span class="string">'Apple'</span>;</div><div class="line"><span class="keyword">DELETE</span> Tree <span class="keyword">WHERE</span> lft &gt;= @myLeft <span class="keyword">AND</span> rgt &lt;= @myRight;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> lft = lft - (@myRight - @myLeft) - <span class="number">1</span> <span class="keyword">WHERE</span> lft &gt; @myRight;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> rgt = rgt - (@myRight - @myLeft) - <span class="number">1</span> <span class="keyword">WHERE</span> rgt &gt; @myRight;</div><div class="line"><span class="keyword">UNLOCK</span> <span class="keyword">TABLES</span>;</div></pre></td></tr></table></figure>
+<p>如果需要只删除该节点，子节点自动上移一级如何处理？</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">LOCK</span> <span class="keyword">TABLE</span> Tree WRITE;</div><div class="line"><span class="keyword">SELECT</span> @parent_id := parent_id , @node_id :=node_id , @myLeft := lft , @myRight := rgt <span class="keyword">FROM</span> Tree <span class="keyword">WHERE</span> <span class="keyword">name</span> = <span class="string">'Red'</span>;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> parent_id = @parent_id <span class="keyword">WHERE</span> parent_id = @node_id</div><div class="line"><span class="keyword">DELETE</span> Tree <span class="keyword">WHERE</span> lft = @myLeft;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> lft = lft - <span class="number">1</span>,rgt = rgt<span class="number">-1</span> <span class="keyword">Where</span> lft &gt; @myLeft <span class="keyword">AND</span> @rgt &lt; @myRight</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> lft = lft - <span class="number">2</span>,rgt = rgt<span class="number">-2</span> <span class="keyword">Where</span> lft &gt; @rgt &gt; @myRight</div><div class="line"><span class="keyword">UNLOCK</span> <span class="keyword">TABLES</span>;</div></pre></td></tr></table></figure>
+<p>以上为Nested Set的CURD操作，具体在使用时建议结合事务和存储过程一起使用。本方案的优点时查询非常的方便，缺点就是每次插入删除数据涉及到的更新内容太多，如果树非常大，插入一条数据可能花很长的时间。</p>
+<p>参考链接：<br>  ● <a href="https://www.sitepoint.com/hierarchical-data-database/" target="_blank" rel="external">https://www.sitepoint.com/hierarchical-data-database/</a><br>  ● <a href="https://packagist.org/search/?q=Nested+Set" target="_blank" rel="external">https://packagist.org/search/?q=Nested+Set</a></p>
+<p>转自<a href="https://www.biaodianfu.com/the-nested-set-model.html" target="_blank" rel="external">https://www.biaodianfu.com/the-nested-set-model.html</a></p>
+<p>作者：标点符</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在基于数据库的一般应用中，查询的需求总要大于删除和修改。为了避免对于树形结构查询时的“递归”过程，基于Tree的前序遍历设计一种全新的无递归查询、无限分组的左右值编码方案，来保存该树的数据。&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;/img/posts/tree-table-store4-1.gif&quot;&gt;&lt;/img&gt;&lt;/center&gt;
+    
+    </summary>
+    
+      <category term="码路刺客" scheme="http://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
+    
+    
+      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
+    
+      <category term="数据库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+  </entry>
   
   <entry>
     <title>树形结构数据存储方案（三）：闭包表</title>
@@ -1149,543 +1300,6 @@
       <category term="SSIS" scheme="http://c-xuan.com/tags/SSIS/"/>
     
       <category term="MSBI" scheme="http://c-xuan.com/tags/MSBI/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>深入对比数据仓库模式：Kimball vs Inmon</title>
-    <link href="http://c-xuan.com/2016/08/26/DataWarehouseSchemeCompare/"/>
-    <id>http://c-xuan.com/2016/08/26/DataWarehouseSchemeCompare/</id>
-    <published>2016-08-26T15:21:19.000Z</published>
-    <updated>2016-09-22T16:13:49.914Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><blockquote>
-<p>毛主席曾经说：实践若不以革命理论为指南，就会变成盲目的实践。</p>
-</blockquote>
-<p>Kimball和Inmon是两种主流的数据仓库方法论，分别由 Ralph Kimbal大神 和 Bill Inmon大神提出，在实际数据仓库建设中，业界往往会相互借鉴使用两种开发模式。本文将详细介绍 Kimball 和 Inmon 理论在实际数据仓库建设中的应用与对比,通过数据仓库理论武装数据仓库实践。</p>
-<a id="more"></a>
-<p><img src="/img/posts/DataWarehouseSchemeCompare-01.png" alt="DataWarehouseSchemeCompare-01"></p>
-<h2 id="什么是Kimball"><a href="#什么是Kimball" class="headerlink" title="什么是Kimball"></a>什么是Kimball</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>Kimball 模式从流程上看是是自底向上的，即从数据集市到数据仓库再到数据源(先有数据集市再有数据仓库)的一种敏捷开发方法。对于Kimball模式，数据源往往是给定的若干个数据库表，数据较为稳定但是数据之间的关联关系比较复杂，需要从这些OLTP中产生的事务型数据结构抽取出分析型数据结构，再放入数据集市中方便下一步的BI与决策支持。</p>
-<h3 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h3><p>通常，Kimball都是以最终任务为导向。首先，在得到数据后需要先做数据的探索，尝试将数据按照目标先拆分出不同的表需求。其次，在明确数据依赖后将各个任务再通过ETL由Stage层转化到DM层。这里DM层数据则由若干个事实表和维度表组成。接着，在完成DM层的事实表维度表拆分后，数据集市一方面可以直接向BI环节输出数据了，另一方面可以先DW层输出数据，方便后续的多维分析。</p>
-<p>Kimball往往意味着快速交付、敏捷迭代，不会对数据仓库架构做过多复杂的设计，在变换莫测的互联网行业，这种架构方式逐渐成为一种主流范式。</p>
-<h2 id="什么是Inmon"><a href="#什么是Inmon" class="headerlink" title="什么是Inmon"></a>什么是Inmon</h2><h3 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h3><p>Inmon 模式从流程上看是自顶向下的，即从数据源到数据仓库再到数据集市的（先有数据仓库再有数据市场）一种瀑布流开发方法。对于Inmon模式，数据源往往是异构的，比如从自行定义的爬虫数据就是较为典型的一种，数据源是根据最终目标自行定制的。这里主要的数据处理工作集中在对异构数据的清洗，包括数据类型检验，数据值范围检验以及其他一些复杂规则。在这种场景下，数据无法从stage层直接输出到dm层，必须先通过ETL将数据的格式清洗后放入dw层，再从dw层选择需要的数据组合输出到dm层。在Inmon模式中，并不强调事实表和维度表的概念，因为数据源变化的可能性较大，需要更加强调数据的清洗工作，从中抽取实体-关系。</p>
-<h3 id="流程-1"><a href="#流程-1" class="headerlink" title="流程"></a>流程</h3><p>通常，Inmon都是以数据源头为导向。首先，需要探索性地去获取尽量符合预期的数据，尝试将数据按照预期划分为不同的表需求。其次，明确数据的清洗规则后将各个任务通过ETL由Stage层转化到DW层，这里DW层通常涉及到较多的UDF开发，将数据抽象为实体-关系模型。接着，在完成DW的数据治理之后，可以将数据输出到数据集市中做基本的数据组合。最后，将数据集市中的数据输出到BI系统中去辅助具体业务。</p>
-<h2 id="特征对比"><a href="#特征对比" class="headerlink" title="特征对比"></a>特征对比</h2><p><img src="/img/posts/DataWarehouseSchemeCompare-02.jpg" alt="DataWarehouseSchemeCompare-02"></p>
-<h3 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h3><table>
-<thead>
-<tr>
-<th>特性</th>
-<th>Kimball</th>
-<th>Inmon</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>数据摄取</td>
-<td>yes</td>
-<td>yes</td>
-</tr>
-<tr>
-<td>stage</td>
-<td>yes</td>
-<td>yes</td>
-</tr>
-<tr>
-<td>ETL</td>
-<td>yes</td>
-<td>yes</td>
-</tr>
-<tr>
-<td>数据集市</td>
-<td>yes</td>
-<td>yes</td>
-</tr>
-<tr>
-<td>商业需求</td>
-<td>yes</td>
-<td>yes</td>
-</tr>
-<tr>
-<td>数据时间属性</td>
-<td>yes</td>
-<td>yes</td>
-</tr>
-<tr>
-<td>数据仓库优先</td>
-<td>no</td>
-<td>yes</td>
-</tr>
-<tr>
-<td>事实维度拆分</td>
-<td>yes</td>
-<td>no</td>
-</tr>
-<tr>
-<td>关系表维护</td>
-<td>no</td>
-<td>yes</td>
-</tr>
-<tr>
-<td>处理导向</td>
-<td>yes</td>
-<td>no</td>
-</tr>
-<tr>
-<td>数据模型泛化</td>
-<td>no</td>
-<td>yes</td>
-</tr>
-<tr>
-<td>精心设计</td>
-<td>no</td>
-<td>yes</td>
-</tr>
-<tr>
-<td>缓慢变化维</td>
-<td>yes</td>
-<td>no</td>
-</tr>
-<tr>
-<td>连续变化维</td>
-<td>no</td>
-<td>yes</td>
-</tr>
-</tbody>
-</table>
-<h3 id="优劣比较"><a href="#优劣比较" class="headerlink" title="优劣比较"></a>优劣比较</h3><table>
-<thead>
-<tr>
-<th>特性</th>
-<th>Kimball</th>
-<th>Inmon</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>时间</td>
-<td>快速交付</td>
-<td>路漫漫其修远兮</td>
-</tr>
-<tr>
-<td>开发难度</td>
-<td>小</td>
-<td>大</td>
-</tr>
-<tr>
-<td>维护难度</td>
-<td>大</td>
-<td>小</td>
-</tr>
-<tr>
-<td>技能要求</td>
-<td>入门级</td>
-<td>专家级</td>
-</tr>
-<tr>
-<td>数据要求</td>
-<td>特定业务</td>
-<td>企业级</td>
-</tr>
-</tbody>
-</table>
-<h2 id="具体例子"><a href="#具体例子" class="headerlink" title="具体例子"></a>具体例子</h2><p>相信一通理论之后可能还是能困惑，现在举一个具体的例子。</p>
-<h3 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h3><p>股票交易为例：</p>
-<p>（OLTP）原始数据包含了如下几张事务表：(真实场景字段设计更为复杂，此处已经简化)</p>
-<ul>
-<li>交易记录表：记录用户下单情况</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>交易记录ID</th>
-<th>用户ID</th>
-<th>交易ID</th>
-<th>交易单号</th>
-<th>标的CODE</th>
-<th>出价</th>
-<th>现价</th>
-<th>方向</th>
-<th>手数</th>
-<th>创建时间</th>
-<th>修改时间</th>
-<th>状态</th>
-<th>备注</th>
-<th>类型</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>MR123456</td>
-<td>A123456</td>
-<td>9.0</td>
-<td>9.5</td>
-<td>买</td>
-<td>100</td>
-<td>2016-10-10 10:58:00</td>
-<td>2016-10-10 10:58:00</td>
-<td>未成交</td>
-<td>NULL</td>
-<td>创业板</td>
-<td></td>
-</tr>
-<tr>
-<td>2</td>
-<td>1</td>
-<td>1</td>
-<td>MR123456</td>
-<td>A123456</td>
-<td>9.0</td>
-<td>8.9</td>
-<td>买</td>
-<td>200</td>
-<td>2016-10-10 11:00:00</td>
-<td>2016-10-10 11:00:10</td>
-<td>已成交</td>
-<td>NULL</td>
-<td>创业板</td>
-</tr>
-<tr>
-<td>3</td>
-<td>1</td>
-<td>2</td>
-<td>MR123457</td>
-<td>A123456</td>
-<td>10.1</td>
-<td>10.2</td>
-<td>卖</td>
-<td>200</td>
-<td>2016-10-10 14:00:00</td>
-<td>2016-10-10 14:00:30</td>
-<td>已成交</td>
-<td>NULL</td>
-<td>创业板</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>成交日志表：记录用户下单且成交的情况</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>成交日志ID</th>
-<th>用户ID</th>
-<th>外部单号</th>
-<th>交易记录ID</th>
-<th>标的CODE</th>
-<th>方向</th>
-<th>手数</th>
-<th>成交价格</th>
-<th>创建时间</th>
-<th>修改时间</th>
-<th>状态</th>
-<th>备注</th>
-<th>类型</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>1</td>
-<td>MR123456</td>
-<td>2</td>
-<td>A123456</td>
-<td>买</td>
-<td>200</td>
-<td>8.9</td>
-<td>2016-10-10 11:00:10</td>
-<td>2016-10-10 11:00:10</td>
-<td>正常</td>
-<td>NULL</td>
-<td>创业板</td>
-</tr>
-<tr>
-<td>2</td>
-<td>1</td>
-<td>MR123456</td>
-<td>3</td>
-<td>A123456</td>
-<td>卖</td>
-<td>200</td>
-<td>10.1</td>
-<td>2016-10-10 14:00:30</td>
-<td>2016-10-10 14:00:30</td>
-<td>正常</td>
-<td>NULL</td>
-<td>创业板</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>用户信息表</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>用户ID</th>
-<th>别名</th>
-<th>姓名</th>
-<th>联系方式</th>
-<th>性别</th>
-<th>身份号码</th>
-<th>资产账户ID</th>
-<th>是否开通创业板</th>
-<th>风险评级</th>
-<th>资产余额</th>
-<th>创建时间</th>
-<th>修改时间</th>
-<th>用户类型</th>
-<th>资产类型</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>FinanceR</td>
-<td>张三</td>
-<td>1234567890</td>
-<td>女</td>
-<td>12345567890X</td>
-<td>SA123213</td>
-<td>是</td>
-<td>高</td>
-<td>12321312.00</td>
-<td>2015-10-10 14:00:00</td>
-<td>2016-10-10 14:00:00</td>
-<td>A</td>
-<td>现金账户</td>
-</tr>
-</tbody>
-</table>
-<h3 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h3><p>如果是 Inmon 模式，我们需要将数据库拆分成 用户实体表、成交日志实体表、用户与成交日志关系表等多个子模块。<br>如果是 Kimball 模式，我们则需要将数据库拆分成 用户维度表、用户资产事实表、成交事实表。在Kimball模式中，我们不需要单独维护关系表，因为关系已经冗余在维度表和事实表中。</p>
-<h3 id="Inmon-模式："><a href="#Inmon-模式：" class="headerlink" title="Inmon 模式："></a>Inmon 模式：</h3><p>用户实体表</p>
-<table>
-<thead>
-<tr>
-<th>用户ID</th>
-<th>别名</th>
-<th>姓名</th>
-<th>联系方式</th>
-<th>性别</th>
-<th>身份号码</th>
-<th>是否开通创业板</th>
-<th>风险评级</th>
-<th>资产余额</th>
-<th>创建时间</th>
-<th>修改时间</th>
-<th>用户类型</th>
-<th>资产类型</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>FinanceR</td>
-<td>张三</td>
-<td>1234567890</td>
-<td>女</td>
-<td>12345567890X</td>
-<td>是</td>
-<td>高</td>
-<td>12321312.00</td>
-<td>2015-10-10 14:00:00</td>
-<td>2016-10-10 14:00:00</td>
-<td>A</td>
-<td>现金账户</td>
-</tr>
-</tbody>
-</table>
-<p>成交关系表</p>
-<table>
-<thead>
-<tr>
-<th>成交ID</th>
-<th>用户ID</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>1</td>
-<td></td>
-</tr>
-<tr>
-<td>2</td>
-<td>1</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>用户资产关系表</p>
-<table>
-<thead>
-<tr>
-<th>资产ID</th>
-<th>用户ID</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>SA123213</td>
-<td>1</td>
-</tr>
-</tbody>
-</table>
-<h3 id="Kimball-模式"><a href="#Kimball-模式" class="headerlink" title="Kimball 模式"></a>Kimball 模式</h3><p>用户维度表</p>
-<table>
-<thead>
-<tr>
-<th>用户ID</th>
-<th>别名</th>
-<th>姓名</th>
-<th>联系方式</th>
-<th>性别</th>
-<th>身份号码</th>
-<th>是否创业板</th>
-<th>风险评级ID</th>
-<th>创建时间</th>
-<th>修改时间</th>
-<th>用户类型ID</th>
-<th>资产ID</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>FinanceR</td>
-<td>张三</td>
-<td>1234567890</td>
-<td>女</td>
-<td>SA123213</td>
-<td>1</td>
-<td>1</td>
-<td>2015-10-10 14:00:00</td>
-<td>2016-10-10 14:00:00</td>
-<td>1</td>
-<td>SA123213</td>
-</tr>
-</tbody>
-</table>
-<p>可以看到这里的用户维度表不包含业务交易信息，变化相对缓慢（静态）。<br>而风险评级、用户类型也需要由风险评级维度表、用户类型维度表来维护</p>
-<p>用户资产事实表</p>
-<table>
-<thead>
-<tr>
-<th>资产ID</th>
-<th>用户ID</th>
-<th>账户余额</th>
-<th>资产类型</th>
-<th>创建时间</th>
-<th>修改时间</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>SA123213</td>
-<td>1</td>
-<td>12321312.00</td>
-<td>现金账户</td>
-<td>2016-10-10 14:00:00</td>
-<td>2016-10-10 14:00:00</td>
-</tr>
-</tbody>
-</table>
-<p>这里的用户资产事实表通常数据是由用户资产交易日志产生的，因为日志存在只插入，不更新的特点（快速增加、最细粒度。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>对于大多数互联网公司由于需求的快速变化，处心积虑设计（Inmon）实体-关系的设计哲学似乎并不能满足快速迭代的业务需要。所以，更多场景下趋向于使用（Kimball）维度-事实的设计哲学反而可以更快地完成任务。<br>数据仓库建设通常以日为粒度，将OLTP数据变化的不情况增量同步到数据仓库中。<br>在数据仓库的实际工作中，80%的时间会花费在任务调度、数据清洗和业务梳理上，只有20%的时间会投入到数据挖掘上。</p>
-<p>转自<a href="https://segmentfault.com/a/1190000006255954" target="_blank" rel="external">https://segmentfault.com/a/1190000006255954</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;毛主席曾经说：实践若不以革命理论为指南，就会变成盲目的实践。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Kimball和Inmon是两种主流的数据仓库方法论，分别由 Ralph Kimbal大神 和 Bill Inmon大神提出，在实际数据仓库建设中，业界往往会相互借鉴使用两种开发模式。本文将详细介绍 Kimball 和 Inmon 理论在实际数据仓库建设中的应用与对比,通过数据仓库理论武装数据仓库实践。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="BI墨客" scheme="http://c-xuan.com/categories/BI%E5%A2%A8%E5%AE%A2/"/>
-    
-    
-      <category term="BI" scheme="http://c-xuan.com/tags/BI/"/>
-    
-      <category term="数据仓库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/"/>
-    
-      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>数据仓库维度建模10大基本原则</title>
-    <link href="http://c-xuan.com/2016/08/23/Datawarehouse-10Dimension-principle/"/>
-    <id>http://c-xuan.com/2016/08/23/Datawarehouse-10Dimension-principle/</id>
-    <published>2016-08-22T16:03:24.000Z</published>
-    <updated>2016-09-22T16:13:39.585Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="原则1"><a href="#原则1" class="headerlink" title="原则1"></a>原则1</h3><p><strong>载入详细的原子数据到维度结构中</strong></p>
-<blockquote>
-<p>维度建模应该使用最基础的原子数据进行填充，以支持不可预知的来自用户查询的过滤和分组请求，用户通常不希望每次只看到一个单一的记录，但是你无法预测 用户想要掩盖哪些数据，想要显示哪些数据，如果只有汇总数据，那么你已经设定了数据的使用模式，当用户想要深入挖掘数据时他们就会遇到障碍。当然，原子数据也可以通过概要维度建模进行补充，但企业用户无法只在汇总数据上工作，他们需要原始数据回答不断变化的问题。</p>
-</blockquote>
-<a id="more"></a>
-<h3 id="原则2"><a href="#原则2" class="headerlink" title="原则2"></a>原则2</h3><p><strong>围绕业务流程构建维度模型</strong></p>
-<blockquote>
-<p>业务流程是组织执行的活动，它们代表可测量的事件，如下一个订单或做一次结算，业务流程通常会捕获或生成唯一的与某个事件相关的性能指标，这些数据转换成事实后，每个业务流程都用一个原子事实表表示，除了单个流程事实表外，有时会从多个流程事实表合并成一个事实表，而且合并事实表是对单一流程事实表的一 个很好的补充，并不能代替它们。</p>
-</blockquote>
-<h3 id="原则3"><a href="#原则3" class="headerlink" title="原则3"></a>原则3</h3><p><strong>确保每个事实表都有一个与之关联的日期维度表</strong></p>
-<blockquote>
-<p>原则2中描述的可测量事件总有一个日期戳信息，每个事实表至少都有一个外键，关联到一个日期维度表，它的粒度就是一天，使用日历属性和非标准的关于测量事件日期的特性，如财务月和公司假日指示符，有时一个事实表中有多个日期外键。</p>
-</blockquote>
-<h3 id="原则4"><a href="#原则4" class="headerlink" title="原则4"></a>原则4</h3><p><strong>确保每个事实表中的事实具有相同的粒度或同级的详细程度</strong></p>
-<blockquote>
-<p>在组织事实表时粒度上有三个基本原则：事务，周期快照或累加快照。无论粒度类型如何，事实表中的度量单位都必须达到相同水平的详细程度，如果事实表中的事实表现的粒度不一样，企业用户会被搞晕，BI应用程序会很脆弱，或者返回的结果根本就不对。</p>
-</blockquote>
-<h3 id="原则5"><a href="#原则5" class="headerlink" title="原则5"></a>原则5</h3><p><strong>解决事实表中的多对多关系</strong></p>
-<blockquote>
-<p>由于事实表存储的 是业务流程事件的结果，因此在它们的外键之间存在多对多(M:M)的关系，如多个仓库中的多个产品在多天销售，这些外键字段不能为空，有时一个维度可以为单个测量事件赋予多个值，如一个保健对应多个诊断，或多个客户有一个银行账号，在这些情况下，它的不合理直接解决了事实表中多值维度，这可能违反了测量事件的天然粒度，因此我们使用多对多，双键桥接表连接事实表。</p>
-</blockquote>
-<h3 id="原则6"><a href="#原则6" class="headerlink" title="原则6"></a>原则6</h3><p><strong>解决维度表中多对一的关系</strong></p>
-<blockquote>
-<p>属性之间分层的、多对一(M：1)的关系通常未规范化，或者被收缩到扁平型维度表中，如果你曾经有过为事务型系统设计实体关系模型的经历，那你一定要抵抗住旧有的思维模式，要将其规范化或将M:1关系拆分成更小的子维度，维度反向规范化是维度建模中常用的词汇。在单个维度表中多对一(M:1)的关系非常常见，一对一的关系，如一个产品描述对应一个产品代码，也可以在维度表中处理，在事实表中偶尔也有多对一关系，如详细当维度表中有上百万条记录时，它推出的属性又经常发生变化。不管怎样，在事实表中要慎用M:1关系。</p>
-</blockquote>
-<h3 id="原则7"><a href="#原则7" class="headerlink" title="原则7"></a>原则7</h3><p><strong>存储报告标记和过滤维度表中的范围值</strong></p>
-<blockquote>
-<p>更重要的是，编码和关联的解码及用于标记和查询过滤的描述符应该被捕获到维度表中，避免在事实表中存储神秘的编码字段或庞大的描述符字段，同样，不要只 在维度表中存储编码，假定用户不需要描述性的解码，或它们将在BI应用程序中得到解决。如果它是一个行/列标记或下拉菜单过滤器，那么它应该当作一个维度属性处理。尽管我们在原则5中已经陈述过，事实表外键不应该为空，同时在维度表的属性字段中使用“NA”或另一个默认值替换空值来避免空值也是明智的，这样可以减少用户的困惑。</p>
-</blockquote>
-<h3 id="原则8"><a href="#原则8" class="headerlink" title="原则8"></a>原则8</h3><p><strong>确定维度表使用了代理键</strong></p>
-<blockquote>
-<p>按顺序分配代理键(除了日期维度)可以获得一系列的操作优势，包括更小的事实表、索引以及性能改善，如果你正在跟踪维度属性的变化，为每个变化使用一个 新的维度记录，那么确实需要代理键，即使你的商业用户没有初始化跟踪属性改变的设想值，使用代理也会使下游策略变化更宽松，代理也允许你使用多个业务键映射到一个普通的配置文件，有利于你缓冲意想不到的业务活动，如废弃产品编号的回收或收购另一家公司的编码方案。</p>
-</blockquote>
-<h3 id="原则9"><a href="#原则9" class="headerlink" title="原则9"></a>原则9</h3><p><strong>创建一致的维度集成整个企业的数据</strong></p>
-<blockquote>
-<p>对于企业数据仓库一致的维度(也叫做通用维度、标准或参考维度)是最基本的原则，在ETL系统中管理一次，然后在所有事实表中都可以重用，一致的维度在 整个维度模型中可以获得一致的描述属性，可以支持从多个业务流程中整合数据，企业数据仓库总线矩阵是最关键的架构蓝图，它展现了组织的核心业务流程和关联的维度，重用一致的维度可以缩短产品的上市时间，也消除了冗余设计和开发过程，但一致的维度需要在数据管理和治理方面有较大的投入。</p>
-</blockquote>
-<h3 id="原则10"><a href="#原则10" class="headerlink" title="原则10"></a>原则10</h3><p><strong>不断平衡需求和现实，提供用户可接受的并能够支持他们决策的DW/BI解决方案</strong></p>
-<blockquote>
-<p>维度建模需要不断在用户需求和数据源事实之间进行平衡，才能够提交可执行性好的设计，更重要的是，要符合业务的需要，需求和事实之间的平衡是DW/BI 从业人员必须面对的事实，无论是你集中在维度建模，还是项目策略、技术/ETL/BI架构或开发/维护规划都要面对这一事实。</p>
-</blockquote>
-<p>转自：<a href="http://www.cnblogs.com/hadoopdev" target="_blank" rel="external">http://www.cnblogs.com/hadoopdev</a> </p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;原则1&quot;&gt;&lt;a href=&quot;#原则1&quot; class=&quot;headerlink&quot; title=&quot;原则1&quot;&gt;&lt;/a&gt;原则1&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;载入详细的原子数据到维度结构中&lt;/strong&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;维度建模应该使用最基础的原子数据进行填充，以支持不可预知的来自用户查询的过滤和分组请求，用户通常不希望每次只看到一个单一的记录，但是你无法预测 用户想要掩盖哪些数据，想要显示哪些数据，如果只有汇总数据，那么你已经设定了数据的使用模式，当用户想要深入挖掘数据时他们就会遇到障碍。当然，原子数据也可以通过概要维度建模进行补充，但企业用户无法只在汇总数据上工作，他们需要原始数据回答不断变化的问题。&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="BI墨客" scheme="http://c-xuan.com/categories/BI%E5%A2%A8%E5%AE%A2/"/>
-    
-    
-      <category term="BI" scheme="http://c-xuan.com/tags/BI/"/>
-    
-      <category term="数据仓库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/"/>
-    
-      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
     
   </entry>
   

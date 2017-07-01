@@ -344,10 +344,10 @@
 </nav>
       <div class="body-wrap ">
   
-    <article id="post-codepen-top-10" class="article article-type-post " itemscope itemprop="blogPost">
+    <article id="post-Delete-duplicate-rows-with-no-primary-key" class="article article-type-post " itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/04/26/codepen-top-10/" class="article-date">
+      <a href="/2016/04/26/Delete-duplicate-rows-with-no-primary-key/" class="article-date">
       <time datetime="2016-04-25T16:00:00.000Z" itemprop="datePublished">2016-04-26</time>
 </a>
 
@@ -363,7 +363,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/26/codepen-top-10/">CodePen上碉堡的前端设计和代码</a>
+      <a class="article-title" href="/2016/04/26/Delete-duplicate-rows-with-no-primary-key/">如何在没有主键的SQL Server表里删除重复行</a>
     </h1>
   
 
@@ -373,7 +373,23 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>CodePen有很多出众的前代码片段，设计师或喜欢前端的人员可以都可能常去那边寻找灵感或学习一些代码的运用。CodePen放出2015年度最热门的100个代码片段，很多代码确实很赞，大家不要错过哦，下面我们筛选几个给大家欣赏。</p>
+              <p>有没有遇到过在一个没有主键标志的表里存了重复的数据行，要把重复的行删掉保留一行的情况呢？我们可以设置SQL Server的ROWCUNT变量来限制影响的数据行数，默认的数据值是0，代表所有行，但是这个值可以在运行SQL语句之前进行设定。</p>
+<p>咱们首先建个测试用的表，插入几条条记录。</p>
+<pre><code>CREATE TABLE dbo.duplicateTest
+    (
+      [ID] [INT] ,
+      [FirstName] [VARCHAR](25) ,
+      [LastName] [VARCHAR](25)
+    )
+ON  [PRIMARY];
+
+INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;) 
+INSERT INTO dbo.duplicateTest VALUES(2, &apos;Dave&apos;,&apos;Jones&apos;) 
+INSERT INTO dbo.duplicateTest VALUES(3, &apos;Karen&apos;,&apos;White&apos;) 
+INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;)
+INSERT INTO dbo.duplicateTest VALUES(2, &apos;Dave&apos;,&apos;Jones&apos;)
+INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;) 
+</code></pre>
           
       
     </div>
@@ -388,81 +404,12 @@
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSS/">CSS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jQuery/">jQuery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端编程/">前端编程</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计/">设计</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL-Server/">SQL Server</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原创/">原创</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2016/04/26/codepen-top-10/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-CSS3-transform-style-3D-Cool" class="article article-type-post " itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/04/24/CSS3-transform-style-3D-Cool/" class="article-date">
-      <time datetime="2016-04-23T16:00:00.000Z" itemprop="datePublished">2016-04-24</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/24/CSS3-transform-style-3D-Cool/">学习制作CSS3 3D旋转透视效果</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>之前学习 react+webpack ，偶然路过 webpack 官网 ，看到顶部的 LOGO ，就很感兴趣。</p>
-<p><img src="/img/posts/CSS3-transform-style-3D-Cool-16.jpg" alt="CSS3-transform-style-3D-Cool-16"></p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/码路刺客/">码路刺客</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSS/">CSS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端编程/">前端编程</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计/">设计</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/04/24/CSS3-transform-style-3D-Cool/#more">阅读全文 >></a>
+          <a href="/2016/04/26/Delete-duplicate-rows-with-no-primary-key/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -532,6 +479,75 @@
       
         <p class="article-more-link">
           <a href="/2016/04/24/SQL-Server-2014-SSDT-Install/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-CSS3-transform-style-3D-Cool" class="article article-type-post " itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/24/CSS3-transform-style-3D-Cool/" class="article-date">
+      <time datetime="2016-04-23T16:00:00.000Z" itemprop="datePublished">2016-04-24</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/24/CSS3-transform-style-3D-Cool/">学习制作CSS3 3D旋转透视效果</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>之前学习 react+webpack ，偶然路过 webpack 官网 ，看到顶部的 LOGO ，就很感兴趣。</p>
+<p><img src="/img/posts/CSS3-transform-style-3D-Cool-16.jpg" alt="CSS3-transform-style-3D-Cool-16"></p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/码路刺客/">码路刺客</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSS/">CSS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端编程/">前端编程</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计/">设计</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016/04/24/CSS3-transform-style-3D-Cool/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -687,74 +703,6 @@
 
 
   
-    <article id="post-IconForEveryday" class="article article-type-post " itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/03/23/IconForEveryday/" class="article-date">
-      <time datetime="2016-03-22T16:00:00.000Z" itemprop="datePublished">2016-03-23</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/23/IconForEveryday/">365cons：每天一枚图标，可免费下载</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>大家都听过“An apple a day keeps the doctor away”这句俚语，现在网络上也开始流行养成习惯持续去做某一件事情，例如先前介绍过的100 Days UI百日设计挑战每天发布一个全新使用者界面设计来启发灵感，当然你也可以为自己设定一个习惯养成目标，HabitRPG甚至让生活变成游戏，让你通过每日任务来建立好的生活习惯，这些想法都值得我们好好思考如何在一成不变的工作中产生更多价值。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/IT看客/">IT看客</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计/">设计</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/03/23/IconForEveryday/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-17JqueryTips" class="article article-type-post " itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -880,6 +828,74 @@
       
         <p class="article-more-link">
           <a href="/2016/03/23/YouDaoNoteMarkdownSupport/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-IconForEveryday" class="article article-type-post " itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/23/IconForEveryday/" class="article-date">
+      <time datetime="2016-03-22T16:00:00.000Z" itemprop="datePublished">2016-03-23</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/23/IconForEveryday/">365cons：每天一枚图标，可免费下载</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>大家都听过“An apple a day keeps the doctor away”这句俚语，现在网络上也开始流行养成习惯持续去做某一件事情，例如先前介绍过的100 Days UI百日设计挑战每天发布一个全新使用者界面设计来启发灵感，当然你也可以为自己设定一个习惯养成目标，HabitRPG甚至让生活变成游戏，让你通过每日任务来建立好的生活习惯，这些想法都值得我们好好思考如何在一成不变的工作中产生更多价值。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/IT看客/">IT看客</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计/">设计</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016/03/23/IconForEveryday/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>

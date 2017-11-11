@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://c-xuan.com/about/index.html</loc>
+    
+    <lastmod>2017-11-11T05:38:50.925Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://c-xuan.com/2016/03/13/SQL-Merge/</loc>
+    
+    <lastmod>2017-11-11T05:37:33.191Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://c-xuan.com/2017/02/05/KimballDimModing/</loc>
     
     <lastmod>2017-03-12T15:06:59.497Z</lastmod>
@@ -124,13 +138,6 @@
     <loc>http://c-xuan.com/2016/03/12/AlphaGo/</loc>
     
     <lastmod>2016-09-25T13:14:28.514Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://c-xuan.com/2016/03/13/SQL-Merge/</loc>
-    
-    <lastmod>2016-09-25T13:04:27.764Z</lastmod>
     
   </url>
   
@@ -390,13 +397,6 @@
     <loc>http://c-xuan.com/2016/09/06/21RulesForDataWarehousing/</loc>
     
     <lastmod>2016-09-22T16:12:25.018Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://c-xuan.com/about/index.html</loc>
-    
-    <lastmod>2016-08-20T07:04:16.916Z</lastmod>
     
   </url>
   

@@ -69,7 +69,7 @@ Play！是一个full-stack（全栈的）Java Web应用框架，包括一个简�
 
 
     <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
-    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/purple/pace-theme-minimal.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="/css/style.css">
@@ -95,7 +95,7 @@ Play！是一个full-stack（全栈的）Java Web应用框架，包括一个简�
         isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
         scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
-        search: undefined
+        search: true
     }
 </script>
 
@@ -156,6 +156,15 @@ Play！是一个full-stack（全栈的）Java Web应用框架，包括一个简�
   <div id="container">
     <div class="left-col">
     <div class="overlay"></div>
+    
+        <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="搜索本站..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <!-- <i class="fa fa-times" onclick="resetSearch()"></i> -->
+        </form>
+        <div id="local-search-result"></div>
+        <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+    
+
 <div class="intrude-less">
     <header id="header" class="inner">
         <a href="/" class="profilepic">
@@ -168,9 +177,6 @@ Play！是一个full-stack（全栈的）Java Web应用框架，包括一个简�
         
         <p class="header-subtitle">青，取之于藍而青于藍。</p>
         
-
-        
-
 
         
             <div id="switch-btn" class="switch-btn">

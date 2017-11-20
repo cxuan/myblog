@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://c-xuan.com/"/>
-  <updated>2017-03-07T16:11:16.129Z</updated>
+  <updated>2017-11-19T16:00:00.000Z</updated>
   <id>http://c-xuan.com/</id>
   
   <author>
@@ -14,6 +14,80 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【ORACLE】导致物化视图快速刷新变慢的原因</title>
+    <link href="http://c-xuan.com/2017/11/19/20171119001/"/>
+    <id>http://c-xuan.com/2017/11/19/20171119001/</id>
+    <published>2017-11-18T16:00:00.000Z</published>
+    <updated>2017-11-19T16:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>ORACLE物化视图(MATERIALIZED VIEW)有自动提交刷新和手动刷新两种刷新方式，每种刷新方式下有增量刷新(FAST)、全量刷新(COMPLETE)、系统自动判断(FORCE)三种刷新方法。一般而言，增量刷新理论上是比全量刷新要快一些的，但是我发现某些情况下增量刷新将导致基表提交后延迟严重，下面将做一些测试。</p>
+<a id="more"></a>
+<h3 id="准备测试数据"><a href="#准备测试数据" class="headerlink" title="准备测试数据"></a>准备测试数据</h3><p>创建三个表结构相同的测试表，id为自增长主键，这三个表作为物化视图的基表。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> t1 (</div><div class="line">    <span class="keyword">id</span> <span class="built_in">INT</span>,</div><div class="line">    c1 <span class="built_in">INT</span>,</div><div class="line">    c2 <span class="built_in">INT</span>,</div><div class="line">    <span class="keyword">constraint</span> pk1 primary <span class="keyword">key</span>(<span class="keyword">id</span>));</div><div class="line">    </div><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> t2 (</div><div class="line">    <span class="keyword">id</span> <span class="built_in">INT</span>,</div><div class="line">    c1 <span class="built_in">INT</span>,</div><div class="line">    c2 <span class="built_in">INT</span>,</div><div class="line">    <span class="keyword">constraint</span> pk2 primary <span class="keyword">key</span>(<span class="keyword">id</span>));</div><div class="line">    </div><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> t3 (</div><div class="line">    <span class="keyword">id</span> <span class="built_in">INT</span>,</div><div class="line">    c1 <span class="built_in">INT</span>,</div><div class="line">    c2 <span class="built_in">INT</span>,</div><div class="line">    <span class="keyword">constraint</span> pk3 primary <span class="keyword">key</span>(<span class="keyword">id</span>));</div></pre></td></tr></table></figure>
+<p>每个表插入30000行数据，并给三个基表创建物化视图日志(MATERIALIZED VIEW LOG)：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> <span class="keyword">LOG</span> <span class="keyword">ON</span> t1 <span class="keyword">WITH</span> <span class="keyword">ROWID</span>,<span class="keyword">SEQUENCE</span>(<span class="keyword">id</span>,c1,c2) <span class="keyword">INCLUDING</span> <span class="keyword">NEW</span> <span class="keyword">VALUES</span>;</div><div class="line"></div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> <span class="keyword">LOG</span> <span class="keyword">ON</span> t2 <span class="keyword">WITH</span> <span class="keyword">ROWID</span>,<span class="keyword">SEQUENCE</span>(<span class="keyword">id</span>,c1,c2) <span class="keyword">INCLUDING</span> <span class="keyword">NEW</span> <span class="keyword">VALUES</span>;</div><div class="line"></div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> <span class="keyword">LOG</span> <span class="keyword">ON</span> t3 <span class="keyword">WITH</span> <span class="keyword">ROWID</span>,<span class="keyword">SEQUENCE</span>(<span class="keyword">id</span>,c1,c2) <span class="keyword">INCLUDING</span> <span class="keyword">NEW</span> <span class="keyword">VALUES</span>;</div></pre></td></tr></table></figure>
+<h3 id="物化视图中不包含列计算"><a href="#物化视图中不包含列计算" class="headerlink" title="物化视图中不包含列计算"></a>物化视图中不包含列计算</h3><p>首先创建的物化视图如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> mv1</div><div class="line"><span class="keyword">BUILD</span> <span class="keyword">IMMEDIATE</span></div><div class="line"><span class="keyword">REFRESH</span> <span class="keyword">FAST</span> <span class="keyword">ON</span> <span class="keyword">COMMIT</span></div><div class="line"><span class="keyword">WITH</span> <span class="keyword">ROWID</span></div><div class="line"><span class="keyword">AS</span></div><div class="line"><span class="keyword">SELECT</span> a.id aid,a.c1 ac1,a.c2 ac2,b.c1 bc1,b.c2 bc2,</div><div class="line">       a.rowid rida,b.rowid ridb</div><div class="line">  <span class="keyword">FROM</span> t1 a,t2 b</div><div class="line"> <span class="keyword">WHERE</span> a.id=b.id(+)</div><div class="line">   <span class="keyword">AND</span> a.c1=b.c1(+);</div></pre></td></tr></table></figure></p>
+<p>该物化视图采用的是基表提交(commit)触发快速刷新(FAST)的方式刷新数据，物化视图为两个基表t1,t2的外联接，SELECT后面的列只是简单列出t1,t2表中的列而已。</p>
+<h4 id="更新外联接主表数据"><a href="#更新外联接主表数据" class="headerlink" title="更新外联接主表数据"></a>更新外联接主表数据</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> mv1 <span class="keyword">where</span> aid = <span class="number">9</span>;</div></pre></td></tr></table></figure>
+<p><img src="/img/posts/20171119001-01.png" alt="20171119001-01"></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">update</span> t1 <span class="keyword">set</span> c2=<span class="number">3</span> <span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">9</span>;</div></pre></td></tr></table></figure>
+<p><img src="/img/posts/20171119001-02.png" alt="20171119001-02"></p>
+<p>可见提交耗时很短，再查看物化视图数据，已经更新。</p>
+<p><img src="/img/posts/20171119001-03.png" alt="20171119001-03"></p>
+<p>使用如下语句查询物化视图的刷新方式，刷新时间等信息。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> MVIEW_NAME,</div><div class="line">       REFRESH_MODE,</div><div class="line">       REFRESH_METHOD,</div><div class="line">       FAST_REFRESHABLE,</div><div class="line">       LAST_REFRESH_TYPE,</div><div class="line">       LAST_REFRESH_DATE,</div><div class="line">       STALENESS </div><div class="line">  <span class="keyword">FROM</span> USER_MVIEWS </div><div class="line"> <span class="keyword">WHERE</span> MVIEW_NAME = <span class="string">'MV1'</span>;</div></pre></td></tr></table></figure>
+<p><img src="/img/posts/20171119001-04.png" alt="20171119001-04"></p>
+<h4 id="更新外联接非主表数据"><a href="#更新外联接非主表数据" class="headerlink" title="更新外联接非主表数据"></a>更新外联接非主表数据</h4><p>更新非主表t2的同一行的数据，提交后耗时也很短。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">update</span> t2 <span class="keyword">set</span> c2=<span class="number">13</span> <span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">9</span>;</div></pre></td></tr></table></figure>
+<p><img src="/img/posts/20171119001-05.png" alt="20171119001-05"></p>
+<p><img src="/img/posts/20171119001-06.png" alt="20171119001-06"></p>
+<p><img src="/img/posts/20171119001-07.png" alt="20171119001-07"></p>
+<p>所以这种情况下，物化视图的增量刷新是没有多少延迟的。</p>
+<h3 id="物化视图中包含列计算"><a href="#物化视图中包含列计算" class="headerlink" title="物化视图中包含列计算"></a>物化视图中包含列计算</h3><p>将MV1物化视图删除，重新创建一个。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">DROP</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> mv1;</div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> mv1</div><div class="line"><span class="keyword">BUILD</span> <span class="keyword">IMMEDIATE</span></div><div class="line"><span class="keyword">REFRESH</span> <span class="keyword">FAST</span> <span class="keyword">ON</span> <span class="keyword">COMMIT</span></div><div class="line"><span class="keyword">WITH</span> <span class="keyword">ROWID</span></div><div class="line"><span class="keyword">AS</span></div><div class="line"><span class="keyword">SELECT</span> a.id aid,a.c1 ac1,a.c2 ac2,b.c1 bc1,b.c2 bc2,</div><div class="line">       a.c2+b.c2 <span class="keyword">as</span> d,</div><div class="line">       a.rowid rida,b.rowid ridb</div><div class="line"> <span class="keyword">FROM</span> t1 a,t2 b</div><div class="line"><span class="keyword">WHERE</span> a.id=b.id(+)</div><div class="line">  <span class="keyword">AND</span> a.c1=b.c1(+);</div></pre></td></tr></table></figure></p>
+<p>在之前的基础上增加了d列，这列是t1和t2基表中各一列的计算。</p>
+<h4 id="更新外联接主表数据-1"><a href="#更新外联接主表数据-1" class="headerlink" title="更新外联接主表数据"></a>更新外联接主表数据</h4><p>测试更新主表数据，查看提交耗时。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> mv1 <span class="keyword">where</span> aid = <span class="number">9</span>;</div></pre></td></tr></table></figure>
+<p><img src="/img/posts/20171119001-08.png" alt="20171119001-08"></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">update</span> t1 <span class="keyword">set</span> c2=<span class="number">6</span> <span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">9</span>;</div></pre></td></tr></table></figure>
+<p><img src="/img/posts/20171119001-09.png" alt="20171119001-09"></p>
+<p><img src="/img/posts/20171119001-10.png" alt="20171119001-10"></p>
+<p><img src="/img/posts/20171119001-11.png" alt="20171119001-11"></p>
+<p>基表数据提交时延迟很小。</p>
+<h4 id="更新外联接非主表数据-1"><a href="#更新外联接非主表数据-1" class="headerlink" title="更新外联接非主表数据"></a>更新外联接非主表数据</h4><p>测试更新t2表数据，查看提交耗时。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">update</span> t2 <span class="keyword">set</span> c2=<span class="number">1</span> <span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">9</span>;</div></pre></td></tr></table></figure>
+<p><img src="/img/posts/20171119001-12.png" alt="20171119001-12"></p>
+<p><img src="/img/posts/20171119001-13.png" alt="20171119001-13"></p>
+<p><img src="/img/posts/20171119001-14.png" alt="20171119001-14"></p>
+<p>基表更新数据提交时，显示<strong>20多秒</strong>才完成，显然，这种情况会导致物化视图增量刷新延迟严重。</p>
+<p>将MV1删除后重建为下列情况，相加的两列是同一个表的两列，这时再更新t2表的一行数据，发现提交没有延迟。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">DROP</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> mv1;</div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> mv1</div><div class="line"><span class="keyword">BUILD</span> <span class="keyword">IMMEDIATE</span></div><div class="line"><span class="keyword">REFRESH</span> <span class="keyword">FAST</span> <span class="keyword">ON</span> <span class="keyword">COMMIT</span></div><div class="line"><span class="keyword">WITH</span> <span class="keyword">ROWID</span></div><div class="line"><span class="keyword">AS</span></div><div class="line"><span class="keyword">SELECT</span> a.id aid,a.c1 ac1,a.c2 ac2,b.c1 bc1,b.c2 bc2,</div><div class="line">       b.c1+b.c2 <span class="keyword">as</span> d,</div><div class="line">       a.rowid rida,b.rowid ridb</div><div class="line">  <span class="keyword">FROM</span> t1 a,t2 b</div><div class="line"> <span class="keyword">WHERE</span> a.id=b.id;</div></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>1.创建含有外联接且刷新方式为REFRESH FAST ON COMMIT的物化视图时，如果select列里含有多个表中取某些列做运算，注意了，这时更新非主表的数据(增删改)，那么基表提交数据后将有可能导致延迟阻塞，这个时间比物化视图全量刷新还要慢。</li>
+<li>2.除上述情况，例如物化视图都是内连接，有外联接但是没有多个表列做运算等，增量刷新都没问题。</li>
+<li>3.至于多表列运算的外联接物化视图增量刷新很慢的原因，还需要探究ORACLE物化视图的刷新机制，解决方法也只能暂时避开这种情况。</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;ORACLE物化视图(MATERIALIZED VIEW)有自动提交刷新和手动刷新两种刷新方式，每种刷新方式下有增量刷新(FAST)、全量刷新(COMPLETE)、系统自动判断(FORCE)三种刷新方法。一般而言，增量刷新理论上是比全量刷新要快一些的，但是我发现某些情况下增量刷新将导致基表提交后延迟严重，下面将做一些测试。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="码路刺客" scheme="http://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
+    
+    
+      <category term="原创" scheme="http://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+      <category term="数据库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+      <category term="ORACLE" scheme="http://c-xuan.com/tags/ORACLE/"/>
+    
+      <category term="物化视图" scheme="http://c-xuan.com/tags/%E7%89%A9%E5%8C%96%E8%A7%86%E5%9B%BE/"/>
+    
+  </entry>
   
   <entry>
     <title>树形结构数据存储方案（五）：区间嵌套</title>
@@ -1244,64 +1318,6 @@
       <category term="数据仓库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/"/>
     
       <category term="原创" scheme="http://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>数据仓库设计的7个步骤，7个禁忌和7种思路</title>
-    <link href="http://c-xuan.com/2016/09/06/21RulesForDataWarehousing/"/>
-    <id>http://c-xuan.com/2016/09/06/21RulesForDataWarehousing/</id>
-    <published>2016-09-06T15:36:18.000Z</published>
-    <updated>2016-09-22T16:12:25.018Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="高效实现数据仓库的七个步骤"><a href="#高效实现数据仓库的七个步骤" class="headerlink" title="高效实现数据仓库的七个步骤"></a>高效实现数据仓库的七个步骤</h3><p>数据仓库和我们常见的RDBMS系统有些亲缘关系，但它又有所不同。如果你没有实施过数据仓库，那么从设定目标到给出设计，从创建数据结构到编写数据分析程序，再到面对挑剔的用户的评估，整个过程都会带给你一种与以往的项目完全不同的体验。一句话，如果你试图以旧有的方式创建数据仓库，那你所面对的不是预算超支就是所建立的数据仓库无法良好运作。<br>在处理一个数据仓库项目时需要注意的问题很多，但同时也有很多有建设性的参考可以帮助你更顺利的完成任务。开放思维，不断尝试新的途径，对于找到一种可行的数据仓库实现方法来说也是必需的。</p>
-<a id="more"></a>
-<ul>
-<li>1.配备一个全职的项目经理或你自己全面负责项目管理<br>在通常情况下，项目经理都会同时负责多个项目的实施。这么做完全是出于资金和IT资源方面的考虑。但是对于数据仓库项目的管理，绝对不能出现一人身兼数个项目的情况。由于你所处的领域是你和你的团队之前没有进入过的领域，有关数据仓库的一切－数据分析、设计、编程、测试、修改、维护－全都是崭新的，因此你或者你指派的项目经理如果能全心投入，对于项目的成功会有很大帮助。</li>
-<li>2.将项目管理职责推给别的项目经理<br>由于数据仓库实现过程实在是太困难了，为了避免自虐，你可以在当前阶段的项目完成后就将项目管理职责推给别的项目经理。当然，这个新的项目经理一定要复合第一条所说的具有全职性。为什么要这么做呢？首先，从项目经理的角度看，数据仓库实施过程的任何一个阶段都足以让人身心疲惫。从物理存储设备的开发到Extract-Transform-Load的实现，从设计开发模型到OLAP，所有阶段都明显的比以前接触的项目更加困难。每个阶段不但需要新的处理方法、新的管理方法，还需要创新性的观点。所以将管理职责推给别的项目经理不但不会对项目有损害，还可以起到帮助作用。</li>
-<li>3.与用户进行沟通<br>这里所讲的内容远比一篇文章本身要重要的多。你必须明白，在数据仓库的设计阶段，那些潜在用户自己也不清楚他们到底需要数据仓库为他们做什么。他们在不断的探索和发现自己的需求，而你的开发团队也在和客户的接触中做着同样的事情。更加频繁的与客户接触，多做记录，并让你的团队更关注于项目需求讨论的结果而不是讨论的过程本身。<br>既然你和客户的交流是为了了解存储的数据是何种类型以及如何有效存储数据，你也许需要（和你的用户一起）采用一种新的方法观察数据，而不是直接处理数据。你可以尝试从中找出隐藏的信息，比如在一段时期内的数字涨落等。不要试图追寻项目需求的答案，而是要让答案找上门来。</li>
-<li>4.以技术/信息库作为领导<br>由于数据仓库实施的各个阶段都有很大不同，因此你需要有人能起到维持整个项目的连续进行的作用，不过这个职责并不需要那种全职性。项目实施有三个重要方面：架构、技术和业务。将架构作为重点可以保证在整个项目中，数据仓库的架构从物理层往上，都会受到良好的维护。而我们应该将技术作为重点，因为开发团队和关键用户都在使用他们以前从未用过的工具，必须有人监督开发过程以及工具使用的一致性。<br>最后，在数据仓库的应用过程中浮现出来的业务需求必须被详细分析和记录，以促机开发过程持续下去。如果用户不能很好的开发人员以及其它用户沟通，那么数据分析和度量方面的开发进程就会延期，所以必须有人关注业务方面的开发，推动开发进入更高级别。</li>
-<li>5.跳出反复修改程序的陷阱<br>第一次实现的数据仓库肯定不会是最终交付的版本。为什么呢？实际上在真正见到产品前，你无法确定的知道自己的目标是什么。或者说，最终用户只有在使用数据仓库产品一段时间后，才能明确告诉你这个产品是不是他所希望的。与你以往处理的项目不同，业务智能还处于发展的初期，每个公司对业务智能都有不同的解释，因此你的项目决不会一次成功。<br>为了以正确的格式获得数据，你需要在不断变化的状况中摸索前进。BI具有很强的个性，不同的环境、不同的市场以及不同的企业都有不同的BI。这又代表什么呢？这表示你需要把数据库管理员放在一个消息相对封闭的环境中，不要让他知道数据仓库的数据结构以及ETL程序在不断的改变。对此没有别的办法。这样可以减轻你和DBA所承受的压力。</li>
-<li>6.对大量的前端资源进行数据源分析<br>在数据仓库实现过程中，你不得不在旧有的数据中艰难跋涉，这些数据来自老的数据库、老的磁带机以及远程的数据。它们中的大部分都凌乱不堪，并且难以获取。你要对这些数据进行大量处理，并且还要设计ETL程序来寻找其中的有用信息。如果你希望整个项目做起来比较顺利，并且找到一种方法能够一次成功，那就需要你的开发人员必须花费足够的时间来充分研究这些旧有数据，将凌乱的数据规则化，并尽力设计和实现强壮的数据采集和转换过程。数据仓库的ETL部分会占用整个项目资源的百分之八十，所以一定要确定你的资源都用在刀刃上了。</li>
-<li>7.将人际关系处理放在首位<br>在数据仓库实现过程中真正的地狱不是来自技术或者开发方面，而是来自你周围的人。你也许会遇到一个对项目并不乐观而又没时间听你陈述的领导。你也许会遇到一些开发人员将进度拖延太长时间还抱怨为什么不能用老方法实施。你也许还会遇到一些抱有不切实际的幻想的用户，他们希望轻点鼠标就能实现想象中的功能，但却不愿在他们那边多做些智力投资，更好的培训他们自己的员工。而你也已经疲惫不堪，鼓励投资，以及在开发团队和用户（甚至老板）中推广新的开发技巧。<br>总之你要保持微笑。当一切搞定，你的烦恼也就一扫而空了，笑到最后才笑得最轻松。</li>
-</ul>
-<h3 id="数据仓库开发过程中的七个禁忌"><a href="#数据仓库开发过程中的七个禁忌" class="headerlink" title="数据仓库开发过程中的七个禁忌"></a>数据仓库开发过程中的七个禁忌</h3><p>过去我们一直使用的OLTP技术也许隐藏着许多严重的缺陷。数据仓库的实现并不是一个简单的任务，你会发现以前积累下来的丰富经验，并不适合处理每个数据仓库的独特需求。<br>下面列出的条款是你在实现数据仓库过程中一定会面对的问题，其中一些看起来并没有想象中那么严重，但是你还是应该尽量避免出现类似问题。数据仓库并不是一个事务处理系统，它没有一定的标准也不会实现某个特定的应用，但它本质上是非常有组织性的。总之，每个公司所建立的数据仓库都是唯一的，并且每一次数据仓库的实现方法都不是一成不变的。在实现数据仓库时需要注意的不单是”应该如何作”，更要注意”不该如何做”。下面就是我们总结的七点”不该如何作”。</p>
-<ul>
-<li>1.不要编写自己无法快速修改的代码<br>你所要编写的程序主要用于数据分析，而不是处理事务。而你的用户也并不真正知道他们自己真正想要一个什么样的程序。因此你不得不反复修改代码好几次，才会明白用户到底需要一个什么样的程序。如果你编写的程序具有良好的结构和灵活性，就算需要修改也不会太浪费力气。反之，你会被自己累死。</li>
-<li>2.不要使用无法修改的数据库访问API<br>在过去，你的数据库可以为大量的客户提供稳定的数据查询服务。而如今，你的程序必须能够应付更多的数据查询。这使得重新改写程序以使得每个查询请求能得到最大的数据量成为势在必行的工作，而一般来说这种代码修改都不会一次成功，所以只有选择合适的可以修改的API，才能使程序尽快适应新的需求。</li>
-<li>3.不要设计任何无法扩展的东西<br>在联机处理过程（OLTP）应用中，数据分析并不是一个真正的应用程序。实际上，数据分析的关键是获取大量旧的数据，从中提取数据模型，并以此模型推断出新的信息。而你所编写的访问潜在信息的代码应该具有可扩展性，可以附加新的数据。千万别在支持数据分析的代码中假定数据都是固定格式的。</li>
-<li>4.不要附加不必要的功能<br>一个仓库要做的是恰到好处的服务，用户走进仓库，从货架上取得自己所需得信息，仅此而已。由于业务智能、分析以及规律性的问题都有各自的处理程序，因此你的客户唯一的需要就是获取信息。他们需要一种应用环境，可以让他们快速的从数据仓库中取得分析过程所需的数据，而不论这个数据是什么样子的。也许你想帮助他们精炼一下获得的数据，但最好不要这么做。一定要记住，不要给客户的数据分析程序添加任何会影响数据访问性能的功能。</li>
-<li>5.不要简化数据清除和数据源分析的步骤<br>在实现数据仓库过程中最应该注意的地方就是为Extract-Transform-Load机制分析数据源，以及为优化负载而清除数据。安全的做法是假设项目经理在这个阶段会需要整个项目资源的一半以上。相反，如果你在这方面进行了简化，稍后肯定会后悔。所以就算系统工作缓慢，也不要简化清理旧的数据的过程。</li>
-<li>6.不要避免颗粒度和分区问题<br>在数据仓库设计过程中有两个最大的数据存储问题，第一是如何给转换数据定位一个恰当的颗粒度等级，第二是如何将数据绝对的分区。为什么这两点问题如此重要呢？因为整个数据仓库的响应能力受颗粒度影响，并且数据访问的效率直接与数据分区性能有关。因此这是具有关键性的工作，不要试图避免面对这些问题。</li>
-<li>7.不要在没考虑业务问题前就使用OLAP<br>用户在亲眼见到程序前通常都不知道自己到底想要个什么样的程序。因此他们的观点有不少错误，比如他们希望分析结果会忠实反应性能度量，或者希望程序会使他们部门或公司的业务工作有所不同。而你必须跳出自己的职责范围，从IT管理者的角度考虑用户部门直至整个企业的运行方式，才能在开发过程中避免这类问题。在通常的OLTP开发中，你可以比较方便的理解业务流程。而在联机分析处理（OLAP）领域，任何事情都需要亲自考察，而在你周围工作的人也许并不会发现你对业务方面存在的误解。因此，不要自以为已经了解了足够的信息。不断的询问才能使你真正了解”业务智能”中的”业务”到底是什么样子的</li>
-</ul>
-<h3 id="顺利开发数据仓库的七种思路"><a href="#顺利开发数据仓库的七种思路" class="headerlink" title="顺利开发数据仓库的七种思路"></a>顺利开发数据仓库的七种思路</h3><p>对于大多数IT顾问来说，实现一个数据仓库的难度比以前做过的任何项目难度都要大。考虑到不同的数据结构、用途以及应用程序开发方法，以前所积累的经验和技巧大部分都无用武之地了。但是只要在你的前进道路上稍加修正，你就会发现实现一个数据仓库并不是难事，就算你是第一次实现数据仓库也没问题。<br>下面列出了数据仓库实施过程需要考虑的步骤，有一些你可能从来没有意识到，而另一些可能已经在实施过程中使用到了，但是重新思考一番也许你会有更多的领悟。开放思维，不断尝试新的途径，找到一种可行的数据仓库实现方法。</p>
-<ul>
-<li>1.再三考虑应用程序的实现方法<br>数据仓库并不涉及事务处理，并且在报表方面也仅占一小部分。而数据仓库应用程序的本质是分析，尤其是针对业务智能的分析。BI并不是通常所说的数据：它是一种从旧有数据中,模型化得到的新的数据。那么如何才能从旧有数据中挖出这些新数据呢？事实上，这个工作不是让你来完成的，而是你的客户所要完成的。从项目主管的角度看，应该有一个经验丰富的数据表格设计师与你合作，进而决定如何将各类程序融合在一起。其中所遇到的最主要的挑战将是如何用新的方法观察数据，这也是你的客户正在试图使用的方法。</li>
-<li>2.创建抽象的、良好部署的数据库访问组件<br>在过去你接触过的数据库项目和现在的数据仓库之间，有一点绝对不同，那就是：在Online Transaction Processing （OLTP）环境中，用户数量非常大，但使用到的数据却比较少；而在Online Analytical Processing （OLAP）环境中情况却正好相反，少量的用户在使用大量的数据。而你的工作就是编写一个应用程序来优化这种不同。这里有一个线索：在你所有的分析程序中，都要能抓取连续的数据项，这样在以后建立和访问的数据结构中才能存放与原数据物理结构类似的数据。具体如何实现呢？首先不要规格化数据。第二将其放入数组中最小化读取请求数。按照这种方法，DBA会很乐意与你合作。</li>
-<li>3.保持松散<br>现在回头看看第一步，你应该可以理解定义一个分析程序不是件简单事了，而且一般情况下，很难在第一次就实现符合要求的最终产品。而在你将要进行分析的数据结构上同样存在这种问题。一句话，实现过程会有很多变数，你需要不断的改动你的程序。通常我们都希望将改动次数降到最低。在一个数据仓库实现过程中，本质是要分析过程毫无差错，这也需要DBA的参与。不要死抓住你的程序设计、代码、框图，或你建立的其它什么东西不放手，要根据这种变化而不断进行调整。</li>
-<li>4.将管理放在首位<br>在分析数据源方面你做的如何呢？你是否认为清理垃圾数据的工作非常困难？并不是只有你一个人这样想，做过类似工作的人都有这种看法。在一个一般规模的机构中，作为数据仓库实现过程的一部分，会有大量的旧有数据必须进行一致性处理。所以分析数据源并花费数个小时编写转换程序将旧有数据导入数据仓库是整个数据仓库实现过程中最艰难的一部分。并且这也是整个项目中最重要的一环，可以占到整个项目周期和预算的四分之三。所以一定要小心对待。</li>
-<li>5.从字里行间发现问题<br>与用户交流是个很麻烦的事情，为什么这么说呢？因为很多用户在见到最终产品前都不知道自己想要什么样的产品。定义数据仓库应用程序是一个探索的过程，而且这个过程要反复进行。记住所谓的”业务智能”是用户自己定义的，他们按照自己的理解来处理业务流程。因此这些用户就是连接数据和业务处理过程间的桥梁。他们所要的并不是数据本身，而是隐藏在数据后面的智能性。你可以让他们讨论、思考并给出建设性的意见。但千万不要让他们解决或让他们任意想象和发表那些”有可能”的观点。最后，一定要随时留意用户得出的结论。</li>
-<li>6.保持领先<br>数据仓库看起来没有传统的OLTP模式根深蒂固，事实如此。虽然很多人投身数据仓库的开发中，但由于其框架与以前的系统大相径庭，因此在开始的一段时间数据仓库的实现看上去相当混乱。但是坚持下去是很重要的。它具有两方面重要的作用。<br>第一，技术的领先性。它可以跟踪项目中任何阶段的软件工具的部署和正确使用，以及开发过程。如果这复合你的背景，你可以对此多加留意。<br>第二，体系结构的领先性。它使得项目在各个阶段转换时，数据仓库和它所支持的系统的物理以及逻辑架构都具有持续性，不会发生改变。这也是你能提供的。</li>
-<li>7.发出警告<br>最后你要记住，你并不是唯一登上新大陆的人。你周围的每一个人都会有下面一点或几点问题：不现实的期望、对技术的误解、旧习惯或坏习惯、竞争行为，或缺乏对项目的信任度。虽然交流沟通等任务应该是项目经理负责的，但实际上你也要担负起相同的责任。那么作为技术总监你该怎么作呢？首先当然是要真诚的对待周围的人，但一定要竖立威信，适当的发出警告。当你发现项目进度缓慢、资源流失，或者员工失去目标，就要直言不讳的说出来。快速明确的给予警告在大部分情况下都是明智之举。匆忙上马的数据仓库项目也许会出轨，但不要让失败的项目把你拉下马。</li>
-</ul>
-<p>转自<a href="http://blogger.org.cn/blog/more.asp?name=xueflhg&amp;id=4233" target="_blank" rel="external">http://blogger.org.cn/blog/more.asp?name=xueflhg&amp;id=4233</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;高效实现数据仓库的七个步骤&quot;&gt;&lt;a href=&quot;#高效实现数据仓库的七个步骤&quot; class=&quot;headerlink&quot; title=&quot;高效实现数据仓库的七个步骤&quot;&gt;&lt;/a&gt;高效实现数据仓库的七个步骤&lt;/h3&gt;&lt;p&gt;数据仓库和我们常见的RDBMS系统有些亲缘关系，但它又有所不同。如果你没有实施过数据仓库，那么从设定目标到给出设计，从创建数据结构到编写数据分析程序，再到面对挑剔的用户的评估，整个过程都会带给你一种与以往的项目完全不同的体验。一句话，如果你试图以旧有的方式创建数据仓库，那你所面对的不是预算超支就是所建立的数据仓库无法良好运作。&lt;br&gt;在处理一个数据仓库项目时需要注意的问题很多，但同时也有很多有建设性的参考可以帮助你更顺利的完成任务。开放思维，不断尝试新的途径，对于找到一种可行的数据仓库实现方法来说也是必需的。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="BI墨客" scheme="http://c-xuan.com/categories/BI%E5%A2%A8%E5%AE%A2/"/>
-    
-    
-      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
-      <category term="BI" scheme="http://c-xuan.com/tags/BI/"/>
-    
-      <category term="数据仓库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/"/>
     
   </entry>
   

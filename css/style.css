@@ -244,7 +244,7 @@ a {
 }
 #container .left-col .overlay {
   width: 100%;
-  height: 180px;
+  height: 110px;
   background-color: #000;
   position: absolute;
   opacity: 0.7;
@@ -252,7 +252,7 @@ a {
 #container .left-col .intrude-less {
   width: 76%;
   text-align: center;
-  margin: 112px auto 0;
+  margin: 100px auto 0;
 }
 #container .left-col li:hover {
   background: none;
@@ -819,7 +819,7 @@ a {
   transform: translate(-100%, 0);
 }
 #header .header-nav {
-  margin-top: 20px;
+  margin-top: 10px;
   width: 100%;
   position: absolute;
   -webkit-transition: -webkit-transform 0.3s ease-in;
@@ -3317,6 +3317,7 @@ pre .javascript .function {
   font-size: 0.9rem;
   text-align: left;
   word-break: break-all;
+  cursor: pointer;
 }
 #local-search-result ul.search-result-list li:hover {
   font-weight: normal;

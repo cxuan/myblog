@@ -3,10 +3,16 @@
   
     
     <entry>
-      <title><![CDATA[【ORACLE】导致物化视图快速刷新变慢的原因]]></title>
+      <title><![CDATA[【ORACLE】导致物化视图快速刷新变慢的原因和解决]]></title>
       <url>/2017/11/19/20171119001/</url>
       <content type="html"><![CDATA[<p>ORACLE物化视图(MATERIALIZED VIEW)有自动提交刷新和手动刷新两种刷新方式，每种刷新方式下有增量刷新(FAST)、全量刷新(COMPLETE)、系统自动判断(FORCE)三种刷新方法。一般而言，增量刷新理论上是比全量刷新要快一些的，但是我发现某些情况下增量刷新将导致基表提交后延迟严重，下面将做一些测试。</p>
 <a id="more"></a>
+<h3 id="测试环境"><a href="#测试环境" class="headerlink" title="测试环境"></a>测试环境</h3><ul>
+<li>操作系统：Red Hat Enterprise Linux Server release 5.8 虚拟机</li>
+<li>处理器：Intel(R) Core(TM) i7-4700MQ CPU @ 2.40GHz</li>
+<li>内存大小：4G</li>
+<li>数据库：Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - 64bit Production</li>
+</ul>
 <h3 id="准备测试数据"><a href="#准备测试数据" class="headerlink" title="准备测试数据"></a>准备测试数据</h3><p>创建三个表结构相同的测试表，id为自增长主键，这三个表作为物化视图的基表。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> t1 (</div><div class="line">    <span class="keyword">id</span> <span class="built_in">INT</span>,</div><div class="line">    c1 <span class="built_in">INT</span>,</div><div class="line">    c2 <span class="built_in">INT</span>,</div><div class="line">    <span class="keyword">constraint</span> pk1 primary <span class="keyword">key</span>(<span class="keyword">id</span>));</div><div class="line">    </div><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> t2 (</div><div class="line">    <span class="keyword">id</span> <span class="built_in">INT</span>,</div><div class="line">    c1 <span class="built_in">INT</span>,</div><div class="line">    c2 <span class="built_in">INT</span>,</div><div class="line">    <span class="keyword">constraint</span> pk2 primary <span class="keyword">key</span>(<span class="keyword">id</span>));</div><div class="line">    </div><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> t3 (</div><div class="line">    <span class="keyword">id</span> <span class="built_in">INT</span>,</div><div class="line">    c1 <span class="built_in">INT</span>,</div><div class="line">    c2 <span class="built_in">INT</span>,</div><div class="line">    <span class="keyword">constraint</span> pk3 primary <span class="keyword">key</span>(<span class="keyword">id</span>));</div></pre></td></tr></table></figure>
 <p>每个表插入30000行数据，并给三个基表创建物化视图日志(MATERIALIZED VIEW LOG)：</p>
@@ -46,10 +52,18 @@
 <p>基表更新数据提交时，显示<strong>20多秒</strong>才完成，显然，这种情况会导致物化视图增量刷新延迟严重。</p>
 <p>将MV1删除后重建为下列情况，相加的两列是同一个表的两列，这时再更新t2表的一行数据，发现提交没有延迟。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">DROP</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> mv1;</div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> mv1</div><div class="line"><span class="keyword">BUILD</span> <span class="keyword">IMMEDIATE</span></div><div class="line"><span class="keyword">REFRESH</span> <span class="keyword">FAST</span> <span class="keyword">ON</span> <span class="keyword">COMMIT</span></div><div class="line"><span class="keyword">WITH</span> <span class="keyword">ROWID</span></div><div class="line"><span class="keyword">AS</span></div><div class="line"><span class="keyword">SELECT</span> a.id aid,a.c1 ac1,a.c2 ac2,b.c1 bc1,b.c2 bc2,</div><div class="line">       b.c1+b.c2 <span class="keyword">as</span> d,</div><div class="line">       a.rowid rida,b.rowid ridb</div><div class="line">  <span class="keyword">FROM</span> t1 a,t2 b</div><div class="line"> <span class="keyword">WHERE</span> a.id=b.id;</div></pre></td></tr></table></figure>
+<h3 id="一种解决方案"><a href="#一种解决方案" class="headerlink" title="一种解决方案"></a>一种解决方案</h3><p>既然含有外联接的物化视图多表列运算有问题，可以在MV1中将运算列都SELECT出来，再创建一个嵌套物化视图MV2，将MV1中的列进行运算处理。<br>物化视图MV1创建如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> mv1</div><div class="line"><span class="keyword">BUILD</span> <span class="keyword">IMMEDIATE</span></div><div class="line"><span class="keyword">REFRESH</span> <span class="keyword">FAST</span> <span class="keyword">ON</span> <span class="keyword">COMMIT</span></div><div class="line"><span class="keyword">WITH</span> <span class="keyword">ROWID</span></div><div class="line"><span class="keyword">AS</span></div><div class="line"><span class="keyword">SELECT</span> a.id aid,a.c1 ac1,a.c2 ac2,b.c1 bc1,b.c2 bc2,</div><div class="line">       a.rowid rida,b.rowid ridb</div><div class="line">  <span class="keyword">FROM</span> t1 a,t2 b</div><div class="line"> <span class="keyword">WHERE</span> a.id=b.id(+)</div><div class="line">   <span class="keyword">AND</span> a.c1=b.c1(+);</div><div class="line"><span class="comment">--因为MV1将作为MV2的基本表，所以要建物化视图日志</span></div><div class="line"><span class="keyword">create</span> <span class="keyword">materialized</span> <span class="keyword">view</span> <span class="keyword">log</span> <span class="keyword">on</span> mv1 <span class="keyword">with</span> <span class="keyword">rowid</span>,<span class="keyword">sequence</span>(aid) <span class="keyword">including</span> <span class="keyword">new</span> <span class="keyword">values</span>;</div></pre></td></tr></table></figure></p>
+<p>物化视图MV2创建如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">materialized</span> <span class="keyword">view</span> mv2</div><div class="line"><span class="keyword">build</span> <span class="keyword">immediate</span></div><div class="line"><span class="keyword">refresh</span> <span class="keyword">fast</span> <span class="keyword">on</span> <span class="keyword">commit</span></div><div class="line"><span class="keyword">with</span> <span class="keyword">rowid</span></div><div class="line"><span class="keyword">as</span></div><div class="line"><span class="keyword">select</span> aid,ac1,ac2,bc1,bc2,</div><div class="line">       ac2+bc2 <span class="keyword">as</span> d, <span class="comment">--原本在MV1中计算的列在这里计算</span></div><div class="line">       a.rowid rida,b.rowid ridb</div><div class="line">  <span class="keyword">from</span> mv1 a,t3 b <span class="comment">--这里注意，在这个ORACLE版本中，创建嵌套物化视图必须要有表关联或者聚合计算，单独from mv1创建不了MV2.</span></div><div class="line"> <span class="keyword">where</span> a.aid=b.id(+);</div></pre></td></tr></table></figure></p>
+<p>查看初始数据<code>select * from mv2 where aid = 99;</code><br><img src="/img/posts/20171119001-15.png" alt="20171119001-15"><br>更新t2表数据<code>update t2 set c2=37 where id = 99;</code>，查看提交耗时<br><img src="/img/posts/20171119001-16.png" alt="20171119001-16"><br>查看MV2结果<br><img src="/img/posts/20171119001-17.png" alt="20171119001-17"><br>查看物化视图刷新情况<br><img src="/img/posts/20171119001-18.png" alt="20171119001-18"><br>可见，两个物化视图在基表数据更新后提交不会耗时很久。用这种方式将一个运算分开两步完成，虽然可行，但是代价也很明显，要多创建嵌套物化视图，不敢保证复杂情况下，嵌套物化视图会有其他问题。</p>
+<h3 id="另两种解决方案"><a href="#另两种解决方案" class="headerlink" title="另两种解决方案"></a>另两种解决方案</h3><ul>
+<li>1.将含有多表列运算的外联接快速刷新物化视图改为定时全量刷新。</li>
+<li>2.将外联接重写为内连接。</li>
+</ul>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
 <li>1.创建含有外联接且刷新方式为REFRESH FAST ON COMMIT的物化视图时，如果select列里含有多个表中取某些列做运算，注意了，这时更新非主表的数据(增删改)，那么基表提交数据后将有可能导致延迟阻塞，这个时间比物化视图全量刷新还要慢。</li>
 <li>2.除上述情况，例如物化视图都是内连接，有外联接但是没有多个表列做运算等，增量刷新都没问题。</li>
-<li>3.至于多表列运算的外联接物化视图增量刷新很慢的原因，还需要探究ORACLE物化视图的刷新机制，解决方法也只能暂时避开这种情况。</li>
+<li>3.至于多表列运算的外联接物化视图增量刷新很慢的原因，与ORACLE物化视图的刷新机制有关，官方文档也有提及这种情况会影响效率，建议最好改为内连接。</li>
+<li>4.解决方法是改为定时全量刷新或者改外联接为内连接或者利用嵌套物化视图，或者还有其他方法，总之就是为了避开这种情况。</li>
 </ul>
 ]]></content>
       
@@ -62,13 +76,13 @@
         
         <tags>
             
-            <tag> 原创 </tag>
-            
             <tag> 数据库 </tag>
             
             <tag> ORACLE </tag>
             
             <tag> 物化视图 </tag>
+            
+            <tag> 原创 </tag>
             
         </tags>
         
@@ -494,9 +508,9 @@
             
             <tag> 转载 </tag>
             
-            <tag> SQL Server </tag>
-            
             <tag> 数据库 </tag>
+            
+            <tag> SQL Server </tag>
             
         </tags>
         
@@ -665,9 +679,9 @@
         
         <tags>
             
-            <tag> 知识管理 </tag>
-            
             <tag> 原创 </tag>
+            
+            <tag> 知识管理 </tag>
             
         </tags>
         
@@ -970,9 +984,9 @@
         
         <tags>
             
-            <tag> 知识管理 </tag>
-            
             <tag> 原创 </tag>
+            
+            <tag> 知识管理 </tag>
             
         </tags>
         
@@ -2037,6 +2051,45 @@
     </entry>
     
     <entry>
+      <title><![CDATA[【T-SQL】group by 和grouping sets]]></title>
+      <url>/2016/06/13/SQL-GroupByAndGroupingSets/</url>
+      <content type="html"><![CDATA[<p>遇到一个情况，需要在内网系统中出一个统计报表。需要根据不同条件使用多个group by语句，需要将所有聚合的数据进行union操作来完成不同维度的统计查看。<br>知道发现了在SQL  Server 2008之后引入了grouping sets这个对于group by的增强后，上面的需求实现起来就简单的多，下面我们用AdventureWork中的表作为demo来解释一下grouping sets.</p>
+<a id="more"></a>
+<p>假设我现在需要两个维度查询我的销售额度，查询T-SQL如下：</p>
+<p><img src="/img/posts/SQL-GroupByAndGroupingSets-1.png" alt="SQL-GroupByAndGroupingSets-1"></p>
+<p>而使用SQL Server 2008之后新增的grouping sets语句，仅仅需要这样写：</p>
+<p><img src="/img/posts/SQL-GroupByAndGroupingSets-3.png" alt="SQL-GroupByAndGroupingSets-3"></p>
+<p>值得注意的是，虽然上面使用grouping sets语句和多个group by语句差生的结果完全一样，但顺序完全不同。</p>
+<p>grouping  sets，仅仅是语法糖？</p>
+<p>从上面的结果来看，使用grouping  sets仅仅是一个可以少写代码的语法糖，但实际情况是，group sets在遇到多个条件时，聚合是一次性从数据库中取出所有需要的操作的数据，在内存中对数据库进行聚合操作并生成结果。而union all是多次扫描表，将返回的结果进行union操作。这也就是为什么grouping  sets和union操作所返回的数据顺序是不同的原因。</p>
+<p>下面通过查看上面两个语句的IO和CPU来进行对比：</p>
+<p><img src="/img/posts/SQL-GroupByAndGroupingSets-5.png" alt="SQL-GroupByAndGroupingSets-5"></p>
+<p>通过上面的图来看grouping sets不仅仅只是语法糖，而是从执行原理做出了改变</p>
+<p>对于grouping sets来说，还经常和grouping函数联合使用，这个函数是反应目标列是否聚合，如果聚合则返回1，否则返回0，如下：</p>
+<p><img src="/img/posts/SQL-GroupByAndGroupingSets-6.png" alt="SQL-GroupByAndGroupingSets-6"></p>
+<p>转自：<a href="http://www.cnblogs.com/CareySon/archive/2011/12/19/2293245.html" target="_blank" rel="external">http://www.cnblogs.com/CareySon/archive/2011/12/19/2293245.html</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> 码路刺客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 转载 </tag>
+            
+            <tag> 数据库 </tag>
+            
+            <tag> SQL Server </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[【SSIS】几个通用属性]]></title>
       <url>/2016/06/13/SSIS-GeneralAttribures/</url>
       <content type="html"><![CDATA[<p>记录几个简单常用SSIS包常用属性，都是通用属性：</p>
@@ -2072,45 +2125,6 @@
             <tag> BI </tag>
             
             <tag> SSIS </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[【T-SQL】group by 和grouping sets]]></title>
-      <url>/2016/06/13/SQL-GroupByAndGroupingSets/</url>
-      <content type="html"><![CDATA[<p>遇到一个情况，需要在内网系统中出一个统计报表。需要根据不同条件使用多个group by语句，需要将所有聚合的数据进行union操作来完成不同维度的统计查看。<br>知道发现了在SQL  Server 2008之后引入了grouping sets这个对于group by的增强后，上面的需求实现起来就简单的多，下面我们用AdventureWork中的表作为demo来解释一下grouping sets.</p>
-<a id="more"></a>
-<p>假设我现在需要两个维度查询我的销售额度，查询T-SQL如下：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-1.png" alt="SQL-GroupByAndGroupingSets-1"></p>
-<p>而使用SQL Server 2008之后新增的grouping sets语句，仅仅需要这样写：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-3.png" alt="SQL-GroupByAndGroupingSets-3"></p>
-<p>值得注意的是，虽然上面使用grouping sets语句和多个group by语句差生的结果完全一样，但顺序完全不同。</p>
-<p>grouping  sets，仅仅是语法糖？</p>
-<p>从上面的结果来看，使用grouping  sets仅仅是一个可以少写代码的语法糖，但实际情况是，group sets在遇到多个条件时，聚合是一次性从数据库中取出所有需要的操作的数据，在内存中对数据库进行聚合操作并生成结果。而union all是多次扫描表，将返回的结果进行union操作。这也就是为什么grouping  sets和union操作所返回的数据顺序是不同的原因。</p>
-<p>下面通过查看上面两个语句的IO和CPU来进行对比：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-5.png" alt="SQL-GroupByAndGroupingSets-5"></p>
-<p>通过上面的图来看grouping sets不仅仅只是语法糖，而是从执行原理做出了改变</p>
-<p>对于grouping sets来说，还经常和grouping函数联合使用，这个函数是反应目标列是否聚合，如果聚合则返回1，否则返回0，如下：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-6.png" alt="SQL-GroupByAndGroupingSets-6"></p>
-<p>转自：<a href="http://www.cnblogs.com/CareySon/archive/2011/12/19/2293245.html" target="_blank" rel="external">http://www.cnblogs.com/CareySon/archive/2011/12/19/2293245.html</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> 码路刺客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 转载 </tag>
-            
-            <tag> SQL Server </tag>
-            
-            <tag> 数据库 </tag>
             
         </tags>
         
@@ -2300,11 +2314,11 @@ select name from @a
         
         <tags>
             
+            <tag> 数据库 </tag>
+            
             <tag> 原创 </tag>
             
             <tag> SQL Server </tag>
-            
-            <tag> 数据库 </tag>
             
         </tags>
         
@@ -2347,11 +2361,11 @@ select name from @a
         
         <tags>
             
+            <tag> 数据库 </tag>
+            
             <tag> 原创 </tag>
             
             <tag> SQL Server </tag>
-            
-            <tag> 数据库 </tag>
             
         </tags>
         
@@ -2498,9 +2512,9 @@ $ npm install bespoke-fx
             
             <tag> jQuery </tag>
             
-            <tag> CSS </tag>
-            
             <tag> JavaScript </tag>
+            
+            <tag> CSS </tag>
             
             <tag> 设计 </tag>
             
@@ -2859,6 +2873,69 @@ $ npm install bespoke-fx
     </entry>
     
     <entry>
+      <title><![CDATA[如何在没有主键的SQL Server表里删除重复行]]></title>
+      <url>/2016/04/26/Delete-duplicate-rows-with-no-primary-key/</url>
+      <content type="html"><![CDATA[<p>有没有遇到过在一个没有主键标志的表里存了重复的数据行，要把重复的行删掉保留一行的情况呢？我们可以设置SQL Server的ROWCUNT变量来限制影响的数据行数，默认的数据值是0，代表所有行，但是这个值可以在运行SQL语句之前进行设定。</p>
+<p>咱们首先建个测试用的表，插入几条条记录。</p>
+<pre><code>CREATE TABLE dbo.duplicateTest
+    (
+      [ID] [INT] ,
+      [FirstName] [VARCHAR](25) ,
+      [LastName] [VARCHAR](25)
+    )
+ON  [PRIMARY];
+
+INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;) 
+INSERT INTO dbo.duplicateTest VALUES(2, &apos;Dave&apos;,&apos;Jones&apos;) 
+INSERT INTO dbo.duplicateTest VALUES(3, &apos;Karen&apos;,&apos;White&apos;) 
+INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;)
+INSERT INTO dbo.duplicateTest VALUES(2, &apos;Dave&apos;,&apos;Jones&apos;)
+INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;) 
+</code></pre><a id="more"></a>
+<p>表内数据如下：</p>
+<pre><code>SELECT * FROM dbo.duplicateTest
+</code></pre><p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-1.jpg" alt="全部数据"></p>
+<p>我们要找到Bob Smith的记录可以用以下语句：</p>
+<pre><code>SELECT * FROM dbo.duplicateTest WHERE ID = 1 AND FirstName = &apos;Bob&apos; AND LastName = &apos;Smith&apos;
+</code></pre><p>找到三行数据</p>
+<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-2.jpg" alt="图2"></p>
+<p>在SQL Server 2000 和 2005上我们可以使用SET ROWCOUNT 命令来限制一条语句作用的行数，设置为1我们就可以删除一条重复的记录了。删除前与删除后的对比如下：</p>
+<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-3.jpg" alt="图3"></p>
+<p>在SQL Server 2005上，我们也可以用TOP命令。像下面这样：</p>
+<pre><code>SELECT * FROM dbo.duplicateTest 
+DELETE TOP(1) FROM dbo.duplicateTest WHERE ID = 1 
+SELECT * FROM dbo.duplicateTest
+</code></pre><p>删除前与删除后的对比如下：</p>
+<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-4.jpg" alt="图4"></p>
+<p><strong>总结</strong></p>
+<ul>
+<li>1、这个方法可以在表中没有明显标志字段来区分每一行的情况，但也有局限，如果一个表中不知道每行记录都有多少行重复的记录，就不能用了，TOP(1)也只是删除重复行中的一行。</li>
+<li>2、如果明确知道表里每行记录都有2行、3行……重复的记录，倒是个不错的选择。</li>
+<li>3、如果表里有个ID自增长的字段，就可以采用删掉重复行保留ID最小的那个行的方法了。</li>
+<li>4、如果表里没有ID自增长的字段，又不知道每行有多少条重复记录，重复记录行都一样，那还是先把记录DISTINCT出来存到临时表里，清空原表，再把临时表的数据插入原表，这样应该是最省事的了。</li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> 码路刺客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 数据库 </tag>
+            
+            <tag> 原创 </tag>
+            
+            <tag> SQL Server </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[CodePen上碉堡的前端设计和代码]]></title>
       <url>/2016/04/26/codepen-top-10/</url>
       <content type="html"><![CDATA[<p>CodePen有很多出众的前代码片段，设计师或喜欢前端的人员可以都可能常去那边寻找灵感或学习一些代码的运用。CodePen放出2015年度最热门的100个代码片段，很多代码确实很赞，大家不要错过哦，下面我们筛选几个给大家欣赏。</p>
@@ -2925,126 +3002,11 @@ $ npm install bespoke-fx
             
             <tag> jQuery </tag>
             
-            <tag> CSS </tag>
-            
             <tag> JavaScript </tag>
             
+            <tag> CSS </tag>
+            
             <tag> 设计 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[如何在没有主键的SQL Server表里删除重复行]]></title>
-      <url>/2016/04/26/Delete-duplicate-rows-with-no-primary-key/</url>
-      <content type="html"><![CDATA[<p>有没有遇到过在一个没有主键标志的表里存了重复的数据行，要把重复的行删掉保留一行的情况呢？我们可以设置SQL Server的ROWCUNT变量来限制影响的数据行数，默认的数据值是0，代表所有行，但是这个值可以在运行SQL语句之前进行设定。</p>
-<p>咱们首先建个测试用的表，插入几条条记录。</p>
-<pre><code>CREATE TABLE dbo.duplicateTest
-    (
-      [ID] [INT] ,
-      [FirstName] [VARCHAR](25) ,
-      [LastName] [VARCHAR](25)
-    )
-ON  [PRIMARY];
-
-INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;) 
-INSERT INTO dbo.duplicateTest VALUES(2, &apos;Dave&apos;,&apos;Jones&apos;) 
-INSERT INTO dbo.duplicateTest VALUES(3, &apos;Karen&apos;,&apos;White&apos;) 
-INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;)
-INSERT INTO dbo.duplicateTest VALUES(2, &apos;Dave&apos;,&apos;Jones&apos;)
-INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;) 
-</code></pre><a id="more"></a>
-<p>表内数据如下：</p>
-<pre><code>SELECT * FROM dbo.duplicateTest
-</code></pre><p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-1.jpg" alt="全部数据"></p>
-<p>我们要找到Bob Smith的记录可以用以下语句：</p>
-<pre><code>SELECT * FROM dbo.duplicateTest WHERE ID = 1 AND FirstName = &apos;Bob&apos; AND LastName = &apos;Smith&apos;
-</code></pre><p>找到三行数据</p>
-<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-2.jpg" alt="图2"></p>
-<p>在SQL Server 2000 和 2005上我们可以使用SET ROWCOUNT 命令来限制一条语句作用的行数，设置为1我们就可以删除一条重复的记录了。删除前与删除后的对比如下：</p>
-<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-3.jpg" alt="图3"></p>
-<p>在SQL Server 2005上，我们也可以用TOP命令。像下面这样：</p>
-<pre><code>SELECT * FROM dbo.duplicateTest 
-DELETE TOP(1) FROM dbo.duplicateTest WHERE ID = 1 
-SELECT * FROM dbo.duplicateTest
-</code></pre><p>删除前与删除后的对比如下：</p>
-<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-4.jpg" alt="图4"></p>
-<p><strong>总结</strong></p>
-<ul>
-<li>1、这个方法可以在表中没有明显标志字段来区分每一行的情况，但也有局限，如果一个表中不知道每行记录都有多少行重复的记录，就不能用了，TOP(1)也只是删除重复行中的一行。</li>
-<li>2、如果明确知道表里每行记录都有2行、3行……重复的记录，倒是个不错的选择。</li>
-<li>3、如果表里有个ID自增长的字段，就可以采用删掉重复行保留ID最小的那个行的方法了。</li>
-<li>4、如果表里没有ID自增长的字段，又不知道每行有多少条重复记录，重复记录行都一样，那还是先把记录DISTINCT出来存到临时表里，清空原表，再把临时表的数据插入原表，这样应该是最省事的了。</li>
-</ul>
-]]></content>
-      
-        <categories>
-            
-            <category> 码路刺客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 原创 </tag>
-            
-            <tag> SQL Server </tag>
-            
-            <tag> 数据库 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[SQL Server 2014的BI开发工具SSDT(以前的BIDS)安装]]></title>
-      <url>/2016/04/24/SQL-Server-2014-SSDT-Install/</url>
-      <content type="html"><![CDATA[<p>当我们安装好SQL Server 2014以后，会发现以前随数据库安装的BI开发套件SQL Server Reporting Services (SSRS), SQL Server Analysis Services (SSAS), 和 SQL Server Integration Services (SSIS)都不见了，怎么弄回来呢？</p>
-<p>在安装开发版或者企业版的SQL Server 2014的时候，你可能已经注意到以前被我们熟知的Business Intelligence Development Studio (BIDS) 已经没有了。从SQL Server 2012开始，这套BI应用工具集已经变成了SQL Server Data Tools)(SSDT)，在SQL Server 2014中，SSDT已经完全在SQL Server的安装过程里消失了。但是，要把Business Intelligence (BI)应用工具安装回来也是很容易的。</p>
-<a id="more"></a>
-<h3 id="安装SQL-Server-2014-BI-Tools"><a href="#安装SQL-Server-2014-BI-Tools" class="headerlink" title="安装SQL Server 2014 BI Tools"></a>安装SQL Server 2014 BI Tools</h3><p>在以前版本的SQL Server里，用来开发SSIS,SSAS,SSRS的BI解决方案都是包含在SQL Server的安装过程里的，在特性部分里可以进行勾选，如下图所示：</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-1.jpg" alt="SQL-Server-2014-SSDT-Install-1"></p>
-<p>但是，当你安装SQL Server 2014的时候，你会发现选项没有了，如下图：</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-2.jpg" alt="SQL-Server-2014-SSDT-Install-2"></p>
-<h3 id="SQL-Server-Data-Tools-SSDT和SSDT-BI-的演变"><a href="#SQL-Server-Data-Tools-SSDT和SSDT-BI-的演变" class="headerlink" title="SQL Server Data Tools (SSDT和SSDT-BI)的演变"></a>SQL Server Data Tools (SSDT和SSDT-BI)的演变</h3><p>由于微软公司在这方面的说明较少，让情况变得有点复杂。事实上，SQL Server 2014的SSDT已经成为了Visual Studio的插件为数据库重构，架构比较以及各种诸如视图、存储过程等对象的创建提供服务支持。而SSDT-BI这个工具也已经成为Visual Studio的一个组件，它才是开发SSIS,SSAS,SSRS解决方案的真正的开发工具。</p>
-<p>以上两个工具都可以在<a href="http://msdn.microsoft.com/en-us/hh297027.aspx" target="_blank" rel="external">http://msdn.microsoft.com/en-us/hh297027.aspx</a> 下载到。每个工具各提供两个版本，一个是Visual Studio 2012的，一个是 Visual Studio 2013的。</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-3.jpg" alt="SQL-Server-2014-SSDT-Install-3"></p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-4.jpg" alt="SQL-Server-2014-SSDT-Install-4"></p>
-<h3 id="安装SQL-Server-Data-Tools-SSDT"><a href="#安装SQL-Server-Data-Tools-SSDT" class="headerlink" title="安装SQL Server Data Tools(SSDT)"></a>安装SQL Server Data Tools(SSDT)</h3><p>微软已经完全把SSDT的安装从SQL Server安装中独立出来了。安装过程也是非常简单，你只需要决定是否让BI工具成为Visual Studio 2013或者Visual Studio 2012的一部分就可以了。</p>
-<p>我们以Visual Studio 2013版本的为例。注意下，咱们不需要先安装Visual Studio 2013在电脑上然后再安装SSDT-BI。安装程序会安装Visual Studio 2013 shell然后提供BI工具作为一个组件。SSDT-BI安装将会添加以下组件：</p>
-<ul>
-<li>Microsoft .NET Framework 4.5.1,</li>
-<li>Microsoft Visual Studio 2012 Shell (Isolated) Redistributable Package,</li>
-<li>Microsoft Visual Studio 2012 Shell (Integrated) Redistributable Package,</li>
-<li>Microsoft Visual Studio 2013 Shell (Isolated) Redistributable Package,</li>
-<li>Microsoft Visual Studio 2013 Shell (Integrated) Redistributable Package,</li>
-<li>Microsoft Visual Studio Tools for Applications 2012,</li>
-<li>Microsoft Report Viewer 2014 Runtime.</li>
-</ul>
-<p>正式的安装过程跟SQL Server安装过程也很像。注意不管是否安装SQL Server 2014数据库程序，以下界面都选择全新安装。我安装的文件名称：SSDTBI_x86_CHS.exe，你可能会去找x64版本的，但是没有这个版本，官网下载的都是x86的，但是不影响安装。</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-8.jpg" alt="SQL-Server-2014-SSDT-Install-8"></p>
-<p>安装过程的以下界面勾选SQL Server Data Tools - Business Intelligence就可以了。</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-5.jpg" alt="SQL-Server-2014-SSDT-Install-5"></p>
-<p>安装好以后，在开始菜单出现 SQL Server Data Tools for Visual Studio 2013选项。</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-6.jpg" alt="SQL-Server-2014-SSDT-Install-6"></p>
-<p>现在，我们可以打开SSDT for Visual Studio 2013来创建SSIS,SSAS,SSRS项目方案了。</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-7.jpg" alt="SQL-Server-2014-SSDT-Install-7"></p>
-]]></content>
-      
-        <categories>
-            
-            <category> BI墨客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> BI </tag>
-            
-            <tag> 原创 </tag>
             
         </tags>
         
@@ -3180,6 +3142,58 @@ SELECT * FROM dbo.duplicateTest
             <tag> CSS </tag>
             
             <tag> 设计 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[SQL Server 2014的BI开发工具SSDT(以前的BIDS)安装]]></title>
+      <url>/2016/04/24/SQL-Server-2014-SSDT-Install/</url>
+      <content type="html"><![CDATA[<p>当我们安装好SQL Server 2014以后，会发现以前随数据库安装的BI开发套件SQL Server Reporting Services (SSRS), SQL Server Analysis Services (SSAS), 和 SQL Server Integration Services (SSIS)都不见了，怎么弄回来呢？</p>
+<p>在安装开发版或者企业版的SQL Server 2014的时候，你可能已经注意到以前被我们熟知的Business Intelligence Development Studio (BIDS) 已经没有了。从SQL Server 2012开始，这套BI应用工具集已经变成了SQL Server Data Tools)(SSDT)，在SQL Server 2014中，SSDT已经完全在SQL Server的安装过程里消失了。但是，要把Business Intelligence (BI)应用工具安装回来也是很容易的。</p>
+<a id="more"></a>
+<h3 id="安装SQL-Server-2014-BI-Tools"><a href="#安装SQL-Server-2014-BI-Tools" class="headerlink" title="安装SQL Server 2014 BI Tools"></a>安装SQL Server 2014 BI Tools</h3><p>在以前版本的SQL Server里，用来开发SSIS,SSAS,SSRS的BI解决方案都是包含在SQL Server的安装过程里的，在特性部分里可以进行勾选，如下图所示：</p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-1.jpg" alt="SQL-Server-2014-SSDT-Install-1"></p>
+<p>但是，当你安装SQL Server 2014的时候，你会发现选项没有了，如下图：</p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-2.jpg" alt="SQL-Server-2014-SSDT-Install-2"></p>
+<h3 id="SQL-Server-Data-Tools-SSDT和SSDT-BI-的演变"><a href="#SQL-Server-Data-Tools-SSDT和SSDT-BI-的演变" class="headerlink" title="SQL Server Data Tools (SSDT和SSDT-BI)的演变"></a>SQL Server Data Tools (SSDT和SSDT-BI)的演变</h3><p>由于微软公司在这方面的说明较少，让情况变得有点复杂。事实上，SQL Server 2014的SSDT已经成为了Visual Studio的插件为数据库重构，架构比较以及各种诸如视图、存储过程等对象的创建提供服务支持。而SSDT-BI这个工具也已经成为Visual Studio的一个组件，它才是开发SSIS,SSAS,SSRS解决方案的真正的开发工具。</p>
+<p>以上两个工具都可以在<a href="http://msdn.microsoft.com/en-us/hh297027.aspx" target="_blank" rel="external">http://msdn.microsoft.com/en-us/hh297027.aspx</a> 下载到。每个工具各提供两个版本，一个是Visual Studio 2012的，一个是 Visual Studio 2013的。</p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-3.jpg" alt="SQL-Server-2014-SSDT-Install-3"></p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-4.jpg" alt="SQL-Server-2014-SSDT-Install-4"></p>
+<h3 id="安装SQL-Server-Data-Tools-SSDT"><a href="#安装SQL-Server-Data-Tools-SSDT" class="headerlink" title="安装SQL Server Data Tools(SSDT)"></a>安装SQL Server Data Tools(SSDT)</h3><p>微软已经完全把SSDT的安装从SQL Server安装中独立出来了。安装过程也是非常简单，你只需要决定是否让BI工具成为Visual Studio 2013或者Visual Studio 2012的一部分就可以了。</p>
+<p>我们以Visual Studio 2013版本的为例。注意下，咱们不需要先安装Visual Studio 2013在电脑上然后再安装SSDT-BI。安装程序会安装Visual Studio 2013 shell然后提供BI工具作为一个组件。SSDT-BI安装将会添加以下组件：</p>
+<ul>
+<li>Microsoft .NET Framework 4.5.1,</li>
+<li>Microsoft Visual Studio 2012 Shell (Isolated) Redistributable Package,</li>
+<li>Microsoft Visual Studio 2012 Shell (Integrated) Redistributable Package,</li>
+<li>Microsoft Visual Studio 2013 Shell (Isolated) Redistributable Package,</li>
+<li>Microsoft Visual Studio 2013 Shell (Integrated) Redistributable Package,</li>
+<li>Microsoft Visual Studio Tools for Applications 2012,</li>
+<li>Microsoft Report Viewer 2014 Runtime.</li>
+</ul>
+<p>正式的安装过程跟SQL Server安装过程也很像。注意不管是否安装SQL Server 2014数据库程序，以下界面都选择全新安装。我安装的文件名称：SSDTBI_x86_CHS.exe，你可能会去找x64版本的，但是没有这个版本，官网下载的都是x86的，但是不影响安装。</p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-8.jpg" alt="SQL-Server-2014-SSDT-Install-8"></p>
+<p>安装过程的以下界面勾选SQL Server Data Tools - Business Intelligence就可以了。</p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-5.jpg" alt="SQL-Server-2014-SSDT-Install-5"></p>
+<p>安装好以后，在开始菜单出现 SQL Server Data Tools for Visual Studio 2013选项。</p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-6.jpg" alt="SQL-Server-2014-SSDT-Install-6"></p>
+<p>现在，我们可以打开SSDT for Visual Studio 2013来创建SSIS,SSAS,SSRS项目方案了。</p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-7.jpg" alt="SQL-Server-2014-SSDT-Install-7"></p>
+]]></content>
+      
+        <categories>
+            
+            <category> BI墨客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> BI </tag>
+            
+            <tag> 原创 </tag>
             
         </tags>
         
@@ -3471,9 +3485,9 @@ $layer = $(&apos;div[class*=&quot;layer-&quot;]’);
             
             <tag> 翻译 </tag>
             
-            <tag> CSS </tag>
-            
             <tag> JavaScript </tag>
+            
+            <tag> CSS </tag>
             
         </tags>
         
@@ -4004,9 +4018,9 @@ $elem.otherStuff();
             
             <tag> 前端编程 </tag>
             
-            <tag> IT资讯 </tag>
-            
             <tag> 原创 </tag>
+            
+            <tag> IT资讯 </tag>
             
         </tags>
         
@@ -4243,9 +4257,9 @@ function update (){
             
             <tag> 翻译 </tag>
             
-            <tag> CSS </tag>
-            
             <tag> JavaScript </tag>
+            
+            <tag> CSS </tag>
             
         </tags>
         
@@ -4337,9 +4351,9 @@ Inserted.grade AS 插入grade;
         
         <tags>
             
-            <tag> 原创 </tag>
-            
             <tag> 数据库 </tag>
+            
+            <tag> 原创 </tag>
             
         </tags>
         

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://c-xuan.com/"/>
-  <updated>2017-11-19T16:00:00.000Z</updated>
+  <updated>2017-11-21T16:00:00.000Z</updated>
   <id>http://c-xuan.com/</id>
   
   <author>
@@ -16,14 +16,20 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>【ORACLE】导致物化视图快速刷新变慢的原因</title>
+    <title>【ORACLE】导致物化视图快速刷新变慢的原因和解决</title>
     <link href="http://c-xuan.com/2017/11/19/20171119001/"/>
     <id>http://c-xuan.com/2017/11/19/20171119001/</id>
     <published>2017-11-18T16:00:00.000Z</published>
-    <updated>2017-11-19T16:00:00.000Z</updated>
+    <updated>2017-11-21T16:00:00.000Z</updated>
     
     <content type="html"><![CDATA[<p>ORACLE物化视图(MATERIALIZED VIEW)有自动提交刷新和手动刷新两种刷新方式，每种刷新方式下有增量刷新(FAST)、全量刷新(COMPLETE)、系统自动判断(FORCE)三种刷新方法。一般而言，增量刷新理论上是比全量刷新要快一些的，但是我发现某些情况下增量刷新将导致基表提交后延迟严重，下面将做一些测试。</p>
 <a id="more"></a>
+<h3 id="测试环境"><a href="#测试环境" class="headerlink" title="测试环境"></a>测试环境</h3><ul>
+<li>操作系统：Red Hat Enterprise Linux Server release 5.8 虚拟机</li>
+<li>处理器：Intel(R) Core(TM) i7-4700MQ CPU @ 2.40GHz</li>
+<li>内存大小：4G</li>
+<li>数据库：Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - 64bit Production</li>
+</ul>
 <h3 id="准备测试数据"><a href="#准备测试数据" class="headerlink" title="准备测试数据"></a>准备测试数据</h3><p>创建三个表结构相同的测试表，id为自增长主键，这三个表作为物化视图的基表。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> t1 (</div><div class="line">    <span class="keyword">id</span> <span class="built_in">INT</span>,</div><div class="line">    c1 <span class="built_in">INT</span>,</div><div class="line">    c2 <span class="built_in">INT</span>,</div><div class="line">    <span class="keyword">constraint</span> pk1 primary <span class="keyword">key</span>(<span class="keyword">id</span>));</div><div class="line">    </div><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> t2 (</div><div class="line">    <span class="keyword">id</span> <span class="built_in">INT</span>,</div><div class="line">    c1 <span class="built_in">INT</span>,</div><div class="line">    c2 <span class="built_in">INT</span>,</div><div class="line">    <span class="keyword">constraint</span> pk2 primary <span class="keyword">key</span>(<span class="keyword">id</span>));</div><div class="line">    </div><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> t3 (</div><div class="line">    <span class="keyword">id</span> <span class="built_in">INT</span>,</div><div class="line">    c1 <span class="built_in">INT</span>,</div><div class="line">    c2 <span class="built_in">INT</span>,</div><div class="line">    <span class="keyword">constraint</span> pk3 primary <span class="keyword">key</span>(<span class="keyword">id</span>));</div></pre></td></tr></table></figure>
 <p>每个表插入30000行数据，并给三个基表创建物化视图日志(MATERIALIZED VIEW LOG)：</p>
@@ -63,10 +69,18 @@
 <p>基表更新数据提交时，显示<strong>20多秒</strong>才完成，显然，这种情况会导致物化视图增量刷新延迟严重。</p>
 <p>将MV1删除后重建为下列情况，相加的两列是同一个表的两列，这时再更新t2表的一行数据，发现提交没有延迟。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">DROP</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> mv1;</div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> mv1</div><div class="line"><span class="keyword">BUILD</span> <span class="keyword">IMMEDIATE</span></div><div class="line"><span class="keyword">REFRESH</span> <span class="keyword">FAST</span> <span class="keyword">ON</span> <span class="keyword">COMMIT</span></div><div class="line"><span class="keyword">WITH</span> <span class="keyword">ROWID</span></div><div class="line"><span class="keyword">AS</span></div><div class="line"><span class="keyword">SELECT</span> a.id aid,a.c1 ac1,a.c2 ac2,b.c1 bc1,b.c2 bc2,</div><div class="line">       b.c1+b.c2 <span class="keyword">as</span> d,</div><div class="line">       a.rowid rida,b.rowid ridb</div><div class="line">  <span class="keyword">FROM</span> t1 a,t2 b</div><div class="line"> <span class="keyword">WHERE</span> a.id=b.id;</div></pre></td></tr></table></figure>
+<h3 id="一种解决方案"><a href="#一种解决方案" class="headerlink" title="一种解决方案"></a>一种解决方案</h3><p>既然含有外联接的物化视图多表列运算有问题，可以在MV1中将运算列都SELECT出来，再创建一个嵌套物化视图MV2，将MV1中的列进行运算处理。<br>物化视图MV1创建如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> mv1</div><div class="line"><span class="keyword">BUILD</span> <span class="keyword">IMMEDIATE</span></div><div class="line"><span class="keyword">REFRESH</span> <span class="keyword">FAST</span> <span class="keyword">ON</span> <span class="keyword">COMMIT</span></div><div class="line"><span class="keyword">WITH</span> <span class="keyword">ROWID</span></div><div class="line"><span class="keyword">AS</span></div><div class="line"><span class="keyword">SELECT</span> a.id aid,a.c1 ac1,a.c2 ac2,b.c1 bc1,b.c2 bc2,</div><div class="line">       a.rowid rida,b.rowid ridb</div><div class="line">  <span class="keyword">FROM</span> t1 a,t2 b</div><div class="line"> <span class="keyword">WHERE</span> a.id=b.id(+)</div><div class="line">   <span class="keyword">AND</span> a.c1=b.c1(+);</div><div class="line"><span class="comment">--因为MV1将作为MV2的基本表，所以要建物化视图日志</span></div><div class="line"><span class="keyword">create</span> <span class="keyword">materialized</span> <span class="keyword">view</span> <span class="keyword">log</span> <span class="keyword">on</span> mv1 <span class="keyword">with</span> <span class="keyword">rowid</span>,<span class="keyword">sequence</span>(aid) <span class="keyword">including</span> <span class="keyword">new</span> <span class="keyword">values</span>;</div></pre></td></tr></table></figure></p>
+<p>物化视图MV2创建如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">materialized</span> <span class="keyword">view</span> mv2</div><div class="line"><span class="keyword">build</span> <span class="keyword">immediate</span></div><div class="line"><span class="keyword">refresh</span> <span class="keyword">fast</span> <span class="keyword">on</span> <span class="keyword">commit</span></div><div class="line"><span class="keyword">with</span> <span class="keyword">rowid</span></div><div class="line"><span class="keyword">as</span></div><div class="line"><span class="keyword">select</span> aid,ac1,ac2,bc1,bc2,</div><div class="line">       ac2+bc2 <span class="keyword">as</span> d, <span class="comment">--原本在MV1中计算的列在这里计算</span></div><div class="line">       a.rowid rida,b.rowid ridb</div><div class="line">  <span class="keyword">from</span> mv1 a,t3 b <span class="comment">--这里注意，在这个ORACLE版本中，创建嵌套物化视图必须要有表关联或者聚合计算，单独from mv1创建不了MV2.</span></div><div class="line"> <span class="keyword">where</span> a.aid=b.id(+);</div></pre></td></tr></table></figure></p>
+<p>查看初始数据<code>select * from mv2 where aid = 99;</code><br><img src="/img/posts/20171119001-15.png" alt="20171119001-15"><br>更新t2表数据<code>update t2 set c2=37 where id = 99;</code>，查看提交耗时<br><img src="/img/posts/20171119001-16.png" alt="20171119001-16"><br>查看MV2结果<br><img src="/img/posts/20171119001-17.png" alt="20171119001-17"><br>查看物化视图刷新情况<br><img src="/img/posts/20171119001-18.png" alt="20171119001-18"><br>可见，两个物化视图在基表数据更新后提交不会耗时很久。用这种方式将一个运算分开两步完成，虽然可行，但是代价也很明显，要多创建嵌套物化视图，不敢保证复杂情况下，嵌套物化视图会有其他问题。</p>
+<h3 id="另两种解决方案"><a href="#另两种解决方案" class="headerlink" title="另两种解决方案"></a>另两种解决方案</h3><ul>
+<li>1.将含有多表列运算的外联接快速刷新物化视图改为定时全量刷新。</li>
+<li>2.将外联接重写为内连接。</li>
+</ul>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
 <li>1.创建含有外联接且刷新方式为REFRESH FAST ON COMMIT的物化视图时，如果select列里含有多个表中取某些列做运算，注意了，这时更新非主表的数据(增删改)，那么基表提交数据后将有可能导致延迟阻塞，这个时间比物化视图全量刷新还要慢。</li>
 <li>2.除上述情况，例如物化视图都是内连接，有外联接但是没有多个表列做运算等，增量刷新都没问题。</li>
-<li>3.至于多表列运算的外联接物化视图增量刷新很慢的原因，还需要探究ORACLE物化视图的刷新机制，解决方法也只能暂时避开这种情况。</li>
+<li>3.至于多表列运算的外联接物化视图增量刷新很慢的原因，与ORACLE物化视图的刷新机制有关，官方文档也有提及这种情况会影响效率，建议最好改为内连接。</li>
+<li>4.解决方法是改为定时全量刷新或者改外联接为内连接或者利用嵌套物化视图，或者还有其他方法，总之就是为了避开这种情况。</li>
 </ul>
 ]]></content>
     
@@ -79,13 +93,13 @@
       <category term="码路刺客" scheme="http://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
     
     
-      <category term="原创" scheme="http://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
-    
       <category term="数据库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
       <category term="ORACLE" scheme="http://c-xuan.com/tags/ORACLE/"/>
     
       <category term="物化视图" scheme="http://c-xuan.com/tags/%E7%89%A9%E5%8C%96%E8%A7%86%E5%9B%BE/"/>
+    
+      <category term="原创" scheme="http://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
     
   </entry>
   
@@ -533,9 +547,9 @@
     
       <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
     
-      <category term="SQL Server" scheme="http://c-xuan.com/tags/SQL-Server/"/>
-    
       <category term="数据库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+      <category term="SQL Server" scheme="http://c-xuan.com/tags/SQL-Server/"/>
     
   </entry>
   
@@ -717,9 +731,9 @@
       <category term="随笔感悟" scheme="http://c-xuan.com/categories/%E9%9A%8F%E7%AC%94%E6%84%9F%E6%82%9F/"/>
     
     
-      <category term="知识管理" scheme="http://c-xuan.com/tags/%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86/"/>
-    
       <category term="原创" scheme="http://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+      <category term="知识管理" scheme="http://c-xuan.com/tags/%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86/"/>
     
   </entry>
   
@@ -1038,9 +1052,9 @@
       <category term="随笔感悟" scheme="http://c-xuan.com/categories/%E9%9A%8F%E7%AC%94%E6%84%9F%E6%82%9F/"/>
     
     
-      <category term="知识管理" scheme="http://c-xuan.com/tags/%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86/"/>
-    
       <category term="原创" scheme="http://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+      <category term="知识管理" scheme="http://c-xuan.com/tags/%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86/"/>
     
   </entry>
   

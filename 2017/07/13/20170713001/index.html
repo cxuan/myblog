@@ -15,23 +15,16 @@
 
 
 
-<meta name="description" content="还在感叹Web 3D云效果(《怎样用CSS做出3D效果的云》)的时候，发现一个将这种效果用到极致的网站。这个网站貌似是个纯净水品牌的展示网站，但是这不妨碍给人一种引人入胜的体验。">
+<meta name="description" content="快速刷新的物化视图创建比较麻烦，限制条件比较多，本文参考Oracle 11g 11.2版本官方文档，总结一般情况、含有联接、含有聚合计算、UNION ALL等情况下的限制条件。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Web蓝天白云的极致体验">
-<meta property="og:url" content="http://c-xuan.com/2016/03/17/Web-Cloud-Effect/index.html">
+<meta property="og:title" content="【ORACLE】物化视图快速刷新限制条件">
+<meta property="og:url" content="http://c-xuan.com/2017/07/13/20170713001/index.html">
 <meta property="og:site_name" content="靛青">
-<meta property="og:description" content="还在感叹Web 3D云效果(《怎样用CSS做出3D效果的云》)的时候，发现一个将这种效果用到极致的网站。这个网站貌似是个纯净水品牌的展示网站，但是这不妨碍给人一种引人入胜的体验。">
-<meta property="og:image" content="http://c-xuan.com/img/posts/42.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/43.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/44.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/45.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/46.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/47.png">
-<meta property="og:updated_time" content="2016-09-25T12:59:16.553Z">
+<meta property="og:description" content="快速刷新的物化视图创建比较麻烦，限制条件比较多，本文参考Oracle 11g 11.2版本官方文档，总结一般情况、含有联接、含有聚合计算、UNION ALL等情况下的限制条件。">
+<meta property="og:updated_time" content="2017-07-12T16:00:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Web蓝天白云的极致体验">
-<meta name="twitter:description" content="还在感叹Web 3D云效果(《怎样用CSS做出3D效果的云》)的时候，发现一个将这种效果用到极致的网站。这个网站貌似是个纯净水品牌的展示网站，但是这不妨碍给人一种引人入胜的体验。">
-<meta name="twitter:image" content="http://c-xuan.com/img/posts/42.png">
+<meta name="twitter:title" content="【ORACLE】物化视图快速刷新限制条件">
+<meta name="twitter:description" content="快速刷新的物化视图创建比较麻烦，限制条件比较多，本文参考Oracle 11g 11.2版本官方文档，总结一般情况、含有联接、含有聚合计算、UNION ALL等情况下的限制条件。">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -63,7 +56,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Web蓝天白云的极致体验 | 靛青</title>
+<title>【ORACLE】物化视图快速刷新限制条件 | 靛青</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -352,11 +345,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap "><article id="post-Web-Cloud-Effect" class="article article-type-post  animated pulse " itemscope itemprop="blogPost">
+      <div class="body-wrap "><article id="post-20170713001" class="article article-type-post  animated pulse " itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/03/17/Web-Cloud-Effect/" class="article-date">
-      <time datetime="2016-03-16T16:00:00.000Z" itemprop="datePublished">2016-03-17</time>
+      <a href="/2017/07/13/20170713001/" class="article-date">
+      <time datetime="2017-07-12T16:00:00.000Z" itemprop="datePublished">2017-07-13</time>
 </a>
 
 
@@ -371,7 +364,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Web蓝天白云的极致体验
+      【ORACLE】物化视图快速刷新限制条件
     </h1>
   
 
@@ -380,13 +373,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/IT看客/">IT看客</a>
+    <a class="article-category-link" href="/categories/码路刺客/">码路刺客</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IT资讯/">IT资讯</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端编程/">前端编程</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原创/">原创</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ORACLE/">ORACLE</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/物化视图/">物化视图</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/翻译/">翻译</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -396,18 +389,37 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>还在感叹Web 3D云效果(<a href="/2016/03/15/CSS-3D-Cloud">《怎样用CSS做出3D效果的云》</a>)的时候，发现一个将这种效果用到极致的网站。这个网站貌似是个纯净水品牌的展示网站，但是这不妨碍给人一种引人入胜的体验。</p>
-<p><img src="/img/posts/42.png" alt="Smartewater网站"></p>
+        <p>快速刷新的物化视图创建比较麻烦，限制条件比较多，本文参考Oracle 11g 11.2版本官方文档，总结一般情况、含有联接、含有聚合计算、UNION ALL等情况下的限制条件。</p>
 <a id="more"></a>
-<p><a href="http://www.drinksmartwater.com/#/home" target="_blank" rel="external">Smartewater网站链接</a> </p>
-<p>据介绍，网页是运用<a href="http://baike.baidu.com/link?url=PXMRpnJpNZFp1uF321fpVLsVJdBcB3LFboHIop_y7OSvE_9NAsTqhHwEnpG6wtI588UE2lJw5bLenky7zvE4b_" target="_blank" rel="external">WebGL</a>,<a href="http://www.w3school.com.cn/html5/html5_canvas.asp" target="_blank" rel="external">canvas</a>和<a href="http://www.w3school.com.cn/css3/css3_3dtransform.asp" target="_blank" rel="external">CSS3D</a>技术做的，实现了不错的用户交互。</p>
-<p>有兴趣可以观赏下，寻找一些灵感。整个网站页面设计还是很高端洋气的(废话，就是国外大牛做的)，页面上下滚动时的视差效果，云层缥缈的动画，阅兵蓝的背景，给人清新之感。交互设计这部分还可以控制云层，随着鼠标移动的方向在云层中穿梭，有木有在空中翱翔之感，噢，页面还有音乐的。</p>
-<p>不过美中还是有瑕疵的：卡顿。下面来几幅大图</p>
-<p><img src="/img/posts/43.png" alt="Smartewater网站界面"></p>
-<p><img src="/img/posts/44.png" alt="导航栏"></p>
-<p><img src="/img/posts/45.png" alt="交互：云层拉伸"></p>
-<p><img src="/img/posts/46.png" alt="单击左键弹出模式菜单"></p>
-<p><img src="/img/posts/47.png" alt="按住左键随意画各种形状的云"></p>
+<h3 id="所有快速刷新的物化视图都必须满足的条件"><a href="#所有快速刷新的物化视图都必须满足的条件" class="headerlink" title="所有快速刷新的物化视图都必须满足的条件"></a><span id="here">所有快速刷新的物化视图都必须满足的条件</span></h3><p>定义物化视图的查询语句限制如下：</p>
+<ul>
+<li>1.物化视图中不能含有非重复表达式的引用，例如<code>SYSDATE</code>和<code>ROWNUM</code>.</li>
+<li>2.物化视图中不能出现<code>RAW</code>或<code>LONG RAW</code>数据类型的引用。</li>
+<li>3.查询语句的<code>SELECT</code>部分语不能出现子查询。</li>
+<li>4.<code>SELECT</code>子句部分不能包含分析性质的函数，例如<code>RANK</code>。</li>
+<li>5.不能含有<code>MODEL</code>子句。</li>
+<li>6.子查询中不能含有<code>HAVING</code>子句。</li>
+<li>7.不能出现含有<code>ANY</code>,<code>ALL</code>或<code>NOT EXISTS</code>的嵌套子查询。</li>
+<li>8.不能含有<code>[START WITH …] CONNECT BY</code>子句。</li>
+<li>9.不能包含不同站点的多个明细表。</li>
+<li>10.<code>ON COMMIT</code>刷新方式的物化视图不能有远程明细表的引用。</li>
+<li>11.嵌套物化视图必须含有表联接或者聚合计算。</li>
+<li>12.物化视图包含联接和<code>GROUP BY</code>子句的聚合计算时，不能select from 一个有索引的表。</li>
+</ul>
+<h3 id="只包含联接的物化视图快速刷新限制条件"><a href="#只包含联接的物化视图快速刷新限制条件" class="headerlink" title="只包含联接的物化视图快速刷新限制条件"></a>只包含联接的物化视图快速刷新限制条件</h3><p>定义物化视图的查询语句只含有联接且没有聚合计算，实现快速刷新除满足<a href="#here">通用条件</a>外，还要满足条件如下：</p>
+<ul>
+<li>1.不能含有<code>GROUP BY</code>子句或聚合计算。</li>
+<li>2.<code>FROM</code>中出现的每个基表的<code>ROWID</code>必须出现在<code>SELECT</code>子句中。</li>
+<li>3.<code>FROM</code>中出现的每个基表都必须创建基于<code>ROWID</code>的物化视图日志(MATERIALIZED VIEW LOG)。</li>
+<li>4.<code>SELECT</code>子句中不能含有object类型的列。</li>
+</ul>
+<p><font color="red"><strong>另外，以下情况将会影响快速刷新的效率：</strong></font></p>
+<ul>
+<li><strong><font color="red">1.定义的查询语句含有外联接，如果这样的话，请考虑重写查询语句改为内连接。</font></strong></li>
+<li><strong><font color="red">2.<code>SELECT</code>子句中含有多个表的列运算。</font></strong></li>
+</ul>
+<h3 id="包含聚合的物化视图快速刷新限制"><a href="#包含聚合的物化视图快速刷新限制" class="headerlink" title="包含聚合的物化视图快速刷新限制"></a>包含聚合的物化视图快速刷新限制</h3><p>定义物化视图的查询语句含有聚合计算，实现快速刷新除满足<a href="#here">通用条件</a>外，还要满足条件如下：</p>
+<p>参考：<a href="https://docs.oracle.com/cd/E11882_01/server.112/e25554/basicmv.htm#i1007013" target="_blank" rel="external">https://docs.oracle.com/cd/E11882_01/server.112/e25554/basicmv.htm#i1007013</a></p>
 
       
     </div>
@@ -416,13 +428,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/03/17/Web-Cloud-Effect/">Web蓝天白云的极致体验</a></p>
+        <p><span>本文标题:</span><a href="/2017/07/13/20170713001/">【ORACLE】物化视图快速刷新限制条件</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">c-xuan</a></p>
-        <p><span>发布时间:</span>2016-03-17, 00:00:00</p>
-        <p><span>最后更新:</span>2016-09-25, 20:59:16</p>
+        <p><span>发布时间:</span>2017-07-13, 00:00:00</p>
+        <p><span>最后更新:</span>2017-07-13, 00:00:00</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/03/17/Web-Cloud-Effect/" title="Web蓝天白云的极致体验">http://c-xuan.com/2016/03/17/Web-Cloud-Effect/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://c-xuan.com/2016/03/17/Web-Cloud-Effect/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/07/13/20170713001/" title="【ORACLE】物化视图快速刷新限制条件">http://c-xuan.com/2017/07/13/20170713001/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://c-xuan.com/2017/07/13/20170713001/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -435,15 +447,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/03/19/CSS-For-Flip-Effect/">
-                    用CSS创建翻转动画
+                <a href="/2017/11/19/20171119001/">
+                    【ORACLE】导致物化视图快速刷新变慢的原因和解决
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/03/15/CSS-3D-Cloud/">
-                    怎样用CSS做出3D效果的云
+                <a href="/2017/03/07/tree-table-store5/">
+                    树形结构数据存储方案（五）：区间嵌套
                 </a>
             </div>
         
@@ -455,7 +467,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#所有快速刷新的物化视图都必须满足的条件"><span class="toc-number">1.</span> <span class="toc-text">所有快速刷新的物化视图都必须满足的条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#只包含联接的物化视图快速刷新限制条件"><span class="toc-number">2.</span> <span class="toc-text">只包含联接的物化视图快速刷新限制条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#包含聚合的物化视图快速刷新限制"><span class="toc-number">3.</span> <span class="toc-text">包含聚合的物化视图快速刷新限制</span></a></li></ol>
         
     </div>
     <style>
@@ -491,7 +503,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"Web蓝天白云的极致体验　| 靛青　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"【ORACLE】物化视图快速刷新限制条件　| 靛青　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -521,7 +533,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/03/19/CSS-For-Flip-Effect/" title="上一篇: 用CSS创建翻转动画">
+            <a href="/2017/11/19/20171119001/" title="上一篇: 【ORACLE】导致物化视图快速刷新变慢的原因和解决">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -529,7 +541,7 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/03/15/CSS-3D-Cloud/" title="下一篇: 怎样用CSS做出3D效果的云">
+            <a href="/2017/03/07/tree-table-store5/" title="下一篇: 树形结构数据存储方案（五）：区间嵌套">
                 <i class="fa fa-angle-right"></i>
             </a>
         

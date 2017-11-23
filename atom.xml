@@ -104,6 +104,65 @@
   </entry>
   
   <entry>
+    <title>【ORACLE】物化视图快速刷新限制条件</title>
+    <link href="http://c-xuan.com/2017/07/13/20170713001/"/>
+    <id>http://c-xuan.com/2017/07/13/20170713001/</id>
+    <published>2017-07-12T16:00:00.000Z</published>
+    <updated>2017-07-12T16:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>快速刷新的物化视图创建比较麻烦，限制条件比较多，本文参考Oracle 11g 11.2版本官方文档，总结一般情况、含有联接、含有聚合计算、UNION ALL等情况下的限制条件。</p>
+<a id="more"></a>
+<h3 id="所有快速刷新的物化视图都必须满足的条件"><a href="#所有快速刷新的物化视图都必须满足的条件" class="headerlink" title="所有快速刷新的物化视图都必须满足的条件"></a><span id="here">所有快速刷新的物化视图都必须满足的条件</span></h3><p>定义物化视图的查询语句限制如下：</p>
+<ul>
+<li>1.物化视图中不能含有非重复表达式的引用，例如<code>SYSDATE</code>和<code>ROWNUM</code>.</li>
+<li>2.物化视图中不能出现<code>RAW</code>或<code>LONG RAW</code>数据类型的引用。</li>
+<li>3.查询语句的<code>SELECT</code>部分语不能出现子查询。</li>
+<li>4.<code>SELECT</code>子句部分不能包含分析性质的函数，例如<code>RANK</code>。</li>
+<li>5.不能含有<code>MODEL</code>子句。</li>
+<li>6.子查询中不能含有<code>HAVING</code>子句。</li>
+<li>7.不能出现含有<code>ANY</code>,<code>ALL</code>或<code>NOT EXISTS</code>的嵌套子查询。</li>
+<li>8.不能含有<code>[START WITH …] CONNECT BY</code>子句。</li>
+<li>9.不能包含不同站点的多个明细表。</li>
+<li>10.<code>ON COMMIT</code>刷新方式的物化视图不能有远程明细表的引用。</li>
+<li>11.嵌套物化视图必须含有表联接或者聚合计算。</li>
+<li>12.物化视图包含联接和<code>GROUP BY</code>子句的聚合计算时，不能select from 一个有索引的表。</li>
+</ul>
+<h3 id="只包含联接的物化视图快速刷新限制条件"><a href="#只包含联接的物化视图快速刷新限制条件" class="headerlink" title="只包含联接的物化视图快速刷新限制条件"></a>只包含联接的物化视图快速刷新限制条件</h3><p>定义物化视图的查询语句只含有联接且没有聚合计算，实现快速刷新除满足<a href="#here">通用条件</a>外，还要满足条件如下：</p>
+<ul>
+<li>1.不能含有<code>GROUP BY</code>子句或聚合计算。</li>
+<li>2.<code>FROM</code>中出现的每个基表的<code>ROWID</code>必须出现在<code>SELECT</code>子句中。</li>
+<li>3.<code>FROM</code>中出现的每个基表都必须创建基于<code>ROWID</code>的物化视图日志(MATERIALIZED VIEW LOG)。</li>
+<li>4.<code>SELECT</code>子句中不能含有object类型的列。</li>
+</ul>
+<p><font color="red"><strong>另外，以下情况将会影响快速刷新的效率：</strong></font></p>
+<ul>
+<li><strong><font color="red">1.定义的查询语句含有外联接，如果这样的话，请考虑重写查询语句改为内连接。</font></strong></li>
+<li><strong><font color="red">2.<code>SELECT</code>子句中含有多个表的列运算。</font></strong></li>
+</ul>
+<h3 id="包含聚合的物化视图快速刷新限制"><a href="#包含聚合的物化视图快速刷新限制" class="headerlink" title="包含聚合的物化视图快速刷新限制"></a>包含聚合的物化视图快速刷新限制</h3><p>定义物化视图的查询语句含有聚合计算，实现快速刷新除满足<a href="#here">通用条件</a>外，还要满足条件如下：</p>
+<p>参考：<a href="https://docs.oracle.com/cd/E11882_01/server.112/e25554/basicmv.htm#i1007013" target="_blank" rel="external">https://docs.oracle.com/cd/E11882_01/server.112/e25554/basicmv.htm#i1007013</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;快速刷新的物化视图创建比较麻烦，限制条件比较多，本文参考Oracle 11g 11.2版本官方文档，总结一般情况、含有联接、含有聚合计算、UNION ALL等情况下的限制条件。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="码路刺客" scheme="http://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
+    
+    
+      <category term="数据库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+      <category term="ORACLE" scheme="http://c-xuan.com/tags/ORACLE/"/>
+    
+      <category term="物化视图" scheme="http://c-xuan.com/tags/%E7%89%A9%E5%8C%96%E8%A7%86%E5%9B%BE/"/>
+    
+      <category term="翻译" scheme="http://c-xuan.com/tags/%E7%BF%BB%E8%AF%91/"/>
+    
+  </entry>
+  
+  <entry>
     <title>树形结构数据存储方案（五）：区间嵌套</title>
     <link href="http://c-xuan.com/2017/03/07/tree-table-store5/"/>
     <id>http://c-xuan.com/2017/03/07/tree-table-store5/</id>
@@ -1285,51 +1344,6 @@
     
       <category term="生活点滴" scheme="http://c-xuan.com/categories/%E7%94%9F%E6%B4%BB%E7%82%B9%E6%BB%B4/"/>
     
-    
-      <category term="原创" scheme="http://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【PowerDesigner】Constraint name uniqueness问题及处理</title>
-    <link href="http://c-xuan.com/2016/09/12/ConstraintNameUniquenessProblem/"/>
-    <id>http://c-xuan.com/2016/09/12/ConstraintNameUniquenessProblem/</id>
-    <published>2016-09-12T15:31:09.000Z</published>
-    <updated>2016-09-22T16:13:27.608Z</updated>
-    
-    <content type="html"><![CDATA[<p>使用PowerDesigner生成数据库脚本时报 Constraint name uniqueness 错误：</p>
-<p><img src="/img/posts/ConstraintNameUniquenessProblem-1.png" alt="ConstraintNameUniquenessProblem-01"></p>
-<a id="more"></a>
-<p>双击每行错误，发现外键引用的名字有重复的：</p>
-<p><img src="/img/posts/ConstraintNameUniquenessProblem-2.png" alt="ConstraintNameUniquenessProblem-02"></p>
-<p>惯性去网上找解决办法，找到的主要是两个方法：</p>
-<p><strong>1.使用Automatic Correction</strong></p>
-<p>右键错误行，菜单中选择Automatic Correction，自动更正错误。</p>
-<p><img src="/img/posts/ConstraintNameUniquenessProblem-3.png" alt="ConstraintNameUniquenessProblem-03"></p>
-<p>这样Constraint name 就会自动编号处理。</p>
-<p><img src="/img/posts/ConstraintNameUniquenessProblem-4.png" alt="ConstraintNameUniquenessProblem-04"></p>
-<p><strong>2.手动修改Constraint name</strong></p>
-<p>在外键引用编辑页面，点击Constraint name最右面的那个头像，然后修改Constraint name名称就可以了。</p>
-<p><img src="/img/posts/ConstraintNameUniquenessProblem-5.png" alt="ConstraintNameUniquenessProblem-05"></p>
-<p>虽然可以解决问题，但感觉治标不治本。仔细看自动生成的Constraint name，应该是有一个模版，根据名称模板自动生成的。只要找到这个名称模板，根据自己的规则修改下不就好了。所以给出第三种处理方法。</p>
-<p><strong>3.修改引用名称模板</strong></p>
-<p>菜单项  数据库(Database)-&gt;Edit Current DBMS…<br>找到Scipt-&gt;Objects-&gt;Reference-&gt;ConstName节点，看到Value值就是自动生成的引用名称模板，具体含义就不解释了，对比下实际生成的引用名称就明白了，我改成 FK<em>%REFR% ，让自动生成的名称就是外键编辑窗口中自定义的Code名称加个FK</em>前缀就行了。</p>
-<p><img src="/img/posts/ConstraintNameUniquenessProblem-6.png" alt="ConstraintNameUniquenessProblem-06"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;使用PowerDesigner生成数据库脚本时报 Constraint name uniqueness 错误：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/img/posts/ConstraintNameUniquenessProblem-1.png&quot; alt=&quot;ConstraintNameUniquenessProblem-01&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="BI墨客" scheme="http://c-xuan.com/categories/BI%E5%A2%A8%E5%AE%A2/"/>
-    
-    
-      <category term="BI" scheme="http://c-xuan.com/tags/BI/"/>
-    
-      <category term="数据仓库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/"/>
     
       <category term="原创" scheme="http://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
     

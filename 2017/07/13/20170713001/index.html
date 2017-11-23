@@ -15,23 +15,16 @@
 
 
 
-<meta name="description" content="你见过新版的Apple TV视差效果么?非常棒，我们用CSS和jQuery来实现它，尽量看起来和原效果一样。">
+<meta name="description" content="快速刷新的物化视图创建比较麻烦，限制条件比较多，本文参考Oracle 11g 11.2版本官方文档，总结一般情况、含有联接、含有聚合计算、UNION ALL等情况下的限制条件。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="用CSS3 & jQuery创建apple TV海报视差效果">
-<meta property="og:url" content="http://c-xuan.com/2016/03/27/AppleTV-Poster-Like/index.html">
+<meta property="og:title" content="【ORACLE】物化视图快速刷新限制条件">
+<meta property="og:url" content="http://c-xuan.com/2017/07/13/20170713001/index.html">
 <meta property="og:site_name" content="靛青">
-<meta property="og:description" content="你见过新版的Apple TV视差效果么?非常棒，我们用CSS和jQuery来实现它，尽量看起来和原效果一样。">
-<meta property="og:image" content="http://c-xuan.com/img/posts/35.gif">
-<meta property="og:image" content="http://c-xuan.com/img/posts/36.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/37.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/38.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/39.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/40.jpg">
-<meta property="og:updated_time" content="2016-09-25T12:27:15.906Z">
+<meta property="og:description" content="快速刷新的物化视图创建比较麻烦，限制条件比较多，本文参考Oracle 11g 11.2版本官方文档，总结一般情况、含有联接、含有聚合计算、UNION ALL等情况下的限制条件。">
+<meta property="og:updated_time" content="2017-07-12T16:00:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="用CSS3 & jQuery创建apple TV海报视差效果">
-<meta name="twitter:description" content="你见过新版的Apple TV视差效果么?非常棒，我们用CSS和jQuery来实现它，尽量看起来和原效果一样。">
-<meta name="twitter:image" content="http://c-xuan.com/img/posts/35.gif">
+<meta name="twitter:title" content="【ORACLE】物化视图快速刷新限制条件">
+<meta name="twitter:description" content="快速刷新的物化视图创建比较麻烦，限制条件比较多，本文参考Oracle 11g 11.2版本官方文档，总结一般情况、含有联接、含有聚合计算、UNION ALL等情况下的限制条件。">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -63,7 +56,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>用CSS3 &amp; jQuery创建apple TV海报视差效果 | 靛青</title>
+<title>【ORACLE】物化视图快速刷新限制条件 | 靛青</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -352,11 +345,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap "><article id="post-AppleTV-Poster-Like" class="article article-type-post  animated pulse " itemscope itemprop="blogPost">
+      <div class="body-wrap "><article id="post-20170713001" class="article article-type-post  animated pulse " itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/03/27/AppleTV-Poster-Like/" class="article-date">
-      <time datetime="2016-03-26T16:00:00.000Z" itemprop="datePublished">2016-03-27</time>
+      <a href="/2017/07/13/20170713001/" class="article-date">
+      <time datetime="2017-07-12T16:00:00.000Z" itemprop="datePublished">2017-07-13</time>
 </a>
 
 
@@ -371,7 +364,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      用CSS3 &amp; jQuery创建apple TV海报视差效果
+      【ORACLE】物化视图快速刷新限制条件
     </h1>
   
 
@@ -386,7 +379,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSS/">CSS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jQuery/">jQuery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端编程/">前端编程</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/翻译/">翻译</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ORACLE/">ORACLE</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/物化视图/">物化视图</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/翻译/">翻译</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -396,193 +389,18 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>你见过新版的<strong>Apple TV视差效</strong>果么?非常棒，我们用CSS和jQuery来实现它，尽量看起来和原效果一样。</p>
-<center><img src="/img/posts/35.gif"></center>
-
+        <p>快速刷新的物化视图创建比较麻烦，限制条件比较多，本文参考Oracle 11g 11.2版本官方文档，总结一般情况、含有联接、含有聚合计算、UNION ALL等情况下的限制条件。</p>
 <a id="more"></a>
-<p>本教程里，我将使用CSS,HTML和jQuery来创建一个近似Apple TV视差效果，如果你正在阅读，我假设你对上述三种技术都有基本的了解。</p>
-<p>废话不多说，开始第一部分。</p>
-<h2 id="HTML页面"><a href="#HTML页面" class="headerlink" title="HTML页面"></a>HTML页面</h2><p>我们的页面结构像下面这样：</p>
-<pre><code>&lt;div class=&quot;poster&quot;&gt;
-  &lt;div class=&quot;shine&quot;&gt;&lt;/div&gt;
-  &lt;div class=&quot;layer-1&quot;&gt;&lt;/div&gt;
-  &lt;div class=&quot;layer-2&quot;&gt;&lt;/div&gt;
-  &lt;div class=&quot;layer-3&quot;&gt;&lt;/div&gt;
-  &lt;div class=&quot;layer-4&quot;&gt;&lt;/div&gt;
-  &lt;div class=&quot;layer-5&quot;&gt;&lt;/div&gt;
-&lt;/div&gt;
-</code></pre><p>首先，需要一个样式类为 <code>.poster</code> 的 <code>div</code> ，在这个 <code>div</code> 里包含5个其他样式的层 <code>div</code>。在这五个层 <code>div</code> 上有一个 <code>shine</code> div来添加一些闪光效果。</p>
-<h2 id="CSS部分"><a href="#CSS部分" class="headerlink" title="CSS部分"></a>CSS部分</h2><p>首先，添加以下代码确保网页 <code>body</code> 部分的高度是整个页面高度：</p>
-<pre><code>body, html { height: 100%; min-height: 100%; }
-</code></pre><p>再给 <code>body</code> 部分一些背景渐变颜色：</p>
-<pre><code>body { background: linear-gradient(to bottom, #f6f7fc 0%,#d5e1e8 40%); }
-</code></pre><p>为了让 <code>.poster</code> 有3D旋转的效果，父容器需要设置透视和变换效果。如我们所见，<code>div</code> 的父容器就是 <code>body</code> 本身，所以添加以下CSS代码：</p>
-<pre><code>body {
-    background: linear-gradient(to bottom, #f6f7fc 0%,#d5e1e8 40%);
-    transform-style: preserve-3d;
-    transform: perspective(800px);
-}
-</code></pre><p>现在给卡片设置样式跟大小，让它在页面居中，添加一些圆角跟阴影效果：</p>
-<pre><code>.poster {
-    width: 320px;
-    height: 500px;
-    position: absolute;
-    top: 50%; left: 50%;
-    margin: -250px 0 0 -160px;
-    border-radius: 5px;
-    box-shadow: 0 45px 100px rgba(0, 0, 0, 0.4);
-    overflow:hidden;
-}
-</code></pre><p>为了让海报居中，需要设置 <code>position</code> 的值为 <code>absolute</code>，<code>top:50%</code> , ‘left:50%’, 上部的 <code>margin</code> 值是 <code>div</code> 高度的一半的负数，左边的 <code>margin</code> 值是 <code>div</code> 宽度的一半的负数。需要记住的是 <code>.poster</code> 的中心也是整个页面的中心。</p>
-<center><img src="/img/posts/36.jpg"></center>
+<h3 id="所有快速刷新的物化视图都必须满足的条件"><a href="#所有快速刷新的物化视图都必须满足的条件" class="headerlink" title="所有快速刷新的物化视图都必须满足的条件"></a><span id="here">所有快速刷新的物化视图都必须满足的条件</span></h3><p>定义物化视图的查询语句限制如下：</p>
+<p>1.物化视图中不能含有非重复表达式的引用，例如SYSDATE和ROWNUM.<br>2.物化视图中不能出现RAW或LONG RAW数据类型的引用。<br>3.查询语句的SELECT部分语不能出现子查询。<br>4.SELECT子句部分不能包含分析性质的函数，例如RANK。<br>5.不能含有MODEL子句。<br>6.子查询中不能含有HAVING子句。<br>7.不能出现含有ANY,ALL或NOT EXISTS的嵌套子查询。<br>8.不能含有[START WITH …] CONNECT BY子句。<br>9.不能包含不同站点的多个明细表。<br>10.ON COMMIT刷新方式的物化视图不能有远程明细表的引用。<br>11.嵌套物化视图必须含有表联接或者聚合计算。<br>12.物化视图包含联接和GROUP BY子句的聚合计算时，不能select from 一个有索引的表。</p>
+<h3 id="只包含联接的物化视图快速刷新限制条件"><a href="#只包含联接的物化视图快速刷新限制条件" class="headerlink" title="只包含联接的物化视图快速刷新限制条件"></a>只包含联接的物化视图快速刷新限制条件</h3><p>定义物化视图的查询语句只含有联接且没有聚合计算，实现快速刷新除满足通用条件外，还要满足条件如下：</p>
+<p>1.不能含有GROUP BY子句或聚合计算。<br>2.FROM中出现的每个基表的ROWID必须出现在SELECT子句中。<br>3.FROM中出现的每个基表都必须创建基于ROWID的物化视图日志(MATERIALIZED VIEW LOG)。<br>4.SELECT子句中不能含有object类型的列。</p>
+<font color="red">另外，以下情况将会影响快速刷新的效率：</font>
 
-<p>我们可以用以下的CSS选择器来选择所有的层：</p>
-<pre><code>div[class *= &apos;layer-&apos;]
-</code></pre><p><code>.poster</code> 已经设计好了，来看看效果。</p>
-<p>所以，CSS选择了所有class类名里含有“layer-”的 <code>div</code>。</p>
-<p>现在，设置所有的层的 <code>position</code> 值是 <code>absolute</code>, <code>background-repeat</code> 值为 <code>no-repeat</code>, <code>background-position</code> 为 <code>top left</code>, 层背景的大小为100%宽度和自动高度。</p>
-<pre><code>div[class*=&quot;layer-&quot;] {
-    position: absolute;
-    top: -10px; left: -10px;
-    right: -10px; bottom: -10px;
-    background-size: 100% auto;
-    background-repeat: no-repeat;
-    background-position: 0 0;
-    transition:0.1s;
-}
-</code></pre><p>注意到 <code>top</code>,<code>left</code>,<code>right</code>,<code>bottom</code> 的值都是-10px,目的是让层的大小比 <code>poster</code> 的大20px，这样在各个层进行视察效果的时候就不会看到层的边缘部分了。</p>
-<p>以下是给每个层添加背景：</p>
-<pre><code>.layer-1 {
-    background-image: url(&apos;http://designmodo.com/demo/apple-tv-parallax/images/1.png&apos;);
-}
+<font color="red">1.定义的查询语句含有外联接，如果这样的话，请考虑重写查询语句改为内连接。</font><br><font color="red">2.SELECT子句中含有多个表的列运算。</font>
 
-.layer-2 {
-    background-image: url(&apos;http://designmodo.com/demo/apple-tv-parallax/images/2.png&apos;);
-}
-
-.layer-3 {
-    top: 0; bottom: 0;
-    left: 0; right: 0;
-    background-image: url(&apos;http://designmodo.com/demo/apple-tv-parallax/images/3.png&apos;);
-}
-
-.layer-4 {
-    background-image: url(&apos;http://designmodo.com/demo/apple-tv-parallax/images/4.png&apos;);
-}
-
-.layer-5 {
-    background-image: url(&apos;http://designmodo.com/demo/apple-tv-parallax/images/5.png&apos;);
-}
-</code></pre><p>在 <code>layer-3</code> 部分， 层不会移动，所以尺寸就不用太大了。</p>
-<center><img src="/img/posts/37.jpg"></center>
-
-<h2 id="JavaScript部分"><a href="#JavaScript部分" class="headerlink" title="JavaScript部分"></a>JavaScript部分</h2><p>在开始之前，请确保已经引入了jQuery库，否则会报错的。</p>
-<p>视差效果的逻辑是这样的，每当鼠标移动的时候，根据光标的位置，<code>.poster</code> 的 <code>transforms：translateY</code>,<code>rotate</code>,<code>rotateY</code> 属性将会改变。光标距离页面左上角越远，动画的效果越明显。</p>
-<p>公式就类似于这样的：offsetX=0.5-光标距离页面顶端的位置/宽度。</p>
-<p>为了每个元素的值都不一样，将给每一个光标公式返回的值乘以一个自定义的值，返回HTML的代码给每个会有动画的层元素添加 <code>data-offset=数字</code> 的属性。</p>
-<pre><code>&lt;div data-offset=&quot;15&quot; class=&quot;poster&quot;&gt;
-    &lt;div class=&quot;shine&quot;&gt;&lt;/div&gt;
-    &lt;div data-offset=&quot;-2&quot; class=&quot;layer-1&quot;&gt;&lt;/div&gt;
-    &lt;div class=&quot;layer-2&quot;&gt;&lt;/div&gt;
-    &lt;div data-offset=&quot;1&quot; class=&quot;layer-3&quot;&gt;&lt;/div&gt;
-    &lt;div data-offset=&quot;3&quot; class=&quot;layer-4&quot;&gt;&lt;/div&gt;
-    &lt;div data-offset=&quot;10&quot; class=&quot;layer-5&quot;&gt;&lt;/div&gt;
-&lt;/div&gt;
-</code></pre><p>每一个 <code>.layers</code> 的规则都相同，但是我们给他们应用到 <code>translateY</code> 和 <code>translateX</code> 属性上。</p>
-<p><code>data-offset</code> 属性的值越大，动画的效果越明显，可以改变这些值体验下。</p>
-<p>为了代码可读性，我们在JavaScript里给 <code>.poster</code> 赋值给 <code>$poster</code> 变量，<code>.shine</code> 给 <code>$shine</code> 变量，<code>$layer</code> 变量代表所有层，<code>w</code>,<code>h</code>代表页面的宽度和高度。</p>
-<pre><code>var $poster = $(&apos;.poster&apos;),
-$shine = $(&apos;.shine&apos;),
-$layer = $(&apos;div[class*=&quot;layer-&quot;]’);
-</code></pre><p>现在，需要考虑下当光标移动的时候获取到光标位置的问题。我们可以用 <code>$(window)</code> 的 <code>mousemove</code> 事件来实现，这个事件会返回一个JavaScript对象，含有我们需要的位置信息和其他一些我们暂时还用不到的变量。</p>
-<pre><code>$(window).on(&apos;mousemove&apos;, function(e) {
-    var w=e.currentTarget.innerWidth,h=e.currentTarget.innerHeight;
-    var offsetX = 0.5 - e.pageX / w, /* where e.pageX is our cursor X coordinate */
-    offsetY = 0.5 - e.pageY / h,
-    offsetPoster = $poster.data(&apos;offset&apos;), /* custom value for animation depth */
-    transformPoster = &apos;translateY(&apos; + -offsetX * offsetPoster + &apos;px) rotateX(&apos; + (-offsetY * offsetPoster) + &apos;deg) rotateY(&apos; + (offsetX * (offsetPoster * 2)) + &apos;deg)&apos;;
-
-    /* apply transform to $poster */
-    $poster.css(&apos;transform&apos;, transformPoster);
-
-    /* parallax foreach layer */
-    /* loop thought each layer */
-    /* get custom parallax value */
-    /* apply transform */
-    $layer.each(function() {
-        var $this = $(this);
-        var offsetLayer = $this.data(&apos;offset&apos;) || 0; /* get custom parallax value, if element docent have data-offset, then its 0 */
-        var transformLayer = &apos;translateX(&apos; + offsetX * offsetLayer + &apos;px) translateY(&apos; + offsetY * offsetLayer + &apos;px)&apos;;
-
-        $this.css(&apos;transform&apos;, transformLayer);
-    });
-});
-</code></pre><p>下一步，就是用上面解释的公式来计算<code>offsetY</code>和<code>offsetX</code>的值，然后就是把视差效果应用到<code>.posert</code>和每一个海报层。</p>
-<p>非常酷啊，现在我们就有了一个有视差效果的小部件了。</p>
-<center><img src="/img/posts/38.jpg"></center>
-
-
-<p>但是还没完,海报上的光泽部分还没设置</p>
-<p>现在回到CSS部分，给<code>.shine</code> div 绝对定位，添加一个渐变颜色效果，设置<code>z-index</code>属性值为100，让它在所有层的上面。</p>
-<pre><code>.shine {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(90deg, rgba(255,255,255,.5) 0%,rgba(255,255,255,0) 60%);
-    z-index: 100;
-}
-</code></pre><p>已经有了一个漂亮的闪光层在海报上，但是为了达到更逼真的效果，光照应该随着光标的移动而变化。</p>
-<center><img src="/img/posts/39.jpg"></center>
-
-<p>我们怎么做呢？可能你还记得无聊的初三数学课，当你想着你在学一些你从来都不会用到的公式的时候，我们现在就用到了。</p>
-<p>所以，倾斜的角度应该等于光标与海报中心形成三角形的角度的相反值。（还记得吧，海报的中心就是整个页面的中心啊，也就是页面宽度和高度的二分之一）</p>
-<center><img src="/img/posts/40.jpg"></center>
-
-<p>首先，找到光标与页面中心形成的三角形的直角边，光标与中心连线后作出一个直角三角形。</p>
-<p>然后用 <code>Math.atan2()</code> 函数得到中心点的角度值。注意这个函数的返回值使用弧度值来表示的，所以我们得在CSS中转换成角的度数，用以下公式：</p>
-<p>弧度值*180/pi = 角度值</p>
-<pre><code>var $poster = $(&apos;.poster&apos;);
-    var $shine = $(&apos;.shine&apos;);
-    var $layer = $(&apos;div[class *= &quot;layer-&quot;]&apos;);
-
-    $poster.data(&quot;offset&quot;,15);
-
-    $(window).on(&apos;mousemove&apos;, function(e) {
-        var w=e.currentTarget.innerWidth,h=e.currentTarget.innerHeight;
-        var offsetX = 0.5 - e.pageX / w, /* where e.pageX is our cursor X coordinate */
-        offsetY = 0.5 - e.pageY / h,
-        offsetPoster = $poster.data(&apos;offset&apos;), /* custom value for animation depth */
-        transformPoster = &apos;translateY(&apos; + -offsetX * offsetPoster + &apos;px) rotateX(&apos; + (-offsetY * offsetPoster) + &apos;deg) rotateY(&apos; + (offsetX * (offsetPoster * 2)) + &apos;deg)&apos;;
-
-        dy = e.pageY - h / 2,
-        dx = e.pageX - w / 2,
-        theta = Math.atan2(dy,dx), /* get angle in radians */
-        angle = theta * 180 / Math.PI; /* convert rad in degrees */
-
-        /* apply transform to $poster */
-        $poster.css(&apos;transform&apos;, transformPoster);
-
-        /* parallax foreach layer */
-        /* loop thought each layer */
-        /* get custom parallax value */
-        /* apply transform */
-        $layer.each(function() {
-            var $this = $(this);
-            var offsetLayer = $this.data(&apos;offset&apos;) || 0; /* get custom parallax value, if element docent have data-offset, then its 0 */
-            var transformLayer = &apos;translateX(&apos; + offsetX * offsetLayer + &apos;px) translateY(&apos; + offsetY * offsetLayer + &apos;px)&apos;;
-
-            $this.css(&apos;transform&apos;, transformLayer);
-        });
-    });
-</code></pre><p>你会发现角度值的范围是从-180到180度，以下代码修复这个问题让角度值从0-360度：</p>
-<pre><code>if (angle &lt; 0) {
-    angle = angle + 360;
-}
-</code></pre><p>现在角度有了，就可以随着光标的移动来动态改变渐变颜色的角度值：</p>
-<pre><code>$shine.css(&apos;background&apos;, &apos;linear-gradient(&apos; + (angle - 90) + &apos;deg, rgba(255,255,255,&apos; + e.pageY / h + &apos;) 0%,rgba(255,255,255,0) 80%)&apos;);
-</code></pre><p>注意：减去90度的原因是 <code>linear-gradient</code> 属性的需要，如果你使用 <code>-webkit-linear-gradient</code>,<code>-moz-linear-gradient</code>属性就没有必要。</p>
-<p>所有都OK了，可以点击来查看示例：</p>
-<p><a href="http://designmodo.com/demo/apple-tv-parallax/" target="_blank" rel="external">我是DEMO</a></p>
-<p>译自 <a href="http://designmodo.com/apple-tv-effect/" target="_blank" rel="external">http://designmodo.com/apple-tv-effect/</a></p>
+<h3 id="包含聚合的物化视图快速刷新限制"><a href="#包含聚合的物化视图快速刷新限制" class="headerlink" title="包含聚合的物化视图快速刷新限制"></a>包含聚合的物化视图快速刷新限制</h3><p>定义物化视图的查询语句含有聚合计算，实现快速刷新除满足通用条件外，还要满足条件如下：</p>
+<p>参考：<a href="https://docs.oracle.com/cd/E11882_01/server.112/e25554/basicmv.htm#i1007013" target="_blank" rel="external">https://docs.oracle.com/cd/E11882_01/server.112/e25554/basicmv.htm#i1007013</a></p>
 
       
     </div>
@@ -591,13 +409,13 @@ $layer = $(&apos;div[class*=&quot;layer-&quot;]’);
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/03/27/AppleTV-Poster-Like/">用CSS3 &amp; jQuery创建apple TV海报视差效果</a></p>
+        <p><span>本文标题:</span><a href="/2017/07/13/20170713001/">【ORACLE】物化视图快速刷新限制条件</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">c-xuan</a></p>
-        <p><span>发布时间:</span>2016-03-27, 00:00:00</p>
-        <p><span>最后更新:</span>2016-09-25, 20:27:15</p>
+        <p><span>发布时间:</span>2017-07-13, 00:00:00</p>
+        <p><span>最后更新:</span>2017-07-13, 00:00:00</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/03/27/AppleTV-Poster-Like/" title="用CSS3 &amp; jQuery创建apple TV海报视差效果">http://c-xuan.com/2016/03/27/AppleTV-Poster-Like/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://c-xuan.com/2016/03/27/AppleTV-Poster-Like/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/07/13/20170713001/" title="【ORACLE】物化视图快速刷新限制条件">http://c-xuan.com/2017/07/13/20170713001/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://c-xuan.com/2017/07/13/20170713001/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -610,15 +428,15 @@ $layer = $(&apos;div[class*=&quot;layer-&quot;]’);
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/04/07/SSIS-Pivot/">
-                    【SSIS】进行列转行格式的转换
+                <a href="/2017/11/19/20171119001/">
+                    【ORACLE】导致物化视图快速刷新变慢的原因和解决
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/03/23/YouDaoNoteMarkdownSupport/">
-                    有道笔记支持Markdown啦
+                <a href="/2017/03/07/tree-table-store5/">
+                    树形结构数据存储方案（五）：区间嵌套
                 </a>
             </div>
         
@@ -630,7 +448,7 @@ $layer = $(&apos;div[class*=&quot;layer-&quot;]’);
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTML页面"><span class="toc-number">1.</span> <span class="toc-text">HTML页面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS部分"><span class="toc-number">2.</span> <span class="toc-text">CSS部分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript部分"><span class="toc-number">3.</span> <span class="toc-text">JavaScript部分</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#所有快速刷新的物化视图都必须满足的条件"><span class="toc-number">1.</span> <span class="toc-text">所有快速刷新的物化视图都必须满足的条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#只包含联接的物化视图快速刷新限制条件"><span class="toc-number">2.</span> <span class="toc-text">只包含联接的物化视图快速刷新限制条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#包含聚合的物化视图快速刷新限制"><span class="toc-number">3.</span> <span class="toc-text">包含聚合的物化视图快速刷新限制</span></a></li></ol>
         
     </div>
     <style>
@@ -666,7 +484,7 @@ $layer = $(&apos;div[class*=&quot;layer-&quot;]’);
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"用CSS3 & jQuery创建apple TV海报视差效果　| 靛青　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"【ORACLE】物化视图快速刷新限制条件　| 靛青　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -696,7 +514,7 @@ $layer = $(&apos;div[class*=&quot;layer-&quot;]’);
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/04/07/SSIS-Pivot/" title="上一篇: 【SSIS】进行列转行格式的转换">
+            <a href="/2017/11/19/20171119001/" title="上一篇: 【ORACLE】导致物化视图快速刷新变慢的原因和解决">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -704,7 +522,7 @@ $layer = $(&apos;div[class*=&quot;layer-&quot;]’);
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/03/23/YouDaoNoteMarkdownSupport/" title="下一篇: 有道笔记支持Markdown啦">
+            <a href="/2017/03/07/tree-table-store5/" title="下一篇: 树形结构数据存储方案（五）：区间嵌套">
                 <i class="fa fa-angle-right"></i>
             </a>
         

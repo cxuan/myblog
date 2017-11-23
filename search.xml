@@ -121,6 +121,19 @@
 <li><strong><font color="red">2.<code>SELECT</code>子句中含有多个表的列运算。</font></strong></li>
 </ul>
 <h3 id="包含聚合的物化视图快速刷新限制"><a href="#包含聚合的物化视图快速刷新限制" class="headerlink" title="包含聚合的物化视图快速刷新限制"></a>包含聚合的物化视图快速刷新限制</h3><p>定义物化视图的查询语句含有聚合计算，实现快速刷新除满足<a href="#here">通用条件</a>外，还要满足条件如下：</p>
+<ul>
+<li>1.所有基表必须建立物化视图日志，创建日志必须满足：<ul>
+<li>1.1 包含在物化视图中引用的所有列，确保这些列没有被加密。</li>
+<li>1.2 需要指定<code>ROWID</code>和<code>INCLUDING NEW VAUES</code>。</li>
+<li>1.3 如果基表会有插入/直接导入，删除，更新数据的混合操作，需要指定<code>SEQUENCE</code>子句。</li>
+</ul>
+</li>
+<li>2.只有<code>SUM</code>,<code>COUNT</code>,<code>AVG</code>,<code>STDDEV</code>,<code>VARIANCE</code>,<code>MIN</code>和<code>MAX</code>才支持快速刷新。</li>
+<li>3.必须有写<code>COUNT(*)</code>。</li>
+<li>4.聚合函数必须出现在表达式的最外层，也就是说像<code>AVG(AVG(X))</code>或<code>AVG(x)+AVG(x)</code>都是不允许的。</li>
+<li>5.对每一个聚集计算如<code>AVG(expr)</code>,相应的<code>COUNT(expr)</code>也必须要有，Oracle建议<code>SUM(expr)</code>也写上。</li>
+<li>6.如果含有<code>VARIANCE(expr)</code>或<code>STDDEV(expr)</code>,<code>COUNT(expr)</code>和<code>SUM(expr)</code>都必须写，Oracle建议<code>SUM(expr*expr)</code>也写上。</li>
+</ul>
 <p>参考：<a href="https://docs.oracle.com/cd/E11882_01/server.112/e25554/basicmv.htm#i1007013" target="_blank" rel="external">https://docs.oracle.com/cd/E11882_01/server.112/e25554/basicmv.htm#i1007013</a></p>
 ]]></content>
       
@@ -736,9 +749,9 @@
         
         <tags>
             
-            <tag> 知识管理 </tag>
-            
             <tag> 原创 </tag>
+            
+            <tag> 知识管理 </tag>
             
         </tags>
         
@@ -1041,9 +1054,9 @@
         
         <tags>
             
-            <tag> 知识管理 </tag>
-            
             <tag> 原创 </tag>
+            
+            <tag> 知识管理 </tag>
             
         </tags>
         
@@ -2569,9 +2582,9 @@ $ npm install bespoke-fx
             
             <tag> jQuery </tag>
             
-            <tag> JavaScript </tag>
-            
             <tag> CSS </tag>
+            
+            <tag> JavaScript </tag>
             
             <tag> 设计 </tag>
             
@@ -2854,37 +2867,6 @@ $ npm install bespoke-fx
     </entry>
     
     <entry>
-      <title><![CDATA[比尔·盖茨：如果你看完了这些极其难懂的书，请给我投简历！]]></title>
-      <url>/2016/05/06/The-Art-of-Computer-Programming/</url>
-      <content type="html"><![CDATA[<p>在硅谷的世界里，有几本比《计算机编程艺术》（ “The Art of Computer Programming”）更受人认可的书，这些书也是斯坦福大学名誉教授Donald Knuth点名的非常不错的书。而在比尔盖茨的演讲中，他甚至表示：“如果你自认为是个非常优秀的程序员。那么你如果全部读完了Knuth编写的《计算机编程艺术》这本书的话。你一定要给我发份简历”。而这句好像开完笑的话，便可以说明比尔盖茨对其的高度评价，同时这些话也被收录在了这本书的第一卷的第三版的封面上。</p>
-<a id="more"></a>
-<p><img src="/img/posts/The-Art-of-Computer-Programming-1.jpg" alt="The-Art-of-Computer-Programming-1"></p>
-<p>据说，这句话是自盖茨曾经工作的辛迪加报纸专栏里流传出来的，而该专栏还称这本书非常具有传奇色彩，而它的难度更让很多人把它拒之门外，下面是其具体描述：<br>“这是一门让人难懂的学科，我花了好几个月时间去读它，看了20页之后就把书丢到一边，一星期之后又回来读另外20页。如果有人傲慢的说他看明白了书中的一切，那么Knuth将帮助他们了解世界是如何的深刻而复杂。”</p>
-<p><img src="/img/posts/The-Art-of-Computer-Programming-2.jpg" alt="The-Art-of-Computer-Programming-2"></p>
-<p>《计算机编程艺术》第一卷于1962年问世，它是第一本深入探讨编程的数学性和科学性的书籍。Knuth将这本书视为其一生的工作，并表示如果情况允许的话，这本书将共有七卷。最新的一本书于2015年12月发布。<br>旧金山企业家Carl Tashian在最近的一篇媒体文章中说道：“Donald Knuth的《计算机编程艺术》有四个精装册，每本的封面都是暗紫色，让人看起来很舒服。而书的本身也像人们透了这样的一个信息：“外行者靠边站，因为这本书是给真正从事编程工作的程序员看的。”<br>就已经跨过这个阶段的Knuth来说，他的技术能力已经成为高科技产业一个传奇。而想要超越单纯的编码深入到程序员工作底层的复杂性，程序员们必须要熟读这本书。<br>Amazon评论家在1997年写道：“如果算机科学有可兰经，圣经等等经书，那也这就是它。”<br>这本书因全面而彻底的讲述编程而闻名，当然，其同时也极大地挑战和挫伤了很多程序员的自尊心。这本书对Knuth的案例和其i严谨的数学证明即使是对于比尔盖茨来说仍是有着很大的困惑的。<br>尽管它有悠久的出版历史，Knuth通过不断更新《计算机编程艺术》的版本来获得更多的粉丝。如果你发现他的书中有任何错误，你就可能得到有名的Knuth奖励检查，总数为2.56美元的奖金。而这笔奖金还被他专门赋予了“一个十六进制的美元”的特殊意义。因此，我们可以认为这笔奖金的获得对于那些想要证明自己知道自己在说些什么的人来说是一笔宝贵的奖励。<br>当然，众所周知天下之大，我们不可能什么都知道。就像你需要开车，你并不需要知道内燃机是如何工作的这件事情一样，你也没有必要为了了解如何编写程序来强硬的读这本书，所以不要把这个事情看成一个必须的读本就好。当然，如果想要有更多的这方面探索的话，这本书还是非常不错的。</p>
-<p>原文链接：<a href="http://toutiao.com/a6279342772928119041/" target="_blank" rel="external">http://toutiao.com/a6279342772928119041/</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> IT看客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 转载 </tag>
-            
-            <tag> IT资讯 </tag>
-            
-            <tag> 计算机基原理 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[【SSIS】利用SSIS模板快速开发SSIS Package]]></title>
       <url>/2016/05/06/SSIS-Template-For-SSISPackage/</url>
       <content type="html"><![CDATA[<p>在做 ETL 项目的时候，往往很多 Package 的开发都是基于相同的模型和流程。比如在 Package 开始运行时需要向 Process Log 表中插入记录，在 Package 运行结束的时候更新运行状态。</p>
@@ -2930,63 +2912,31 @@ $ npm install bespoke-fx
     </entry>
     
     <entry>
-      <title><![CDATA[如何在没有主键的SQL Server表里删除重复行]]></title>
-      <url>/2016/04/26/Delete-duplicate-rows-with-no-primary-key/</url>
-      <content type="html"><![CDATA[<p>有没有遇到过在一个没有主键标志的表里存了重复的数据行，要把重复的行删掉保留一行的情况呢？我们可以设置SQL Server的ROWCUNT变量来限制影响的数据行数，默认的数据值是0，代表所有行，但是这个值可以在运行SQL语句之前进行设定。</p>
-<p>咱们首先建个测试用的表，插入几条条记录。</p>
-<pre><code>CREATE TABLE dbo.duplicateTest
-    (
-      [ID] [INT] ,
-      [FirstName] [VARCHAR](25) ,
-      [LastName] [VARCHAR](25)
-    )
-ON  [PRIMARY];
-
-INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;) 
-INSERT INTO dbo.duplicateTest VALUES(2, &apos;Dave&apos;,&apos;Jones&apos;) 
-INSERT INTO dbo.duplicateTest VALUES(3, &apos;Karen&apos;,&apos;White&apos;) 
-INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;)
-INSERT INTO dbo.duplicateTest VALUES(2, &apos;Dave&apos;,&apos;Jones&apos;)
-INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;) 
-</code></pre><a id="more"></a>
-<p>表内数据如下：</p>
-<pre><code>SELECT * FROM dbo.duplicateTest
-</code></pre><p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-1.jpg" alt="全部数据"></p>
-<p>我们要找到Bob Smith的记录可以用以下语句：</p>
-<pre><code>SELECT * FROM dbo.duplicateTest WHERE ID = 1 AND FirstName = &apos;Bob&apos; AND LastName = &apos;Smith&apos;
-</code></pre><p>找到三行数据</p>
-<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-2.jpg" alt="图2"></p>
-<p>在SQL Server 2000 和 2005上我们可以使用SET ROWCOUNT 命令来限制一条语句作用的行数，设置为1我们就可以删除一条重复的记录了。删除前与删除后的对比如下：</p>
-<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-3.jpg" alt="图3"></p>
-<p>在SQL Server 2005上，我们也可以用TOP命令。像下面这样：</p>
-<pre><code>SELECT * FROM dbo.duplicateTest 
-DELETE TOP(1) FROM dbo.duplicateTest WHERE ID = 1 
-SELECT * FROM dbo.duplicateTest
-</code></pre><p>删除前与删除后的对比如下：</p>
-<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-4.jpg" alt="图4"></p>
-<p><strong>总结</strong></p>
-<ul>
-<li>1、这个方法可以在表中没有明显标志字段来区分每一行的情况，但也有局限，如果一个表中不知道每行记录都有多少行重复的记录，就不能用了，TOP(1)也只是删除重复行中的一行。</li>
-<li>2、如果明确知道表里每行记录都有2行、3行……重复的记录，倒是个不错的选择。</li>
-<li>3、如果表里有个ID自增长的字段，就可以采用删掉重复行保留ID最小的那个行的方法了。</li>
-<li>4、如果表里没有ID自增长的字段，又不知道每行有多少条重复记录，重复记录行都一样，那还是先把记录DISTINCT出来存到临时表里，清空原表，再把临时表的数据插入原表，这样应该是最省事的了。</li>
-</ul>
+      <title><![CDATA[比尔·盖茨：如果你看完了这些极其难懂的书，请给我投简历！]]></title>
+      <url>/2016/05/06/The-Art-of-Computer-Programming/</url>
+      <content type="html"><![CDATA[<p>在硅谷的世界里，有几本比《计算机编程艺术》（ “The Art of Computer Programming”）更受人认可的书，这些书也是斯坦福大学名誉教授Donald Knuth点名的非常不错的书。而在比尔盖茨的演讲中，他甚至表示：“如果你自认为是个非常优秀的程序员。那么你如果全部读完了Knuth编写的《计算机编程艺术》这本书的话。你一定要给我发份简历”。而这句好像开完笑的话，便可以说明比尔盖茨对其的高度评价，同时这些话也被收录在了这本书的第一卷的第三版的封面上。</p>
+<a id="more"></a>
+<p><img src="/img/posts/The-Art-of-Computer-Programming-1.jpg" alt="The-Art-of-Computer-Programming-1"></p>
+<p>据说，这句话是自盖茨曾经工作的辛迪加报纸专栏里流传出来的，而该专栏还称这本书非常具有传奇色彩，而它的难度更让很多人把它拒之门外，下面是其具体描述：<br>“这是一门让人难懂的学科，我花了好几个月时间去读它，看了20页之后就把书丢到一边，一星期之后又回来读另外20页。如果有人傲慢的说他看明白了书中的一切，那么Knuth将帮助他们了解世界是如何的深刻而复杂。”</p>
+<p><img src="/img/posts/The-Art-of-Computer-Programming-2.jpg" alt="The-Art-of-Computer-Programming-2"></p>
+<p>《计算机编程艺术》第一卷于1962年问世，它是第一本深入探讨编程的数学性和科学性的书籍。Knuth将这本书视为其一生的工作，并表示如果情况允许的话，这本书将共有七卷。最新的一本书于2015年12月发布。<br>旧金山企业家Carl Tashian在最近的一篇媒体文章中说道：“Donald Knuth的《计算机编程艺术》有四个精装册，每本的封面都是暗紫色，让人看起来很舒服。而书的本身也像人们透了这样的一个信息：“外行者靠边站，因为这本书是给真正从事编程工作的程序员看的。”<br>就已经跨过这个阶段的Knuth来说，他的技术能力已经成为高科技产业一个传奇。而想要超越单纯的编码深入到程序员工作底层的复杂性，程序员们必须要熟读这本书。<br>Amazon评论家在1997年写道：“如果算机科学有可兰经，圣经等等经书，那也这就是它。”<br>这本书因全面而彻底的讲述编程而闻名，当然，其同时也极大地挑战和挫伤了很多程序员的自尊心。这本书对Knuth的案例和其i严谨的数学证明即使是对于比尔盖茨来说仍是有着很大的困惑的。<br>尽管它有悠久的出版历史，Knuth通过不断更新《计算机编程艺术》的版本来获得更多的粉丝。如果你发现他的书中有任何错误，你就可能得到有名的Knuth奖励检查，总数为2.56美元的奖金。而这笔奖金还被他专门赋予了“一个十六进制的美元”的特殊意义。因此，我们可以认为这笔奖金的获得对于那些想要证明自己知道自己在说些什么的人来说是一笔宝贵的奖励。<br>当然，众所周知天下之大，我们不可能什么都知道。就像你需要开车，你并不需要知道内燃机是如何工作的这件事情一样，你也没有必要为了了解如何编写程序来强硬的读这本书，所以不要把这个事情看成一个必须的读本就好。当然，如果想要有更多的这方面探索的话，这本书还是非常不错的。</p>
+<p>原文链接：<a href="http://toutiao.com/a6279342772928119041/" target="_blank" rel="external">http://toutiao.com/a6279342772928119041/</a></p>
 ]]></content>
       
         <categories>
             
-            <category> 码路刺客 </category>
+            <category> IT看客 </category>
             
         </categories>
         
         
         <tags>
             
-            <tag> 数据库 </tag>
+            <tag> 转载 </tag>
             
-            <tag> 原创 </tag>
+            <tag> IT资讯 </tag>
             
-            <tag> SQL Server </tag>
+            <tag> 计算机基原理 </tag>
             
         </tags>
         
@@ -3059,11 +3009,126 @@ SELECT * FROM dbo.duplicateTest
             
             <tag> jQuery </tag>
             
-            <tag> JavaScript </tag>
-            
             <tag> CSS </tag>
             
+            <tag> JavaScript </tag>
+            
             <tag> 设计 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[如何在没有主键的SQL Server表里删除重复行]]></title>
+      <url>/2016/04/26/Delete-duplicate-rows-with-no-primary-key/</url>
+      <content type="html"><![CDATA[<p>有没有遇到过在一个没有主键标志的表里存了重复的数据行，要把重复的行删掉保留一行的情况呢？我们可以设置SQL Server的ROWCUNT变量来限制影响的数据行数，默认的数据值是0，代表所有行，但是这个值可以在运行SQL语句之前进行设定。</p>
+<p>咱们首先建个测试用的表，插入几条条记录。</p>
+<pre><code>CREATE TABLE dbo.duplicateTest
+    (
+      [ID] [INT] ,
+      [FirstName] [VARCHAR](25) ,
+      [LastName] [VARCHAR](25)
+    )
+ON  [PRIMARY];
+
+INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;) 
+INSERT INTO dbo.duplicateTest VALUES(2, &apos;Dave&apos;,&apos;Jones&apos;) 
+INSERT INTO dbo.duplicateTest VALUES(3, &apos;Karen&apos;,&apos;White&apos;) 
+INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;)
+INSERT INTO dbo.duplicateTest VALUES(2, &apos;Dave&apos;,&apos;Jones&apos;)
+INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;) 
+</code></pre><a id="more"></a>
+<p>表内数据如下：</p>
+<pre><code>SELECT * FROM dbo.duplicateTest
+</code></pre><p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-1.jpg" alt="全部数据"></p>
+<p>我们要找到Bob Smith的记录可以用以下语句：</p>
+<pre><code>SELECT * FROM dbo.duplicateTest WHERE ID = 1 AND FirstName = &apos;Bob&apos; AND LastName = &apos;Smith&apos;
+</code></pre><p>找到三行数据</p>
+<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-2.jpg" alt="图2"></p>
+<p>在SQL Server 2000 和 2005上我们可以使用SET ROWCOUNT 命令来限制一条语句作用的行数，设置为1我们就可以删除一条重复的记录了。删除前与删除后的对比如下：</p>
+<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-3.jpg" alt="图3"></p>
+<p>在SQL Server 2005上，我们也可以用TOP命令。像下面这样：</p>
+<pre><code>SELECT * FROM dbo.duplicateTest 
+DELETE TOP(1) FROM dbo.duplicateTest WHERE ID = 1 
+SELECT * FROM dbo.duplicateTest
+</code></pre><p>删除前与删除后的对比如下：</p>
+<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-4.jpg" alt="图4"></p>
+<p><strong>总结</strong></p>
+<ul>
+<li>1、这个方法可以在表中没有明显标志字段来区分每一行的情况，但也有局限，如果一个表中不知道每行记录都有多少行重复的记录，就不能用了，TOP(1)也只是删除重复行中的一行。</li>
+<li>2、如果明确知道表里每行记录都有2行、3行……重复的记录，倒是个不错的选择。</li>
+<li>3、如果表里有个ID自增长的字段，就可以采用删掉重复行保留ID最小的那个行的方法了。</li>
+<li>4、如果表里没有ID自增长的字段，又不知道每行有多少条重复记录，重复记录行都一样，那还是先把记录DISTINCT出来存到临时表里，清空原表，再把临时表的数据插入原表，这样应该是最省事的了。</li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> 码路刺客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 数据库 </tag>
+            
+            <tag> 原创 </tag>
+            
+            <tag> SQL Server </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[SQL Server 2014的BI开发工具SSDT(以前的BIDS)安装]]></title>
+      <url>/2016/04/24/SQL-Server-2014-SSDT-Install/</url>
+      <content type="html"><![CDATA[<p>当我们安装好SQL Server 2014以后，会发现以前随数据库安装的BI开发套件SQL Server Reporting Services (SSRS), SQL Server Analysis Services (SSAS), 和 SQL Server Integration Services (SSIS)都不见了，怎么弄回来呢？</p>
+<p>在安装开发版或者企业版的SQL Server 2014的时候，你可能已经注意到以前被我们熟知的Business Intelligence Development Studio (BIDS) 已经没有了。从SQL Server 2012开始，这套BI应用工具集已经变成了SQL Server Data Tools)(SSDT)，在SQL Server 2014中，SSDT已经完全在SQL Server的安装过程里消失了。但是，要把Business Intelligence (BI)应用工具安装回来也是很容易的。</p>
+<a id="more"></a>
+<h3 id="安装SQL-Server-2014-BI-Tools"><a href="#安装SQL-Server-2014-BI-Tools" class="headerlink" title="安装SQL Server 2014 BI Tools"></a>安装SQL Server 2014 BI Tools</h3><p>在以前版本的SQL Server里，用来开发SSIS,SSAS,SSRS的BI解决方案都是包含在SQL Server的安装过程里的，在特性部分里可以进行勾选，如下图所示：</p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-1.jpg" alt="SQL-Server-2014-SSDT-Install-1"></p>
+<p>但是，当你安装SQL Server 2014的时候，你会发现选项没有了，如下图：</p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-2.jpg" alt="SQL-Server-2014-SSDT-Install-2"></p>
+<h3 id="SQL-Server-Data-Tools-SSDT和SSDT-BI-的演变"><a href="#SQL-Server-Data-Tools-SSDT和SSDT-BI-的演变" class="headerlink" title="SQL Server Data Tools (SSDT和SSDT-BI)的演变"></a>SQL Server Data Tools (SSDT和SSDT-BI)的演变</h3><p>由于微软公司在这方面的说明较少，让情况变得有点复杂。事实上，SQL Server 2014的SSDT已经成为了Visual Studio的插件为数据库重构，架构比较以及各种诸如视图、存储过程等对象的创建提供服务支持。而SSDT-BI这个工具也已经成为Visual Studio的一个组件，它才是开发SSIS,SSAS,SSRS解决方案的真正的开发工具。</p>
+<p>以上两个工具都可以在<a href="http://msdn.microsoft.com/en-us/hh297027.aspx" target="_blank" rel="external">http://msdn.microsoft.com/en-us/hh297027.aspx</a> 下载到。每个工具各提供两个版本，一个是Visual Studio 2012的，一个是 Visual Studio 2013的。</p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-3.jpg" alt="SQL-Server-2014-SSDT-Install-3"></p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-4.jpg" alt="SQL-Server-2014-SSDT-Install-4"></p>
+<h3 id="安装SQL-Server-Data-Tools-SSDT"><a href="#安装SQL-Server-Data-Tools-SSDT" class="headerlink" title="安装SQL Server Data Tools(SSDT)"></a>安装SQL Server Data Tools(SSDT)</h3><p>微软已经完全把SSDT的安装从SQL Server安装中独立出来了。安装过程也是非常简单，你只需要决定是否让BI工具成为Visual Studio 2013或者Visual Studio 2012的一部分就可以了。</p>
+<p>我们以Visual Studio 2013版本的为例。注意下，咱们不需要先安装Visual Studio 2013在电脑上然后再安装SSDT-BI。安装程序会安装Visual Studio 2013 shell然后提供BI工具作为一个组件。SSDT-BI安装将会添加以下组件：</p>
+<ul>
+<li>Microsoft .NET Framework 4.5.1,</li>
+<li>Microsoft Visual Studio 2012 Shell (Isolated) Redistributable Package,</li>
+<li>Microsoft Visual Studio 2012 Shell (Integrated) Redistributable Package,</li>
+<li>Microsoft Visual Studio 2013 Shell (Isolated) Redistributable Package,</li>
+<li>Microsoft Visual Studio 2013 Shell (Integrated) Redistributable Package,</li>
+<li>Microsoft Visual Studio Tools for Applications 2012,</li>
+<li>Microsoft Report Viewer 2014 Runtime.</li>
+</ul>
+<p>正式的安装过程跟SQL Server安装过程也很像。注意不管是否安装SQL Server 2014数据库程序，以下界面都选择全新安装。我安装的文件名称：SSDTBI_x86_CHS.exe，你可能会去找x64版本的，但是没有这个版本，官网下载的都是x86的，但是不影响安装。</p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-8.jpg" alt="SQL-Server-2014-SSDT-Install-8"></p>
+<p>安装过程的以下界面勾选SQL Server Data Tools - Business Intelligence就可以了。</p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-5.jpg" alt="SQL-Server-2014-SSDT-Install-5"></p>
+<p>安装好以后，在开始菜单出现 SQL Server Data Tools for Visual Studio 2013选项。</p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-6.jpg" alt="SQL-Server-2014-SSDT-Install-6"></p>
+<p>现在，我们可以打开SSDT for Visual Studio 2013来创建SSIS,SSAS,SSRS项目方案了。</p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-7.jpg" alt="SQL-Server-2014-SSDT-Install-7"></p>
+]]></content>
+      
+        <categories>
+            
+            <category> BI墨客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> BI </tag>
+            
+            <tag> 原创 </tag>
             
         </tags>
         
@@ -3199,58 +3264,6 @@ SELECT * FROM dbo.duplicateTest
             <tag> CSS </tag>
             
             <tag> 设计 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[SQL Server 2014的BI开发工具SSDT(以前的BIDS)安装]]></title>
-      <url>/2016/04/24/SQL-Server-2014-SSDT-Install/</url>
-      <content type="html"><![CDATA[<p>当我们安装好SQL Server 2014以后，会发现以前随数据库安装的BI开发套件SQL Server Reporting Services (SSRS), SQL Server Analysis Services (SSAS), 和 SQL Server Integration Services (SSIS)都不见了，怎么弄回来呢？</p>
-<p>在安装开发版或者企业版的SQL Server 2014的时候，你可能已经注意到以前被我们熟知的Business Intelligence Development Studio (BIDS) 已经没有了。从SQL Server 2012开始，这套BI应用工具集已经变成了SQL Server Data Tools)(SSDT)，在SQL Server 2014中，SSDT已经完全在SQL Server的安装过程里消失了。但是，要把Business Intelligence (BI)应用工具安装回来也是很容易的。</p>
-<a id="more"></a>
-<h3 id="安装SQL-Server-2014-BI-Tools"><a href="#安装SQL-Server-2014-BI-Tools" class="headerlink" title="安装SQL Server 2014 BI Tools"></a>安装SQL Server 2014 BI Tools</h3><p>在以前版本的SQL Server里，用来开发SSIS,SSAS,SSRS的BI解决方案都是包含在SQL Server的安装过程里的，在特性部分里可以进行勾选，如下图所示：</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-1.jpg" alt="SQL-Server-2014-SSDT-Install-1"></p>
-<p>但是，当你安装SQL Server 2014的时候，你会发现选项没有了，如下图：</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-2.jpg" alt="SQL-Server-2014-SSDT-Install-2"></p>
-<h3 id="SQL-Server-Data-Tools-SSDT和SSDT-BI-的演变"><a href="#SQL-Server-Data-Tools-SSDT和SSDT-BI-的演变" class="headerlink" title="SQL Server Data Tools (SSDT和SSDT-BI)的演变"></a>SQL Server Data Tools (SSDT和SSDT-BI)的演变</h3><p>由于微软公司在这方面的说明较少，让情况变得有点复杂。事实上，SQL Server 2014的SSDT已经成为了Visual Studio的插件为数据库重构，架构比较以及各种诸如视图、存储过程等对象的创建提供服务支持。而SSDT-BI这个工具也已经成为Visual Studio的一个组件，它才是开发SSIS,SSAS,SSRS解决方案的真正的开发工具。</p>
-<p>以上两个工具都可以在<a href="http://msdn.microsoft.com/en-us/hh297027.aspx" target="_blank" rel="external">http://msdn.microsoft.com/en-us/hh297027.aspx</a> 下载到。每个工具各提供两个版本，一个是Visual Studio 2012的，一个是 Visual Studio 2013的。</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-3.jpg" alt="SQL-Server-2014-SSDT-Install-3"></p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-4.jpg" alt="SQL-Server-2014-SSDT-Install-4"></p>
-<h3 id="安装SQL-Server-Data-Tools-SSDT"><a href="#安装SQL-Server-Data-Tools-SSDT" class="headerlink" title="安装SQL Server Data Tools(SSDT)"></a>安装SQL Server Data Tools(SSDT)</h3><p>微软已经完全把SSDT的安装从SQL Server安装中独立出来了。安装过程也是非常简单，你只需要决定是否让BI工具成为Visual Studio 2013或者Visual Studio 2012的一部分就可以了。</p>
-<p>我们以Visual Studio 2013版本的为例。注意下，咱们不需要先安装Visual Studio 2013在电脑上然后再安装SSDT-BI。安装程序会安装Visual Studio 2013 shell然后提供BI工具作为一个组件。SSDT-BI安装将会添加以下组件：</p>
-<ul>
-<li>Microsoft .NET Framework 4.5.1,</li>
-<li>Microsoft Visual Studio 2012 Shell (Isolated) Redistributable Package,</li>
-<li>Microsoft Visual Studio 2012 Shell (Integrated) Redistributable Package,</li>
-<li>Microsoft Visual Studio 2013 Shell (Isolated) Redistributable Package,</li>
-<li>Microsoft Visual Studio 2013 Shell (Integrated) Redistributable Package,</li>
-<li>Microsoft Visual Studio Tools for Applications 2012,</li>
-<li>Microsoft Report Viewer 2014 Runtime.</li>
-</ul>
-<p>正式的安装过程跟SQL Server安装过程也很像。注意不管是否安装SQL Server 2014数据库程序，以下界面都选择全新安装。我安装的文件名称：SSDTBI_x86_CHS.exe，你可能会去找x64版本的，但是没有这个版本，官网下载的都是x86的，但是不影响安装。</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-8.jpg" alt="SQL-Server-2014-SSDT-Install-8"></p>
-<p>安装过程的以下界面勾选SQL Server Data Tools - Business Intelligence就可以了。</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-5.jpg" alt="SQL-Server-2014-SSDT-Install-5"></p>
-<p>安装好以后，在开始菜单出现 SQL Server Data Tools for Visual Studio 2013选项。</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-6.jpg" alt="SQL-Server-2014-SSDT-Install-6"></p>
-<p>现在，我们可以打开SSDT for Visual Studio 2013来创建SSIS,SSAS,SSRS项目方案了。</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-7.jpg" alt="SQL-Server-2014-SSDT-Install-7"></p>
-]]></content>
-      
-        <categories>
-            
-            <category> BI墨客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> BI </tag>
-            
-            <tag> 原创 </tag>
             
         </tags>
         
@@ -3542,9 +3555,9 @@ $layer = $(&apos;div[class*=&quot;layer-&quot;]’);
             
             <tag> 翻译 </tag>
             
-            <tag> JavaScript </tag>
-            
             <tag> CSS </tag>
+            
+            <tag> JavaScript </tag>
             
         </tags>
         
@@ -4075,9 +4088,9 @@ $elem.otherStuff();
             
             <tag> 前端编程 </tag>
             
-            <tag> 原创 </tag>
-            
             <tag> IT资讯 </tag>
+            
+            <tag> 原创 </tag>
             
         </tags>
         
@@ -4314,9 +4327,9 @@ function update (){
             
             <tag> 翻译 </tag>
             
-            <tag> JavaScript </tag>
-            
             <tag> CSS </tag>
+            
+            <tag> JavaScript </tag>
             
         </tags>
         

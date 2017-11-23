@@ -140,6 +140,19 @@
 <li><strong><font color="red">2.<code>SELECT</code>子句中含有多个表的列运算。</font></strong></li>
 </ul>
 <h3 id="包含聚合的物化视图快速刷新限制"><a href="#包含聚合的物化视图快速刷新限制" class="headerlink" title="包含聚合的物化视图快速刷新限制"></a>包含聚合的物化视图快速刷新限制</h3><p>定义物化视图的查询语句含有聚合计算，实现快速刷新除满足<a href="#here">通用条件</a>外，还要满足条件如下：</p>
+<ul>
+<li>1.所有基表必须建立物化视图日志，创建日志必须满足：<ul>
+<li>1.1 包含在物化视图中引用的所有列，确保这些列没有被加密。</li>
+<li>1.2 需要指定<code>ROWID</code>和<code>INCLUDING NEW VAUES</code>。</li>
+<li>1.3 如果基表会有插入/直接导入，删除，更新数据的混合操作，需要指定<code>SEQUENCE</code>子句。</li>
+</ul>
+</li>
+<li>2.只有<code>SUM</code>,<code>COUNT</code>,<code>AVG</code>,<code>STDDEV</code>,<code>VARIANCE</code>,<code>MIN</code>和<code>MAX</code>才支持快速刷新。</li>
+<li>3.必须有写<code>COUNT(*)</code>。</li>
+<li>4.聚合函数必须出现在表达式的最外层，也就是说像<code>AVG(AVG(X))</code>或<code>AVG(x)+AVG(x)</code>都是不允许的。</li>
+<li>5.对每一个聚集计算如<code>AVG(expr)</code>,相应的<code>COUNT(expr)</code>也必须要有，Oracle建议<code>SUM(expr)</code>也写上。</li>
+<li>6.如果含有<code>VARIANCE(expr)</code>或<code>STDDEV(expr)</code>,<code>COUNT(expr)</code>和<code>SUM(expr)</code>都必须写，Oracle建议<code>SUM(expr*expr)</code>也写上。</li>
+</ul>
 <p>参考：<a href="https://docs.oracle.com/cd/E11882_01/server.112/e25554/basicmv.htm#i1007013" target="_blank" rel="external">https://docs.oracle.com/cd/E11882_01/server.112/e25554/basicmv.htm#i1007013</a></p>
 ]]></content>
     
@@ -790,9 +803,9 @@
       <category term="随笔感悟" scheme="http://c-xuan.com/categories/%E9%9A%8F%E7%AC%94%E6%84%9F%E6%82%9F/"/>
     
     
-      <category term="知识管理" scheme="http://c-xuan.com/tags/%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86/"/>
-    
       <category term="原创" scheme="http://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+      <category term="知识管理" scheme="http://c-xuan.com/tags/%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86/"/>
     
   </entry>
   
@@ -1111,9 +1124,9 @@
       <category term="随笔感悟" scheme="http://c-xuan.com/categories/%E9%9A%8F%E7%AC%94%E6%84%9F%E6%82%9F/"/>
     
     
-      <category term="知识管理" scheme="http://c-xuan.com/tags/%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86/"/>
-    
       <category term="原创" scheme="http://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+      <category term="知识管理" scheme="http://c-xuan.com/tags/%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86/"/>
     
   </entry>
   

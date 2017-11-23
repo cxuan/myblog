@@ -232,7 +232,7 @@ a {
 }
 #container .left-col {
   background: rgba(255,255,255,0.85);
-  width: 330px;
+  width: 23%;
   position: fixed;
   opacity: 1;
   -webkit-transition: all 0.2s ease-in;
@@ -252,7 +252,7 @@ a {
 #container .left-col .intrude-less {
   width: 76%;
   text-align: center;
-  margin: 100px auto 0;
+  margin: 17% auto 0;
 }
 #container .left-col li:hover {
   background: none;
@@ -262,7 +262,7 @@ a {
   right: 0;
   min-height: 100%;
   background: rgba(255,255,255,0.8);
-  left: 330px;
+  left: 23%;
   width: auto;
 }
 @media screen and (max-width: 800px) {
@@ -571,8 +571,8 @@ a {
   display: block;
   border: 5px solid #fff;
   border-radius: 50%;
-  width: 128px;
-  height: 128px;
+  width: 37%;
+  height: 37%;
   margin: 0 auto;
   position: relative;
   overflow: hidden;
@@ -819,9 +819,10 @@ a {
   transform: translate(-100%, 0);
 }
 #header .header-nav {
-  margin-top: 10px;
+  margin-top: 0px;
   width: 100%;
   position: absolute;
+  bottom: -56%;
   -webkit-transition: -webkit-transform 0.3s ease-in;
   -moz-transition: -moz-transform 0.3s ease-in;
   -ms-transition: -ms-transform 0.3s ease-in;
@@ -1253,8 +1254,8 @@ rgba(255,255,255,0.6)
 }
 .hide-labels {
   position: fixed;
-  left: 408px;
-  top: 30px;
+  left: 20%;
+  top: 6%;
   padding: 1px;
   border: none;
   border-radius: 5px;
@@ -1265,7 +1266,7 @@ rgba(255,255,255,0.6)
   font-weight: bold;
   color: #666;
   background: none;
-  opacity: 0.32;
+  opacity: 0.99;
   -webkit-appearance: none;
 }
 .hide-labels:hover {
@@ -1273,8 +1274,9 @@ rgba(255,255,255,0.6)
   opacity: 1;
 }
 #post-nav-button {
-  left: 330px;
+  left: 25%;
   top: 61.8%;
+  background: #ccc;
 }
 #post-nav-button a {
   border-bottom-color: transparent;
@@ -1913,12 +1915,12 @@ li:hover {
 }
 #tocButton {
   position: fixed;
-  left: 250px;
+  left: 17%;
   top: 385px;
   font-size: 0.9em;
   font-weight: bold;
   font-family: inherit;
-  color: #d3d3d3;
+  color: #999580;
   cursor: pointer;
   background: none;
   border: none;
@@ -1930,12 +1932,12 @@ li:hover {
 }
 .toc-article {
   position: fixed;
-  width: 260px;
+  width: 20%;
   top: 378px;
   bottom: 1em;
   left: 0;
   margin-left: 0;
-  padding: 6px 10px 10px 50px;
+  padding: 6px 10px 10px 2%;
   border-radius: 2.8%;
   overflow: auto;
 }
@@ -2542,7 +2544,7 @@ pre .javascript .function {
   font-family: "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
   text-shadow: 0 1px #fff;
   position: absolute;
-  bottom: 20px;
+  bottom: 1%;
   opacity: 0.75;
   width: 100%;
   text-align: center;
@@ -2773,7 +2775,7 @@ pre .javascript .function {
 }
 .switch-btn {
   margin: 0 auto;
-  margin-top: 23px;
+  margin-top: 8%;
   position: relative;
   width: 70px;
   text-align: center;
@@ -3270,10 +3272,11 @@ pre .javascript .function {
   overflow: hidden;
 }
 .search {
-  width: 84%;
-  height: 23px;
-  margin-top: 3%;
-  margin-left: 5%;
+  position: fixed;
+  left: 1.5%;
+  top: 1%;
+  width: 18.6%;
+  height: 2.5%;
   padding: 0;
   font-family: inherit;
   border: 1px solid transparent;
@@ -3313,7 +3316,14 @@ pre .javascript .function {
   box-shadow: 0 0 6px rgba(0,0,0,0.25);
 }
 #local-search-result {
-  margin: auto 0% auto 5%;
+  position: fixed;
+  left: 1.4%;
+  top: 5%;
+  width: 20%;
+  z-index: 99;
+  background: #eee;
+  overflow-y: auto;
+  max-height: 90%;
   font-size: 0.9rem;
   text-align: left;
   word-break: break-all;

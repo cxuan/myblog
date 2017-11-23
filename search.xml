@@ -736,9 +736,9 @@
         
         <tags>
             
-            <tag> 原创 </tag>
-            
             <tag> 知识管理 </tag>
+            
+            <tag> 原创 </tag>
             
         </tags>
         
@@ -1041,9 +1041,9 @@
         
         <tags>
             
-            <tag> 原创 </tag>
-            
             <tag> 知识管理 </tag>
+            
+            <tag> 原创 </tag>
             
         </tags>
         
@@ -2108,45 +2108,6 @@
     </entry>
     
     <entry>
-      <title><![CDATA[【T-SQL】group by 和grouping sets]]></title>
-      <url>/2016/06/13/SQL-GroupByAndGroupingSets/</url>
-      <content type="html"><![CDATA[<p>遇到一个情况，需要在内网系统中出一个统计报表。需要根据不同条件使用多个group by语句，需要将所有聚合的数据进行union操作来完成不同维度的统计查看。<br>知道发现了在SQL  Server 2008之后引入了grouping sets这个对于group by的增强后，上面的需求实现起来就简单的多，下面我们用AdventureWork中的表作为demo来解释一下grouping sets.</p>
-<a id="more"></a>
-<p>假设我现在需要两个维度查询我的销售额度，查询T-SQL如下：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-1.png" alt="SQL-GroupByAndGroupingSets-1"></p>
-<p>而使用SQL Server 2008之后新增的grouping sets语句，仅仅需要这样写：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-3.png" alt="SQL-GroupByAndGroupingSets-3"></p>
-<p>值得注意的是，虽然上面使用grouping sets语句和多个group by语句差生的结果完全一样，但顺序完全不同。</p>
-<p>grouping  sets，仅仅是语法糖？</p>
-<p>从上面的结果来看，使用grouping  sets仅仅是一个可以少写代码的语法糖，但实际情况是，group sets在遇到多个条件时，聚合是一次性从数据库中取出所有需要的操作的数据，在内存中对数据库进行聚合操作并生成结果。而union all是多次扫描表，将返回的结果进行union操作。这也就是为什么grouping  sets和union操作所返回的数据顺序是不同的原因。</p>
-<p>下面通过查看上面两个语句的IO和CPU来进行对比：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-5.png" alt="SQL-GroupByAndGroupingSets-5"></p>
-<p>通过上面的图来看grouping sets不仅仅只是语法糖，而是从执行原理做出了改变</p>
-<p>对于grouping sets来说，还经常和grouping函数联合使用，这个函数是反应目标列是否聚合，如果聚合则返回1，否则返回0，如下：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-6.png" alt="SQL-GroupByAndGroupingSets-6"></p>
-<p>转自：<a href="http://www.cnblogs.com/CareySon/archive/2011/12/19/2293245.html" target="_blank" rel="external">http://www.cnblogs.com/CareySon/archive/2011/12/19/2293245.html</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> 码路刺客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 转载 </tag>
-            
-            <tag> 数据库 </tag>
-            
-            <tag> SQL Server </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[【SSIS】几个通用属性]]></title>
       <url>/2016/06/13/SSIS-GeneralAttribures/</url>
       <content type="html"><![CDATA[<p>记录几个简单常用SSIS包常用属性，都是通用属性：</p>
@@ -2182,6 +2143,45 @@
             <tag> BI </tag>
             
             <tag> SSIS </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[【T-SQL】group by 和grouping sets]]></title>
+      <url>/2016/06/13/SQL-GroupByAndGroupingSets/</url>
+      <content type="html"><![CDATA[<p>遇到一个情况，需要在内网系统中出一个统计报表。需要根据不同条件使用多个group by语句，需要将所有聚合的数据进行union操作来完成不同维度的统计查看。<br>知道发现了在SQL  Server 2008之后引入了grouping sets这个对于group by的增强后，上面的需求实现起来就简单的多，下面我们用AdventureWork中的表作为demo来解释一下grouping sets.</p>
+<a id="more"></a>
+<p>假设我现在需要两个维度查询我的销售额度，查询T-SQL如下：</p>
+<p><img src="/img/posts/SQL-GroupByAndGroupingSets-1.png" alt="SQL-GroupByAndGroupingSets-1"></p>
+<p>而使用SQL Server 2008之后新增的grouping sets语句，仅仅需要这样写：</p>
+<p><img src="/img/posts/SQL-GroupByAndGroupingSets-3.png" alt="SQL-GroupByAndGroupingSets-3"></p>
+<p>值得注意的是，虽然上面使用grouping sets语句和多个group by语句差生的结果完全一样，但顺序完全不同。</p>
+<p>grouping  sets，仅仅是语法糖？</p>
+<p>从上面的结果来看，使用grouping  sets仅仅是一个可以少写代码的语法糖，但实际情况是，group sets在遇到多个条件时，聚合是一次性从数据库中取出所有需要的操作的数据，在内存中对数据库进行聚合操作并生成结果。而union all是多次扫描表，将返回的结果进行union操作。这也就是为什么grouping  sets和union操作所返回的数据顺序是不同的原因。</p>
+<p>下面通过查看上面两个语句的IO和CPU来进行对比：</p>
+<p><img src="/img/posts/SQL-GroupByAndGroupingSets-5.png" alt="SQL-GroupByAndGroupingSets-5"></p>
+<p>通过上面的图来看grouping sets不仅仅只是语法糖，而是从执行原理做出了改变</p>
+<p>对于grouping sets来说，还经常和grouping函数联合使用，这个函数是反应目标列是否聚合，如果聚合则返回1，否则返回0，如下：</p>
+<p><img src="/img/posts/SQL-GroupByAndGroupingSets-6.png" alt="SQL-GroupByAndGroupingSets-6"></p>
+<p>转自：<a href="http://www.cnblogs.com/CareySon/archive/2011/12/19/2293245.html" target="_blank" rel="external">http://www.cnblogs.com/CareySon/archive/2011/12/19/2293245.html</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> 码路刺客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 转载 </tag>
+            
+            <tag> 数据库 </tag>
+            
+            <tag> SQL Server </tag>
             
         </tags>
         
@@ -2854,6 +2854,37 @@ $ npm install bespoke-fx
     </entry>
     
     <entry>
+      <title><![CDATA[比尔·盖茨：如果你看完了这些极其难懂的书，请给我投简历！]]></title>
+      <url>/2016/05/06/The-Art-of-Computer-Programming/</url>
+      <content type="html"><![CDATA[<p>在硅谷的世界里，有几本比《计算机编程艺术》（ “The Art of Computer Programming”）更受人认可的书，这些书也是斯坦福大学名誉教授Donald Knuth点名的非常不错的书。而在比尔盖茨的演讲中，他甚至表示：“如果你自认为是个非常优秀的程序员。那么你如果全部读完了Knuth编写的《计算机编程艺术》这本书的话。你一定要给我发份简历”。而这句好像开完笑的话，便可以说明比尔盖茨对其的高度评价，同时这些话也被收录在了这本书的第一卷的第三版的封面上。</p>
+<a id="more"></a>
+<p><img src="/img/posts/The-Art-of-Computer-Programming-1.jpg" alt="The-Art-of-Computer-Programming-1"></p>
+<p>据说，这句话是自盖茨曾经工作的辛迪加报纸专栏里流传出来的，而该专栏还称这本书非常具有传奇色彩，而它的难度更让很多人把它拒之门外，下面是其具体描述：<br>“这是一门让人难懂的学科，我花了好几个月时间去读它，看了20页之后就把书丢到一边，一星期之后又回来读另外20页。如果有人傲慢的说他看明白了书中的一切，那么Knuth将帮助他们了解世界是如何的深刻而复杂。”</p>
+<p><img src="/img/posts/The-Art-of-Computer-Programming-2.jpg" alt="The-Art-of-Computer-Programming-2"></p>
+<p>《计算机编程艺术》第一卷于1962年问世，它是第一本深入探讨编程的数学性和科学性的书籍。Knuth将这本书视为其一生的工作，并表示如果情况允许的话，这本书将共有七卷。最新的一本书于2015年12月发布。<br>旧金山企业家Carl Tashian在最近的一篇媒体文章中说道：“Donald Knuth的《计算机编程艺术》有四个精装册，每本的封面都是暗紫色，让人看起来很舒服。而书的本身也像人们透了这样的一个信息：“外行者靠边站，因为这本书是给真正从事编程工作的程序员看的。”<br>就已经跨过这个阶段的Knuth来说，他的技术能力已经成为高科技产业一个传奇。而想要超越单纯的编码深入到程序员工作底层的复杂性，程序员们必须要熟读这本书。<br>Amazon评论家在1997年写道：“如果算机科学有可兰经，圣经等等经书，那也这就是它。”<br>这本书因全面而彻底的讲述编程而闻名，当然，其同时也极大地挑战和挫伤了很多程序员的自尊心。这本书对Knuth的案例和其i严谨的数学证明即使是对于比尔盖茨来说仍是有着很大的困惑的。<br>尽管它有悠久的出版历史，Knuth通过不断更新《计算机编程艺术》的版本来获得更多的粉丝。如果你发现他的书中有任何错误，你就可能得到有名的Knuth奖励检查，总数为2.56美元的奖金。而这笔奖金还被他专门赋予了“一个十六进制的美元”的特殊意义。因此，我们可以认为这笔奖金的获得对于那些想要证明自己知道自己在说些什么的人来说是一笔宝贵的奖励。<br>当然，众所周知天下之大，我们不可能什么都知道。就像你需要开车，你并不需要知道内燃机是如何工作的这件事情一样，你也没有必要为了了解如何编写程序来强硬的读这本书，所以不要把这个事情看成一个必须的读本就好。当然，如果想要有更多的这方面探索的话，这本书还是非常不错的。</p>
+<p>原文链接：<a href="http://toutiao.com/a6279342772928119041/" target="_blank" rel="external">http://toutiao.com/a6279342772928119041/</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> IT看客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 转载 </tag>
+            
+            <tag> IT资讯 </tag>
+            
+            <tag> 计算机基原理 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[【SSIS】利用SSIS模板快速开发SSIS Package]]></title>
       <url>/2016/05/06/SSIS-Template-For-SSISPackage/</url>
       <content type="html"><![CDATA[<p>在做 ETL 项目的时候，往往很多 Package 的开发都是基于相同的模型和流程。比如在 Package 开始运行时需要向 Process Log 表中插入记录，在 Package 运行结束的时候更新运行状态。</p>
@@ -2899,31 +2930,63 @@ $ npm install bespoke-fx
     </entry>
     
     <entry>
-      <title><![CDATA[比尔·盖茨：如果你看完了这些极其难懂的书，请给我投简历！]]></title>
-      <url>/2016/05/06/The-Art-of-Computer-Programming/</url>
-      <content type="html"><![CDATA[<p>在硅谷的世界里，有几本比《计算机编程艺术》（ “The Art of Computer Programming”）更受人认可的书，这些书也是斯坦福大学名誉教授Donald Knuth点名的非常不错的书。而在比尔盖茨的演讲中，他甚至表示：“如果你自认为是个非常优秀的程序员。那么你如果全部读完了Knuth编写的《计算机编程艺术》这本书的话。你一定要给我发份简历”。而这句好像开完笑的话，便可以说明比尔盖茨对其的高度评价，同时这些话也被收录在了这本书的第一卷的第三版的封面上。</p>
-<a id="more"></a>
-<p><img src="/img/posts/The-Art-of-Computer-Programming-1.jpg" alt="The-Art-of-Computer-Programming-1"></p>
-<p>据说，这句话是自盖茨曾经工作的辛迪加报纸专栏里流传出来的，而该专栏还称这本书非常具有传奇色彩，而它的难度更让很多人把它拒之门外，下面是其具体描述：<br>“这是一门让人难懂的学科，我花了好几个月时间去读它，看了20页之后就把书丢到一边，一星期之后又回来读另外20页。如果有人傲慢的说他看明白了书中的一切，那么Knuth将帮助他们了解世界是如何的深刻而复杂。”</p>
-<p><img src="/img/posts/The-Art-of-Computer-Programming-2.jpg" alt="The-Art-of-Computer-Programming-2"></p>
-<p>《计算机编程艺术》第一卷于1962年问世，它是第一本深入探讨编程的数学性和科学性的书籍。Knuth将这本书视为其一生的工作，并表示如果情况允许的话，这本书将共有七卷。最新的一本书于2015年12月发布。<br>旧金山企业家Carl Tashian在最近的一篇媒体文章中说道：“Donald Knuth的《计算机编程艺术》有四个精装册，每本的封面都是暗紫色，让人看起来很舒服。而书的本身也像人们透了这样的一个信息：“外行者靠边站，因为这本书是给真正从事编程工作的程序员看的。”<br>就已经跨过这个阶段的Knuth来说，他的技术能力已经成为高科技产业一个传奇。而想要超越单纯的编码深入到程序员工作底层的复杂性，程序员们必须要熟读这本书。<br>Amazon评论家在1997年写道：“如果算机科学有可兰经，圣经等等经书，那也这就是它。”<br>这本书因全面而彻底的讲述编程而闻名，当然，其同时也极大地挑战和挫伤了很多程序员的自尊心。这本书对Knuth的案例和其i严谨的数学证明即使是对于比尔盖茨来说仍是有着很大的困惑的。<br>尽管它有悠久的出版历史，Knuth通过不断更新《计算机编程艺术》的版本来获得更多的粉丝。如果你发现他的书中有任何错误，你就可能得到有名的Knuth奖励检查，总数为2.56美元的奖金。而这笔奖金还被他专门赋予了“一个十六进制的美元”的特殊意义。因此，我们可以认为这笔奖金的获得对于那些想要证明自己知道自己在说些什么的人来说是一笔宝贵的奖励。<br>当然，众所周知天下之大，我们不可能什么都知道。就像你需要开车，你并不需要知道内燃机是如何工作的这件事情一样，你也没有必要为了了解如何编写程序来强硬的读这本书，所以不要把这个事情看成一个必须的读本就好。当然，如果想要有更多的这方面探索的话，这本书还是非常不错的。</p>
-<p>原文链接：<a href="http://toutiao.com/a6279342772928119041/" target="_blank" rel="external">http://toutiao.com/a6279342772928119041/</a></p>
+      <title><![CDATA[如何在没有主键的SQL Server表里删除重复行]]></title>
+      <url>/2016/04/26/Delete-duplicate-rows-with-no-primary-key/</url>
+      <content type="html"><![CDATA[<p>有没有遇到过在一个没有主键标志的表里存了重复的数据行，要把重复的行删掉保留一行的情况呢？我们可以设置SQL Server的ROWCUNT变量来限制影响的数据行数，默认的数据值是0，代表所有行，但是这个值可以在运行SQL语句之前进行设定。</p>
+<p>咱们首先建个测试用的表，插入几条条记录。</p>
+<pre><code>CREATE TABLE dbo.duplicateTest
+    (
+      [ID] [INT] ,
+      [FirstName] [VARCHAR](25) ,
+      [LastName] [VARCHAR](25)
+    )
+ON  [PRIMARY];
+
+INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;) 
+INSERT INTO dbo.duplicateTest VALUES(2, &apos;Dave&apos;,&apos;Jones&apos;) 
+INSERT INTO dbo.duplicateTest VALUES(3, &apos;Karen&apos;,&apos;White&apos;) 
+INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;)
+INSERT INTO dbo.duplicateTest VALUES(2, &apos;Dave&apos;,&apos;Jones&apos;)
+INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;) 
+</code></pre><a id="more"></a>
+<p>表内数据如下：</p>
+<pre><code>SELECT * FROM dbo.duplicateTest
+</code></pre><p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-1.jpg" alt="全部数据"></p>
+<p>我们要找到Bob Smith的记录可以用以下语句：</p>
+<pre><code>SELECT * FROM dbo.duplicateTest WHERE ID = 1 AND FirstName = &apos;Bob&apos; AND LastName = &apos;Smith&apos;
+</code></pre><p>找到三行数据</p>
+<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-2.jpg" alt="图2"></p>
+<p>在SQL Server 2000 和 2005上我们可以使用SET ROWCOUNT 命令来限制一条语句作用的行数，设置为1我们就可以删除一条重复的记录了。删除前与删除后的对比如下：</p>
+<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-3.jpg" alt="图3"></p>
+<p>在SQL Server 2005上，我们也可以用TOP命令。像下面这样：</p>
+<pre><code>SELECT * FROM dbo.duplicateTest 
+DELETE TOP(1) FROM dbo.duplicateTest WHERE ID = 1 
+SELECT * FROM dbo.duplicateTest
+</code></pre><p>删除前与删除后的对比如下：</p>
+<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-4.jpg" alt="图4"></p>
+<p><strong>总结</strong></p>
+<ul>
+<li>1、这个方法可以在表中没有明显标志字段来区分每一行的情况，但也有局限，如果一个表中不知道每行记录都有多少行重复的记录，就不能用了，TOP(1)也只是删除重复行中的一行。</li>
+<li>2、如果明确知道表里每行记录都有2行、3行……重复的记录，倒是个不错的选择。</li>
+<li>3、如果表里有个ID自增长的字段，就可以采用删掉重复行保留ID最小的那个行的方法了。</li>
+<li>4、如果表里没有ID自增长的字段，又不知道每行有多少条重复记录，重复记录行都一样，那还是先把记录DISTINCT出来存到临时表里，清空原表，再把临时表的数据插入原表，这样应该是最省事的了。</li>
+</ul>
 ]]></content>
       
         <categories>
             
-            <category> IT看客 </category>
+            <category> 码路刺客 </category>
             
         </categories>
         
         
         <tags>
             
-            <tag> 转载 </tag>
+            <tag> 数据库 </tag>
             
-            <tag> IT资讯 </tag>
+            <tag> 原创 </tag>
             
-            <tag> 计算机基原理 </tag>
+            <tag> SQL Server </tag>
             
         </tags>
         
@@ -3001,69 +3064,6 @@ $ npm install bespoke-fx
             <tag> CSS </tag>
             
             <tag> 设计 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[如何在没有主键的SQL Server表里删除重复行]]></title>
-      <url>/2016/04/26/Delete-duplicate-rows-with-no-primary-key/</url>
-      <content type="html"><![CDATA[<p>有没有遇到过在一个没有主键标志的表里存了重复的数据行，要把重复的行删掉保留一行的情况呢？我们可以设置SQL Server的ROWCUNT变量来限制影响的数据行数，默认的数据值是0，代表所有行，但是这个值可以在运行SQL语句之前进行设定。</p>
-<p>咱们首先建个测试用的表，插入几条条记录。</p>
-<pre><code>CREATE TABLE dbo.duplicateTest
-    (
-      [ID] [INT] ,
-      [FirstName] [VARCHAR](25) ,
-      [LastName] [VARCHAR](25)
-    )
-ON  [PRIMARY];
-
-INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;) 
-INSERT INTO dbo.duplicateTest VALUES(2, &apos;Dave&apos;,&apos;Jones&apos;) 
-INSERT INTO dbo.duplicateTest VALUES(3, &apos;Karen&apos;,&apos;White&apos;) 
-INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;)
-INSERT INTO dbo.duplicateTest VALUES(2, &apos;Dave&apos;,&apos;Jones&apos;)
-INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;) 
-</code></pre><a id="more"></a>
-<p>表内数据如下：</p>
-<pre><code>SELECT * FROM dbo.duplicateTest
-</code></pre><p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-1.jpg" alt="全部数据"></p>
-<p>我们要找到Bob Smith的记录可以用以下语句：</p>
-<pre><code>SELECT * FROM dbo.duplicateTest WHERE ID = 1 AND FirstName = &apos;Bob&apos; AND LastName = &apos;Smith&apos;
-</code></pre><p>找到三行数据</p>
-<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-2.jpg" alt="图2"></p>
-<p>在SQL Server 2000 和 2005上我们可以使用SET ROWCOUNT 命令来限制一条语句作用的行数，设置为1我们就可以删除一条重复的记录了。删除前与删除后的对比如下：</p>
-<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-3.jpg" alt="图3"></p>
-<p>在SQL Server 2005上，我们也可以用TOP命令。像下面这样：</p>
-<pre><code>SELECT * FROM dbo.duplicateTest 
-DELETE TOP(1) FROM dbo.duplicateTest WHERE ID = 1 
-SELECT * FROM dbo.duplicateTest
-</code></pre><p>删除前与删除后的对比如下：</p>
-<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-4.jpg" alt="图4"></p>
-<p><strong>总结</strong></p>
-<ul>
-<li>1、这个方法可以在表中没有明显标志字段来区分每一行的情况，但也有局限，如果一个表中不知道每行记录都有多少行重复的记录，就不能用了，TOP(1)也只是删除重复行中的一行。</li>
-<li>2、如果明确知道表里每行记录都有2行、3行……重复的记录，倒是个不错的选择。</li>
-<li>3、如果表里有个ID自增长的字段，就可以采用删掉重复行保留ID最小的那个行的方法了。</li>
-<li>4、如果表里没有ID自增长的字段，又不知道每行有多少条重复记录，重复记录行都一样，那还是先把记录DISTINCT出来存到临时表里，清空原表，再把临时表的数据插入原表，这样应该是最省事的了。</li>
-</ul>
-]]></content>
-      
-        <categories>
-            
-            <category> 码路刺客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 数据库 </tag>
-            
-            <tag> 原创 </tag>
-            
-            <tag> SQL Server </tag>
             
         </tags>
         
@@ -3551,144 +3551,6 @@ $layer = $(&apos;div[class*=&quot;layer-&quot;]’);
     </entry>
     
     <entry>
-      <title><![CDATA[有道笔记支持Markdown啦]]></title>
-      <url>/2016/03/23/YouDaoNoteMarkdownSupport/</url>
-      <content type="html"><![CDATA[<p>继有道云协作率先支持markdown语法之后，令人振奋的markdown编辑功能现已在web版有道云笔记优雅上线，移动端也已支持预览！<br>不要着急，PC客户端也将随后支持markdown的编辑预览！</p>
-<h2 id="何为Markdown？"><a href="#何为Markdown？" class="headerlink" title="何为Markdown？"></a>何为Markdown？</h2><p>Markdown是一种轻量级的<strong>「标记语言」</strong>，通常为程序员群体所用，目前它已是全球最大的技术分享网站GitHub和技术问答网站StackOverFlow的御用书写格式。</p>
-<a id="more"></a>
-<p>非技术类笔记用户，千万不要被<strong>「标记」</strong>、<strong>「语言」</strong>吓到，markdown的语法十分简单，常用的标记符号不超过十个，用于日常写作记录绰绰有余，不到半小时就能完全掌握。</p>
-<p>就是这十个不到的标记符号，却能让人优雅地沉浸式记录，专注内容而不是纠结排版，达到<strong>「心中无尘，码字入神」</strong>的境界。</p>
-<h2 id="Markdown有哪些优点？"><a href="#Markdown有哪些优点？" class="headerlink" title="Markdown有哪些优点？"></a>Markdown有哪些优点？</h2><ul>
-<li>易写：纵使文科出身的你，半小时也能完全掌握常用的markdown基本语法.</li>
-<li>易读：兼顾「什么人都能打开」和「排版样式不变」。所谓「什么人都能打开」是指，Markdown属于兼容性极强的纯文本，可以用所有文本编辑器打开，避免了「用Windows的人打不开.pages文件」的情况发生;Markdown文本轻松可转成HTML、电子书等格式，而HTML是整个万维网（web）的标记语言，也是目前主流电子书格式（EPUB、mobi、Kindle专有格式.azw）所用的标记语言。人们如果采用Markdown标注格式，对日后的文件转换工作将大有裨益。所谓「排版样式不变」是指，在转化为富文本/HTML等格式后依然可以保留原本的排版和阅读体验。不会出现「我这篇稿子是用旧版Word写的，你用新版Word看可能格式会有点问题」的情况。</li>
-</ul>
-<h2 id="利用新增markdown功能做什么？"><a href="#利用新增markdown功能做什么？" class="headerlink" title="利用新增markdown功能做什么？"></a>利用新增markdown功能做什么？</h2><ul>
-<li><strong>1.代码高亮</strong></li>
-</ul>
-<center><img src="/img/posts/24.jpg"></center>
-
-<ul>
-<li><strong>2.制作待办事项Todo list</strong></li>
-</ul>
-<center><img src="/img/posts/25.jpg"></center>
-
-<ul>
-<li><strong>3.高效绘制 流程图、序列图、甘特图、表格</strong></li>
-</ul>
-<p><strong>流程图：</strong></p>
-<center><img src="/img/posts/26.jpg"></center>
-
-<p><strong>序列图：</strong></p>
-<center><img src="/img/posts/27.jpg"></center>
-
-<p><strong>甘特图：</strong></p>
-<center><img src="/img/posts/28.jpg"></center>
-
-<p><strong>表格：</strong></p>
-<center><img src="/img/posts/29.jpg"></center>
-
-<ul>
-<li><strong>4.书写LaTeX公式</strong></li>
-</ul>
-<center><img src="/img/posts/30.jpg"></center>
-
-<p>够酷吗？？</p>
-<p>如果你是<strong>程序员</strong>，你可以用来写日志、技术文稿、记录代码片段、起草邮件</p>
-<p>如果你是<strong>科研人员/工科学生</strong>，你可以用来撰写科技论文，记录工科笔记</p>
-<p>如果你是<strong>文字工作者/热爱文字</strong>的人，你可以用来写作</p>
-<p>如果你是<strong>微信运营人员</strong>，你可以用来替微信编辑器编写微信文章</p>
-<h2 id="web版有道云笔记做到了什么？"><a href="#web版有道云笔记做到了什么？" class="headerlink" title="web版有道云笔记做到了什么？"></a>web版有道云笔记做到了什么？</h2><ul>
-<li><strong>1.实时同步预览，即看即所得</strong></li>
-</ul>
-<p>我们将笔记编辑界面一分为二，左边为编辑区，右边为预览区，两区滚动条同步。在编辑区的操作能够实时反映在预览区，方便及时调整和查看最终版面效果。</p>
-<ul>
-<li><strong>2.工具栏内置markdown语法，方便新手学习</strong></li>
-</ul>
-<p>编辑页面顶端的工具栏有对应代码，如果你是一个不熟悉markdown语法的新手，可以先尝试用编辑栏辅助操作。也可以在网上搜索「markdown语法指南」进行学习。</p>
-<p>当然，如果你觉得工具栏太打扰，点击下方分界条即可隐藏工具栏，切换到极简编辑环境。</p>
-<ul>
-<li><strong>3.实时云端保存</strong></li>
-</ul>
-<p>markdown模式继承了有道云笔记的优良传统，你每一次击键的内容都会实时保存在云端，无需担心浏览器崩溃、设备没电、突然断网等情况。对于写作者来说，更是再也不用担心因为各种原因痛失文稿的情况了。</p>
-<h2 id="web版Markdown实操指南"><a href="#web版Markdown实操指南" class="headerlink" title="web版Markdown实操指南"></a>web版Markdown实操指南</h2><ul>
-<li>1.点击“新建”按钮，可选择新建markdown文件</li>
-</ul>
-<center><img src="/img/posts/31.jpg"></center>
-
-<ul>
-<li>2.可直接通过markdown语句编辑文件，也可以使用编辑器实现格式调整</li>
-</ul>
-<center><img src="/img/posts/32.jpg"></center>
-
-<ul>
-<li>3.界面大小可点击分界条调整。<br>点击“1”处，编辑器收起；<br>点击“2”处，左侧编辑区域全屏。</li>
-</ul>
-<center><img src="/img/posts/33.jpg"></center>
-
-<p>点击后效果如配图4</p>
-<center><img src="/img/posts/34.jpg"></center>
-
-<p>转自 <a href="http://toutiao.com/a6265175131246657794/" target="_blank" rel="external">http://toutiao.com/a6265175131246657794/</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> IT看客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> IT资讯 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[365cons：每天一枚图标，可免费下载]]></title>
-      <url>/2016/03/23/IconForEveryday/</url>
-      <content type="html"><![CDATA[<p>大家都听过“An apple a day keeps the doctor away”这句俚语，现在网络上也开始流行养成习惯持续去做某一件事情，例如先前介绍过的100 Days UI百日设计挑战每天发布一个全新使用者界面设计来启发灵感，当然你也可以为自己设定一个习惯养成目标，HabitRPG甚至让生活变成游戏，让你通过每日任务来建立好的生活习惯，这些想法都值得我们好好思考如何在一成不变的工作中产生更多价值。</p>
-<a id="more"></a>
-<center><img src="/img/posts/21.jpg"></center>
-
-
-<p>最近发现一个很棒的项目365cons，由一位西雅图视觉设计师Amy开发，网站每天会更新释出一个免费图标让使用者下载！Amy给自己立下一个目标：在2016年的每一天都发布一款全新图标，借此探索各种风格及练习设计相关技术。这些图标都与设计师生活息息相关，不局限于特定主题。</p>
-<p>365cons提供的图标格式包括：SVG、PNG两种版本，每一个图标都能在网页预览，无须注册就能免费下载使用。图标授权方式采MIT License，可被免费下载使用于任何地方。</p>
-<p>站点名称：<strong>365cons</strong></p>
-<p>网站连接：<a href="http://www.365cons.com/" target="_blank" rel="external">http://www.365cons.com/</a></p>
-<p><strong>使用教学</strong></p>
-<p><strong>STEP 1</strong></p>
-<p>开启365cons网站后，可以看到网站收录的免费图标项目，这些图标都是由设计师亲自设计开发，每日更新，不过网站没有提供订阅方式，如果你想追踪更新，那么可以定时回到网站来逛逛。</p>
-<center><img src="/img/posts/22.jpg"></center>
-
-<p><strong>STEP 2</strong></p>
-<p>在每一个图标下方，会有该图标编号、名称，以及SVG和PNG档案下载连接。</p>
-<center><img src="/img/posts/23.jpg"></center>
-
-<p>如果你有任何想法或建议，都可以通过网站上的网址与设计师联系，这些图标设计都非常可爱，也跟一般在外面看到的图标集不太一样，多了那么一点独特与天真浪漫！喜欢的话能将它下载下来使用，完全免费。</p>
-<p>转自 <a href="http://toutiao.com/a6262086085100273922/" target="_blank" rel="external">http://toutiao.com/a6262086085100273922/</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> IT看客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 转载 </tag>
-            
-            <tag> 设计 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[17个jQuery实用技巧]]></title>
       <url>/2016/03/23/17JqueryTips/</url>
       <content type="html"><![CDATA[<h2 id="检查-jQuery-是否加载"><a href="#检查-jQuery-是否加载" class="headerlink" title="检查 jQuery 是否加载"></a>检查 jQuery 是否加载</h2><p>在使用 jQuery 进行任何操作之前，你需要先确认它已经加载：</p>
@@ -3847,6 +3709,144 @@ $elem.otherStuff();
             <tag> 前端编程 </tag>
             
             <tag> jQuery </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[有道笔记支持Markdown啦]]></title>
+      <url>/2016/03/23/YouDaoNoteMarkdownSupport/</url>
+      <content type="html"><![CDATA[<p>继有道云协作率先支持markdown语法之后，令人振奋的markdown编辑功能现已在web版有道云笔记优雅上线，移动端也已支持预览！<br>不要着急，PC客户端也将随后支持markdown的编辑预览！</p>
+<h2 id="何为Markdown？"><a href="#何为Markdown？" class="headerlink" title="何为Markdown？"></a>何为Markdown？</h2><p>Markdown是一种轻量级的<strong>「标记语言」</strong>，通常为程序员群体所用，目前它已是全球最大的技术分享网站GitHub和技术问答网站StackOverFlow的御用书写格式。</p>
+<a id="more"></a>
+<p>非技术类笔记用户，千万不要被<strong>「标记」</strong>、<strong>「语言」</strong>吓到，markdown的语法十分简单，常用的标记符号不超过十个，用于日常写作记录绰绰有余，不到半小时就能完全掌握。</p>
+<p>就是这十个不到的标记符号，却能让人优雅地沉浸式记录，专注内容而不是纠结排版，达到<strong>「心中无尘，码字入神」</strong>的境界。</p>
+<h2 id="Markdown有哪些优点？"><a href="#Markdown有哪些优点？" class="headerlink" title="Markdown有哪些优点？"></a>Markdown有哪些优点？</h2><ul>
+<li>易写：纵使文科出身的你，半小时也能完全掌握常用的markdown基本语法.</li>
+<li>易读：兼顾「什么人都能打开」和「排版样式不变」。所谓「什么人都能打开」是指，Markdown属于兼容性极强的纯文本，可以用所有文本编辑器打开，避免了「用Windows的人打不开.pages文件」的情况发生;Markdown文本轻松可转成HTML、电子书等格式，而HTML是整个万维网（web）的标记语言，也是目前主流电子书格式（EPUB、mobi、Kindle专有格式.azw）所用的标记语言。人们如果采用Markdown标注格式，对日后的文件转换工作将大有裨益。所谓「排版样式不变」是指，在转化为富文本/HTML等格式后依然可以保留原本的排版和阅读体验。不会出现「我这篇稿子是用旧版Word写的，你用新版Word看可能格式会有点问题」的情况。</li>
+</ul>
+<h2 id="利用新增markdown功能做什么？"><a href="#利用新增markdown功能做什么？" class="headerlink" title="利用新增markdown功能做什么？"></a>利用新增markdown功能做什么？</h2><ul>
+<li><strong>1.代码高亮</strong></li>
+</ul>
+<center><img src="/img/posts/24.jpg"></center>
+
+<ul>
+<li><strong>2.制作待办事项Todo list</strong></li>
+</ul>
+<center><img src="/img/posts/25.jpg"></center>
+
+<ul>
+<li><strong>3.高效绘制 流程图、序列图、甘特图、表格</strong></li>
+</ul>
+<p><strong>流程图：</strong></p>
+<center><img src="/img/posts/26.jpg"></center>
+
+<p><strong>序列图：</strong></p>
+<center><img src="/img/posts/27.jpg"></center>
+
+<p><strong>甘特图：</strong></p>
+<center><img src="/img/posts/28.jpg"></center>
+
+<p><strong>表格：</strong></p>
+<center><img src="/img/posts/29.jpg"></center>
+
+<ul>
+<li><strong>4.书写LaTeX公式</strong></li>
+</ul>
+<center><img src="/img/posts/30.jpg"></center>
+
+<p>够酷吗？？</p>
+<p>如果你是<strong>程序员</strong>，你可以用来写日志、技术文稿、记录代码片段、起草邮件</p>
+<p>如果你是<strong>科研人员/工科学生</strong>，你可以用来撰写科技论文，记录工科笔记</p>
+<p>如果你是<strong>文字工作者/热爱文字</strong>的人，你可以用来写作</p>
+<p>如果你是<strong>微信运营人员</strong>，你可以用来替微信编辑器编写微信文章</p>
+<h2 id="web版有道云笔记做到了什么？"><a href="#web版有道云笔记做到了什么？" class="headerlink" title="web版有道云笔记做到了什么？"></a>web版有道云笔记做到了什么？</h2><ul>
+<li><strong>1.实时同步预览，即看即所得</strong></li>
+</ul>
+<p>我们将笔记编辑界面一分为二，左边为编辑区，右边为预览区，两区滚动条同步。在编辑区的操作能够实时反映在预览区，方便及时调整和查看最终版面效果。</p>
+<ul>
+<li><strong>2.工具栏内置markdown语法，方便新手学习</strong></li>
+</ul>
+<p>编辑页面顶端的工具栏有对应代码，如果你是一个不熟悉markdown语法的新手，可以先尝试用编辑栏辅助操作。也可以在网上搜索「markdown语法指南」进行学习。</p>
+<p>当然，如果你觉得工具栏太打扰，点击下方分界条即可隐藏工具栏，切换到极简编辑环境。</p>
+<ul>
+<li><strong>3.实时云端保存</strong></li>
+</ul>
+<p>markdown模式继承了有道云笔记的优良传统，你每一次击键的内容都会实时保存在云端，无需担心浏览器崩溃、设备没电、突然断网等情况。对于写作者来说，更是再也不用担心因为各种原因痛失文稿的情况了。</p>
+<h2 id="web版Markdown实操指南"><a href="#web版Markdown实操指南" class="headerlink" title="web版Markdown实操指南"></a>web版Markdown实操指南</h2><ul>
+<li>1.点击“新建”按钮，可选择新建markdown文件</li>
+</ul>
+<center><img src="/img/posts/31.jpg"></center>
+
+<ul>
+<li>2.可直接通过markdown语句编辑文件，也可以使用编辑器实现格式调整</li>
+</ul>
+<center><img src="/img/posts/32.jpg"></center>
+
+<ul>
+<li>3.界面大小可点击分界条调整。<br>点击“1”处，编辑器收起；<br>点击“2”处，左侧编辑区域全屏。</li>
+</ul>
+<center><img src="/img/posts/33.jpg"></center>
+
+<p>点击后效果如配图4</p>
+<center><img src="/img/posts/34.jpg"></center>
+
+<p>转自 <a href="http://toutiao.com/a6265175131246657794/" target="_blank" rel="external">http://toutiao.com/a6265175131246657794/</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> IT看客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> IT资讯 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[365cons：每天一枚图标，可免费下载]]></title>
+      <url>/2016/03/23/IconForEveryday/</url>
+      <content type="html"><![CDATA[<p>大家都听过“An apple a day keeps the doctor away”这句俚语，现在网络上也开始流行养成习惯持续去做某一件事情，例如先前介绍过的100 Days UI百日设计挑战每天发布一个全新使用者界面设计来启发灵感，当然你也可以为自己设定一个习惯养成目标，HabitRPG甚至让生活变成游戏，让你通过每日任务来建立好的生活习惯，这些想法都值得我们好好思考如何在一成不变的工作中产生更多价值。</p>
+<a id="more"></a>
+<center><img src="/img/posts/21.jpg"></center>
+
+
+<p>最近发现一个很棒的项目365cons，由一位西雅图视觉设计师Amy开发，网站每天会更新释出一个免费图标让使用者下载！Amy给自己立下一个目标：在2016年的每一天都发布一款全新图标，借此探索各种风格及练习设计相关技术。这些图标都与设计师生活息息相关，不局限于特定主题。</p>
+<p>365cons提供的图标格式包括：SVG、PNG两种版本，每一个图标都能在网页预览，无须注册就能免费下载使用。图标授权方式采MIT License，可被免费下载使用于任何地方。</p>
+<p>站点名称：<strong>365cons</strong></p>
+<p>网站连接：<a href="http://www.365cons.com/" target="_blank" rel="external">http://www.365cons.com/</a></p>
+<p><strong>使用教学</strong></p>
+<p><strong>STEP 1</strong></p>
+<p>开启365cons网站后，可以看到网站收录的免费图标项目，这些图标都是由设计师亲自设计开发，每日更新，不过网站没有提供订阅方式，如果你想追踪更新，那么可以定时回到网站来逛逛。</p>
+<center><img src="/img/posts/22.jpg"></center>
+
+<p><strong>STEP 2</strong></p>
+<p>在每一个图标下方，会有该图标编号、名称，以及SVG和PNG档案下载连接。</p>
+<center><img src="/img/posts/23.jpg"></center>
+
+<p>如果你有任何想法或建议，都可以通过网站上的网址与设计师联系，这些图标设计都非常可爱，也跟一般在外面看到的图标集不太一样，多了那么一点独特与天真浪漫！喜欢的话能将它下载下来使用，完全免费。</p>
+<p>转自 <a href="http://toutiao.com/a6262086085100273922/" target="_blank" rel="external">http://toutiao.com/a6262086085100273922/</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> IT看客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 转载 </tag>
+            
+            <tag> 设计 </tag>
             
         </tags>
         

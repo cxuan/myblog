@@ -3,6 +3,160 @@
   
     
     <entry>
+      <title><![CDATA[【cmd】IF ELSE 复制(copy)文件问题]]></title>
+      <url>/2017/11/28/20171128001/</url>
+      <content type="html"><![CDATA[<p>cmd中复制文件<code>COPY</code>命令一般都不会有问题，但是如果把<code>COPY</code>放在<code>IF ELSE</code>中可能导致批处理文件无法运行。</p>
+<a id="more"></a>
+<h3 id="测试场景"><a href="#测试场景" class="headerlink" title="测试场景"></a>测试场景</h3><p>文件夹结构如下：</p>
+<p>test <br><br>|—folder1<br><br>|—|—a(b).txt<br><br>|—folder2</p>
+<p>选择是否从folder1文件夹复制a(b).txt文件到folder2文件夹。</p>
+<h3 id="测试1"><a href="#测试1" class="headerlink" title="测试1"></a>测试1</h3><p>不进行选择交互，直接复制，脚本如下：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">@<span class="built_in">echo</span> off &amp; <span class="built_in">setlocal</span> EnableDelayedExpansion</div><div class="line"></div><div class="line"><span class="built_in">set</span> currentDir=<span class="variable">!cd!</span></div><div class="line"></div><div class="line"><span class="built_in">DEL</span> /Q <span class="variable">!currentDir!</span>\folder2\*.* </div><div class="line"></div><div class="line"><span class="built_in">copy</span> <span class="variable">!currentDir!</span>\folder1\a(b).txt <span class="variable">!currentDir!</span>\folder2</div></pre></td></tr></table></figure></p>
+<p>保存为test.bat文件后执行结果：<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">已复制         <span class="number">1</span> 个文件。</div><div class="line">请按任意键继续. . .</div></pre></td></tr></table></figure></p>
+<p>copy复制语句似乎没有问题。</p>
+<h3 id="测试2"><a href="#测试2" class="headerlink" title="测试2"></a>测试2</h3><p>修改以上脚本，添加选择交互：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">@<span class="built_in">echo</span> off &amp; <span class="built_in">setlocal</span> EnableDelayedExpansion</div><div class="line"></div><div class="line"><span class="built_in">set</span> /p yesno=是否复制(<span class="number">0</span>:否，<span class="number">1</span>:是): </div><div class="line"></div><div class="line"><span class="built_in">set</span> currentDir=<span class="variable">!cd!</span></div><div class="line"></div><div class="line"><span class="built_in">DEL</span> /Q <span class="variable">!currentDir!</span>\folder2\*.*</div><div class="line"></div><div class="line"><span class="keyword">if</span> <span class="variable">!yesno!</span> <span class="keyword">equ</span> <span class="number">1</span> ( </div><div class="line">    <span class="built_in">copy</span> <span class="variable">!currentDir!</span>\folder1\a(b).txt <span class="variable">!currentDir!</span>\folder2</div><div class="line">)<span class="keyword">else</span> (</div><div class="line">    <span class="built_in">echo</span> 没复制</div><div class="line">)</div><div class="line"></div><div class="line"><span class="built_in">pause</span></div></pre></td></tr></table></figure></p>
+<p>保存为test.bat文件后执行,发现一闪而过，看不到什么报错。</p>
+<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><p>经过多次测试，发现将copy中的路径用双引号(“”)包裹起来就可以了。<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">@<span class="built_in">echo</span> off &amp; <span class="built_in">setlocal</span> EnableDelayedExpansion</div><div class="line"></div><div class="line"><span class="built_in">set</span> /p yesno=是否复制(<span class="number">0</span>:否，<span class="number">1</span>:是): </div><div class="line"></div><div class="line"><span class="built_in">set</span> currentDir=<span class="variable">!cd!</span></div><div class="line"></div><div class="line"><span class="built_in">DEL</span> /Q <span class="variable">!currentDir!</span>\folder2\*.*</div><div class="line"></div><div class="line"><span class="keyword">if</span> <span class="variable">!yesno!</span> <span class="keyword">equ</span> <span class="number">1</span> ( </div><div class="line">    <span class="built_in">copy</span> "<span class="variable">!currentDir!</span>\folder1\a(b).txt" <span class="variable">!currentDir!</span>\folder2</div><div class="line">)<span class="keyword">else</span> (</div><div class="line">    <span class="built_in">echo</span> 没复制</div><div class="line">)</div><div class="line"></div><div class="line"><span class="built_in">pause</span></div></pre></td></tr></table></figure></p>
+<p>由此可见，应该是路径中某些符号没有转义导致的，目测是文件名中的<code>()</code>，修改脚本，用<code>^</code>将<code>()</code>转义：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">@<span class="built_in">echo</span> off &amp; <span class="built_in">setlocal</span> EnableDelayedExpansion</div><div class="line"></div><div class="line"><span class="built_in">set</span> /p yesno=是否复制(<span class="number">0</span>:否，<span class="number">1</span>:是): </div><div class="line"></div><div class="line"><span class="built_in">set</span> currentDir=<span class="variable">!cd!</span></div><div class="line"></div><div class="line"><span class="built_in">DEL</span> /Q <span class="variable">!currentDir!</span>\folder2\*.*</div><div class="line"></div><div class="line"><span class="keyword">if</span> <span class="variable">!yesno!</span> <span class="keyword">equ</span> <span class="number">1</span> ( </div><div class="line">    <span class="built_in">copy</span> <span class="variable">!currentDir!</span>\folder1\a^(b^).txt <span class="variable">!currentDir!</span>\folder2</div><div class="line">)<span class="keyword">else</span> (</div><div class="line">    <span class="built_in">echo</span> 没复制</div><div class="line">)</div><div class="line"></div><div class="line"><span class="built_in">pause</span></div></pre></td></tr></table></figure></p>
+<p>运行结果：<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">是否复制(<span class="number">0</span>:否，<span class="number">1</span>:是): <span class="number">1</span></div><div class="line">已复制         <span class="number">1</span> 个文件。</div><div class="line">请按任意键继续. . .</div></pre></td></tr></table></figure></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>虽然测试1中直接执行复制没问题，但是，将同样的语句放入IF ELSE中居然无法执行，还很难定位问题在哪里，所以解决方法是最好把路径放在双引号(“”)里面，就不用担心这个问题了，如果不这样就在IF ELSE中的路径把特殊字符转义。附上CMD中特殊字符转义说明。</p>
+<table>
+<thead>
+<tr>
+<th>Character to be escaped</th>
+<th>Escape Sequence</th>
+<th>Remark</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%</td>
+<td>%%</td>
+<td>May not always be required in doublequoted strings, just try</td>
+</tr>
+<tr>
+<td>^</td>
+<td>^^</td>
+<td>May not always be required in doublequoted strings, but it won’t hurt</td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td>^&amp;</td>
+<td>May not always be required in doublequoted strings, but it won’t hurt</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>^&lt;</td>
+<td>May not always be required in doublequoted strings, but it won’t hurt</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>^&gt;</td>
+<td>May not always be required in doublequoted strings, but it won’t hurt</td>
+</tr>
+<tr>
+<td>‘</td>
+<td>^’</td>
+<td>Required only in the FOR /F “subject” (i.e. between the parenthesis), unless backqis used</td>
+</tr>
+<tr>
+<td>`</td>
+<td>^`</td>
+<td>Required only in the FOR /F “subject” (i.e. between the parenthesis), if backq is used</td>
+</tr>
+<tr>
+<td>,</td>
+<td>^,</td>
+<td>Required only in the FOR /F “subject” (i.e. between the parenthesis), even in doublequoted strings</td>
+</tr>
+<tr>
+<td>;</td>
+<td>^;</td>
+<td>Required only in the FOR /F “subject” (i.e. between the parenthesis), even in doublequoted strings</td>
+</tr>
+<tr>
+<td>=</td>
+<td>^=</td>
+<td>Required only in the FOR /F “subject” (i.e. between the parenthesis), even in doublequoted strings</td>
+</tr>
+<tr>
+<td>(</td>
+<td>^(</td>
+<td>Required only in the FOR /F “subject” (i.e. between the parenthesis), even in doublequoted strings</td>
+</tr>
+<tr>
+<td>)</td>
+<td>^)</td>
+<td>Required only in the FOR /F “subject” (i.e. between the parenthesis), even in doublequoted strings</td>
+</tr>
+<tr>
+<td>!</td>
+<td>^^!</td>
+<td>Required only when delayed variable expansion is active</td>
+</tr>
+<tr>
+<td>“</td>
+<td>“”</td>
+<td>Required only inside the search pattern of FIND</td>
+</tr>
+<tr>
+<td>\</td>
+<td>\\</td>
+<td>Required only inside the regex pattern of FINDSTR</td>
+</tr>
+<tr>
+<td>[</td>
+<td>\[</td>
+<td>Required only inside the regex pattern of FINDSTR</td>
+</tr>
+<tr>
+<td>]</td>
+<td>\]</td>
+<td>Required only inside the regex pattern of FINDSTR</td>
+</tr>
+<tr>
+<td>\</td>
+<td>\\</td>
+<td>Required only inside the regex pattern of FINDSTR</td>
+</tr>
+<tr>
+<td>.</td>
+<td>\.</td>
+<td>Required only inside the regex pattern of FINDSTR</td>
+</tr>
+<tr>
+<td>*</td>
+<td>\*</td>
+<td>Required only inside the regex pattern of FINDSTR</td>
+</tr>
+<tr>
+<td>?</td>
+<td>\?</td>
+<td>Required only inside the regex pattern of FINDSTR</td>
+</tr>
+</tbody>
+</table>
+<p>参考：<a href="http://www.robvanderwoude.com/escapechars.php" target="_blank" rel="external">http://www.robvanderwoude.com/escapechars.php</a></p>
+<p>将表格快速转换为HTML,Markdown格式：<a href="http://www.tablesgenerator.com/]" target="_blank" rel="external">http://www.tablesgenerator.com/</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> 码路刺客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 原创 </tag>
+            
+            <tag> cmd </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[【ORACLE】导致物化视图快速刷新变慢的原因和解决]]></title>
       <url>/2017/11/19/20171119001/</url>
       <content type="html"><![CDATA[<p>ORACLE物化视图(MATERIALIZED VIEW)有自动提交刷新和手动刷新两种刷新方式，每种刷新方式下有增量刷新(FAST)、全量刷新(COMPLETE)、系统自动判断(FORCE)三种刷新方法。一般而言，增量刷新理论上是比全量刷新要快一些的，但是我发现某些情况下增量刷新将导致基表提交后延迟严重，下面将做一些测试。</p>
@@ -59,11 +213,15 @@
 <li>1.将含有多表列运算的外联接快速刷新物化视图改为定时全量刷新。</li>
 <li>2.将外联接重写为内连接。</li>
 </ul>
+<h3 id="最终解决"><a href="#最终解决" class="headerlink" title="最终解决"></a>最终解决</h3><p>经测试，除以上方法外，有一个方法比较完美的解决延迟问题的方案，就是在物化视图上的ROWID列创建索引。测试如下：<br>这里做了一个相对复杂的嵌套物化视图测试。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">drop</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> mv1;</div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> mv1</div><div class="line"><span class="keyword">BUILD</span> <span class="keyword">IMMEDIATE</span></div><div class="line"><span class="keyword">REFRESH</span> <span class="keyword">FAST</span> <span class="keyword">ON</span> <span class="keyword">COMMIT</span></div><div class="line"><span class="keyword">WITH</span> <span class="keyword">ROWID</span></div><div class="line"><span class="keyword">AS</span></div><div class="line"><span class="keyword">SELECT</span> a.id aid,a.c1 ac1,a.c2 ac2,b.c1 bc1,b.c2 bc2,</div><div class="line">       a.c2+b.c2 <span class="keyword">as</span> d,</div><div class="line">       (a.c2+b.c2)*b.c1 <span class="keyword">as</span> e,</div><div class="line">       a.rowid rida,b.rowid ridb</div><div class="line"> <span class="keyword">FROM</span> t1 a,t2 b</div><div class="line"><span class="keyword">WHERE</span> a.id=b.id(+)</div><div class="line">  <span class="keyword">AND</span> a.c1=b.c1(+);</div><div class="line"><span class="comment">--在mv1上所有rowid创建索引</span></div><div class="line"><span class="keyword">create</span> <span class="keyword">index</span> idx1 <span class="keyword">on</span> mv1(rida,ridb);</div><div class="line"><span class="comment">--创建mv1物化视图日志</span></div><div class="line"><span class="keyword">create</span> <span class="keyword">materialized</span> <span class="keyword">view</span> <span class="keyword">log</span> <span class="keyword">on</span> mv1 <span class="keyword">with</span> <span class="keyword">rowid</span>(aid,ac1,ac2,bc1,bc2) <span class="keyword">including</span> <span class="keyword">new</span> <span class="keyword">values</span>;</div><div class="line"><span class="comment">--mv2引用mv1</span></div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> mv2</div><div class="line"><span class="keyword">BUILD</span> <span class="keyword">IMMEDIATE</span></div><div class="line"><span class="keyword">REFRESH</span> <span class="keyword">FAST</span> <span class="keyword">ON</span> <span class="keyword">COMMIT</span></div><div class="line"><span class="keyword">WITH</span> <span class="keyword">ROWID</span></div><div class="line"><span class="keyword">AS</span></div><div class="line"><span class="keyword">select</span> a.aid,a.ac1,a.ac2,b.c1 bc1,b.c2 bc2,a.e,</div><div class="line">       a.e+b.c2 <span class="keyword">as</span> d,</div><div class="line">       a.rowid rida,b.rowid ridb</div><div class="line"><span class="keyword">from</span> mv1 a,t2 b</div><div class="line"><span class="keyword">where</span> a.aid=b.id(+)</div><div class="line">  <span class="keyword">and</span> a.ac1=b.c1(+);</div><div class="line"><span class="comment">--在mv2上所有rowid创建索引</span></div><div class="line"><span class="keyword">create</span> <span class="keyword">index</span> idx2 <span class="keyword">on</span> mv2(rida,ridb);</div></pre></td></tr></table></figure></p>
+<p>以上脚本，创建了两个物化视图mv1,mv2，每个物化视图都含有外联接，且select列中含有多个表列结算，mv1嵌套在mv2中，基表t2被两个物化视图引用，且t2的字段在两个物化视图中都参与计算，这样的情况应该算比较复杂了，注意每个物化视图都建立索引。</p>
+<p>查询mv2初始值:<br><code>select * from mv2 where aid = 509;</code><br><img src="/img/posts/20171119001-19.png" alt="20171119001-19"><br>修改基表t2的数据：<br><code>update t2 set c2=85 where id = 509;</code><br><img src="/img/posts/20171119001-20.png" alt="20171119001-20"><br>查看结果：<br><code>select * from mv2 where aid = 509;</code><br><img src="/img/posts/20171119001-21.png" alt="20171119001-21"><br>查看物化视图状态：<br><img src="/img/posts/20171119001-22.png" alt="20171119001-22"><br>可见物化视图为增量刷新，且没有之前发生的严重延迟的情况，需要注意的是，物化视图都要建立索引，且索引列都是包含rowid列的复合索引，如果是其他不是rowid列索引，可能没有任何效果。经测试，对基表增删改都是有效果的。</p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
 <li>1.创建含有外联接且刷新方式为REFRESH FAST ON COMMIT的物化视图时，如果select列里含有多个表中取某些列做运算，注意了，这时更新非主表的数据(增删改)，那么基表提交数据后将有可能导致延迟阻塞，这个时间比物化视图全量刷新还要慢。</li>
 <li>2.除上述情况，例如物化视图都是内连接，有外联接但是没有多个表列做运算等，增量刷新都没问题。</li>
-<li>3.至于多表列运算的外联接物化视图增量刷新很慢的原因，与ORACLE物化视图的刷新机制有关，官方文档也有提及这种情况会影响效率，建议最好改为内连接。</li>
-<li>4.解决方法是改为定时全量刷新或者改外联接为内连接或者利用嵌套物化视图，或者还有其他方法，总之就是为了避开这种情况。</li>
+<li><del>3.至于多表列运算的外联接物化视图增量刷新很慢的原因，与ORACLE物化视图的刷新机制有关，官方文档也有提及这种情况会影响效率，建议最好改为内连接。</del></li>
+<li><del>4.解决方法是改为定时全量刷新或者改外联接为内连接或者利用嵌套物化视图，或者还有其他方法，总之就是为了避开这种情况。</del></li>
+<li>3.比较靠谱的解决方案是在多表列运算的外联接物化视图上创建包含rowid列的索引，创建与不创建索引在这个问题上显现出天壤之别。</li>
 </ul>
 ]]></content>
       
@@ -2201,6 +2359,47 @@
     </entry>
     
     <entry>
+      <title><![CDATA[放开那程序猿！构建业务导向的大数据云平台]]></title>
+      <url>/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/</url>
+      <content type="html"><![CDATA[<p>按数据处理方式及使用目标，企业级IT系统可分为OLTP和OLAP系统。简而言之，OLTP系统生产数据，OLAP系统加工数据。从数据到智慧的转换金字塔上看，OLTP系统实现了底层的数据产生和存储以及面向事务的信息整合，在这之上的各层就要依赖OLAP系统了。OLAP概念源自决策支持系统（DSS），企业中的数据仓库、数据集市、统计报表、驾驶舱、数据挖掘等都属于OLAP体系。其中，数据仓库和数据集市主要实现信息整合，一般统称为数据整合平台。统计报表、驾驶舱、数据挖掘进一步利用数据整合平台的成果，帮助用户发现知识并最终形成智慧。 </p>
+<a id="more"></a>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-1.png" alt="BuildBusinessOrientedBigDataCloudPlatform-1"></p>
+<p>OLAP系统的主要用户是分析人员和管理人员，目标是支持管理决策，依据是企业生产经营过程中产生的全量数据，是一个按目标使用场景对数据进行加工、利用的过程。这过程一般可以划分五个阶段：业务部门定义需求；IT部门根据需求获取并整合相关数据；IT部门根据需求设计分析模型；IT部门开发实施并发布；业务部门应用并衡量实际成效。在传统的数据基础和技术环境下，这个周期可能要经历较漫长的时间。还在建设OLAP体系的情况自不必多说，即便已建成OLAP体系统，要及时响应业务部门的需求也是较困难的，而且很有可能最终的交付质量不能达到需求方的预期。</p>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-2.png" alt="BuildBusinessOrientedBigDataCloudPlatform-2"></p>
+<p>下图是目前较常见的OLAP体系简图，上游系统指那些OLTP系统，是数据源。数据整合平台包括ODS、数据仓库、数据集市等，主要实现数据整合。下游系统指那些利用数据整合平台成果的系统，包括统计报表、驾驶舱、数据挖掘等。其中，数据整合平台承上启下，在整个OLAP体系中非常重要。按照目前较普遍的架构，从上游到下游的数据流向，至少分为同构层、整合层、应用层。其中同构层在模型上基本与上游接入数据源基本保持一致，整合层一般会采用高范式模型进行数据整合，应用层面向下游具体应用采用星型模型。这个架构是在Inmon帮和Kimball派十几年如一日的不断撕逼和妥协中演进出来的，应该是一种最佳实践。但随着互联网+大数据时代到来，对数据应用有着更高效、更深入的要求，这种架构本身固有的缺点被不断放大。</p>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-3.png" alt="BuildBusinessOrientedBigDataCloudPlatform-3"></p>
+<p><strong>开发周期长</strong></p>
+<p>为了避免因上游系统接入模型的变化而导致数据整合平台模型的被动调整，整合层建模时一般会采用较高范式实现高内聚、低耦合，ER实体较多、关系复杂。这样就增加了ETL设计、开发以及测试的复杂度，同时ETL程序执行效率也低。业务部门提出的需求，IT首先由下至上逐层对模型进行分析，即便只需在应用层开发，基于上述原因也需要一周以上。如果涉及要改动整合层，开发周期要一个月左右，业务部门显然是不能接受的。最后的结局不用猜都知道，苦逼的程序猿只能再一次强睁熊猫眼天天加班赶工。但是故事并没有到此结束，马上一个意想不到但细细想想又是顺理成章的伴生问题发生了。</p>
+<p><strong>架构迅速变坏</strong></p>
+<p>在日复一日的高压下，程序猿只能另辟蹊径为自己减负。既然工作量是由于数据模型和层次的复杂性引起的，那最有效的减少工作量的方法无非就是：1、绕过整合层，数据直接从同构层到应用层。2、还是从通过整合层，但使用面向应用的自建模型。无论哪种方法，都使整合层形同虚设，从同构层到应用层形成一个个数据井道。虽然单个开发任务的开发时间缩短了，但各数据井道之间无法复用，所以总的开发时间绝对要更多，而且后期的维护工作将是一场噩梦。</p>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-4.png" alt="BuildBusinessOrientedBigDataCloudPlatform-4"></p>
+<p><strong>效率低</strong></p>
+<p>架构变坏后，数据一致性无法保证，大量数据重复存储，大量指标重复计算，ETL作业数急剧上升，数据整合平台效率自然会越来越差。即便架构还能保持，但随着时间的推移，数据量及业务需求不断增加，架构上倾向分割出更多的层次，以便实现更多的复用。随着层次的增加，数据迁移的路径就变长了，长久以往也难逃低效率的宿命。</p>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-5.png" alt="BuildBusinessOrientedBigDataCloudPlatform-5"></p>
+<p>再回顾下OLAP数据应用的五个阶段，从业务提出需求到业务应用验证形成闭环，这过程是由IT导向推动的，IT首先与业务讨论分析需求，在业务模型层面中达成共识，然后再映射到系统模型，实现对来自上游系统的数据进行加工处理，最后通过OLAP系统将结果在业务语境中展现给用户，之前讨论的所有弊病都此有关。而对于像银行、保险等发展较成熟的行业，其业务语境、模型是较稳定的，支持业务开展的上游IT系统的系统模型也应该是相对稳定的，因此业务模型和系统模型间能形成较稳定的映射关系。这样只要能达到足够细的粒度，就能实现操纵业务模型来改变系统模型的目的。而业务模型又能被业务所能理解，因此这个闭环过程就可以完全由业务导向不需要IT的参与，整个过程可以简化为：业务设计模型，业务应用验证。</p>
+<p>文／season7（简书作者）<br>原文链接：<a href="http://www.jianshu.com/p/d55d8eeac219" target="_blank" rel="external">http://www.jianshu.com/p/d55d8eeac219</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> BI墨客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 转载 </tag>
+            
+            <tag> BI </tag>
+            
+            <tag> BigData </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[房地产行业商业智能解决方案分享]]></title>
       <url>/2016/06/05/RealEstateBISolutionCaseShare/</url>
       <content type="html"><![CDATA[<p>中国地产行业经过了20多年的发展，房地产行业整合已成大势所趋，逐步由区域开发转变为集团化的跨地区综合开发商。然而，对于处在超常规速度发展的房地产企业来说，其面临的挑战也是超常规的。首先，房地产企业要在有限的资金和人力条件下，同一时间，对全国区域范围内的多个项目做出科学的决策，以及进行合理地资源平衡，这是一项非常复杂的系统工程。另外，由单个区域开发到全国跨地区开发所带来的管理上的复杂程度也是呈几何级数增长的。这就对企业在项目进度控制、现金流管理等方面提出了更加精细的要求。 </p>
@@ -2237,47 +2436,6 @@
             <tag> 转载 </tag>
             
             <tag> BI </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[放开那程序猿！构建业务导向的大数据云平台]]></title>
-      <url>/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/</url>
-      <content type="html"><![CDATA[<p>按数据处理方式及使用目标，企业级IT系统可分为OLTP和OLAP系统。简而言之，OLTP系统生产数据，OLAP系统加工数据。从数据到智慧的转换金字塔上看，OLTP系统实现了底层的数据产生和存储以及面向事务的信息整合，在这之上的各层就要依赖OLAP系统了。OLAP概念源自决策支持系统（DSS），企业中的数据仓库、数据集市、统计报表、驾驶舱、数据挖掘等都属于OLAP体系。其中，数据仓库和数据集市主要实现信息整合，一般统称为数据整合平台。统计报表、驾驶舱、数据挖掘进一步利用数据整合平台的成果，帮助用户发现知识并最终形成智慧。 </p>
-<a id="more"></a>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-1.png" alt="BuildBusinessOrientedBigDataCloudPlatform-1"></p>
-<p>OLAP系统的主要用户是分析人员和管理人员，目标是支持管理决策，依据是企业生产经营过程中产生的全量数据，是一个按目标使用场景对数据进行加工、利用的过程。这过程一般可以划分五个阶段：业务部门定义需求；IT部门根据需求获取并整合相关数据；IT部门根据需求设计分析模型；IT部门开发实施并发布；业务部门应用并衡量实际成效。在传统的数据基础和技术环境下，这个周期可能要经历较漫长的时间。还在建设OLAP体系的情况自不必多说，即便已建成OLAP体系统，要及时响应业务部门的需求也是较困难的，而且很有可能最终的交付质量不能达到需求方的预期。</p>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-2.png" alt="BuildBusinessOrientedBigDataCloudPlatform-2"></p>
-<p>下图是目前较常见的OLAP体系简图，上游系统指那些OLTP系统，是数据源。数据整合平台包括ODS、数据仓库、数据集市等，主要实现数据整合。下游系统指那些利用数据整合平台成果的系统，包括统计报表、驾驶舱、数据挖掘等。其中，数据整合平台承上启下，在整个OLAP体系中非常重要。按照目前较普遍的架构，从上游到下游的数据流向，至少分为同构层、整合层、应用层。其中同构层在模型上基本与上游接入数据源基本保持一致，整合层一般会采用高范式模型进行数据整合，应用层面向下游具体应用采用星型模型。这个架构是在Inmon帮和Kimball派十几年如一日的不断撕逼和妥协中演进出来的，应该是一种最佳实践。但随着互联网+大数据时代到来，对数据应用有着更高效、更深入的要求，这种架构本身固有的缺点被不断放大。</p>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-3.png" alt="BuildBusinessOrientedBigDataCloudPlatform-3"></p>
-<p><strong>开发周期长</strong></p>
-<p>为了避免因上游系统接入模型的变化而导致数据整合平台模型的被动调整，整合层建模时一般会采用较高范式实现高内聚、低耦合，ER实体较多、关系复杂。这样就增加了ETL设计、开发以及测试的复杂度，同时ETL程序执行效率也低。业务部门提出的需求，IT首先由下至上逐层对模型进行分析，即便只需在应用层开发，基于上述原因也需要一周以上。如果涉及要改动整合层，开发周期要一个月左右，业务部门显然是不能接受的。最后的结局不用猜都知道，苦逼的程序猿只能再一次强睁熊猫眼天天加班赶工。但是故事并没有到此结束，马上一个意想不到但细细想想又是顺理成章的伴生问题发生了。</p>
-<p><strong>架构迅速变坏</strong></p>
-<p>在日复一日的高压下，程序猿只能另辟蹊径为自己减负。既然工作量是由于数据模型和层次的复杂性引起的，那最有效的减少工作量的方法无非就是：1、绕过整合层，数据直接从同构层到应用层。2、还是从通过整合层，但使用面向应用的自建模型。无论哪种方法，都使整合层形同虚设，从同构层到应用层形成一个个数据井道。虽然单个开发任务的开发时间缩短了，但各数据井道之间无法复用，所以总的开发时间绝对要更多，而且后期的维护工作将是一场噩梦。</p>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-4.png" alt="BuildBusinessOrientedBigDataCloudPlatform-4"></p>
-<p><strong>效率低</strong></p>
-<p>架构变坏后，数据一致性无法保证，大量数据重复存储，大量指标重复计算，ETL作业数急剧上升，数据整合平台效率自然会越来越差。即便架构还能保持，但随着时间的推移，数据量及业务需求不断增加，架构上倾向分割出更多的层次，以便实现更多的复用。随着层次的增加，数据迁移的路径就变长了，长久以往也难逃低效率的宿命。</p>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-5.png" alt="BuildBusinessOrientedBigDataCloudPlatform-5"></p>
-<p>再回顾下OLAP数据应用的五个阶段，从业务提出需求到业务应用验证形成闭环，这过程是由IT导向推动的，IT首先与业务讨论分析需求，在业务模型层面中达成共识，然后再映射到系统模型，实现对来自上游系统的数据进行加工处理，最后通过OLAP系统将结果在业务语境中展现给用户，之前讨论的所有弊病都此有关。而对于像银行、保险等发展较成熟的行业，其业务语境、模型是较稳定的，支持业务开展的上游IT系统的系统模型也应该是相对稳定的，因此业务模型和系统模型间能形成较稳定的映射关系。这样只要能达到足够细的粒度，就能实现操纵业务模型来改变系统模型的目的。而业务模型又能被业务所能理解，因此这个闭环过程就可以完全由业务导向不需要IT的参与，整个过程可以简化为：业务设计模型，业务应用验证。</p>
-<p>文／season7（简书作者）<br>原文链接：<a href="http://www.jianshu.com/p/d55d8eeac219" target="_blank" rel="external">http://www.jianshu.com/p/d55d8eeac219</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> BI墨客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 转载 </tag>
-            
-            <tag> BI </tag>
-            
-            <tag> BigData </tag>
             
         </tags>
         
@@ -2943,6 +3101,69 @@ $ npm install bespoke-fx
     </entry>
     
     <entry>
+      <title><![CDATA[如何在没有主键的SQL Server表里删除重复行]]></title>
+      <url>/2016/04/26/Delete-duplicate-rows-with-no-primary-key/</url>
+      <content type="html"><![CDATA[<p>有没有遇到过在一个没有主键标志的表里存了重复的数据行，要把重复的行删掉保留一行的情况呢？我们可以设置SQL Server的ROWCUNT变量来限制影响的数据行数，默认的数据值是0，代表所有行，但是这个值可以在运行SQL语句之前进行设定。</p>
+<p>咱们首先建个测试用的表，插入几条条记录。</p>
+<pre><code>CREATE TABLE dbo.duplicateTest
+    (
+      [ID] [INT] ,
+      [FirstName] [VARCHAR](25) ,
+      [LastName] [VARCHAR](25)
+    )
+ON  [PRIMARY];
+
+INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;) 
+INSERT INTO dbo.duplicateTest VALUES(2, &apos;Dave&apos;,&apos;Jones&apos;) 
+INSERT INTO dbo.duplicateTest VALUES(3, &apos;Karen&apos;,&apos;White&apos;) 
+INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;)
+INSERT INTO dbo.duplicateTest VALUES(2, &apos;Dave&apos;,&apos;Jones&apos;)
+INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;) 
+</code></pre><a id="more"></a>
+<p>表内数据如下：</p>
+<pre><code>SELECT * FROM dbo.duplicateTest
+</code></pre><p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-1.jpg" alt="全部数据"></p>
+<p>我们要找到Bob Smith的记录可以用以下语句：</p>
+<pre><code>SELECT * FROM dbo.duplicateTest WHERE ID = 1 AND FirstName = &apos;Bob&apos; AND LastName = &apos;Smith&apos;
+</code></pre><p>找到三行数据</p>
+<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-2.jpg" alt="图2"></p>
+<p>在SQL Server 2000 和 2005上我们可以使用SET ROWCOUNT 命令来限制一条语句作用的行数，设置为1我们就可以删除一条重复的记录了。删除前与删除后的对比如下：</p>
+<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-3.jpg" alt="图3"></p>
+<p>在SQL Server 2005上，我们也可以用TOP命令。像下面这样：</p>
+<pre><code>SELECT * FROM dbo.duplicateTest 
+DELETE TOP(1) FROM dbo.duplicateTest WHERE ID = 1 
+SELECT * FROM dbo.duplicateTest
+</code></pre><p>删除前与删除后的对比如下：</p>
+<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-4.jpg" alt="图4"></p>
+<p><strong>总结</strong></p>
+<ul>
+<li>1、这个方法可以在表中没有明显标志字段来区分每一行的情况，但也有局限，如果一个表中不知道每行记录都有多少行重复的记录，就不能用了，TOP(1)也只是删除重复行中的一行。</li>
+<li>2、如果明确知道表里每行记录都有2行、3行……重复的记录，倒是个不错的选择。</li>
+<li>3、如果表里有个ID自增长的字段，就可以采用删掉重复行保留ID最小的那个行的方法了。</li>
+<li>4、如果表里没有ID自增长的字段，又不知道每行有多少条重复记录，重复记录行都一样，那还是先把记录DISTINCT出来存到临时表里，清空原表，再把临时表的数据插入原表，这样应该是最省事的了。</li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> 码路刺客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 数据库 </tag>
+            
+            <tag> 原创 </tag>
+            
+            <tag> SQL Server </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[CodePen上碉堡的前端设计和代码]]></title>
       <url>/2016/04/26/codepen-top-10/</url>
       <content type="html"><![CDATA[<p>CodePen有很多出众的前代码片段，设计师或喜欢前端的人员可以都可能常去那边寻找灵感或学习一些代码的运用。CodePen放出2015年度最热门的100个代码片段，很多代码确实很赞，大家不要错过哦，下面我们筛选几个给大家欣赏。</p>
@@ -3014,69 +3235,6 @@ $ npm install bespoke-fx
             <tag> JavaScript </tag>
             
             <tag> 设计 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[如何在没有主键的SQL Server表里删除重复行]]></title>
-      <url>/2016/04/26/Delete-duplicate-rows-with-no-primary-key/</url>
-      <content type="html"><![CDATA[<p>有没有遇到过在一个没有主键标志的表里存了重复的数据行，要把重复的行删掉保留一行的情况呢？我们可以设置SQL Server的ROWCUNT变量来限制影响的数据行数，默认的数据值是0，代表所有行，但是这个值可以在运行SQL语句之前进行设定。</p>
-<p>咱们首先建个测试用的表，插入几条条记录。</p>
-<pre><code>CREATE TABLE dbo.duplicateTest
-    (
-      [ID] [INT] ,
-      [FirstName] [VARCHAR](25) ,
-      [LastName] [VARCHAR](25)
-    )
-ON  [PRIMARY];
-
-INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;) 
-INSERT INTO dbo.duplicateTest VALUES(2, &apos;Dave&apos;,&apos;Jones&apos;) 
-INSERT INTO dbo.duplicateTest VALUES(3, &apos;Karen&apos;,&apos;White&apos;) 
-INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;)
-INSERT INTO dbo.duplicateTest VALUES(2, &apos;Dave&apos;,&apos;Jones&apos;)
-INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;) 
-</code></pre><a id="more"></a>
-<p>表内数据如下：</p>
-<pre><code>SELECT * FROM dbo.duplicateTest
-</code></pre><p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-1.jpg" alt="全部数据"></p>
-<p>我们要找到Bob Smith的记录可以用以下语句：</p>
-<pre><code>SELECT * FROM dbo.duplicateTest WHERE ID = 1 AND FirstName = &apos;Bob&apos; AND LastName = &apos;Smith&apos;
-</code></pre><p>找到三行数据</p>
-<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-2.jpg" alt="图2"></p>
-<p>在SQL Server 2000 和 2005上我们可以使用SET ROWCOUNT 命令来限制一条语句作用的行数，设置为1我们就可以删除一条重复的记录了。删除前与删除后的对比如下：</p>
-<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-3.jpg" alt="图3"></p>
-<p>在SQL Server 2005上，我们也可以用TOP命令。像下面这样：</p>
-<pre><code>SELECT * FROM dbo.duplicateTest 
-DELETE TOP(1) FROM dbo.duplicateTest WHERE ID = 1 
-SELECT * FROM dbo.duplicateTest
-</code></pre><p>删除前与删除后的对比如下：</p>
-<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-4.jpg" alt="图4"></p>
-<p><strong>总结</strong></p>
-<ul>
-<li>1、这个方法可以在表中没有明显标志字段来区分每一行的情况，但也有局限，如果一个表中不知道每行记录都有多少行重复的记录，就不能用了，TOP(1)也只是删除重复行中的一行。</li>
-<li>2、如果明确知道表里每行记录都有2行、3行……重复的记录，倒是个不错的选择。</li>
-<li>3、如果表里有个ID自增长的字段，就可以采用删掉重复行保留ID最小的那个行的方法了。</li>
-<li>4、如果表里没有ID自增长的字段，又不知道每行有多少条重复记录，重复记录行都一样，那还是先把记录DISTINCT出来存到临时表里，清空原表，再把临时表的数据插入原表，这样应该是最省事的了。</li>
-</ul>
-]]></content>
-      
-        <categories>
-            
-            <category> 码路刺客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 数据库 </tag>
-            
-            <tag> 原创 </tag>
-            
-            <tag> SQL Server </tag>
             
         </tags>
         
@@ -3564,6 +3722,48 @@ $layer = $(&apos;div[class*=&quot;layer-&quot;]’);
     </entry>
     
     <entry>
+      <title><![CDATA[365cons：每天一枚图标，可免费下载]]></title>
+      <url>/2016/03/23/IconForEveryday/</url>
+      <content type="html"><![CDATA[<p>大家都听过“An apple a day keeps the doctor away”这句俚语，现在网络上也开始流行养成习惯持续去做某一件事情，例如先前介绍过的100 Days UI百日设计挑战每天发布一个全新使用者界面设计来启发灵感，当然你也可以为自己设定一个习惯养成目标，HabitRPG甚至让生活变成游戏，让你通过每日任务来建立好的生活习惯，这些想法都值得我们好好思考如何在一成不变的工作中产生更多价值。</p>
+<a id="more"></a>
+<center><img src="/img/posts/21.jpg"></center>
+
+
+<p>最近发现一个很棒的项目365cons，由一位西雅图视觉设计师Amy开发，网站每天会更新释出一个免费图标让使用者下载！Amy给自己立下一个目标：在2016年的每一天都发布一款全新图标，借此探索各种风格及练习设计相关技术。这些图标都与设计师生活息息相关，不局限于特定主题。</p>
+<p>365cons提供的图标格式包括：SVG、PNG两种版本，每一个图标都能在网页预览，无须注册就能免费下载使用。图标授权方式采MIT License，可被免费下载使用于任何地方。</p>
+<p>站点名称：<strong>365cons</strong></p>
+<p>网站连接：<a href="http://www.365cons.com/" target="_blank" rel="external">http://www.365cons.com/</a></p>
+<p><strong>使用教学</strong></p>
+<p><strong>STEP 1</strong></p>
+<p>开启365cons网站后，可以看到网站收录的免费图标项目，这些图标都是由设计师亲自设计开发，每日更新，不过网站没有提供订阅方式，如果你想追踪更新，那么可以定时回到网站来逛逛。</p>
+<center><img src="/img/posts/22.jpg"></center>
+
+<p><strong>STEP 2</strong></p>
+<p>在每一个图标下方，会有该图标编号、名称，以及SVG和PNG档案下载连接。</p>
+<center><img src="/img/posts/23.jpg"></center>
+
+<p>如果你有任何想法或建议，都可以通过网站上的网址与设计师联系，这些图标设计都非常可爱，也跟一般在外面看到的图标集不太一样，多了那么一点独特与天真浪漫！喜欢的话能将它下载下来使用，完全免费。</p>
+<p>转自 <a href="http://toutiao.com/a6262086085100273922/" target="_blank" rel="external">http://toutiao.com/a6262086085100273922/</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> IT看客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 转载 </tag>
+            
+            <tag> 设计 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[17个jQuery实用技巧]]></title>
       <url>/2016/03/23/17JqueryTips/</url>
       <content type="html"><![CDATA[<h2 id="检查-jQuery-是否加载"><a href="#检查-jQuery-是否加载" class="headerlink" title="检查 jQuery 是否加载"></a>检查 jQuery 是否加载</h2><p>在使用 jQuery 进行任何操作之前，你需要先确认它已经加载：</p>
@@ -3818,48 +4018,6 @@ $elem.otherStuff();
         <tags>
             
             <tag> IT资讯 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[365cons：每天一枚图标，可免费下载]]></title>
-      <url>/2016/03/23/IconForEveryday/</url>
-      <content type="html"><![CDATA[<p>大家都听过“An apple a day keeps the doctor away”这句俚语，现在网络上也开始流行养成习惯持续去做某一件事情，例如先前介绍过的100 Days UI百日设计挑战每天发布一个全新使用者界面设计来启发灵感，当然你也可以为自己设定一个习惯养成目标，HabitRPG甚至让生活变成游戏，让你通过每日任务来建立好的生活习惯，这些想法都值得我们好好思考如何在一成不变的工作中产生更多价值。</p>
-<a id="more"></a>
-<center><img src="/img/posts/21.jpg"></center>
-
-
-<p>最近发现一个很棒的项目365cons，由一位西雅图视觉设计师Amy开发，网站每天会更新释出一个免费图标让使用者下载！Amy给自己立下一个目标：在2016年的每一天都发布一款全新图标，借此探索各种风格及练习设计相关技术。这些图标都与设计师生活息息相关，不局限于特定主题。</p>
-<p>365cons提供的图标格式包括：SVG、PNG两种版本，每一个图标都能在网页预览，无须注册就能免费下载使用。图标授权方式采MIT License，可被免费下载使用于任何地方。</p>
-<p>站点名称：<strong>365cons</strong></p>
-<p>网站连接：<a href="http://www.365cons.com/" target="_blank" rel="external">http://www.365cons.com/</a></p>
-<p><strong>使用教学</strong></p>
-<p><strong>STEP 1</strong></p>
-<p>开启365cons网站后，可以看到网站收录的免费图标项目，这些图标都是由设计师亲自设计开发，每日更新，不过网站没有提供订阅方式，如果你想追踪更新，那么可以定时回到网站来逛逛。</p>
-<center><img src="/img/posts/22.jpg"></center>
-
-<p><strong>STEP 2</strong></p>
-<p>在每一个图标下方，会有该图标编号、名称，以及SVG和PNG档案下载连接。</p>
-<center><img src="/img/posts/23.jpg"></center>
-
-<p>如果你有任何想法或建议，都可以通过网站上的网址与设计师联系，这些图标设计都非常可爱，也跟一般在外面看到的图标集不太一样，多了那么一点独特与天真浪漫！喜欢的话能将它下载下来使用，完全免费。</p>
-<p>转自 <a href="http://toutiao.com/a6262086085100273922/" target="_blank" rel="external">http://toutiao.com/a6262086085100273922/</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> IT看客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 转载 </tag>
-            
-            <tag> 设计 </tag>
             
         </tags>
         

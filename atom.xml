@@ -312,8 +312,38 @@
 <li>4.聚合函数必须出现在表达式的最外层，也就是说像<code>AVG(AVG(X))</code>或<code>AVG(x)+AVG(x)</code>都是不允许的。</li>
 <li>5.对每一个聚集计算如<code>AVG(expr)</code>,相应的<code>COUNT(expr)</code>也必须要有，Oracle建议<code>SUM(expr)</code>也写上。</li>
 <li>6.如果含有<code>VARIANCE(expr)</code>或<code>STDDEV(expr)</code>,<code>COUNT(expr)</code>和<code>SUM(expr)</code>都必须写，Oracle建议<code>SUM(expr*expr)</code>也写上。</li>
+<li>7.查询中定义的<code>SELECT</code>列不能是来自多个表的列复杂运算，可以考虑使用嵌套物化视图作为变通方案。</li>
+<li>8.<code>GROUP BY</code>中的列都要在<code>SELECT</code>里出现。</li>
+<li>9.如果物化视图日志中过滤列字段类型为<code>CHAR</code>，那么基表所在的数据库和物化视图所在的数据库的字符集必须要一样。</li>
+<li>10.如果物化视图有以下情况，增量刷新只支持DML操作中的<code>INSERT</code>和直接装载(direct loads)操作，这种物化视图叫只能插入(insert-only)的物化视图：<ul>
+<li>10.1 物化视图有<code>MIN</code>或者<code>MAX</code>聚合计算。</li>
+<li>10.2 物化视图有<code>SUM(expr)</code>但是没有<code>COUNT(expr)</code>。</li>
+<li>10.3 物化视图没有指定<code>COUNT(*)</code>。</li>
 </ul>
-<p>参考：<a href="https://docs.oracle.com/cd/E11882_01/server.112/e25554/basicmv.htm#i1007013" target="_blank" rel="external">https://docs.oracle.com/cd/E11882_01/server.112/e25554/basicmv.htm#i1007013</a></p>
+</li>
+<li>11.含有<code>MAX</code>或<code>MIN</code>聚合计算的物化视图如果没有<code>WHERE</code>子句，是支持基表增删改的增量刷新的。</li>
+<li>12.物化视图的<code>FROM</code>子句中有普通视图或者子查询，如果普通视图可以被完全合并是可以支持增量刷新的。(PS.这一条不懂啥意思)</li>
+<li>13.如果没有外联接，<code>WHERE</code>子句没有限制。</li>
+<li>14.有外联接和聚合计算的物化视图是支持增量刷新的，只有外接表数据变更的时候。另外，唯一约束必须存在于表的内连接列上。如果有外联接，所有连接必须用<code>AND</code>和<code>=</code>操作符。</li>
+<li>15.对于含有<code>CUBE</code>，<code>ROLLUP</code>，<code>GOUPING SETS</code>的物化视图，会有以下限制：<ul>
+<li>15.1<code>SELECT</code>列表要包含<code>GROUP BY</code>所有字段的<code>GROUPING_ID</code>或<code>GROUPING</code>。举个例子，<code>GROUP BY</code>子句是<code>GROUP BY CUBE(a, b)</code>，那么<code>SELECT</code>列表中应该包含<code>GROUPING_ID(a, b)</code>或<code>GROUPING(a) , GROUPING(b)</code>，这样才会使物化视图增量刷新。</li>
+<li>15.2 <code>GROUP BY</code>不能导致多个groupings的情况，比如，<code>GROUP BY a, ROLLUP(a, b)</code>就不会增量刷新因为这会导致多个groupings，<code>(a), (a, b), (a)</code>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="包含UNION-ALL的物化视图快速刷新限制"><a href="#包含UNION-ALL的物化视图快速刷新限制" class="headerlink" title="包含UNION ALL的物化视图快速刷新限制"></a>包含UNION ALL的物化视图快速刷新限制</h3><p>含有<code>UNION ALL</code>的物化视图<code>REFRESH FAST</code>需要满足以下条件：</p>
+<ul>
+<li><p>1.<code>UNION ALL</code>操作必须在查询语句的顶层。<code>UNION ALL</code>不能被嵌套在一个子查询里面，这里有一个例外：<code>SELECT * FROM</code>后面直接跟含有<code>UNION ALL</code>的子查询。例如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">VIEW</span> view_with_unionall <span class="keyword">AS</span></div><div class="line">(<span class="keyword">SELECT</span> c.rowid crid, c.cust_id, <span class="number">2</span> umarker</div><div class="line">   <span class="keyword">FROM</span> customers c <span class="keyword">WHERE</span> c.cust_last_name = <span class="string">'Smith'</span></div><div class="line">  <span class="keyword">UNION</span> ALL</div><div class="line"> <span class="keyword">SELECT</span> c.rowid crid, c.cust_id, <span class="number">3</span> umarker</div><div class="line">   <span class="keyword">FROM</span> customers c <span class="keyword">WHERE</span> c.cust_last_name = <span class="string">'Jones'</span>);</div><div class="line"></div><div class="line"> <span class="keyword">CREATE</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> unionall_inside_view_mv</div><div class="line"><span class="keyword">REFRESH</span> <span class="keyword">FAST</span> <span class="keyword">ON</span> <span class="keyword">DEMAND</span> <span class="keyword">AS</span></div><div class="line"> <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> view_with_unionall;</div></pre></td></tr></table></figure>
+</li>
+<li><p>2.<code>UNION ALL</code>的每一部分查询必须满足聚合物化视图货连接物化视图的增量刷新条件。相应的物化视图日志也要建上。</p>
+</li>
+<li>3.<code>UNION ALL</code>的每一部分查询必须包含一列标记列，这个标识列必须是数值或者字符型的固定数值，而且这一列在每一部分的查询中<code>SELECT</code>列顺序相同。</li>
+<li>4.一些特性如外联接，只能插入(insert-only)的物化视图查询和远程表都是不支持<code>UNION ALL</code>物化视图的。然而，那些被用于复制的不包含联接和聚集计算的物化视图，是可以增量刷新的。</li>
+<li>5.创建包含<code>UNION ALL</code>的增量刷新物化视图，版本需满足9.2.0或更高才能满足兼容。</li>
+</ul>
+<p>参考：<br><a href="https://docs.oracle.com/cd/E11882_01/server.112/e25554/basicmv.htm#i1007013" target="_blank" rel="external">https://docs.oracle.com/cd/E11882_01/server.112/e25554/basicmv.htm#i1007013</a></p>
+<p>更多：<br><a href="http://c-xuan.com/2017/07/13/20170713001">http://c-xuan.com/2017/07/13/20170713001</a></p>
 ]]></content>
     
     <summary type="html">

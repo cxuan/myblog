@@ -3,7 +3,7 @@
   
     
     <entry>
-      <title><![CDATA[Markdown使用<table>标签创建表格的问题]]></title>
+      <title><![CDATA[Markdown使用table标签创建表格的问题]]></title>
       <url>/2017/12/10/20171210001/</url>
       <content type="html"><![CDATA[<p>使用Markdown写东西有时需要插入表格，方式有两种：</p>
 <ul>

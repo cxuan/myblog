@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://c-xuan.com/"/>
-  <updated>2017-11-27T16:00:00.000Z</updated>
+  <updated>2017-12-09T16:00:00.000Z</updated>
   <id>http://c-xuan.com/</id>
   
   <author>
@@ -14,6 +14,90 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Markdown使用&lt;table&gt;标签创建表格的问题</title>
+    <link href="http://c-xuan.com/2017/12/10/20171210001/"/>
+    <id>http://c-xuan.com/2017/12/10/20171210001/</id>
+    <published>2017-12-09T16:00:00.000Z</published>
+    <updated>2017-12-09T16:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>使用Markdown写东西有时需要插入表格，方式有两种：</p>
+<ul>
+<li>1.使用Markdown的表格语法</li>
+<li>2.使用html的<code>&lt;table&gt;</code>标签来创建表格</li>
+</ul>
+<p>但是某些Markdown编辑器中使用<code>&lt;table&gt;</code>标签会出现表格前有空行的情况。</p>
+<a id="more"></a>
+<h3 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h3><p>先看使用Markdown语法创建表格：<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="params">| Tables   |</span>      Are      <span class="params">|  Cool |</span></div><div class="line"><span class="params">|----------|</span><span class="symbol">:-------------</span><span class="symbol">:|------</span><span class="symbol">:|</span></div><div class="line"><span class="params">| col 1 is |</span>  left-aligned <span class="params">| $1600 |</span></div><div class="line"><span class="params">| col 2 is |</span>    centered   <span class="params">|   $12 |</span></div><div class="line"><span class="params">| col 3 is |</span> right-aligned <span class="params">|    $1 |</span></div></pre></td></tr></table></figure></p>
+<p>效果如下（分割线中间的表格）</p>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Tables</th>
+<th style="text-align:center">Are</th>
+<th style="text-align:right">Cool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>col 1 is</td>
+<td style="text-align:center">left-aligned</td>
+<td style="text-align:right">$1600</td>
+</tr>
+<tr>
+<td>col 2 is</td>
+<td style="text-align:center">centered</td>
+<td style="text-align:right">$12</td>
+</tr>
+<tr>
+<td>col 3 is</td>
+<td style="text-align:center">right-aligned</td>
+<td style="text-align:right">$1</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>同样的表格使用<code>&lt;table&gt;</code>标签创建：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">table</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">th</span>&gt;</span>Tables<span class="tag">&lt;/<span class="name">th</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">th</span>&gt;</span>Are<span class="tag">&lt;/<span class="name">th</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">th</span>&gt;</span>Cool<span class="tag">&lt;/<span class="name">th</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>col 1 is<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>left-aligned<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>$1600<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>col 2 is<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>centered<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>$12<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>col 3 is<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>right-aligned<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>$1<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>效果如下：（分割线中间的表格）</p>
+<hr>
+<p><table><br>  <tr><br>    <th>Tables</th><br>    <th>Are</th><br>    <th>Cool</th><br>  </tr><br>  <tr><br>    <td>col 1 is</td><br>    <td>left-aligned</td><br>    <td>$1600</td><br>  </tr><br>  <tr><br>    <td>col 2 is</td><br>    <td>centered</td><br>    <td>$12</td><br>  </tr><br>  <tr><br>    <td>col 3 is</td><br>    <td>right-aligned</td><br>    <td>$1</td><br>  </tr><br></table></p>
+<hr>
+<p>会发现表格前多了很多<code>&lt;/br&gt;</code>换行。</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>解决办法是将代码改为紧凑模式，修改代码如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;table&gt;<span class="xml"><span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">th</span>&gt;</span>Tables<span class="tag">&lt;/<span class="name">th</span>&gt;</span><span class="tag">&lt;<span class="name">th</span>&gt;</span>Are<span class="tag">&lt;/<span class="name">th</span>&gt;</span><span class="tag">&lt;<span class="name">th</span>&gt;</span>Cool<span class="tag">&lt;/<span class="name">th</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><span class="xml"><span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>col 1 is<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>left-aligned<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>$1600<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><span class="xml"><span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>col 2 is<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>centered<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>$12<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><span class="xml"><span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>col 3 is<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>right-aligned<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>$1<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span></div></pre></td></tr></table></figure></p>
+<p>效果如下：（分割线中间的表格）</p>
+<hr>
+<p><table><tr><th>Tables</th><th>Are</th><th>Cool</th></tr><tr><td>col 1 is</td><td>left-aligned</td><td>$1600</td></tr><tr><td>col 2 is</td><td>centered</td><td>$12</td></tr><tr><td>col 3 is</td><td>right-aligned</td><td>$1</td></tr></table></p>
+<hr>
+<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ul>
+<li>1由于使用Haroopad编辑器写东西再用Hexo发布到Github上，所以会有这种情况出现。如果是其他编辑器，比如简书，这个不会有，因为简书压根儿不支持<code>&lt;table&gt;</code>标签的表格，CSDN上是支持的，不会出现以上问题。</li>
+<li>2.使用哪种方式创建表格根据自己的需要而定，Markdown语法简单，但是缺点是不支持列宽度定义，表格样式定义，单元格合并等。<code>&lt;table&gt;</code>标签相比较而言灵活很多。</li>
+<li>3.很多时候直接写表格代码是很累的，比较好的方案是在Excel中编辑，再生成代码，网上搜索相应工具也有很多，比如<a href="http://www.tablesgenerator.com/" target="_blank" rel="external">Tables Generator</a>。</li>
+<li>4.笔者使用Excel自行写了个生成<code>&lt;table&gt;</code>代码的工具生成压缩的表格代码，在EXCEL中编辑好表格，生成的表格代码列宽会根据Excel中的表格列宽转成百分比，编辑后点击<code>生成表格代码</code>即在Excel文件的同一目录中出现<code>Output.txt</code>文件，将代码复制到Markdown中即可。</li>
+</ul>
+<p><a href="/download/table2code.xlsm">代码生成工具下载</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;使用Markdown写东西有时需要插入表格，方式有两种：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;1.使用Markdown的表格语法&lt;/li&gt;
+&lt;li&gt;2.使用html的&lt;code&gt;&amp;lt;table&amp;gt;&lt;/code&gt;标签来创建表格&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;但是某些Markdown编辑器中使用&lt;code&gt;&amp;lt;table&amp;gt;&lt;/code&gt;标签会出现表格前有空行的情况。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="码路刺客" scheme="http://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
+    
+    
+      <category term="原创" scheme="http://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+      <category term="Markdown" scheme="http://c-xuan.com/tags/Markdown/"/>
+    
+  </entry>
   
   <entry>
     <title>【cmd】IF ELSE 复制(copy)文件问题</title>
@@ -153,7 +237,7 @@
 </tbody>
 </table>
 <p>参考：<a href="http://www.robvanderwoude.com/escapechars.php" target="_blank" rel="external">http://www.robvanderwoude.com/escapechars.php</a></p>
-<p>将表格快速转换为HTML,Markdown格式：<a href="http://www.tablesgenerator.com/]" target="_blank" rel="external">http://www.tablesgenerator.com/</a></p>
+<p>将表格快速转换为HTML,Markdown格式：<a href="http://www.tablesgenerator.com/" target="_blank" rel="external">http://www.tablesgenerator.com/</a></p>
 ]]></content>
     
     <summary type="html">
@@ -260,6 +344,69 @@
       <category term="物化视图" scheme="http://c-xuan.com/tags/%E7%89%A9%E5%8C%96%E8%A7%86%E5%9B%BE/"/>
     
       <category term="原创" scheme="http://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【ORACLE】物化视图相关元数据视图字段说明</title>
+    <link href="http://c-xuan.com/2017/08/13/20170813001/"/>
+    <id>http://c-xuan.com/2017/08/13/20170813001/</id>
+    <published>2017-08-12T16:00:00.000Z</published>
+    <updated>2017-08-12T16:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>当需要对物化视图的状态等信息进行查询，监控和管理时，就要用到相关的系统元数据表了，本文介绍了Oracle物化视图相关的元数据系统视图的表结构，这些视图有：<br><code>ALL_VIEWS</code>,<code>DBA_MVIEWS</code>,<code>USER_MVIEWS</code>，<code>ALL_MVIEW_ANALYSIS</code>，<code>DBA_MVIEW_ANALYSIS</code>，<code>USER_MVIEW_ANALYSIS</code>，<code>ALL_MVIEW_AGGREGATES</code>，<code>DBA_MVIEW_AGGREGATES</code>，<code>USER_MVIEW_AGGREGATES</code>，<code>ALL_MVIEW_REFRESH_TIMES</code>，<code>DBA_MVIEW_REFRESH_TIMES</code>，<code>USER_MVIEW_REFRESH_TIMES</code>，<code>ALL_MVIEW_JOINS</code>，<code>DBA_MVIEW_JOINS</code>，<code>USER_MVIEW_JOINS</code>，<code>ALL_MVIEW_KEYS</code>，<code>DBA_MVIEW_KEYS</code>，<code>USER_MVIEW_KEYS</code>，<code>ALL_MVIEW_LOGS</code>，<code>DBA_MVIEW_LOGS</code>，<code>USER_MVIEW_LOGS</code>。</p>
+<a id="more"></a>
+<h3 id="ALL-MVIEWS"><a href="#ALL-MVIEWS" class="headerlink" title="ALL_MVIEWS"></a>ALL_MVIEWS</h3><p><code>ALL_MVIEWS</code>系统视图描述了当前用户下所有可以访问的物化视图的相关信息。<br>相关视图</p>
+<ul>
+<li><code>DBA_MVIEWS</code>描述了数据库中创建的所有物化视图的相关信息。</li>
+<li><code>USER_MVIEWS</code>描述了所属于当前用户下的所有物化视图的相关信息。</li>
+</ul>
+<table style="font-size:14px;"><tr><th width="16.78%">列名称</th><th width="14.24%">数据类型</th><th width="11.44%">是否可为NULL</th><th width="57.58%">字段描述</th></tr><tr><td>OWNER</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>创建物化视图所用的Schema.</td></tr><tr><td>MVIEW_NAME</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>物化视图名称</td></tr><tr><td>CONTAINER_NAME</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>存储物化视图数据的容器名称。一般跟MVIEWNAME是一样的。对于早于Oracle8i的版本，数据库附上了SNAP$的前缀。如果MVIEW_NAME超过里了19比特长度，数据库将会把名称截断至19比特，外加了4位的序列号以免发生名称重复。</td></tr><tr><td>QUERY</td><td>LONG</td><td></td><td>定义物化视图查询的语句</td></tr><tr><td>QUERY_LEN</td><td>NUMBER(38)</td><td></td><td>定义的物化视图查询语句的长度，以比特为单位</td></tr><tr><td>UPDATABLE</td><td>VARCHAR2(1)</td><td></td><td>指明物化视图是(Y)否(N)可更新</td></tr><tr><td>UPDATE_LOG</td><td>VARCHAR2(30)</td><td></td><td>对于可更新的物化视图，更新日志的文件名称</td></tr><tr><td>MASTER_ROLLBACK_SEG</td><td>VARCHAR2(30)</td><td></td><td>Rollback segment for the master site or the master materialized view site</td></tr><tr><td>MASTER_LINK</td><td>VARCHAR2(128)</td><td></td><td>基表端的数据库链接</td></tr><tr><td>REWRITE_ENABLED</td><td>VARCHAR2(1)</td><td></td><td>指出是(Y)否(N)支持物化视图的查询重写</td></tr><tr><td>REWRITE_CAPABILITY</td><td>VARCHAR2(9)</td><td></td><td>指出物化视图是否适合查询重写。会有以下三种情况：<br>NONE：物化视图不能被用于查询重写以为查询重写选项被禁用了。<br>TEXTMATCH：物化视图的查询语句中包含查询重写的相关限制。<br>GENETAL：物化视图的查询语句中没有任何限制，所以数据库将在物化视图上应用支持的查询重写功能。</td></tr><tr><td>REFRESH_MODE</td><td>VARCHAR2(6)</td><td></td><td>物化视图的刷新模式：<br>DEMAND：物化视图将在调用刷新物化视图的存储过程时刷新。<br>COMMIT：物化视图将在基表上的事物提交后刷新。<br>NEVER：物化视图永远不会被刷新。</td></tr><tr><td>REFRESH_METHOD</td><td>VARCHAR2(8)</td><td></td><td>物化视图的刷新方法：<br>COMPLETE：物化视图会对基表的数据进行全量刷新。<br>FORCE：数据库引擎自动判断，如果物化视图可被增量刷新则执行增量刷新，否则全量刷新。<br>FAST：物化视图将从上一次刷新后，对于基表的数据变化进行增量刷新。<br>NEVER：用户告诉数据库该物化视图不用刷新。</td></tr><tr><td>BUILD_MODE</td><td>VARCHAR2(9)</td><td></td><td>指明物化视图在创建时是否填充数据：<br>IMMEDIATE：在创建物化视图时填充数据。<br>DEFERRED：在创建时不填充数据，之后用户要手动更新数据。<br>PREBUILT：在创建物化视图时用一个已经存在的表的数据填充物化视图。</td></tr><tr><td>FAST_REFRESHABLE</td><td>VARCHAR2(18)</td><td></td><td>指明物化视图是否适合增量刷新。Oracle数据库会基于定义物化视图的查询语句静态计算这个值。<br>NO：物化视图不支持增量刷新。<br>DML；只支持DML操作的增量刷新。<br>DIRLOAD_DML；适合于直接装载和DML操作的增加刷新。<br>DIRLOAD_LIMITEDDML；只支持直接装载和某些类型的DML操作的增量刷新。</td></tr><tr><td>LAST_REFRESH_TYPE</td><td>VARCHAR2(8)</td><td></td><td>最近一次刷新方法：COMPLETE：全量刷新。FAST：增量刷新。NA：还没有刷新过，比如创建时没指定填充数据的时候。</td></tr><tr><td>LAST_REFRESH_DATE</td><td>DATE</td><td></td><td>最近一次刷新的日期时间，如果从没刷新过就是空。</td></tr><tr><td>STALENESS</td><td>VARCHAR2(19)</td><td></td><td>物化视图的数据和基表数据的关系：<br>FRESH：物化视图数据跟基表的数据是一致的。<br>STALE：物化视图过期了，因为有一个或多个基表的数据已经变了，如果物化视图在此之前是FRESH，然后才变成STALE，那物化视图的数据跟基表表数据变更前是一致的。<br>NEEDS_COMPILE：物化视图的某些基表已经改了，要用ALTER MATERIALIZED VIEW…COMPILE语句来重新计算物化视图该状态。<br>UNUSABLE：物化视图的数据跟基表的数据任何时间都不一致。<br>UNKNOWN：Oracle数据库无法得知物化视图的数据跟基表的关系。这可能是基于prebuilt table来创建的物化视图。<br>UNDEFINED：物化视图有远程的基表，对于这类物化视图该状态不适用。</td></tr><tr><td>AFTER_FAST_REFRESH</td><td>VARCHAR2(19)</td><td></td><td>指明在物化视图执行增量刷新后是啥状态，状态值跟STALENESS列是一样的，只是多了一个NA，当执行增量刷新后变为不适用增量了出现这个值。</td></tr><tr><td>UNKNOWN_PREBUILT</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether the materialized view is prebuilt (Y) or not (N)</td></tr><tr><td>UNKNOWN_PLSQL_FUNC</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether the materialized view contains PL/SQL functions (Y) or not (N)</td></tr><tr><td>UNKNOWN_EXTERNAL_TABLE</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether the materialized view contains external tables (Y) or not (N)</td></tr><tr><td>UNKNOWN_CONSIDER_FRESH</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether the materialized view is considered fresh (Y) or not (N)</td></tr><tr><td>UNKNOWN_IMPORT</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether the materialized view is imported (Y) or not (N)</td></tr><tr><td>UNKNOWN_TRUSTED_FD</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether the materialized view uses trusted constraints for refresh (Y) or not (N)</td></tr><tr><td>COMPILE_STATE</td><td>VARCHAR2(19)</td><td></td><td>检查物化视图的相关基表都是否合法：<br>VALID：物化视图是没问题的，物化视图的基表没有变更。<br>NEEDS_COMPILE：物化视图的某些基表被改变了，要重新编译。<br>ERROR：物化视图有错误。</td></tr><tr><td>USE_NO_INDEX</td><td>VARCHAR2(1)</td><td></td><td>指出创建物化视图的时候是否使用USING NO INDEX子句，或者物化视图创建时默认了索引。</td></tr><tr><td>STALE_SINCE</td><td>DATE</td><td></td><td>Time from when the materialized view became stale</td></tr><tr><td>NUM_PCT_TABLES</td><td>NUMBER</td><td></td><td>Number of PCT detail tables</td></tr><tr><td>NUM_FRESH_PCT_REGIONS</td><td>NUMBER</td><td></td><td>Number of fresh PCT partition regions</td></tr><tr><td>NUM_STALE_PCT_REGIONS</td><td>NUMBER</td><td></td><td>Number of stale PCT partition regions</td></tr></table>
+
+
+<p>参考<a href="https://docs.oracle.com/cd/E11882_01/server.112/e40402/statviews_1153.htm#REFRN20139" target="_blank" rel="external">https://docs.oracle.com/cd/E11882_01/server.112/e40402/statviews_1153.htm#REFRN20139</a></p>
+<h3 id="ALL-MVIEW-ANALYSIS"><a href="#ALL-MVIEW-ANALYSIS" class="headerlink" title="ALL_MVIEW_ANALYSIS"></a>ALL_MVIEW_ANALYSIS</h3><p>ALL_MVIEW_ANALYSIS describes the materialized views accessible to the current user. It provides additional information for analysis by applications. Minimal information is displayed for materialized views that do not support query rewrite (such as materialized views with remote master tables or nondeterministic functions).<br>Related Views<br>  ● DBA_MVIEW_ANALYSIS describes all such materialized views in the database.<br>  ● USER_MVIEW_ANALYSIS describes all such materialized views owned by the current user.<br>Note:<br>All of the information in these views is also displayed in ALL_MVIEWS and its related views. Oracle recommends that you refer to ALL_MVIEWSfor this information instead of these views.</p>
+<table style="font-size:14px;"><tr><th width="16.78%">Column</th><th width="14.24%">Datatype</th><th width="11.44%">NULL</th><th width="57.58%">Description</th></tr><tr><td>OWNER</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Owner of the materialized view</td></tr><tr><td>MVIEW_NAME</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Name of the materialized view</td></tr><tr><td>MVIEW_TABLE_OWNER</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Owner of the container table (see next column)</td></tr><tr><td>CONTAINER_NAME</td><td>VARCHAR2(30)</td><td></td><td>Name of the internal container in which the materialized view data is held. Normally this is the same asMVIEW<em>NAME. For materialized views created prior to Oracle8i, Oracle Database attaches the 6-byte prefix?SNAP$</em>. If?MVIEW_NAMEhas more than 19 bytes, then Oracle Database truncates the name to 19 bytes and adds a 4-byte sequence number as a suffix to produce a nonambiguousCONTAINER_NAME.</td></tr><tr><td>LAST_REFRESH_SCN</td><td>NUMBER</td><td></td><td>System change number (SCN) of the last refresh operation</td></tr><tr><td>LAST_REFRESH_DATE</td><td>DATE</td><td></td><td>SYSDATE?of the last refresh</td></tr><tr><td>REFRESH_METHOD</td><td>VARCHAR2(8)</td><td></td><td>Default refresh method:<br>FORCE<br>FAST<br>COMPLETE<br>NEVER</td></tr><tr><td>SUMMARY</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether this materialized view includes a?GROUP BY?clause or aggregation (Y) or not (N)</td></tr><tr><td>FULLREFRESHTIM</td><td>NUMBER</td><td></td><td>Approximate refresh time, in seconds, for full refresh (defined only when?SUMMARY?=?Y)</td></tr><tr><td>INCREFRESHTIM</td><td>NUMBER</td><td></td><td>Approximate refresh time, in seconds, for fast refresh (defined only when?SUMMARY?=?Y)</td></tr><tr><td>CONTAINS_VIEWS</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether this materialized view contains a view in its definition (Y) or not (N)</td></tr><tr><td>UNUSABLE</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether this materialized view is?UNUSABLE?(inconsistent data) (Y) or not (N). A materialized view can be?UNUSABLE?if a system failure occurs during a full refresh.</td></tr><tr><td>RESTRICTED_SYNTAX</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether this materialized view had a restriction in its defining query that limits the use of query rewrite (Y) or not (N). More complete information is provided by theREWRITE_CAPABILITY?column of the?*_MVIEWS?view.</td></tr><tr><td>INC_REFRESHABLE</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether this materialized view can be fast refreshed (Y) or not (N)</td></tr><tr><td>KNOWN_STALE</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether the data contained in the materialized view is known to be inconsistent with the master table data because that has been updated since the last successful refresh (Y) or not (N)</td></tr><tr><td>INVALID</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether this materialized view is in an invalid state (inconsistent metadata) (Y) or not (N)</td></tr><tr><td>REWRITE_ENABLED</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether this materialized view is currently enabled for query rewrite (Y) or not (N)</td></tr><tr><td>QUERY_LEN</td><td>NUMBER</td><td></td><td>Length (in bytes) of the query field</td></tr><tr><td>QUERY</td><td>LONG</td><td></td><td>SELECT?expression of the materialized view definition</td></tr><tr><td>REVISION</td><td>NUMBER</td><td>NOT NULL</td><td>Reserved for internal use</td></tr></table>
+
+<p>参考<br><a href="https://docs.oracle.com/cd/E11882_01/server.112/e40402/statviews_1144.htm#REFRN20132" target="_blank" rel="external">https://docs.oracle.com/cd/E11882_01/server.112/e40402/statviews_1144.htm#REFRN20132</a></p>
+<h3 id="ALL-MVIEW-AGGREGATES"><a href="#ALL-MVIEW-AGGREGATES" class="headerlink" title="ALL_MVIEW_AGGREGATES"></a>ALL_MVIEW_AGGREGATES</h3><p>ALL_MVIEW_AGGREGATES describes the grouping functions (aggregate operations) that appear in the SELECT list of materialized aggregate views accessible to the current user.<br>Related Views<br>  ● DBA_MVIEW_AGGREGATES describes all such grouping functions defined for all materialized views in the database.<br>  ● USER_MVIEW_AGGREGATES describes all such grouping functions defined for all materialized views owned by the current user.<br>Note:<br>All three views exclude materialized views that reference remote tables or that include references to a nonstatic value such as SYSDATE orUSER. These views also exclude materialized views that were created as “snapshots” prior to Oracle8i and that were never altered to enable query rewrite.</p>
+<table style="font-size:14px;"><tr><th width="16.78%">Column</th><th width="14.24%">Datatype</th><th width="11.44%">NULL</th><th width="57.58%">Description</th></tr><tr><td>OWNER</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Owner of the materialized view</td></tr><tr><td>MVIEW_NAME</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Name of the materialized view</td></tr><tr><td>POSITION_IN_SELECT</td><td>NUMBER</td><td>NOT NULL</td><td>Ordinal position of this aggregation within the?SELECT?list. For the position of nonaggregate elements of the select list, see”ALL_MVIEW_KEYS”.</td></tr><tr><td>CONTAINER_COLUMN</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Name of this column in the container table</td></tr><tr><td>AGG_FUNCTION</td><td>VARCHAR2(8)</td><td></td><td>Aggregation function</td></tr><tr><td>DISTINCTFLAG</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether this aggregation is distinct (Y) or not (N)</td></tr><tr><td>MEASURE</td><td>LONG</td><td></td><td>SQL text of the measure, excluding the aggregation function. Equal to?<em>?for?COUNT(</em>).</td></tr></table>
+
+<p>参考<br><a href="https://docs.oracle.com/cd/E11882_01/server.112/e40402/statviews_1143.htm#REFRN20131" target="_blank" rel="external">https://docs.oracle.com/cd/E11882_01/server.112/e40402/statviews_1143.htm#REFRN20131</a></p>
+<h3 id="ALL-MVIEW-REFRESH-TIMES"><a href="#ALL-MVIEW-REFRESH-TIMES" class="headerlink" title="ALL_MVIEW_REFRESH_TIMES"></a>ALL_MVIEW_REFRESH_TIMES</h3><p>ALL_MVIEW_REFRESH_TIMES describes refresh times of the materialized views accessible to the current user.<br>Related Views<br>  ● DBA_MVIEW_REFRESH_TIMES describes refresh times of all materialized views in the database.<br>  ● USER_MVIEW_REFRESH_TIMES describes refresh times of the materialized views owned by the current user.</p>
+<table style="font-size:14px;"><tr><th width="16.78%">Column</th><th width="14.24%">Datatype</th><th width="11.44%">NULL</th><th width="57.58%">Description</th></tr><tr><td>OWNER</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Owner of the materialized view</td></tr><tr><td>NAME</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Name of the materialized view</td></tr><tr><td>MASTER_OWNER</td><td>VARCHAR2(30)</td><td></td><td>Owner of the master table</td></tr><tr><td>MASTER</td><td>VARCHAR2(30)</td><td></td><td>Name of the master table</td></tr><tr><td>LAST_REFRESH</td><td>DATE</td><td></td><td>SYSDATE?from the master site at the time of the last refresh</td></tr></table>
+
+<h3 id="ALL-MVIEW-JOINS"><a href="#ALL-MVIEW-JOINS" class="headerlink" title="ALL_MVIEW_JOINS"></a>ALL_MVIEW_JOINS</h3><p>ALL_MVIEW_JOINS describes joins between two columns in the WHERE clause of the subquery that defines a materialized view accessible to the current user.<br>Related Views<br>  ● DBA_MVIEW_JOINS describes all such joins for all materialized views in the database.<br>  ● USER_MVIEW_JOINS describes such joins for all materialized views owned by the current user.<br>Note:<br>All three views exclude materialized views that reference remote tables or that includes references to a nonstatic value such as SYSDATE orUSER. These views also exclude materialized views that were created as “snapshots” prior to Oracle8i and that were never altered to enable query rewrite.</p>
+<table style="font-size:14px;"><tr><th width="16.78%">Column</th><th width="14.24%">Datatype</th><th width="11.44%">NULL</th><th width="57.58%">Description</th></tr><tr><td>OWNER</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Owner of the materialized view</td></tr><tr><td>MVIEW_NAME</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Materialized view name</td></tr><tr><td>DETAILOBJ1_OWNER</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Owner of the first object in the joinFoot?1?</td></tr><tr><td>DETAILOBJ1_RELATION</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Name of the first object in the joinFootref?1</td></tr><tr><td>DETAILOBJ1_COLUMN</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Join column of the first object in the joinFootref?1</td></tr><tr><td>OPERATOR</td><td>CHAR(1)</td><td></td><td>Join operatorFootref?1</td></tr><tr><td>OPERATOR_TYPE</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether the join is an inner join (I) or the?DETAILOBJ1table is the left side of an outer join (L)Footref?1</td></tr><tr><td>DETAILOBJ2_OWNER</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Owner of the second object in the joinFootref?1</td></tr><tr><td>DETAILOBJ2_RELATION</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Name of the second object in the joinFootref?1</td></tr><tr><td>DETAILOBJ2_COLUMN</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Join column of the second object in the joinFootref?1</td></tr></table>
+
+<p>Footnote 1 These rows relate only to materialized join views and materialized aggregate views. They describe the two detail objects of a materialized view join.</p>
+<p>参考<br><a href="https://docs.oracle.com/cd/E11882_01/server.112/e40402/statviews_1149.htm#REFRN20134" target="_blank" rel="external">https://docs.oracle.com/cd/E11882_01/server.112/e40402/statviews_1149.htm#REFRN20134</a></p>
+<h3 id="ALL-MVIEW-KEYS"><a href="#ALL-MVIEW-KEYS" class="headerlink" title="ALL_MVIEW_KEYS"></a>ALL_MVIEW_KEYS</h3><p>ALL_MVIEW_KEYS describes the columns or expressions in the SELECT list upon which materialized views accessible to the current user are based.<br>Related Views<br>  ● DBA_MVIEW_KEYS describes such columns and expressions for all materialized views in the database.<br>  ● USER_MVIEW_KEYS describes such columns and expressions for all materialized views owned by the current user.<br>Note:<br>All three views exclude materialized views that reference remote tables or that includes references to a nonstatic value such as SYSDATE orUSER. These views also exclude materialized views that were created as snapshots prior to Oracle8i and that were never altered to enable query rewrite.</p>
+<table style="font-size:14px;"><tr><th width="16.78%">Column</th><th width="14.24%">Datatype</th><th width="11.44%">NULL</th><th width="57.58%">Description</th></tr><tr><td>OWNER</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Owner of the materialized view</td></tr><tr><td>MVIEW_NAME</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Materialized view name</td></tr><tr><td>POSITION_IN_SELECT</td><td>NUMBER</td><td>NOT NULL</td><td>Ordinal position of this key within the?SELECT?list</td></tr><tr><td>CONTAINER_COLUMN</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Name of the column in the container table</td></tr><tr><td>DETAILOBJ_OWNER</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Detail object owner</td></tr><tr><td>DETAILOBJ_NAME</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Detail object name (for example, the name of a table or view)</td></tr><tr><td>DETAILOBJ_ALIAS</td><td>VARCHAR2(30)</td><td></td><td>Implicit or explicit alias for detail relation</td></tr><tr><td>DETAILOBJ_TYPE</td><td>VARCHAR2(5)</td><td></td><td>Detail object type:</td></tr></table>
+
+<p>参考<br><a href="https://docs.oracle.com/cd/E11882_01/server.112/e40402/statviews_1150.htm#REFRN20135" target="_blank" rel="external">https://docs.oracle.com/cd/E11882_01/server.112/e40402/statviews_1150.htm#REFRN20135</a></p>
+<h3 id="ALL-MVIEW-LOGS"><a href="#ALL-MVIEW-LOGS" class="headerlink" title="ALL_MVIEW_LOGS"></a>ALL_MVIEW_LOGS</h3><p>ALL_MVIEW_LOGS describes all materialized view logs accessible to the current user.<br>Related Views<br>  ● DBA_MVIEW_LOGS describes all materialized view logs in the database.<br>  ● USER_MVIEW_LOGS describes all materialized view logs owned by the current user.</p>
+<table style="font-size:14px;"><tr><th width="16.78%">Column</th><th width="14.24%">Datatype</th><th width="11.44%">NULL</th><th width="57.58%">Description</th></tr><tr><td>LOG_OWNER</td><td>VARCHAR2(30)</td><td></td><td>Owner of the materialized view log</td></tr><tr><td>MASTER</td><td>VARCHAR2(30)</td><td></td><td>Name of the master table or master materialized view whose changes are logged</td></tr><tr><td>LOG_TABLE</td><td>VARCHAR2(30)</td><td></td><td>Name of the table where the changes to the master table or master materialized view are logged</td></tr><tr><td>LOG_TRIGGER</td><td>VARCHAR2(30)</td><td></td><td>Obsolete with Oracle8i?and later. Set to NULL. Formerly, this parameter was an after-row trigger on the master which inserted rows into the log.</td></tr><tr><td>ROWIDS</td><td>VARCHAR2(3)</td><td></td><td>Indicates whether rowid information is recorded (YES) or not (NO)</td></tr><tr><td>PRIMARY_KEY</td><td>VARCHAR2(3)</td><td></td><td>Indicates whether primary key information is recorded (YES) or not (NO)</td></tr><tr><td>OBJECT_ID</td><td>VARCHAR2(3)</td><td></td><td>Indicates whether object identifier information in an object table is recorded (YES) or not (NO)</td></tr><tr><td>FILTER_COLUMNS</td><td>VARCHAR2(3)</td><td></td><td>Indicates whether filter column information is recorded (YES) or not (NO)</td></tr><tr><td>SEQUENCE</td><td>VARCHAR2(3)</td><td></td><td>Indicates whether the sequence value, which provides additional ordering information, is recorded (YES) or not (NO)</td></tr><tr><td>INCLUDE_NEW_VALUES</td><td>VARCHAR2(3)</td><td></td><td>Indicates whether both old and new values are recorded (YES) or old values are recorded but new values are not recorded (NO)</td></tr><tr><td>PURGE_ASYNCHRONOUS</td><td>VARCHAR2(3)</td><td></td><td>Indicates whether the materialized view log is purged asynchronously (YES) or not (NO)</td></tr><tr><td>PURGE_DEFERRED</td><td>VARCHAR2(3)</td><td></td><td>Indicates whether the materialized view log is purged in a deferred manner (YES) or not (NO)</td></tr><tr><td>PURGE_START</td><td>DATE</td><td></td><td>For deferred purge, the purge start date</td></tr><tr><td>PURGE_INTERVAL</td><td>VARCHAR2(200)</td><td></td><td>For deferred purge, the purge interval</td></tr><tr><td>LAST_PURGE_DATE</td><td>DATE</td><td></td><td>Date of the last purge</td></tr><tr><td>LAST_PURGE_STATUS</td><td>NUMBER</td><td></td><td>Status of the last purge (error code or?0?for success)</td></tr><tr><td>NUM_ROWS_PURGED</td><td>NUMBER</td><td></td><td>Number of rows purged in the last purge</td></tr><tr><td>COMMIT_SCN_BASED</td><td>VARCHAR2(3)</td><td></td><td>Indicates whether the materialized view log is commit SCN-based (YES) or not (NO)</td></tr></table>
+
+<p>参考<br><a href="https://docs.oracle.com/cd/E11882_01/server.112/e40402/statviews_1151.htm#REFRN20137" target="_blank" rel="external">https://docs.oracle.com/cd/E11882_01/server.112/e40402/statviews_1151.htm#REFRN20137</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;当需要对物化视图的状态等信息进行查询，监控和管理时，就要用到相关的系统元数据表了，本文介绍了Oracle物化视图相关的元数据系统视图的表结构，这些视图有：&lt;br&gt;&lt;code&gt;ALL_VIEWS&lt;/code&gt;,&lt;code&gt;DBA_MVIEWS&lt;/code&gt;,&lt;code&gt;USER_MVIEWS&lt;/code&gt;，&lt;code&gt;ALL_MVIEW_ANALYSIS&lt;/code&gt;，&lt;code&gt;DBA_MVIEW_ANALYSIS&lt;/code&gt;，&lt;code&gt;USER_MVIEW_ANALYSIS&lt;/code&gt;，&lt;code&gt;ALL_MVIEW_AGGREGATES&lt;/code&gt;，&lt;code&gt;DBA_MVIEW_AGGREGATES&lt;/code&gt;，&lt;code&gt;USER_MVIEW_AGGREGATES&lt;/code&gt;，&lt;code&gt;ALL_MVIEW_REFRESH_TIMES&lt;/code&gt;，&lt;code&gt;DBA_MVIEW_REFRESH_TIMES&lt;/code&gt;，&lt;code&gt;USER_MVIEW_REFRESH_TIMES&lt;/code&gt;，&lt;code&gt;ALL_MVIEW_JOINS&lt;/code&gt;，&lt;code&gt;DBA_MVIEW_JOINS&lt;/code&gt;，&lt;code&gt;USER_MVIEW_JOINS&lt;/code&gt;，&lt;code&gt;ALL_MVIEW_KEYS&lt;/code&gt;，&lt;code&gt;DBA_MVIEW_KEYS&lt;/code&gt;，&lt;code&gt;USER_MVIEW_KEYS&lt;/code&gt;，&lt;code&gt;ALL_MVIEW_LOGS&lt;/code&gt;，&lt;code&gt;DBA_MVIEW_LOGS&lt;/code&gt;，&lt;code&gt;USER_MVIEW_LOGS&lt;/code&gt;。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="码路刺客" scheme="http://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
+    
+    
+      <category term="数据库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+      <category term="ORACLE" scheme="http://c-xuan.com/tags/ORACLE/"/>
+    
+      <category term="物化视图" scheme="http://c-xuan.com/tags/%E7%89%A9%E5%8C%96%E8%A7%86%E5%9B%BE/"/>
+    
+      <category term="翻译" scheme="http://c-xuan.com/tags/%E7%BF%BB%E8%AF%91/"/>
     
   </entry>
   
@@ -1352,170 +1499,6 @@
     
     
       <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Play Framework 2.5 环境搭建与新建项目（二）</title>
-    <link href="http://c-xuan.com/2016/09/21/PlayFrameworkInit2/"/>
-    <id>http://c-xuan.com/2016/09/21/PlayFrameworkInit2/</id>
-    <published>2016-09-21T13:18:31.000Z</published>
-    <updated>2016-09-24T16:32:41.539Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="activator-ui-方式"><a href="#activator-ui-方式" class="headerlink" title="activator ui 方式"></a>activator ui 方式</h2><p>打开命令行窗口，输入以下命令：</p>
-<pre><code>activator ui
-</code></pre><a id="more"></a>    
-<p><img src="/img/posts/PlayFrameworkInit-14.gif" alt="PlayFrameworkInit-14"></p>
-<p>浏览器中打开一个页面，类似于一个IDE，实际上也是一个网页版的IDE。</p>
-<p><img src="/img/posts/PlayFrameworkInit-11.gif" alt="PlayFrameworkInit-11"></p>
-<p>选择 <code>Seeds-&gt;Play Java Seed</code>，在右下角选择项目创建到的文件夹路径，然后点 <code>Create app</code> 完成创建。 </p>
-<p>在Build页面，可以看到初始化项目时引入依赖包等等。如果是首次创建项目，等待时间应该会很久，跟命令行创建过程差不多。</p>
-<p><img src="/img/posts/PlayFrameworkInit-12.gif" alt="PlayFrameworkInit-12"></p>
-<p>Code页面可以查看项目创建的文件结构以及编辑代码，虽说是一个开发环境，编辑代码的时候是没有提示的，不像Eclipse或者Intellij idea那么方便，在目录结构导航菜单中，可以看到一些新建文件夹和文件等菜单，对于 <code>Create Eclipse project</code> <code>Create Intellij project</code> 菜单，他们可以将你的项目转换成Eclipse或者Idea的目录结构，更好的导入。</p>
-<p><img src="/img/posts/PlayFrameworkInit-13.gif" alt="PlayFrameworkInit-13"></p>
-<p>在Run界面，可以启动项目，然后在浏览器中浏览项目页面，前提是Build完成。</p>
-<h2 id="intellij-idea-方式"><a href="#intellij-idea-方式" class="headerlink" title="intellij idea 方式"></a>intellij idea 方式</h2><p>官网给出用Eclipse或者intellij idea的编程环境来创建和调试Play项目的方法，这里用idea, eclipse赶脚太麻烦了。我用的idea 2015的。进入设置看下</p>
-<p><img src="/img/posts/PlayFrameworkInit-15.gif" alt="PlayFrameworkInit-15"></p>
-<p>进入设置看下Scala和SBT两个插件是否安装了，如果没有，点击 <code>Browse repositories</code>安装一下。</p>
-<p><img src="/img/posts/PlayFrameworkInit-16.gif" alt="PlayFrameworkInit-16"></p>
-<h3 id="新建项目"><a href="#新建项目" class="headerlink" title="新建项目"></a>新建项目</h3><p>在新建项目面板中，<code>Scala-&gt;Activator</code> </p>
-<p><img src="/img/posts/PlayFrameworkInit-17.gif" alt="PlayFrameworkInit-17"></p>
-<p>然后下一步，填入项目名称，下面选择模板，键盘输入play java seed就会找到这个选项。下面的Project SDK就是本机的JDK环境。点击完成。</p>
-<p><img src="/img/posts/PlayFrameworkInit-18.gif" alt="PlayFrameworkInit-18"></p>
-<p>新建项目需要引入一些依赖包，所以很慢。</p>
-<p><img src="/img/posts/PlayFrameworkInit-19.gif" alt="PlayFrameworkInit-19"></p>
-<h3 id="导入项目"><a href="#导入项目" class="headerlink" title="导入项目"></a>导入项目</h3><p>选择导入项目所在文件夹。</p>
-<p><img src="/img/posts/PlayFrameworkInit-20.gif" alt="PlayFrameworkInit-20"></p>
-<p>项目模块选择SBT。</p>
-<p><img src="/img/posts/PlayFrameworkInit-21.gif" alt="PlayFrameworkInit-21"></p>
-<p>完成设置。</p>
-<p><img src="/img/posts/PlayFrameworkInit-22.gif" alt="PlayFrameworkInit-22"></p>
-<h3 id="启动调试"><a href="#启动调试" class="headerlink" title="启动调试"></a>启动调试</h3><p>官方给的是，在Edit Config菜单中，点击 <code>+</code> 选择SBT Task，然后Name里写个名称，Tasks里输个 <code>run</code> 就可以了。</p>
-<p><img src="/img/posts/PlayFrameworkInit-25.gif" alt="PlayFrameworkInit-25"></p>
-<p><img src="/img/posts/PlayFrameworkInit-26.gif" alt="PlayFrameworkInit-26"></p>
-<p><img src="/img/posts/PlayFrameworkInit-23.gif" alt="PlayFrameworkInit-23"></p>
-<p>但是几次启动调试都失败了，比如下面的错误，不知道啥原因。估计是有什么依赖包没下载全。</p>
-<p><img src="/img/posts/PlayFrameworkInit-24.gif" alt="PlayFrameworkInit-24"></p>
-<p>我们其实可以在项目文件中右键，然后在菜单中选择 <code>Run Play 2 App</code>菜单，就可以启动项目。</p>
-<p><img src="/img/posts/PlayFrameworkInit-27.gif" alt="PlayFrameworkInit-27"></p>
-<p>这时候在运行调试编辑中可以看到有一个Play 2 App的项目了。</p>
-<p><img src="/img/posts/PlayFrameworkInit-28.gif" alt="PlayFrameworkInit-28"></p>
-<p>如果信息窗口中出现以下提示信息：</p>
-<p><strong>SBT compilation for play framework 2.x disabled by default</strong></p>
-<p>进入File-&gt;Setting菜单，将下面选项勾选即可。</p>
-<p><img src="/img/posts/PlayFrameworkInit-29.gif" alt="PlayFrameworkInit-29"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;activator-ui-方式&quot;&gt;&lt;a href=&quot;#activator-ui-方式&quot; class=&quot;headerlink&quot; title=&quot;activator ui 方式&quot;&gt;&lt;/a&gt;activator ui 方式&lt;/h2&gt;&lt;p&gt;打开命令行窗口，输入以下命令：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;activator ui
-&lt;/code&gt;&lt;/pre&gt;
-    
-    </summary>
-    
-      <category term="码路刺客" scheme="http://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
-    
-    
-      <category term="原创" scheme="http://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
-    
-      <category term="Play Framework" scheme="http://c-xuan.com/tags/Play-Framework/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Play Framework 2.5 环境搭建与新建项目（一）</title>
-    <link href="http://c-xuan.com/2016/09/20/PlayFrameworkInit/"/>
-    <id>http://c-xuan.com/2016/09/20/PlayFrameworkInit/</id>
-    <published>2016-09-19T16:40:51.000Z</published>
-    <updated>2016-09-24T15:33:17.947Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Play Framework是啥？引用下百度百科的说法：</p>
-<blockquote>
-<p>Play！是一个full-stack（全栈的）Java Web应用框架，包括一个简单的无状态MVC模型，具有Hibernate的对象持续，一个基于Groovy的模板引擎，以及建立一个现代Web应用所需的所有东西。</p>
-</blockquote>
-<p>当然，这个介绍是比较旧的，对于老版本的Play!，这么说没毛病。进入<a href="https://www.playframework.com/" target="_blank" rel="external">Play!官网</a>看看，满眼的绿啊，有一股清新之感呐。版本都到<code>2.5.8</code>了。追溯1.0版本都是在2010.07.28发布的，到现在已经有6年时间了。</p>
-<a id="more"></a>
-<p><img src="/img/posts/PlayFrameworkInit-1.gif" alt="PlayFrameworkInit-1"></p>
-<p>其实从Play!2.3.8版本开始变化就很大了，引入了<code>activator</code>,<code>typesafe</code>,<code>SBT</code>啥啥的各种东东，一开始都不大懂这些，只要知道跟之前版本相差很远就好了。这个号称是拯救Java程序员的神器，带着一颗好(zhe)奇(teng)的心开始探索一番。</p>
-<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><h3 id="下载安装包"><a href="#下载安装包" class="headerlink" title="下载安装包"></a>下载安装包</h3><p><img src="/img/posts/PlayFrameworkInit-2.gif" alt="PlayFrameworkInit-2"></p>
-<p>进入到官网的下载界面，点击下载就可以了，一个名为<code>typesafe-activator-1.3.10-minimal.zip</code>的压缩文件，没错，这就是全部了。但是从名字里的minimal就可以看出这是个精简版的环境包，用这个有代价的噢，尤其在我大天朝。在新建项目的时候会下载各种依赖包，很多国外站点在国内访问是很慢的，所以新建项目的过程非常考验耐性。所以还是下载那个Offline Distrbution版本的，离线版本的600+M，本以为用这个离线版的会快很多，结果。。。。。。。。是谁谁应该都会吐槽，这TM不是离线的麽，下了几百兆的东西，你告我创建项目的时候还要更新和各种下载依赖包！！！！！</p>
-<p>不过突然想到一个问题，人家是离线包，我在新建项目的时候是连着网的，莫非是要把网断开么！行，我等下试试。</p>
-<h3 id="添加环境变量"><a href="#添加环境变量" class="headerlink" title="添加环境变量"></a>添加环境变量</h3><p>按正常步骤来，把下载的压缩包加压到一个目录里，比如:</p>
-<p>F:\PlayFramework\typesafe-activator-1.3.10\activator-dist-1.3.10</p>
-<p>然后进入到bin目录，复制地址栏的地址:</p>
-<p>F:\PlayFramework\typesafe-activator-1.3.10\activator-dist-1.3.10\bin</p>
-<p>把这个加到Windows的环境变量里，怎么添加我就不多讲了。</p>
-<p>添加完以后，在你想创建项目的目录下空白处按住<code>Shit</code>键，然后点鼠标右键，弹出菜单选择“在此处打开命令行”弹出命令行窗口。输入<code>activator</code>命令，然后在浏览器中打开一个说明页面的话就说明环境变量添加的没问题了。</p>
-<h3 id="小问题"><a href="#小问题" class="headerlink" title="小问题"></a>小问题</h3><p><img src="/img/posts/PlayFrameworkInit-3.gif" alt="PlayFrameworkInit-3"></p>
-<p>关于那个系统找不到文件提示：</p>
-<p><strong>ACTIVATOR_HOME=F:\PlayFramework\typesafe-activator-1.3.10\activator-dist-1.3.10<br>系统找不到文件 BIN_DIRECTORY..\conf\sbtconfig.txt。</strong></p>
-<p>这个其实没啥影响，但是非要纠结的话，可以用文本编辑器看看</p>
-<p>F:\PlayFramework\typesafe-activator-1.3.10\activator-dist-1.3.10\bin</p>
-<p>目录下的 <strong>activator.bat</strong> 文件。找到</p>
-<p><img src="/img/posts/PlayFrameworkInit-4.gif" alt="PlayFrameworkInit-4"></p>
-<pre><code>set SBT_HOME=%BIN_DIRECTORY
-</code></pre><p>这行，不知道是官方故意怎么干的还是马虎造成的错误，感觉少了个<code>%</code>，应该是</p>
-<pre><code>set SBT_HOME=%BIN_DIRECTORY%
-</code></pre><p>改成上述那样其实也会报错，因为</p>
-<p>F:\PlayFramework\typesafe-activator-1.3.10\activator-dist-1.3.10\</p>
-<p>路径下就没有conf文件夹，里面就没有sbtconfig.txt文件，要是真看着不舒服的话，就建一个conf文件夹，然后里面建一个sbtconfig.txt配置文件，然后把下面这段复制到文件里面：</p>
-<pre><code># Set the java args to high
-
--Xmx512M
-
--XX:MaxPermSize=256m
-
--XX:ReservedCodeCacheSize=128m
-
-# Set the extra SBT options
-
--Dsbt.log.format=true
-</code></pre><h2 id="项目创建和启动"><a href="#项目创建和启动" class="headerlink" title="项目创建和启动"></a>项目创建和启动</h2><h3 id="命令行方式"><a href="#命令行方式" class="headerlink" title="命令行方式"></a>命令行方式</h3><p>下面就正式用命令行创建项目了。命令行输入</p>
-<pre><code>activator new onlineTest
-</code></pre><p>onlineTest是项目名称，然后稍等下会列出一些模板名称，根据个人喜好，用Java就输入5然后回车，用Scala语言写程序的就输入6然后回车，其他的我没试，不过就是创建一个项目结构目录嘛，大概差不多。</p>
-<p><img src="/img/posts/PlayFrameworkInit-5.gif" alt="PlayFrameworkInit-5"></p>
-<p>然后就看到F:\PlayFramework目录下多了一个文件夹，名称就是你输入的项目名称。<br>继续命令行输入 </p>
-<pre><code>cd onlineTest 
-</code></pre><p>切换到项目目录下，再输入 </p>
-<pre><code>activator run 
-</code></pre><p>就会编译项目然后启动运行服务了。</p>
-<p><img src="/img/posts/PlayFrameworkInit-6.gif" alt="PlayFrameworkInit-6"></p>
-<p>得说一下，因为我之前创建过项目了，换句话说该下载的依赖包都下载了，所以很快。就启动了，在浏览器输入</p>
-<pre><code>localhost:9000
-</code></pre><p>就可以看到界面了。</p>
-<p><img src="/img/posts/PlayFrameworkInit-7.gif" alt="PlayFrameworkInit-7"></p>
-<p>但是如果是第一次创建的话，而且还是在国内没有什么破墙手段的话，对不住了您呐，先沏壶茶，嗑袋瓜子，睡个午觉，那等的花都谢了。</p>
-<p>一开始我还好奇，它下载的东西都哪去了，没往项目目录里下载，其实是往用户目录下的 <strong>.ivy2</strong> 和 <strong>.sbt</strong> 两个隐藏文件夹里下载了，如果你看到这两个文件夹的大小有变化，恭喜你，就是在下载依赖包的路上了。很有可能你一个午觉醒来发现瓦擦！中途网络下载超时启动失败了！那么同样恭喜你，换个网络或者同一个网络下再试几次。毕竟Play!框架嘛，有种被Play的赶脚。</p>
-<p><img src="/img/posts/PlayFrameworkInit-8.gif" alt="PlayFrameworkInit-8"></p>
-<p>其实我也试过像之前我说的把网络断掉，然后运行启动命令，可能还是因为我这之前下载过了依赖包，所以很快，不大清楚首次创建运行项目的时候咋样，你可以试试。</p>
-<p>唉，本来想睡觉的，但是还是想好（zhe）奇（teng）下断网会怎样，我就把用户目录下的.ivy2和.sbt两个隐藏文件夹删了，然后断开网络，重新建一个offlineTest项目试试。</p>
-<p><img src="/img/posts/PlayFrameworkInit-9.gif" alt="PlayFrameworkInit-9"></p>
-<p>得，报错了，我输入过ignore，直接停止了，不行，我有试过last，然后看到命令行窗口刷刷刷的快速往上飘各种信息。感觉有希望啊。然后又来了一个停顿</p>
-<p><img src="/img/posts/PlayFrameworkInit-10.gif" alt="PlayFrameworkInit-10"></p>
-<p>继续输入last，回车后继续刷刷刷的。。。。。好久。。。。。好想睡觉。</p>
-<p>又来了个停顿，输入last回车。。。。。等~等灯等灯~</p>
-<p>后面又输入两次last，还没完事儿。。。。。算了睡觉!!</p>
-<p>后续</p>
-<p><a href="/2016/09/21/PlayFrameworkInit2">Play Framework 2.5 环境搭建与新建项目（二）</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;Play Framework是啥？引用下百度百科的说法：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Play！是一个full-stack（全栈的）Java Web应用框架，包括一个简单的无状态MVC模型，具有Hibernate的对象持续，一个基于Groovy的模板引擎，以及建立一个现代Web应用所需的所有东西。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;当然，这个介绍是比较旧的，对于老版本的Play!，这么说没毛病。进入&lt;a href=&quot;https://www.playframework.com/&quot;&gt;Play!官网&lt;/a&gt;看看，满眼的绿啊，有一股清新之感呐。版本都到&lt;code&gt;2.5.8&lt;/code&gt;了。追溯1.0版本都是在2010.07.28发布的，到现在已经有6年时间了。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="码路刺客" scheme="http://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
-    
-    
-      <category term="原创" scheme="http://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
-    
-      <category term="Play Framework" scheme="http://c-xuan.com/tags/Play-Framework/"/>
     
   </entry>
   

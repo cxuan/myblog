@@ -449,7 +449,13 @@
     
         <section class="youyan" id="comments">
     
-    <script> loadComment(); </script>
+    <script>
+        try {
+            loadComment();
+        } catch(error){
+            console.log(error);
+        }
+    </script>
 
 	<!-- UY BEGIN -->
 	<div id="uyan_frame" style="width:90%; margin:0 auto;"></div>
@@ -470,7 +476,7 @@
     <div class="outer">
         <div id="footer-info">
             <div class="footer-left">
-                Posts count:58
+                Posts count:60
             </div>
 			<!--
             <div class="footer-left">

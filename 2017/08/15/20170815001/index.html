@@ -15,20 +15,18 @@
 
 
 
-<meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;CSS动画是非常有意思的，用一些简单的属性就可以创建出来，从优雅的淡入到更加惊艳的效果都可以，翻页效果就是其中之一，它通过在容器的正面跟反面包含不同的内容来加以实现。本文就是用尽可">
-<meta name="keywords" content="前端编程,翻译,CSS">
+<meta name="description" content="对物化视图的状态等信息进行查询，监控和管理时，需要对系统视图进行查询，以下列出了常用的物化视图状态、依赖关联，批量维护时能用到的查询语句，根据具体情况进行适当修改。">
+<meta name="keywords" content="数据库,ORACLE,物化视图,原创">
 <meta property="og:type" content="article">
-<meta property="og:title" content="用CSS创建翻转动画">
-<meta property="og:url" content="http://c-xuan.com/2016/03/19/CSS-For-Flip-Effect/index.html">
+<meta property="og:title" content="【ORACLE】常用物化视图相关元数据查询语句">
+<meta property="og:url" content="http://c-xuan.com/2017/08/15/20170815001/index.html">
 <meta property="og:site_name" content="靛青">
-<meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;CSS动画是非常有意思的，用一些简单的属性就可以创建出来，从优雅的淡入到更加惊艳的效果都可以，翻页效果就是其中之一，它通过在容器的正面跟反面包含不同的内容来加以实现。本文就是用尽可能简单的方法来实现这种效果。">
+<meta property="og:description" content="对物化视图的状态等信息进行查询，监控和管理时，需要对系统视图进行查询，以下列出了常用的物化视图状态、依赖关联，批量维护时能用到的查询语句，根据具体情况进行适当修改。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://c-xuan.com/img/posts/CSS-For-Flip-Effect.png">
-<meta property="og:updated_time" content="2016-09-25T12:49:21.090Z">
+<meta property="og:updated_time" content="2017-08-14T16:00:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="用CSS创建翻转动画">
-<meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;CSS动画是非常有意思的，用一些简单的属性就可以创建出来，从优雅的淡入到更加惊艳的效果都可以，翻页效果就是其中之一，它通过在容器的正面跟反面包含不同的内容来加以实现。本文就是用尽可能简单的方法来实现这种效果。">
-<meta name="twitter:image" content="http://c-xuan.com/img/posts/CSS-For-Flip-Effect.png">
+<meta name="twitter:title" content="【ORACLE】常用物化视图相关元数据查询语句">
+<meta name="twitter:description" content="对物化视图的状态等信息进行查询，监控和管理时，需要对系统视图进行查询，以下列出了常用的物化视图状态、依赖关联，批量维护时能用到的查询语句，根据具体情况进行适当修改。">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -60,7 +58,7 @@
 <link href="/js/others/font-awesome.min.css" rel="stylesheet">
 
 
-<title>用CSS创建翻转动画 | 靛青</title>
+<title>【ORACLE】常用物化视图相关元数据查询语句 | 靛青</title>
 
 <script src="/js/others/jquery.min.js"></script>
 <script src="/js/others/clipboard.min.js"></script>
@@ -356,11 +354,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap "><article id="post-CSS-For-Flip-Effect" class="article article-type-post  animated pulse " itemscope itemprop="blogPost">
+      <div class="body-wrap "><article id="post-20170815001" class="article article-type-post  animated pulse " itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/03/19/CSS-For-Flip-Effect/" class="article-date">
-      <time datetime="2016-03-18T16:00:00.000Z" itemprop="datePublished">2016-03-19</time>
+      <a href="/2017/08/15/20170815001/" class="article-date">
+      <time datetime="2017-08-14T16:00:00.000Z" itemprop="datePublished">2017-08-15</time>
 </a>
 
 
@@ -375,7 +373,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      用CSS创建翻转动画
+      【ORACLE】常用物化视图相关元数据查询语句
     </h1>
   
 
@@ -390,7 +388,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSS/">CSS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端编程/">前端编程</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/翻译/">翻译</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ORACLE/">ORACLE</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原创/">原创</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/物化视图/">物化视图</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -400,178 +398,18 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CSS动画是非常有意思的，用一些简单的属性就可以创建出来，从优雅的淡入到更加惊艳的效果都可以，翻页效果就是其中之一，它通过在容器的正面跟反面包含不同的内容来加以实现。本文就是用尽可能简单的方法来实现这种效果。</p>
-<center><img src="/img/posts/CSS-For-Flip-Effect.png"></center>
-
+        <p>对物化视图的状态等信息进行查询，监控和管理时，需要对系统视图进行查询，以下列出了常用的物化视图状态、依赖关联，批量维护时能用到的查询语句，根据具体情况进行适当修改。</p>
 <a id="more"></a>
-<p><a href="https://davidwalsh.name/demo/css-flip.php" target="_blank" rel="external">查看演示</a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：本文不是第一篇讲述这种效果怎么做的文章，但是我发现很多将这个的文章都过于复杂，添加了很多额外的样式代码到案例里面，让读者搞不清那些代码是需要的哪些不是。本文不会有这个问题，只含有一些必要的样式，你可以随意美化翻转的每个页。</p>
-<p>##HTML结构##</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;以下HTML结构就是为了达到有两面的效果的：</p>
-<pre><code>&lt;div class=&quot;flip-container&quot; ontouchstart=&quot;this.classList.toggle(&apos;hover&apos;);&quot;&gt;
-        &lt;div class=&quot;flipper&quot;&gt;
-                &lt;div class=&quot;front&quot;&gt;
-                        &lt;!-- 正面内容 --&gt;
-                &lt;/div&gt;
-                &lt;div class=&quot;back&quot;&gt;
-                        &lt;!-- 反面内容 --&gt;
-                &lt;/div&gt;
-        &lt;/div&gt;
-&lt;/div&gt;
-</code></pre><p>　　正如你预料的，有两个内容面板：正面跟反面。你将惊奇的发现包含的CSS样式不多：</p>
-<pre><code>/* 整个容器，包括透视 */
-.flip-container {
-    perspective: 1000;
-}
-
-/* 鼠标放上去的时候翻转 */
-.flip-container:hover .flipper, .flip-container.hover .flipper {
-    transform: rotateY(180deg);
-}
-
-.flip-container, .front, .back {
-    width: 320px;
-    height: 480px;
-}
-
-/* 翻转速度设置 */
-.flipper {
-    transition: 1.5s;
-    transform-style: preserve-3d;
-
-    position: relative;
-}
-
-/* 翻转页的时候隐藏背面 */
-.front, .back {
-    backface-visibility: hidden;
-
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-/* 前面板放在上面 */
-.front {
-    z-index: 2;
-    /* for firefox 31 */
-    transform: rotateY(0deg);
-}
-
-/* 背面初始的时候隐藏 */
-.back {
-    transform: rotateY(180deg);
-}
-</code></pre><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们来看下大体的实现过程：</p>
-<ul>
-<li>最外面的容器设置了整个动画区域的<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/perspective" target="_blank" rel="external">透视</a>范围</li>
-<li>内层的容器是真正用于翻转的元素，父容器被激活的时候翻转了180度。这也是控制翻转速度的地方，把翻转角度改成-180度就会反方向翻转了。</li>
-<li>正面和反面的元素被决定定位了，这样他们就可以很好的层叠在彼此之上。他们的 <code>backface-visibility</code> 属性是 <code>hidden</code>, 所以当正面或者反面显示的时候，背面就隐藏起来。</li>
-<li>正面元素比反面元素有一个比较高的 <code>z-index</code> 属性值所以它可以预先编码和显示在上层。</li>
-<li>反面元素旋转了180度，成了背面。</li>
-</ul>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;以上就是所有要做的了，将这个简单的结构放在你想放的地方，修改你需要的正面跟反面的样式。</p>
-<p>##来自CSS动画专家Ana Tudor的说明##</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在卡片元素上给属性设置确定的值(比如 <code>overflow: hidden</code>)将禁止有3D变换的子元素。我相信这是很重要的，因为我就曾这样设置过，导致所有的子元素都成了一样的3D变换了。</p>
-<p>##CSS翻转开关##</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果你想用JavaScript代码来控制元素的翻转，一个简单的CSS类样式就可以了</p>
-<pre><code>.flip-container:hover .flipper, .flip-container.hover .flipper, .flip-container.flip .flipper {
-    transform: rotateY(180deg);
-}
-</code></pre><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加这个翻转的类样式到你想要用JavaScript控制的元素里面，使用下面的JavaScript代码就可以起作用了。</p>
-<pre><code>document.querySelector(&quot;#myCard&quot;).classList.toggle(&quot;flip&quot;)
-</code></pre><p>##CSS垂直翻转##</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;想要实现垂直翻转就需要添加 <code>transform-origin</code> 坐标轴的值。原来的翻转样式需要更新才能实现垂直地翻转。</p>
-<pre><code>.vertical.flip-container {
-    position: relative;
-}
-
-.vertical .back {
-    transform: rotateX(180deg);
-}
-
-.vertical.flip-container .flipper {
-    transform-origin: 100% 213.5px; /* 高度值的一半 */
-}
-
-.vertical.flip-container:hover .flipper {
-    transform: rotateX(-180deg);
-}
-</code></pre><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;你将看到绕着X轴翻转的效果。</p>
-<p>##支持IE浏览器##</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;要兼容IE浏览器就需要对代码进行一些改动，因为IE还没兼容所有现代 <code>transform</code> 的属性。 本质上还是正面跟反面元素同时翻转。</p>
-<pre><code>/* 整个容器，包括透视 */
-.flip-container {
-    perspective: 1000;
-    transform-style: preserve-3d;
-}
-
-/*  注意这里有修改 */
-.flip-container:hover .back {
-    transform: rotateY(0deg);
-}
-.flip-container:hover .front {
-    transform: rotateY(180deg);
-}
-
-.flip-container, .front, .back {
-    width: 320px;
-    height: 480px;
-}
-
-/* 翻转速度设置 */
-.flipper {
-    transition: 0.6s;
-    transform-style: preserve-3d;
-
-    position: relative;
-}
-
-/* 翻转页的时候隐藏背面 */
-.front, .back {
-    backface-visibility: hidden;
-    transition: 0.6s;
-    transform-style: preserve-3d;
-
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-/* 注意这里有修改 */
-.front {
-    z-index: 2;
-    transform: rotateY(0deg);
-}
-
-/* 背面初始的时候隐藏 */
-.back {
-    transform: rotateY(-180deg);
-}
-
-/* 
-    垂直翻转的修改
-*/
-.vertical.flip-container {
-    position: relative;
-}
-
-.vertical .back {
-    transform: rotateX(180deg);
-}
-
-.vertical.flip-container:hover .back {
-    transform: rotateX(0deg);
-}
-
-.vertical.flip-container:hover .front {
-    transform: rotateX(180deg);
-}
-</code></pre><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上面的代码就会在IE10以上工作了。</p>
-<p><a href="https://davidwalsh.name/demo/css-flip.php" target="_blank" rel="external">查看演示</a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CSS翻转动画是很经典的，是CSS动画运用的代表性例子。稍加深入，就是3D CSS动画效果了，CSS代码真的算是很少了。这个效果对于HTML5游戏是很优雅的。对于卡片式的效果，简直完美。</p>
-<p>本文译自<a href="https://davidwalsh.name/css-flip" target="_blank" rel="external">https://davidwalsh.name/css-flip</a></p>
-
+<p>语句中使用到的系统表字段说明请查看<a href="/2017/08/13/20170813001">物化视图相关元数据视图字段说明</a></p>
+<h3 id="基本信息查询"><a href="#基本信息查询" class="headerlink" title="基本信息查询"></a>基本信息查询</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 物化视图基本信息</span></span><br><span class="line">	<span class="keyword">SELECT</span> OWNER            , <span class="comment">--所有者账户</span></span><br><span class="line">		   MVIEW_NAME       , <span class="comment">--名称</span></span><br><span class="line">		   LAST_REFRESH_DATE, <span class="comment">--上次更新时间</span></span><br><span class="line">		   REFRESH_METHOD   , <span class="comment">--更新方式</span></span><br><span class="line">		   INVALID          , <span class="comment">--是否失效</span></span><br><span class="line">		   <span class="keyword">QUERY</span>              <span class="comment">--查询语句</span></span><br><span class="line">	  <span class="keyword">FROM</span> USER_MVIEW_ANALYSIS </span><br><span class="line">  <span class="keyword">ORDER</span> <span class="keyword">BY</span> LAST_REFRESH_DATE <span class="keyword">DESC</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="物化视图输出列"><a href="#物化视图输出列" class="headerlink" title="物化视图输出列"></a>物化视图输出列</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">SELECT</span> a.OWNER        , <span class="comment">--所有者账户</span></span><br><span class="line">		a.MVIEW_NAME   , <span class="comment">--名称</span></span><br><span class="line">		b.COLUMN_NAME  , <span class="comment">--列名称</span></span><br><span class="line">		b.COMMENTS       <span class="comment">--列注释</span></span><br><span class="line">      <span class="keyword">FROM</span> USER_MVIEW_ANALYSIS a</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> USER_COL_COMMENTS b</span><br><span class="line">        <span class="keyword">ON</span> a.MVIEW_NAME = b.TABLE_NAME;</span><br></pre></td></tr></table></figure>
+<h3 id="物化视图引用了哪些基表"><a href="#物化视图引用了哪些基表" class="headerlink" title="物化视图引用了哪些基表"></a>物化视图引用了哪些基表</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 物化视图关联表</span></span><br><span class="line">		<span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> </span><br><span class="line">			   A.OWNER,          <span class="comment">--所有者账户</span></span><br><span class="line">			   A.MVIEW_NAME     ,<span class="comment">--物化视图名称</span></span><br><span class="line">		       B.COMMENTS       ,<span class="comment">--视图注释</span></span><br><span class="line">		       A.DETAILOBJ_OWNER,<span class="comment">--基表所有者账号</span></span><br><span class="line">		       A.DETAILOBJ_NAME  <span class="comment">--基表名称</span></span><br><span class="line">		  <span class="keyword">FROM</span> USER_MVIEW_DETAIL_RELATIONS A</span><br><span class="line">    <span class="keyword">INNER</span> <span class="keyword">JOIN</span> USER_MVIEW_COMMENTS B <span class="keyword">ON</span> A.MVIEW_NAME = B.MVIEW_NAME</span><br><span class="line">		 <span class="keyword">WHERE</span> DETAILOBJ_NAME <span class="keyword">NOT</span> <span class="keyword">LIKE</span> <span class="string">'BIN%'</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="物化视图-基表-存储过程引用关系"><a href="#物化视图-基表-存储过程引用关系" class="headerlink" title="物化视图-基表-存储过程引用关系"></a>物化视图-基表-存储过程引用关系</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 物化视图或普通视图引用了什么普通表，视图被哪些存储过程引用</span></span><br><span class="line">WITH CTE AS (</span><br><span class="line">    <span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> </span><br><span class="line">           A.OWNER,               <span class="comment">-- 所有者账户</span></span><br><span class="line">           A.MVIEW_NAME         , <span class="comment">-- 物化视图名称</span></span><br><span class="line">           A.DETAILOBJ_OWNER    , <span class="comment">-- 被引用表账号</span></span><br><span class="line">           A.DETAILOBJ_NAME       <span class="comment">-- 被引用表名称</span></span><br><span class="line">      <span class="keyword">FROM</span> USER_MVIEW_DETAIL_RELATIONS A</span><br><span class="line">     <span class="keyword">WHERE</span> A.DETAILOBJ_NAME <span class="keyword">NOT</span> <span class="keyword">LIKE</span> <span class="string">'BIN%'</span></span><br><span class="line"> <span class="keyword">UNION</span> ALL</span><br><span class="line">    <span class="keyword">SELECT</span> <span class="string">''</span> <span class="keyword">AS</span> OWNER,</span><br><span class="line">           <span class="keyword">NAME</span> <span class="keyword">AS</span> MVIEW_NAME,</span><br><span class="line">           REFERENCED_OWNER <span class="keyword">AS</span> DETAILOBJ_OWNER,</span><br><span class="line">           REFERENCED_NAME <span class="keyword">AS</span> DETAILOBJ_NAME</span><br><span class="line">      <span class="keyword">FROM</span> USER_DEPENDENCIES </span><br><span class="line">     <span class="keyword">WHERE</span> <span class="keyword">TYPE</span> =<span class="string">'VIEW'</span></span><br><span class="line">)</span><br><span class="line">    <span class="keyword">SELECT</span> A.OWNER            ,<span class="comment">-- 视图所有者账户</span></span><br><span class="line">           A.MVIEW_NAME <span class="keyword">AS</span> MV ,<span class="comment">-- 视图名称</span></span><br><span class="line">           A.DETAILOBJ_OWNER  ,<span class="comment">-- 基表所有者账户</span></span><br><span class="line">           A.DETAILOBJ_NAME   ,<span class="comment">-- 基表/视图</span></span><br><span class="line">           NVL(B.NAME,<span class="string">'-'</span>) <span class="keyword">AS</span> PROC_NAME <span class="comment">-- 存储过程名称</span></span><br><span class="line">      <span class="keyword">FROM</span> CTE A</span><br><span class="line"> <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> (<span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> <span class="keyword">NAME</span>,REFERENCED_NAME </span><br><span class="line">              <span class="keyword">FROM</span> USER_DEPENDENCIES B </span><br><span class="line">             <span class="keyword">WHERE</span> B.TYPE = <span class="string">'PROCEDURE'</span> </span><br><span class="line">            ) B <span class="keyword">ON</span> A.MVIEW_NAME = B.REFERENCED_NAME</span><br><span class="line">  <span class="keyword">ORDER</span> <span class="keyword">BY</span> A.MVIEW_NAME,A.DETAILOBJ_NAME,B.NAME</span><br><span class="line">    ;</span><br></pre></td></tr></table></figure>
+<h3 id="批量删除物化视图日志"><a href="#批量删除物化视图日志" class="headerlink" title="批量删除物化视图日志"></a>批量删除物化视图日志</h3><p>将结果复制出来执行。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 批量删除物化视图日志</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MASTER</span>,<span class="string">'DROP MATERIALIZED VIEW LOG ON '</span> || <span class="keyword">MASTER</span> || <span class="string">' ;'</span> <span class="keyword">AS</span> DSQL </span><br><span class="line">  <span class="keyword">FROM</span> USER_MVIEW_LOGS;</span><br></pre></td></tr></table></figure></p>
+<h3 id="删除没有被引用的基表的物化视图日志"><a href="#删除没有被引用的基表的物化视图日志" class="headerlink" title="删除没有被引用的基表的物化视图日志"></a>删除没有被引用的基表的物化视图日志</h3><p>将结果复制出来执行。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 删除没有被物化视图引用的基表的物化视图日志</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MASTER</span>,<span class="string">'DROP MATERIALIZED VIEW LOG ON '</span> || <span class="keyword">MASTER</span> || <span class="string">';'</span>  <span class="keyword">AS</span> A</span><br><span class="line">  <span class="keyword">FROM</span> ALL_MVIEW_LOGS </span><br><span class="line"> <span class="keyword">WHERE</span> <span class="keyword">MASTER</span> <span class="keyword">NOT</span> <span class="keyword">IN</span> (</span><br><span class="line">           <span class="keyword">SELECT</span> DETAILOBJ_NAME </span><br><span class="line">             <span class="keyword">FROM</span> USER_MVIEW_DETAIL_RELATIONS </span><br><span class="line">        );</span><br></pre></td></tr></table></figure></p>
+<h3 id="批量修改物化视图刷新方式"><a href="#批量修改物化视图刷新方式" class="headerlink" title="批量修改物化视图刷新方式"></a>批量修改物化视图刷新方式</h3><p>将结果复制出来执行。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--修改物化视图为手动增量刷新</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="string">'ALTER MATERIALIZED VIEW '</span> || MVIEW_NAME || <span class="string">' REFRESH FAST ON DEMAND;'</span> <span class="keyword">AS</span> S</span><br><span class="line"><span class="keyword">FROM</span> USER_MVIEWS <span class="keyword">WHERE</span> MVIEW_NAME <span class="keyword">LIKE</span> <span class="string">'MV_%'</span>;</span><br><span class="line"><span class="comment">--手动执行物化视图增量刷新</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="string">'DBMS_MVIEW.REFRESH('''</span> || MVIEW_NAME || <span class="string">''',''F'');'</span> <span class="keyword">AS</span> S</span><br><span class="line"><span class="keyword">FROM</span> USER_MVIEWS <span class="keyword">WHERE</span> MVIEW_NAME <span class="keyword">LIKE</span> <span class="string">'MV_%'</span>;</span><br><span class="line"><span class="comment">--修改物化视图为自动增量刷新</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="string">'ALTER MATERIALIZED VIEW '</span> || MVIEW_NAME || <span class="string">' REFRESH FAST ON COMMIT;'</span> <span class="keyword">AS</span> S</span><br><span class="line"><span class="keyword">FROM</span> USER_MVIEWS <span class="keyword">WHERE</span> MVIEW_NAME <span class="keyword">LIKE</span> <span class="string">'MV_%'</span>;</span><br><span class="line"><span class="comment">--修改引用了某个基表的所有物化视图为手动增量刷新</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="string">'ALTER MATERIALIZED VIEW '</span> || MVIEW_NAME || <span class="string">' REFRESH FAST ON DEMAND;'</span> <span class="keyword">AS</span> S</span><br><span class="line"><span class="keyword">FROM</span> USER_MVIEWS</span><br><span class="line"><span class="keyword">WHERE</span> MVIEW_NAME <span class="keyword">IN</span> (</span><br><span class="line">      <span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> <span class="keyword">NAME</span> </span><br><span class="line">      <span class="keyword">FROM</span> USER_DEPENDENCIES </span><br><span class="line">      <span class="keyword">WHERE</span> <span class="keyword">TYPE</span> = <span class="string">'MATERIALIZED VIEW'</span> </span><br><span class="line">      <span class="keyword">AND</span> REFERENCED_NAME <span class="keyword">LIKE</span> <span class="string">'%table_name%'</span> <span class="comment">-- 基表名称</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
+<h3 id="物化视图刷新信息"><a href="#物化视图刷新信息" class="headerlink" title="物化视图刷新信息"></a>物化视图刷新信息</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--物化视图刷新信息</span></span><br><span class="line"><span class="keyword">SELECT</span> MVIEW_NAME,<span class="comment">--物化视图名称</span></span><br><span class="line">       REFRESH_MODE,<span class="comment">--刷新方式</span></span><br><span class="line">       REFRESH_METHOD,<span class="comment">--刷新类型</span></span><br><span class="line">       FAST_REFRESHABLE,<span class="comment">--是否可刷新</span></span><br><span class="line">       LAST_REFRESH_TYPE,<span class="comment">--最近一次刷新类型</span></span><br><span class="line">       LAST_REFRESH_DATE,<span class="comment">--最近一次刷新时间</span></span><br><span class="line">       STALENESS <span class="comment">--数据是否过时</span></span><br><span class="line">  <span class="keyword">FROM</span> USER_MVIEWS </span><br><span class="line"> <span class="comment">--WHERE MVIEW_NAME = 'MV1'</span></span><br><span class="line"> <span class="keyword">ORDER</span> <span class="keyword">BY</span> LAST_REFRESH_DATE <span class="keyword">DESC</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="物化视图最近一次刷新信息"><a href="#物化视图最近一次刷新信息" class="headerlink" title="物化视图最近一次刷新信息"></a>物化视图最近一次刷新信息</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--查询物化视图最近一次刷新信息</span></span><br><span class="line"> <span class="keyword">SELECT</span> MVIEW_NAME,  <span class="comment">--物化视图名称</span></span><br><span class="line">	    LAST_REFRESH_DATE <span class="string">"START_TIME"</span>, <span class="comment">--刷新开始时间</span></span><br><span class="line">	    <span class="keyword">CASE</span> <span class="keyword">WHEN</span> FULLREFRESHTIM &lt;&gt; <span class="number">0</span> </span><br><span class="line">			 <span class="keyword">THEN</span> LAST_REFRESH_DATE + FULLREFRESHTIM/<span class="number">60</span>/<span class="number">60</span>/<span class="number">24</span></span><br><span class="line">		     <span class="keyword">WHEN</span> INCREFRESHTIM &lt;&gt; <span class="number">0</span> </span><br><span class="line">			 <span class="keyword">THEN</span> LAST_REFRESH_DATE + INCREFRESHTIM/<span class="number">60</span>/<span class="number">60</span>/<span class="number">24</span></span><br><span class="line">		     <span class="keyword">ELSE</span> LAST_REFRESH_DATE</span><br><span class="line">	    <span class="keyword">END</span> <span class="string">"END_TIME"</span>, <span class="comment">--刷新结束时间</span></span><br><span class="line">	    FULLREFRESHTIM, <span class="comment">--全量刷新耗时</span></span><br><span class="line">	    INCREFRESHTIM , <span class="comment">--增量刷新耗时</span></span><br><span class="line">	    REFRESH_METHOD, <span class="comment">--最近一次刷新方式</span></span><br><span class="line">	    SUMMARY       , <span class="comment">--是否含有聚合查询</span></span><br><span class="line">	    INC_REFRESHABLE,<span class="comment">--是否支持增量刷新</span></span><br><span class="line">	    INVALID       , <span class="comment">--是否失效</span></span><br><span class="line">	    REWRITE_ENABLED <span class="comment">--是否支持查询重写</span></span><br><span class="line">   <span class="keyword">FROM</span> ALL_MVIEW_ANALYSIS</span><br><span class="line">  <span class="keyword">WHERE</span> OWNER=<span class="string">'OWNER'</span> <span class="comment">--物化视图所有者账户</span></span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> LAST_REFRESH_DATE <span class="keyword">DESC</span>;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -579,13 +417,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/03/19/CSS-For-Flip-Effect/">用CSS创建翻转动画</a></p>
+        <p><span>本文标题:</span><a href="/2017/08/15/20170815001/">【ORACLE】常用物化视图相关元数据查询语句</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">c-xuan</a></p>
-        <p><span>发布时间:</span>2016-03-19, 00:00:00</p>
-        <p><span>最后更新:</span>2016-09-25, 20:49:21</p>
+        <p><span>发布时间:</span>2017-08-15, 00:00:00</p>
+        <p><span>最后更新:</span>2017-08-15, 00:00:00</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/03/19/CSS-For-Flip-Effect/" title="用CSS创建翻转动画">http://c-xuan.com/2016/03/19/CSS-For-Flip-Effect/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://c-xuan.com/2016/03/19/CSS-For-Flip-Effect/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/08/15/20170815001/" title="【ORACLE】常用物化视图相关元数据查询语句">http://c-xuan.com/2017/08/15/20170815001/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://c-xuan.com/2017/08/15/20170815001/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -598,15 +436,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/03/23/17JqueryTips/">
-                    17个jQuery实用技巧
+                <a href="/2017/11/19/20171119001/">
+                    【ORACLE】导致物化视图快速刷新变慢的原因和解决
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/03/17/Web-Cloud-Effect/">
-                    Web蓝天白云的极致体验
+                <a href="/2017/08/13/20170813001/">
+                    【ORACLE】物化视图相关元数据视图字段说明
                 </a>
             </div>
         
@@ -618,7 +456,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本信息查询"><span class="toc-number">1.</span> <span class="toc-text">基本信息查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#物化视图输出列"><span class="toc-number">2.</span> <span class="toc-text">物化视图输出列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#物化视图引用了哪些基表"><span class="toc-number">3.</span> <span class="toc-text">物化视图引用了哪些基表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#物化视图-基表-存储过程引用关系"><span class="toc-number">4.</span> <span class="toc-text">物化视图-基表-存储过程引用关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#批量删除物化视图日志"><span class="toc-number">5.</span> <span class="toc-text">批量删除物化视图日志</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除没有被引用的基表的物化视图日志"><span class="toc-number">6.</span> <span class="toc-text">删除没有被引用的基表的物化视图日志</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#批量修改物化视图刷新方式"><span class="toc-number">7.</span> <span class="toc-text">批量修改物化视图刷新方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#物化视图刷新信息"><span class="toc-number">8.</span> <span class="toc-text">物化视图刷新信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#物化视图最近一次刷新信息"><span class="toc-number">9.</span> <span class="toc-text">物化视图最近一次刷新信息</span></a></li></ol>
         
     </div>
     <style>
@@ -654,7 +492,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"用CSS创建翻转动画　| 靛青　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"【ORACLE】常用物化视图相关元数据查询语句　| 靛青　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -695,7 +533,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/03/23/17JqueryTips/" title="上一篇: 17个jQuery实用技巧">
+            <a href="/2017/11/19/20171119001/" title="上一篇: 【ORACLE】导致物化视图快速刷新变慢的原因和解决">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -703,7 +541,7 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/03/17/Web-Cloud-Effect/" title="下一篇: Web蓝天白云的极致体验">
+            <a href="/2017/08/13/20170813001/" title="下一篇: 【ORACLE】物化视图相关元数据视图字段说明">
                 <i class="fa fa-angle-right"></i>
             </a>
         

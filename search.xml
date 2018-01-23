@@ -3,6 +3,87 @@
   
     
     <entry>
+      <title><![CDATA[CentOS上zookeeper集群模式安装配置]]></title>
+      <url>/2018/01/20/20180120001/</url>
+      <content type="html"><![CDATA[<p>本篇介绍在四个节点的集群中搭建zookeeper环境，zookeeper可配置三种模式运行：单机模式，伪集群模式，集群模式，本文使用集群模式搭建。<br><a id="more"></a></p>
+<h3 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h3><ul>
+<li>虚拟机：VMware Workstation 12 Player</li>
+<li>Linux版本：CentOS release 6.4 (Final)</li>
+<li>zookeeper版本：zookeeper-3.4.5-cdh5.7.6.tar.gz</li>
+<li>集群节点：<ul>
+<li>master:192.168.137.11</li>
+<li>slave1:192.168.137.12</li>
+<li>slave2:192.168.137.13</li>
+<li>slave3:192.168.137.14</li>
+</ul>
+</li>
+<li>前提：java已安装，已配置ssh绵密登录，停掉防火墙等。</li>
+</ul>
+<h3 id="上传安装包"><a href="#上传安装包" class="headerlink" title="上传安装包"></a>上传安装包</h3><p>将下载的zookeeper-3.4.5-cdh5.7.6.tar.gz安装包上传到CentOS指定目录，例如<code>/opt</code>。<br>上传方法很多，这里在SecureCRT用rz命令。</p>
+<p>解压缩安装包：</p>
+<p><code>tar -zxf zookeeper-3.4.5-cdh5.7.6.tar.gz</code></p>
+<p>重命名文件夹：</p>
+<p><code>mv zookeeper-3.4.5-cdh5.7.6 zookeeper</code></p>
+<h3 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h3><p>配置文件在安装目录<code>conf</code>文件夹下的<code>zoo_sample.cfg</code>，需要先复制一个并且改文件名：</p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@master conf]<span class="comment"># pwd</span></span><br><span class="line">/opt/zookeeper/conf</span><br><span class="line">[root@master conf]<span class="comment"># cp zoo_sample.cfg zoo.cfg</span></span><br><span class="line">[root@master conf]<span class="comment"># ll</span></span><br><span class="line">total 16</span><br><span class="line">-rw-rw-r--.<span class="number"> 1 </span>root root <span class="number"> 535 </span>Feb<span class="number"> 22 </span><span class="number"> 2017 </span>configuration.xsl</span><br><span class="line">-rw-rw-r--.<span class="number"> 1 </span>root root<span class="number"> 2693 </span>Feb<span class="number"> 22 </span><span class="number"> 2017 </span>log4j.properties</span><br><span class="line">-rw-r--r--.<span class="number"> 1 </span>root root <span class="number"> 808 </span>Jan<span class="number"> 23 </span>10:06 zoo.cfg</span><br><span class="line">-rw-rw-r--.<span class="number"> 1 </span>root root <span class="number"> 808 </span>Feb<span class="number"> 22 </span><span class="number"> 2017 </span>zoo_sample.cfg</span><br></pre></td></tr></table></figure>
+<p>修改zoo.cfg配置文件：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">tickTime</span>=2000</span><br><span class="line"><span class="comment"># The number of ticks that the initial</span></span><br><span class="line"><span class="comment"># synchronization phase can take</span></span><br><span class="line"><span class="attribute">initLimit</span>=10</span><br><span class="line"><span class="comment"># The number of ticks that can pass between</span></span><br><span class="line"><span class="comment"># sending a request and getting an acknowledgement</span></span><br><span class="line"><span class="attribute">syncLimit</span>=5</span><br><span class="line"><span class="comment"># the directory where the snapshot is stored.</span></span><br><span class="line"><span class="comment"># do not use /tmp for storage, /tmp here is just</span></span><br><span class="line"><span class="comment"># example sakes.</span></span><br><span class="line"><span class="attribute">dataDir</span>=/opt/zookeeper/tmp</span><br><span class="line"><span class="comment"># the port at which the clients will connect</span></span><br><span class="line"><span class="attribute">clientPort</span>=2181</span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Be sure to read the maintenance section of the</span></span><br><span class="line"><span class="comment"># administrator guide before turning on autopurge.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># http://zookeeper.apache.org/doc/current/zookeeperAdmin.html#sc_maintenance</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># The number of snapshots to retain in dataDir</span></span><br><span class="line"><span class="comment">#autopurge.snapRetainCount=3</span></span><br><span class="line"><span class="comment"># Purge task interval in hours</span></span><br><span class="line"><span class="comment"># Set to "0" to disable auto purge feature</span></span><br><span class="line"><span class="comment">#autopurge.purgeInterval=1</span></span><br><span class="line"><span class="attribute">dataLogDir</span>=/opt/zookeeper/logs</span><br><span class="line">server.<span class="attribute">1</span>=master:2888:3888</span><br><span class="line">server.<span class="attribute">2</span>=slave1:2888:3888</span><br><span class="line">server.<span class="attribute">3</span>=slave2:2888:3888</span><br><span class="line">server.<span class="attribute">4</span>=slave3:2888:3888</span><br></pre></td></tr></table></figure></p>
+<p>参数说明：</p>
+<ul>
+<li>tickTime: zookeeper中使用的基本时间单位, 毫秒值.</li>
+<li>dataDir: 数据目录. 可以是任意目录.</li>
+<li>dataLogDir: log目录, 同样可以是任意目录. 如果没有设置该参数, 将使用和dataDir相同的设置.</li>
+<li>clientPort: 监听client连接的端口号.</li>
+<li>initLimit: zookeeper集群中的包含多台server, 其中一台为leader, 集群中其余的server为follower. initLimit参数配置初始化连接时, follower和leader之间的最长心跳时间. 此时该参数设置为5, 说明时间限制为5倍tickTime, 即5*2000=10000ms=10s.</li>
+<li>syncLimit: 该参数配置leader和follower之间发送消息, 请求和应答的最大时间长度. 此时该参数设置为2, 说明时间限制为2倍tickTime, 即4000ms.</li>
+<li>server.X=A:B:C 其中X是一个数字, 表示这是第几号server. A是该server所在的IP地址. B配置该server和集群中的leader交换消息所使用的端口. C配置选举leader时所使用的端口. </li>
+</ul>
+<p>由于我们修改了<code>dataDir</code>目录，在zookeeper目录中创建一个文件夹用于后面创建<code>myid</code>文件：</p>
+<p><code>mkdir /opt/zookeeper/tmp</code><br><code>mkdir /opt/zookeeper/logs</code></p>
+<h3 id="复制安装包到其他节点"><a href="#复制安装包到其他节点" class="headerlink" title="复制安装包到其他节点"></a>复制安装包到其他节点</h3><p>将<code>zookeeper</code>文件夹复制到其他三个服务器上：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">scp -r /opt/zookeeper/ root<span class="variable">@slave1</span><span class="symbol">:/opt</span></span><br><span class="line">scp -r /opt/zookeeper/ root<span class="variable">@slave2</span><span class="symbol">:/opt</span></span><br><span class="line">scp -r /opt/zookeeper/ root<span class="variable">@slave3</span><span class="symbol">:/opt</span></span><br></pre></td></tr></table></figure>
+<p>在master节点上用一下命令给每个节点上创建<code>myid</code>文件，文件中的id号与<code>zoo.cfg</code>配置文件中的对应：</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@<span class="keyword">master</span> <span class="title">zookeeper</span>]<span class="comment"># echo 1 &gt; /opt/zookeeper/tmp/myid</span></span><br><span class="line">[root@<span class="keyword">master</span> <span class="title">zookeeper</span>]<span class="comment"># ssh slave1 "echo 2 &gt; /opt/zookeeper/tmp/myid"</span></span><br><span class="line">[root@<span class="keyword">master</span> <span class="title">zookeeper</span>]<span class="comment"># ssh slave2 "echo 3 &gt; /opt/zookeeper/tmp/myid"</span></span><br><span class="line">[root@<span class="keyword">master</span> <span class="title">zookeeper</span>]<span class="comment"># ssh slave3 "echo 4 &gt; /opt/zookeeper/tmp/myid"</span></span><br></pre></td></tr></table></figure>
+<h3 id="运行启动"><a href="#运行启动" class="headerlink" title="运行启动"></a>运行启动</h3><p>由于没有配置环境变量，需要用全路径执行：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@master zookeeper]# /opt/zookeeper/bin/zkServer.sh start</span><br><span class="line">JMX enabled by default</span><br><span class="line">Using config: /opt/zookeeper/bin/<span class="built_in">..</span>/conf/zoo.cfg</span><br><span class="line">Starting zookeeper <span class="built_in">..</span>. STARTED</span><br></pre></td></tr></table></figure>
+<p>其实配置文件中修改<code>dataLogDir</code>的本意是想让启动日志输出到配置的文件夹里，但是好像并没有，日志文件<code>zookeeper.out</code>还是在zookeeper的安装目录下生成。</p>
+<p>查看<code>zookeeper.out</code>文件发现有错误：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">2018-01-23 10:48:35,470 [myid:] - <span class="builtin-name">INFO</span>  [main:QuorumPeerConfig@101] - Reading configuration <span class="keyword">from</span>: /opt/zookeeper/bin/<span class="built_in">..</span>/conf/zoo.cfg</span><br><span class="line">2018-01-23 10:48:35,484 [myid:] - WARN  [main:QuorumPeerConfig@290] - Non-optimial configuration, consider an odd number of servers.</span><br><span class="line">2018-01-23 10:48:35,484 [myid:] - <span class="builtin-name">INFO</span>  [main:QuorumPeerConfig@334] - Defaulting <span class="keyword">to</span> majority quorums</span><br><span class="line">2018-01-23 10:48:35,512 [myid:4] - <span class="builtin-name">INFO</span>  [main:DatadirCleanupManager@78] - autopurge.snapRetainCount <span class="builtin-name">set</span> <span class="keyword">to</span> 3</span><br><span class="line">2018-01-23 10:48:35,513 [myid:4] - <span class="builtin-name">INFO</span>  [main:DatadirCleanupManager@79] - autopurge.purgeInterval <span class="builtin-name">set</span> <span class="keyword">to</span> 0</span><br><span class="line">2018-01-23 10:48:35,513 [myid:4] - <span class="builtin-name">INFO</span>  [main:DatadirCleanupManager@101] - Purge task is <span class="keyword">not</span> scheduled.</span><br><span class="line">2018-01-23 10:48:35,536 [myid:4] - <span class="builtin-name">INFO</span>  [main:QuorumPeerMain@132] - Starting quorum peer</span><br><span class="line">2018-01-23 10:48:35,587 [myid:4] - <span class="builtin-name">INFO</span>  [main:NIOServerCnxnFactory@94] - binding <span class="keyword">to</span><span class="built_in"> port </span>0.0.0.0/0.0.0.0:2181</span><br><span class="line">2018-01-23 10:48:35,611 [myid:4] - <span class="builtin-name">INFO</span>  [main:QuorumPeer@913] - tickTime <span class="builtin-name">set</span> <span class="keyword">to</span> 2000</span><br><span class="line">2018-01-23 10:48:35,612 [myid:4] - <span class="builtin-name">INFO</span>  [main:QuorumPeer@933] - minSessionTimeout <span class="builtin-name">set</span> <span class="keyword">to</span> -1</span><br><span class="line">2018-01-23 10:48:35,612 [myid:4] - <span class="builtin-name">INFO</span>  [main:QuorumPeer@944] - maxSessionTimeout <span class="builtin-name">set</span> <span class="keyword">to</span> -1</span><br><span class="line">2018-01-23 10:48:35,612 [myid:4] - <span class="builtin-name">INFO</span>  [main:QuorumPeer@959] - initLimit <span class="builtin-name">set</span> <span class="keyword">to</span> 10</span><br><span class="line">2018-01-23 10:48:35,639 [myid:4] - <span class="builtin-name">INFO</span>  [main:QuorumPeer@429] - currentEpoch <span class="keyword">not</span> found! Creating with a reasonable<span class="built_in"> default </span>of 0. This should only happen when you are upgrading your installation</span><br><span class="line">2018-01-23 10:48:35,643 [myid:4] - <span class="builtin-name">INFO</span>  [main:QuorumPeer@444] - acceptedEpoch <span class="keyword">not</span> found! Creating with a reasonable<span class="built_in"> default </span>of 0. This should only happen when you are upgrading your installation</span><br><span class="line">2018-01-23 10:48:35,652 [myid:4] - <span class="builtin-name">INFO</span>  [Thread-1:QuorumCnxManager<span class="variable">$Listener</span>@486] - My election bind port: 0.0.0.0/0.0.0.0:3888</span><br><span class="line">2018-01-23 10:48:35,674 [myid:4] - <span class="builtin-name">INFO</span>  [QuorumPeer[<span class="attribute">myid</span>=4]/0:0:0:0:0:0:0:0:2181:QuorumPeer@670] - LOOKING</span><br><span class="line">2018-01-23 10:48:35,679 [myid:4] - <span class="builtin-name">INFO</span>  [QuorumPeer[<span class="attribute">myid</span>=4]/0:0:0:0:0:0:0:0:2181:FastLeaderElection@740] - New election. My id =  4, proposed <span class="attribute">zxid</span>=0x0</span><br><span class="line">2018-01-23 10:48:35,692 [myid:4] - <span class="builtin-name">INFO</span>  [slave3/192.168.137.14:3888:QuorumCnxManager<span class="variable">$Listener</span>@493] - Received<span class="built_in"> connection </span>request /192.168.137.11:34491</span><br><span class="line">2018-01-23 10:48:35,704 [myid:4] - <span class="builtin-name">INFO</span>  [WorkerReceiver[<span class="attribute">myid</span>=4]:FastLeaderElection@542] - Notification: 4 (n.leader), 0x0 (n.zxid), 0x1 (n.round), LOOKING (n.state), 4 (n.sid), 0x0 (n.peerEPoch), LOOKING (my state)</span><br><span class="line">2018-01-23 10:48:35,706 [myid:4] - WARN  [WorkerSender[<span class="attribute">myid</span>=4]:QuorumCnxManager@368] - Cannot open channel <span class="keyword">to</span> 2 at election<span class="built_in"> address </span>slave1/192.168.137.12:3888</span><br><span class="line">java.net.ConnectException:<span class="built_in"> Connection </span>refused (Connection refused)</span><br><span class="line">	at java.net.PlainSocketImpl.socketConnect(Native Method)</span><br><span class="line">	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)</span><br><span class="line">	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)</span><br><span class="line">	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)</span><br><span class="line">	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)</span><br><span class="line">	at java.net.Socket.connect(Socket.java:589)</span><br><span class="line">	at org.apache.zookeeper.server.quorum.QuorumCnxManager.connectOne(QuorumCnxManager.java:354)</span><br><span class="line">	at org.apache.zookeeper.server.quorum.QuorumCnxManager.toSend(QuorumCnxManager.java:327)</span><br><span class="line">	at org.apache.zookeeper.server.quorum.FastLeaderElection<span class="variable">$Messenger</span><span class="variable">$WorkerSender</span>.process(FastLeaderElection.java:393)</span><br><span class="line">	at org.apache.zookeeper.server.quorum.FastLeaderElection<span class="variable">$Messenger</span><span class="variable">$WorkerSender</span>.<span class="builtin-name">run</span>(FastLeaderElection.java:365)</span><br><span class="line">	at java.lang.Thread.<span class="builtin-name">run</span>(Thread.java:748)</span><br></pre></td></tr></table></figure></p>
+<p>提示<code>Connection refused</code>的异常，其实一开始先不急着百度这个问题，其实要所有节点上都启动zookeeper后再看看运行状态，现在查看运行状态都是没运行的，也找不到相应的进程：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@master zookeeper]# /opt/zookeeper/bin/zkServer.sh start</span><br><span class="line">JMX enabled by default</span><br><span class="line">Using config: /opt/zookeeper/bin/<span class="built_in">..</span>/conf/zoo.cfg</span><br><span class="line">Starting zookeeper <span class="built_in">..</span>. STARTED</span><br><span class="line">[root@master zookeeper]# /opt/zookeeper/bin/zkServer.sh status</span><br><span class="line">JMX enabled by default</span><br><span class="line">Using config: /opt/zookeeper/bin/<span class="built_in">..</span>/conf/zoo.cfg</span><br><span class="line"><span class="builtin-name">Error</span> contacting service. It is probably <span class="keyword">not</span> running.</span><br></pre></td></tr></table></figure>
+<p>到其他节点服务器上都启动zookeeper，过一会儿后每个服务器查看状态：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@master zookeeper]# /opt/zookeeper/bin/zkServer.sh status</span><br><span class="line">JMX enabled by default</span><br><span class="line">Using config: /opt/zookeeper/bin/<span class="built_in">..</span>/conf/zoo.cfg</span><br><span class="line">Mode: follower</span><br><span class="line">[root@master zookeeper]# jps</span><br><span class="line">5488 QuorumPeerMain</span><br><span class="line">5539 Jps</span><br></pre></td></tr></table></figure></p>
+<p>如果有Mode和QuorumPeerMain，就说明已经启动成功了。</p>
+<p>如果要关闭zookeeper,需要在每个节点上执行：</p>
+<p><code>/opt/zookeeper/bin/zkServer.sh stop</code></p>
+<p>另外如果使用如下命令启动，就会在启动时输出日志信息：</p>
+<p><code>/opt/zookeeper/bin/zkServer.sh start-foreground</code></p>
+<h3 id="批量启动和关闭"><a href="#批量启动和关闭" class="headerlink" title="批量启动和关闭"></a>批量启动和关闭</h3><p>一台一台服务器去执行命令有点麻烦，写一个脚本批量执行：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#下面变量修改zookeeper安装目录</span></span><br><span class="line">zooHome=/opt/zookeeper</span><br><span class="line"><span class="keyword">if</span>  [ <span class="variable">$1</span> != <span class="string">""</span>  ]</span><br><span class="line">	<span class="keyword">then</span></span><br><span class="line">        confFile=<span class="variable">$zooHome</span>/conf/zoo.cfg</span><br><span class="line">        slaves=$(cat <span class="string">"<span class="variable">$confFile</span>"</span> | sed <span class="string">'/^server/!d;s/^.*=//;s/:.*$//g;/^$/d'</span>)</span><br><span class="line">        <span class="keyword">for</span> salve <span class="keyword">in</span> <span class="variable">$slaves</span> ; <span class="keyword">do</span></span><br><span class="line">            ssh <span class="variable">$salve</span> <span class="string">"<span class="variable">$zooHome</span>/bin/zkServer.sh <span class="variable">$1</span>"</span></span><br><span class="line">        <span class="keyword">done</span></span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">echo</span> <span class="string">"parameter empty! parameter:start|stop"</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure></p>
+<p>将上面脚本保存为<code>zooManager</code>文件，调用执行：</p>
+<p><code>sh zooManager start</code></p>
+<p><code>sh zooManager stop</code></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@master opt]# sh zooManager start</span><br><span class="line">JMX enabled by default</span><br><span class="line">Using config: /opt/zookeeper/bin/<span class="built_in">..</span>/conf/zoo.cfg</span><br><span class="line">Starting zookeeper <span class="built_in">..</span>. STARTED</span><br><span class="line">JMX enabled by default</span><br><span class="line">Using config: /opt/zookeeper/bin/<span class="built_in">..</span>/conf/zoo.cfg</span><br><span class="line">Starting zookeeper <span class="built_in">..</span>. STARTED</span><br><span class="line">JMX enabled by default</span><br><span class="line">Using config: /opt/zookeeper/bin/<span class="built_in">..</span>/conf/zoo.cfg</span><br><span class="line">Starting zookeeper <span class="built_in">..</span>. STARTED</span><br><span class="line">JMX enabled by default</span><br><span class="line">Using config: /opt/zookeeper/bin/<span class="built_in">..</span>/conf/zoo.cfg</span><br><span class="line">Starting zookeeper <span class="built_in">..</span>. STARTED</span><br></pre></td></tr></table></figure>
+<p>由于所有服务器节点都是使用root用户，所以没有考虑权限问题，实际情况要考虑的。</p>
+<p>参考：<a href="http://coolxing.iteye.com/blog/1871009" target="_blank" rel="noopener">http://coolxing.iteye.com/blog/1871009</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> 码路刺客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 原创 </tag>
+            
+            <tag> zookeeper </tag>
+            
+            <tag> 分布式 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Markdown使用table标签创建表格的问题]]></title>
       <url>/2017/12/10/20171210001/</url>
       <content type="html"><![CDATA[<p>使用Markdown写东西有时需要插入表格，方式有两种：</p>
@@ -3229,6 +3310,37 @@ $ npm install bespoke-fx
     </entry>
     
     <entry>
+      <title><![CDATA[比尔·盖茨：如果你看完了这些极其难懂的书，请给我投简历！]]></title>
+      <url>/2016/05/06/The-Art-of-Computer-Programming/</url>
+      <content type="html"><![CDATA[<p>在硅谷的世界里，有几本比《计算机编程艺术》（ “The Art of Computer Programming”）更受人认可的书，这些书也是斯坦福大学名誉教授Donald Knuth点名的非常不错的书。而在比尔盖茨的演讲中，他甚至表示：“如果你自认为是个非常优秀的程序员。那么你如果全部读完了Knuth编写的《计算机编程艺术》这本书的话。你一定要给我发份简历”。而这句好像开完笑的话，便可以说明比尔盖茨对其的高度评价，同时这些话也被收录在了这本书的第一卷的第三版的封面上。</p>
+<a id="more"></a>
+<p><img src="/img/posts/The-Art-of-Computer-Programming-1.jpg" alt="The-Art-of-Computer-Programming-1"></p>
+<p>据说，这句话是自盖茨曾经工作的辛迪加报纸专栏里流传出来的，而该专栏还称这本书非常具有传奇色彩，而它的难度更让很多人把它拒之门外，下面是其具体描述：<br>“这是一门让人难懂的学科，我花了好几个月时间去读它，看了20页之后就把书丢到一边，一星期之后又回来读另外20页。如果有人傲慢的说他看明白了书中的一切，那么Knuth将帮助他们了解世界是如何的深刻而复杂。”</p>
+<p><img src="/img/posts/The-Art-of-Computer-Programming-2.jpg" alt="The-Art-of-Computer-Programming-2"></p>
+<p>《计算机编程艺术》第一卷于1962年问世，它是第一本深入探讨编程的数学性和科学性的书籍。Knuth将这本书视为其一生的工作，并表示如果情况允许的话，这本书将共有七卷。最新的一本书于2015年12月发布。<br>旧金山企业家Carl Tashian在最近的一篇媒体文章中说道：“Donald Knuth的《计算机编程艺术》有四个精装册，每本的封面都是暗紫色，让人看起来很舒服。而书的本身也像人们透了这样的一个信息：“外行者靠边站，因为这本书是给真正从事编程工作的程序员看的。”<br>就已经跨过这个阶段的Knuth来说，他的技术能力已经成为高科技产业一个传奇。而想要超越单纯的编码深入到程序员工作底层的复杂性，程序员们必须要熟读这本书。<br>Amazon评论家在1997年写道：“如果算机科学有可兰经，圣经等等经书，那也这就是它。”<br>这本书因全面而彻底的讲述编程而闻名，当然，其同时也极大地挑战和挫伤了很多程序员的自尊心。这本书对Knuth的案例和其i严谨的数学证明即使是对于比尔盖茨来说仍是有着很大的困惑的。<br>尽管它有悠久的出版历史，Knuth通过不断更新《计算机编程艺术》的版本来获得更多的粉丝。如果你发现他的书中有任何错误，你就可能得到有名的Knuth奖励检查，总数为2.56美元的奖金。而这笔奖金还被他专门赋予了“一个十六进制的美元”的特殊意义。因此，我们可以认为这笔奖金的获得对于那些想要证明自己知道自己在说些什么的人来说是一笔宝贵的奖励。<br>当然，众所周知天下之大，我们不可能什么都知道。就像你需要开车，你并不需要知道内燃机是如何工作的这件事情一样，你也没有必要为了了解如何编写程序来强硬的读这本书，所以不要把这个事情看成一个必须的读本就好。当然，如果想要有更多的这方面探索的话，这本书还是非常不错的。</p>
+<p>原文链接：<a href="http://toutiao.com/a6279342772928119041/" target="_blank" rel="external">http://toutiao.com/a6279342772928119041/</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> IT看客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 转载 </tag>
+            
+            <tag> IT资讯 </tag>
+            
+            <tag> 计算机基原理 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[【SSIS】利用SSIS模板快速开发SSIS Package]]></title>
       <url>/2016/05/06/SSIS-Template-For-SSISPackage/</url>
       <content type="html"><![CDATA[<p>在做 ETL 项目的时候，往往很多 Package 的开发都是基于相同的模型和流程。比如在 Package 开始运行时需要向 Process Log 表中插入记录，在 Package 运行结束的时候更新运行状态。</p>
@@ -3268,100 +3380,6 @@ $ npm install bespoke-fx
             <tag> BI </tag>
             
             <tag> SSIS </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[比尔·盖茨：如果你看完了这些极其难懂的书，请给我投简历！]]></title>
-      <url>/2016/05/06/The-Art-of-Computer-Programming/</url>
-      <content type="html"><![CDATA[<p>在硅谷的世界里，有几本比《计算机编程艺术》（ “The Art of Computer Programming”）更受人认可的书，这些书也是斯坦福大学名誉教授Donald Knuth点名的非常不错的书。而在比尔盖茨的演讲中，他甚至表示：“如果你自认为是个非常优秀的程序员。那么你如果全部读完了Knuth编写的《计算机编程艺术》这本书的话。你一定要给我发份简历”。而这句好像开完笑的话，便可以说明比尔盖茨对其的高度评价，同时这些话也被收录在了这本书的第一卷的第三版的封面上。</p>
-<a id="more"></a>
-<p><img src="/img/posts/The-Art-of-Computer-Programming-1.jpg" alt="The-Art-of-Computer-Programming-1"></p>
-<p>据说，这句话是自盖茨曾经工作的辛迪加报纸专栏里流传出来的，而该专栏还称这本书非常具有传奇色彩，而它的难度更让很多人把它拒之门外，下面是其具体描述：<br>“这是一门让人难懂的学科，我花了好几个月时间去读它，看了20页之后就把书丢到一边，一星期之后又回来读另外20页。如果有人傲慢的说他看明白了书中的一切，那么Knuth将帮助他们了解世界是如何的深刻而复杂。”</p>
-<p><img src="/img/posts/The-Art-of-Computer-Programming-2.jpg" alt="The-Art-of-Computer-Programming-2"></p>
-<p>《计算机编程艺术》第一卷于1962年问世，它是第一本深入探讨编程的数学性和科学性的书籍。Knuth将这本书视为其一生的工作，并表示如果情况允许的话，这本书将共有七卷。最新的一本书于2015年12月发布。<br>旧金山企业家Carl Tashian在最近的一篇媒体文章中说道：“Donald Knuth的《计算机编程艺术》有四个精装册，每本的封面都是暗紫色，让人看起来很舒服。而书的本身也像人们透了这样的一个信息：“外行者靠边站，因为这本书是给真正从事编程工作的程序员看的。”<br>就已经跨过这个阶段的Knuth来说，他的技术能力已经成为高科技产业一个传奇。而想要超越单纯的编码深入到程序员工作底层的复杂性，程序员们必须要熟读这本书。<br>Amazon评论家在1997年写道：“如果算机科学有可兰经，圣经等等经书，那也这就是它。”<br>这本书因全面而彻底的讲述编程而闻名，当然，其同时也极大地挑战和挫伤了很多程序员的自尊心。这本书对Knuth的案例和其i严谨的数学证明即使是对于比尔盖茨来说仍是有着很大的困惑的。<br>尽管它有悠久的出版历史，Knuth通过不断更新《计算机编程艺术》的版本来获得更多的粉丝。如果你发现他的书中有任何错误，你就可能得到有名的Knuth奖励检查，总数为2.56美元的奖金。而这笔奖金还被他专门赋予了“一个十六进制的美元”的特殊意义。因此，我们可以认为这笔奖金的获得对于那些想要证明自己知道自己在说些什么的人来说是一笔宝贵的奖励。<br>当然，众所周知天下之大，我们不可能什么都知道。就像你需要开车，你并不需要知道内燃机是如何工作的这件事情一样，你也没有必要为了了解如何编写程序来强硬的读这本书，所以不要把这个事情看成一个必须的读本就好。当然，如果想要有更多的这方面探索的话，这本书还是非常不错的。</p>
-<p>原文链接：<a href="http://toutiao.com/a6279342772928119041/" target="_blank" rel="external">http://toutiao.com/a6279342772928119041/</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> IT看客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 转载 </tag>
-            
-            <tag> IT资讯 </tag>
-            
-            <tag> 计算机基原理 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[如何在没有主键的SQL Server表里删除重复行]]></title>
-      <url>/2016/04/26/Delete-duplicate-rows-with-no-primary-key/</url>
-      <content type="html"><![CDATA[<p>有没有遇到过在一个没有主键标志的表里存了重复的数据行，要把重复的行删掉保留一行的情况呢？我们可以设置SQL Server的ROWCUNT变量来限制影响的数据行数，默认的数据值是0，代表所有行，但是这个值可以在运行SQL语句之前进行设定。</p>
-<p>咱们首先建个测试用的表，插入几条条记录。</p>
-<pre><code>CREATE TABLE dbo.duplicateTest
-    (
-      [ID] [INT] ,
-      [FirstName] [VARCHAR](25) ,
-      [LastName] [VARCHAR](25)
-    )
-ON  [PRIMARY];
-
-INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;) 
-INSERT INTO dbo.duplicateTest VALUES(2, &apos;Dave&apos;,&apos;Jones&apos;) 
-INSERT INTO dbo.duplicateTest VALUES(3, &apos;Karen&apos;,&apos;White&apos;) 
-INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;)
-INSERT INTO dbo.duplicateTest VALUES(2, &apos;Dave&apos;,&apos;Jones&apos;)
-INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;) 
-</code></pre><a id="more"></a>
-<p>表内数据如下：</p>
-<pre><code>SELECT * FROM dbo.duplicateTest
-</code></pre><p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-1.jpg" alt="全部数据"></p>
-<p>我们要找到Bob Smith的记录可以用以下语句：</p>
-<pre><code>SELECT * FROM dbo.duplicateTest WHERE ID = 1 AND FirstName = &apos;Bob&apos; AND LastName = &apos;Smith&apos;
-</code></pre><p>找到三行数据</p>
-<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-2.jpg" alt="图2"></p>
-<p>在SQL Server 2000 和 2005上我们可以使用SET ROWCOUNT 命令来限制一条语句作用的行数，设置为1我们就可以删除一条重复的记录了。删除前与删除后的对比如下：</p>
-<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-3.jpg" alt="图3"></p>
-<p>在SQL Server 2005上，我们也可以用TOP命令。像下面这样：</p>
-<pre><code>SELECT * FROM dbo.duplicateTest 
-DELETE TOP(1) FROM dbo.duplicateTest WHERE ID = 1 
-SELECT * FROM dbo.duplicateTest
-</code></pre><p>删除前与删除后的对比如下：</p>
-<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-4.jpg" alt="图4"></p>
-<p><strong>总结</strong></p>
-<ul>
-<li>1、这个方法可以在表中没有明显标志字段来区分每一行的情况，但也有局限，如果一个表中不知道每行记录都有多少行重复的记录，就不能用了，TOP(1)也只是删除重复行中的一行。</li>
-<li>2、如果明确知道表里每行记录都有2行、3行……重复的记录，倒是个不错的选择。</li>
-<li>3、如果表里有个ID自增长的字段，就可以采用删掉重复行保留ID最小的那个行的方法了。</li>
-<li>4、如果表里没有ID自增长的字段，又不知道每行有多少条重复记录，重复记录行都一样，那还是先把记录DISTINCT出来存到临时表里，清空原表，再把临时表的数据插入原表，这样应该是最省事的了。</li>
-</ul>
-]]></content>
-      
-        <categories>
-            
-            <category> 码路刺客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 数据库 </tag>
-            
-            <tag> 原创 </tag>
-            
-            <tag> SQL Server </tag>
             
         </tags>
         
@@ -3439,6 +3457,69 @@ SELECT * FROM dbo.duplicateTest
             <tag> JavaScript </tag>
             
             <tag> 设计 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[如何在没有主键的SQL Server表里删除重复行]]></title>
+      <url>/2016/04/26/Delete-duplicate-rows-with-no-primary-key/</url>
+      <content type="html"><![CDATA[<p>有没有遇到过在一个没有主键标志的表里存了重复的数据行，要把重复的行删掉保留一行的情况呢？我们可以设置SQL Server的ROWCUNT变量来限制影响的数据行数，默认的数据值是0，代表所有行，但是这个值可以在运行SQL语句之前进行设定。</p>
+<p>咱们首先建个测试用的表，插入几条条记录。</p>
+<pre><code>CREATE TABLE dbo.duplicateTest
+    (
+      [ID] [INT] ,
+      [FirstName] [VARCHAR](25) ,
+      [LastName] [VARCHAR](25)
+    )
+ON  [PRIMARY];
+
+INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;) 
+INSERT INTO dbo.duplicateTest VALUES(2, &apos;Dave&apos;,&apos;Jones&apos;) 
+INSERT INTO dbo.duplicateTest VALUES(3, &apos;Karen&apos;,&apos;White&apos;) 
+INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;)
+INSERT INTO dbo.duplicateTest VALUES(2, &apos;Dave&apos;,&apos;Jones&apos;)
+INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;) 
+</code></pre><a id="more"></a>
+<p>表内数据如下：</p>
+<pre><code>SELECT * FROM dbo.duplicateTest
+</code></pre><p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-1.jpg" alt="全部数据"></p>
+<p>我们要找到Bob Smith的记录可以用以下语句：</p>
+<pre><code>SELECT * FROM dbo.duplicateTest WHERE ID = 1 AND FirstName = &apos;Bob&apos; AND LastName = &apos;Smith&apos;
+</code></pre><p>找到三行数据</p>
+<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-2.jpg" alt="图2"></p>
+<p>在SQL Server 2000 和 2005上我们可以使用SET ROWCOUNT 命令来限制一条语句作用的行数，设置为1我们就可以删除一条重复的记录了。删除前与删除后的对比如下：</p>
+<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-3.jpg" alt="图3"></p>
+<p>在SQL Server 2005上，我们也可以用TOP命令。像下面这样：</p>
+<pre><code>SELECT * FROM dbo.duplicateTest 
+DELETE TOP(1) FROM dbo.duplicateTest WHERE ID = 1 
+SELECT * FROM dbo.duplicateTest
+</code></pre><p>删除前与删除后的对比如下：</p>
+<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-4.jpg" alt="图4"></p>
+<p><strong>总结</strong></p>
+<ul>
+<li>1、这个方法可以在表中没有明显标志字段来区分每一行的情况，但也有局限，如果一个表中不知道每行记录都有多少行重复的记录，就不能用了，TOP(1)也只是删除重复行中的一行。</li>
+<li>2、如果明确知道表里每行记录都有2行、3行……重复的记录，倒是个不错的选择。</li>
+<li>3、如果表里有个ID自增长的字段，就可以采用删掉重复行保留ID最小的那个行的方法了。</li>
+<li>4、如果表里没有ID自增长的字段，又不知道每行有多少条重复记录，重复记录行都一样，那还是先把记录DISTINCT出来存到临时表里，清空原表，再把临时表的数据插入原表，这样应该是最省事的了。</li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> 码路刺客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 数据库 </tag>
+            
+            <tag> 原创 </tag>
+            
+            <tag> SQL Server </tag>
             
         </tags>
         
@@ -3926,48 +4007,6 @@ $layer = $(&apos;div[class*=&quot;layer-&quot;]’);
     </entry>
     
     <entry>
-      <title><![CDATA[365cons：每天一枚图标，可免费下载]]></title>
-      <url>/2016/03/23/IconForEveryday/</url>
-      <content type="html"><![CDATA[<p>大家都听过“An apple a day keeps the doctor away”这句俚语，现在网络上也开始流行养成习惯持续去做某一件事情，例如先前介绍过的100 Days UI百日设计挑战每天发布一个全新使用者界面设计来启发灵感，当然你也可以为自己设定一个习惯养成目标，HabitRPG甚至让生活变成游戏，让你通过每日任务来建立好的生活习惯，这些想法都值得我们好好思考如何在一成不变的工作中产生更多价值。</p>
-<a id="more"></a>
-<center><img src="/img/posts/21.jpg"></center>
-
-
-<p>最近发现一个很棒的项目365cons，由一位西雅图视觉设计师Amy开发，网站每天会更新释出一个免费图标让使用者下载！Amy给自己立下一个目标：在2016年的每一天都发布一款全新图标，借此探索各种风格及练习设计相关技术。这些图标都与设计师生活息息相关，不局限于特定主题。</p>
-<p>365cons提供的图标格式包括：SVG、PNG两种版本，每一个图标都能在网页预览，无须注册就能免费下载使用。图标授权方式采MIT License，可被免费下载使用于任何地方。</p>
-<p>站点名称：<strong>365cons</strong></p>
-<p>网站连接：<a href="http://www.365cons.com/" target="_blank" rel="external">http://www.365cons.com/</a></p>
-<p><strong>使用教学</strong></p>
-<p><strong>STEP 1</strong></p>
-<p>开启365cons网站后，可以看到网站收录的免费图标项目，这些图标都是由设计师亲自设计开发，每日更新，不过网站没有提供订阅方式，如果你想追踪更新，那么可以定时回到网站来逛逛。</p>
-<center><img src="/img/posts/22.jpg"></center>
-
-<p><strong>STEP 2</strong></p>
-<p>在每一个图标下方，会有该图标编号、名称，以及SVG和PNG档案下载连接。</p>
-<center><img src="/img/posts/23.jpg"></center>
-
-<p>如果你有任何想法或建议，都可以通过网站上的网址与设计师联系，这些图标设计都非常可爱，也跟一般在外面看到的图标集不太一样，多了那么一点独特与天真浪漫！喜欢的话能将它下载下来使用，完全免费。</p>
-<p>转自 <a href="http://toutiao.com/a6262086085100273922/" target="_blank" rel="external">http://toutiao.com/a6262086085100273922/</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> IT看客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 转载 </tag>
-            
-            <tag> 设计 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[有道笔记支持Markdown啦]]></title>
       <url>/2016/03/23/YouDaoNoteMarkdownSupport/</url>
       <content type="html"><![CDATA[<p>继有道云协作率先支持markdown语法之后，令人振奋的markdown编辑功能现已在web版有道云笔记优雅上线，移动端也已支持预览！<br>不要着急，PC客户端也将随后支持markdown的编辑预览！</p>
@@ -4058,6 +4097,48 @@ $layer = $(&apos;div[class*=&quot;layer-&quot;]’);
         <tags>
             
             <tag> IT资讯 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[365cons：每天一枚图标，可免费下载]]></title>
+      <url>/2016/03/23/IconForEveryday/</url>
+      <content type="html"><![CDATA[<p>大家都听过“An apple a day keeps the doctor away”这句俚语，现在网络上也开始流行养成习惯持续去做某一件事情，例如先前介绍过的100 Days UI百日设计挑战每天发布一个全新使用者界面设计来启发灵感，当然你也可以为自己设定一个习惯养成目标，HabitRPG甚至让生活变成游戏，让你通过每日任务来建立好的生活习惯，这些想法都值得我们好好思考如何在一成不变的工作中产生更多价值。</p>
+<a id="more"></a>
+<center><img src="/img/posts/21.jpg"></center>
+
+
+<p>最近发现一个很棒的项目365cons，由一位西雅图视觉设计师Amy开发，网站每天会更新释出一个免费图标让使用者下载！Amy给自己立下一个目标：在2016年的每一天都发布一款全新图标，借此探索各种风格及练习设计相关技术。这些图标都与设计师生活息息相关，不局限于特定主题。</p>
+<p>365cons提供的图标格式包括：SVG、PNG两种版本，每一个图标都能在网页预览，无须注册就能免费下载使用。图标授权方式采MIT License，可被免费下载使用于任何地方。</p>
+<p>站点名称：<strong>365cons</strong></p>
+<p>网站连接：<a href="http://www.365cons.com/" target="_blank" rel="external">http://www.365cons.com/</a></p>
+<p><strong>使用教学</strong></p>
+<p><strong>STEP 1</strong></p>
+<p>开启365cons网站后，可以看到网站收录的免费图标项目，这些图标都是由设计师亲自设计开发，每日更新，不过网站没有提供订阅方式，如果你想追踪更新，那么可以定时回到网站来逛逛。</p>
+<center><img src="/img/posts/22.jpg"></center>
+
+<p><strong>STEP 2</strong></p>
+<p>在每一个图标下方，会有该图标编号、名称，以及SVG和PNG档案下载连接。</p>
+<center><img src="/img/posts/23.jpg"></center>
+
+<p>如果你有任何想法或建议，都可以通过网站上的网址与设计师联系，这些图标设计都非常可爱，也跟一般在外面看到的图标集不太一样，多了那么一点独特与天真浪漫！喜欢的话能将它下载下来使用，完全免费。</p>
+<p>转自 <a href="http://toutiao.com/a6262086085100273922/" target="_blank" rel="external">http://toutiao.com/a6262086085100273922/</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> IT看客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 转载 </tag>
+            
+            <tag> 设计 </tag>
             
         </tags>
         

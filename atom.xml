@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://c-xuan.com/"/>
-  <updated>2018-01-23T16:00:00.000Z</updated>
+  <updated>2018-01-26T03:49:37.000Z</updated>
   <id>http://c-xuan.com/</id>
   
   <author>
@@ -14,6 +14,58 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【Python 3 基础】循环</title>
+    <link href="http://c-xuan.com/2018/01/26/20180126001/"/>
+    <id>http://c-xuan.com/2018/01/26/20180126001/</id>
+    <published>2018-01-26T03:49:37.000Z</published>
+    <updated>2018-01-26T03:49:37.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>本文主要介绍Ptyhon 3中while循环、for循环的基本语法，以及利用for循环遍历列表、字典和列表推导的相关内容。</p>
+<a id="more"></a>
+<h3 id="while循环"><a href="#while循环" class="headerlink" title="while循环"></a>while循环</h3><h4 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h4><p>while循环语法比较简单，与其他语言类似。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#输出1-10</span></div><div class="line">x = <span class="number">1</span></div><div class="line"><span class="keyword">while</span> x &lt;= <span class="number">10</span>:</div><div class="line">    print(x)</div><div class="line">    x +=<span class="number">1</span></div></pre></td></tr></table></figure>
+<h3 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h3><h4 id="遍历列表"><a href="#遍历列表" class="headerlink" title="遍历列表"></a>遍历列表</h4><p>for循环更多地用于列表，集合，字典等遍历。</p>
+<p>例如遍历一个列表：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#遍历列表</span></div><div class="line">numbers = [<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</div><div class="line"><span class="keyword">for</span> number <span class="keyword">in</span> numbers:</div><div class="line">    print(number)</div></pre></td></tr></table></figure>
+<p>如果要生成特定序列，可使用内建函数range()，注意python 3 中xrange()函数跟range()已合并。之前版本中xrange()函数作用与range()函数相同，区别是range()函数一次创建整个序列，xrange()函数一次只创建一个数。需要迭代一个巨大的序列时，xrange()会更高效一些。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#如果只是输出某一范围的数字，可以使用范围函数range(),该函数生成一个包含开始，不含结束区间的序列。</span></div><div class="line"><span class="keyword">for</span> number <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">6</span>):</div><div class="line">    print(number)</div></pre></td></tr></table></figure>
+<h4 id="字典遍历"><a href="#字典遍历" class="headerlink" title="字典遍历"></a>字典遍历</h4><p>可使用如下语法遍历字典的键和值。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#循环遍历字典</span></div><div class="line">d = &#123;<span class="string">'x'</span>:<span class="number">1</span>,<span class="string">'y'</span>:<span class="number">2</span>,<span class="string">'z'</span>:<span class="number">3</span>&#125;</div><div class="line"><span class="keyword">for</span> key,value <span class="keyword">in</span> d.items():</div><div class="line">    print(key,<span class="string">'-&gt;'</span>,value)</div></pre></td></tr></table></figure></p>
+<p>如果只遍历字典的键，如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#循环遍历字典</span></div><div class="line">d = &#123;<span class="string">'x'</span>:<span class="number">1</span>,<span class="string">'y'</span>:<span class="number">2</span>,<span class="string">'z'</span>:<span class="number">3</span>&#125;</div><div class="line"><span class="keyword">for</span> key <span class="keyword">in</span> d.keys():</div><div class="line">    print(key)</div></pre></td></tr></table></figure></p>
+<p>如果只遍历字典的值，如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#循环遍历字典</span></div><div class="line">d = &#123;<span class="string">'x'</span>:<span class="number">1</span>,<span class="string">'y'</span>:<span class="number">2</span>,<span class="string">'z'</span>:<span class="number">3</span>&#125;</div><div class="line"><span class="keyword">for</span> value <span class="keyword">in</span> d.values():</div><div class="line">    print(value)</div></pre></td></tr></table></figure></p>
+<h4 id="字典并行遍历"><a href="#字典并行遍历" class="headerlink" title="字典并行遍历"></a>字典并行遍历</h4><p>如果要同时遍历两个列表，可以按如下方式：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#并行迭代，如果要同时遍历两个列表</span></div><div class="line">names = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>]</div><div class="line">ages = [<span class="number">12</span>,<span class="number">34</span>,<span class="number">55</span>]</div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(names)):</div><div class="line">    print(names[i],<span class="string">' is '</span>,ages[i],<span class="string">' years old'</span>)</div></pre></td></tr></table></figure></p>
+<p>内建zip()函数可用于并行迭代，把两个序列并在一起，返回一个元祖列表，写法更简洁。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 内建zip()函数可用于并行迭代，把两个序列并在一起，返回一个元祖列表</span></div><div class="line"><span class="comment"># 如果连个序列不等长，遍历完短的序列就结束了</span></div><div class="line">names = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>]</div><div class="line">ages = [<span class="number">12</span>,<span class="number">34</span>,<span class="number">55</span>,<span class="number">66</span>]</div><div class="line"></div><div class="line"><span class="keyword">for</span> name,age <span class="keyword">in</span> zip(names,ages):</div><div class="line">    print(name,<span class="string">' is '</span>,age,<span class="string">' years old'</span>)</div></pre></td></tr></table></figure>
+<h4 id="for循环与else语句"><a href="#for循环与else语句" class="headerlink" title="for循环与else语句"></a>for循环与else语句</h4><p>for循环中可以使用判断语句，如果符合某一特定条件就让for循环终止，如下代码，如果n等于3，则循环终止了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> n <span class="keyword">in</span> range(<span class="number">7</span>):</div><div class="line">    <span class="keyword">if</span> n == <span class="number">3</span>:</div><div class="line">        print(n)</div><div class="line">        <span class="keyword">break</span></div></pre></td></tr></table></figure>
+<p>如果在for后加一个else子句，如果for循环被break打断，else子句不会被执行，如下代码输出结果3。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> n <span class="keyword">in</span> range(<span class="number">7</span>):</div><div class="line">    <span class="keyword">if</span> n == <span class="number">3</span>:</div><div class="line">        print(n)</div><div class="line">        <span class="keyword">break</span></div><div class="line"><span class="keyword">else</span>:</div><div class="line">        print(<span class="string">'No'</span>)</div></pre></td></tr></table></figure></p>
+<p>如果for循环中没有执行break语句，则else子句会被执行一次，如下代码输出结果:No<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> n <span class="keyword">in</span> range(<span class="number">7</span>):</div><div class="line">    <span class="keyword">if</span> n == <span class="number">7</span>:</div><div class="line">        print(n)</div><div class="line">        <span class="keyword">break</span></div><div class="line"><span class="keyword">else</span>:</div><div class="line">        print(<span class="string">'No'</span>)</div></pre></td></tr></table></figure></p>
+<h4 id="列表推导"><a href="#列表推导" class="headerlink" title="列表推导"></a>列表推导</h4><p>刚开始看列表推导的语法可能不大容易理解，它的功能就是在一个列表基础上生成另一个列表，例如生成0-9的平方数列表：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[x*x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">10</span>)]</div><div class="line"></div><div class="line"><span class="comment"># 输出结果：[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]</span></div></pre></td></tr></table></figure>
+<p>还可以在列表推导中加入判断语句，例如，如果要过滤出0-9中能被3整除的数的平方，可以怎么写：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 输出能被3整除的平方数</span></div><div class="line">[x*x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">10</span>) <span class="keyword">if</span> x % <span class="number">3</span> == <span class="number">0</span>]</div><div class="line"></div><div class="line"><span class="comment"># 输出结果：[0, 9, 36, 81]</span></div></pre></td></tr></table></figure>
+<p>列表推导中可以写多个for语句，例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[(x,y) <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">3</span>) <span class="keyword">for</span> y <span class="keyword">in</span> range(<span class="number">3</span>)]</div><div class="line"></div><div class="line"><span class="comment"># 输出结果：[(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)]</span></div></pre></td></tr></table></figure>
+<p>可以看到，效果类似于表的全连接，输出连个列表的所有组合，同样可以加入if语句，效果类似于表连接中的where条件过滤。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[(x,y) <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">3</span>) <span class="keyword">for</span> y <span class="keyword">in</span> range(<span class="number">3</span>) <span class="keyword">if</span> x == y]</div><div class="line"></div><div class="line"><span class="comment"># 输出结果：[(0, 0), (1, 1), (2, 2)]</span></div></pre></td></tr></table></figure>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>Magnus Lie Hetland 著《Beginning Python-From Novice to Professional Secnod Edition》</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文主要介绍Ptyhon 3中while循环、for循环的基本语法，以及利用for循环遍历列表、字典和列表推导的相关内容。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="码路刺客" scheme="http://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
+    
+    
+      <category term="原创" scheme="http://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+      <category term="Python" scheme="http://c-xuan.com/tags/Python/"/>
+    
+  </entry>
   
   <entry>
     <title>CentOS Hbase-1.2.0 安装配置</title>
@@ -1513,60 +1565,6 @@
       <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
     
       <category term="JavaScript" scheme="http://c-xuan.com/tags/JavaScript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>为什么ETL任务困难</title>
-    <link href="http://c-xuan.com/2016/10/15/WhyDifficultOnETLJob/"/>
-    <id>http://c-xuan.com/2016/10/15/WhyDifficultOnETLJob/</id>
-    <published>2016-10-15T15:04:05.000Z</published>
-    <updated>2016-10-15T15:12:08.871Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="工具繁多"><a href="#工具繁多" class="headerlink" title="工具繁多"></a>工具繁多</h3><p>从 DataStage到Kettle, ETL 工具覆盖了商业化领域和开源领域, 价格从几十万到免费,起码有几十种选择。</p>
-<p>有人要说了,选择多不是一件好事么?如果再早几年,我会同意这是好事,可到现在,我要说 NO!</p>
-<p>前面关于决策思维的博文提到一个论点:相比于普通人做出决策,专家是会直接给一种可行方案还是罗列众多方案类比优劣?</p>
-<p>答案是前者,也是我反对选择众多是好事这一论点的依据之一。</p>
-<a id="more"></a>
-<h4 id="那么选择多有什么坏处"><a href="#那么选择多有什么坏处" class="headerlink" title="那么选择多有什么坏处?"></a>那么选择多有什么坏处?</h4><ul>
-<li>基础方案混杂。各公司方案不同,甚至一个公司 ETL 环节也采用不同工具及架构,人才无法公用,维护成本高。</li>
-<li>数据项目失败案例远多于成功案例, 项目选型越复杂成功概率越低。大量公司做 BI、做大数据,甚至在没有人懂的情况下招人开工!事实上在数据领域,熟手都清楚一个现象,没有成功案例的人很难做成数据项目。很残忍的现实,但也让那些盲目投入资源跟风做项目的公司考虑冷静下来了。</li>
-<li>抬高实施门槛。现在大家都想做数据,进入大数据领域,尤其是有很多不具备该领域经验的公司想要做。那么实施前首先就是选型了,如果从三个产品选一个来做还可行的话,那么要从三十个产品中选型,这个工作本身就阻碍了数据项目的开展!</li>
-</ul>
-<h3 id="GUI工具"><a href="#GUI工具" class="headerlink" title="GUI工具"></a>GUI工具</h3><p>说到这里反对的朋友更多了,GUI 所见即所得,降低使用门槛,好处一页都写不完,作为一名数据领域从业者,我决然反对,自己都能感觉到火药味。 为了论证我的观点,这里要罗列ETL领域那些GUI的罪证了。</p>
-<h4 id="ETL工具的六大问题"><a href="#ETL工具的六大问题" class="headerlink" title="ETL工具的六大问题"></a>ETL工具的六大问题</h4><ul>
-<li>工具太大了,卡卡卡!我不是说 SSIS 之类,也不是说 Kettle 相关,我说的是他们所有人……</li>
-<li>好用的太贵, 便宜的不好用!</li>
-<li>组件式的拖拉开发,性能真的没法起来!尤其是那些依靠组件解决数据变化提取的兄弟们,你们想多了。</li>
-<li>我需要一包厕纸而已,你非要给我整个超市。在我蹲之前非得找遍整个超市!大家对比下里面的功能自己使用的比率。</li>
-<li>说 GUI 简单好用的,我强烈反对。GUI 好调试么?映射过程报错了大家要怎么办?检查源检查目标也就算了,连映射环节都要排查。除了自己设定的格式类型,还要考虑工具环节自己的转换类型,这不是增加负担么?</li>
-<li>部署,我都不想说部署了。一千个任务下来,ETL 工具别谈部署了!这时候有同学开始研究调度,有些关注数据质量,任务数量起来,想什么都是多的,保佑这混乱情况别出岔子就阿弥陀佛了。</li>
-</ul>
-<h3 id="ETL工具阻碍了设计"><a href="#ETL工具阻碍了设计" class="headerlink" title="ETL工具阻碍了设计"></a>ETL工具阻碍了设计</h3><ul>
-<li>直接用工具拉数据的项目,认真找找有没有架构设计,有没有项目文档,有没有扩展性考虑,性能考虑?或者简单点,这项目换人可能接手下来么?</li>
-<li>数据项目是团队项目,ETL 工具是个人化工具。如果多个成员不能无缝接替工作,对不起,我认为这不是数据项目。哦不对,不算是一个项目。</li>
-<li>组件报错是工具问题,转换异常跟自己没关系。工具的 bug 和我真没关系,我项目做得好好的,ETL 工具崩溃了管我什么事?遇到这种情况不说我也知道做法,崩溃了再起来跑一跑嘛,运气好数据就跑出来了。至于数据质量管理是什么这样的问题,就别问出来了。</li>
-</ul>
-<p>转自<br><a href="http://www.infotrim.cn/article/5" target="_blank" rel="external">http://www.infotrim.cn/article/5</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;工具繁多&quot;&gt;&lt;a href=&quot;#工具繁多&quot; class=&quot;headerlink&quot; title=&quot;工具繁多&quot;&gt;&lt;/a&gt;工具繁多&lt;/h3&gt;&lt;p&gt;从 DataStage到Kettle, ETL 工具覆盖了商业化领域和开源领域, 价格从几十万到免费,起码有几十种选择。&lt;/p&gt;
-&lt;p&gt;有人要说了,选择多不是一件好事么?如果再早几年,我会同意这是好事,可到现在,我要说 NO!&lt;/p&gt;
-&lt;p&gt;前面关于决策思维的博文提到一个论点:相比于普通人做出决策,专家是会直接给一种可行方案还是罗列众多方案类比优劣?&lt;/p&gt;
-&lt;p&gt;答案是前者,也是我反对选择众多是好事这一论点的依据之一。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="BI墨客" scheme="http://c-xuan.com/categories/BI%E5%A2%A8%E5%AE%A2/"/>
-    
-    
-      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
-      <category term="BI" scheme="http://c-xuan.com/tags/BI/"/>
-    
-      <category term="数据仓库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/"/>
     
   </entry>
   

@@ -24,6 +24,7 @@
 <meta property="og:url" content="http://c-xuan.com/index.html">
 <meta property="og:site_name" content="靛青">
 <meta property="og:description" content="IT技术学习分享博客">
+<meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="靛青">
 <meta name="twitter:description" content="IT技术学习分享博客">
@@ -400,7 +401,7 @@
       
           
               <p>连接Hive的客户端有很多，<strong>Aqua Data Studio</strong>是不错的一个，之前用过DbVisualizer，多个Sql语句都是用<code>;</code>结束的，运行没问题，但是到了Aqua里就报错了：</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt;[Error] Script lines: <span class="number">1</span>-<span class="number">1</span> --------------------------</div><div class="line"> Error while compiling statement: FAILED: ParseException line <span class="number">1</span>:<span class="number">19</span> </div><div class="line"> cannot recognize input near 'agent' ';' '&lt;EOF&gt;' <span class="keyword">in</span> from source</div></pre></td></tr></table></figure>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;[Error] Script lines: <span class="number">1</span>-<span class="number">1</span> --------------------------</span><br><span class="line"> Error while compiling statement: FAILED: ParseException line <span class="number">1</span>:<span class="number">19</span> </span><br><span class="line"> cannot recognize input near 'agent' ';' '&lt;EOF&gt;' <span class="keyword">in</span> from source</span><br></pre></td></tr></table></figure>
           
       
     </div>
@@ -1295,7 +1296,7 @@
       
           
               <p>在基于数据库的一般应用中，查询的需求总要大于删除和修改。为了避免对于树形结构查询时的“递归”过程，基于Tree的前序遍历设计一种全新的无递归查询、无限分组的左右值编码方案，来保存该树的数据。</p>
-<center><img src="/img/posts/tree-table-store4-1.gif"></img></center>
+<center><img src="/img/posts/tree-table-store4-1.gif"></center>
           
       
     </div>
@@ -1432,7 +1433,7 @@
       
           
               <p>前一篇文章介绍了比较简单的邻接列表模式，物化路径其实更加容易理解，其实就是在创建节点时，将节点的完整路径进行记录。以下图为例：</p>
-<center><img src="/img/posts/tree-table-store2-1.gif"></img></center>
+<center><img src="/img/posts/tree-table-store2-1.gif"></center>
           
       
     </div>
@@ -1706,7 +1707,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">sp_addextendedproperty</div><div class="line">    [ @name = ] &#123; <span class="string">'property_name'</span> &#125;</div><div class="line">    [ , [ @value = ] &#123; <span class="string">'value'</span> &#125; </div><div class="line">        [ , [ @level0type = ] &#123; <span class="string">'level0_object_type'</span> &#125; </div><div class="line">                    , [ @level0name = ] &#123; <span class="string">'level0_object_name'</span> &#125; </div><div class="line">                [ , [ @level1type = ] &#123; <span class="string">'level1_object_type'</span> &#125; </div><div class="line">                                    , [ @level1name = ] &#123; <span class="string">'level1_object_name'</span> &#125; </div><div class="line">                        [ , [ @level2type = ] &#123; <span class="string">'level2_object_type'</span> &#125; </div><div class="line">                                                    , [ @level2name = ] &#123; <span class="string">'level2_object_name'</span> &#125; </div><div class="line">                        ] </div><div class="line">                ]</div><div class="line">        ] </div><div class="line">    ]</div></pre></td></tr></table></figure>
+              <h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">sp_addextendedproperty</span><br><span class="line">    [ @name = ] &#123; <span class="string">'property_name'</span> &#125;</span><br><span class="line">    [ , [ @value = ] &#123; <span class="string">'value'</span> &#125; </span><br><span class="line">        [ , [ @level0type = ] &#123; <span class="string">'level0_object_type'</span> &#125; </span><br><span class="line">                    , [ @level0name = ] &#123; <span class="string">'level0_object_name'</span> &#125; </span><br><span class="line">                [ , [ @level1type = ] &#123; <span class="string">'level1_object_type'</span> &#125; </span><br><span class="line">                                    , [ @level1name = ] &#123; <span class="string">'level1_object_name'</span> &#125; </span><br><span class="line">                        [ , [ @level2type = ] &#123; <span class="string">'level2_object_type'</span> &#125; </span><br><span class="line">                                                    , [ @level2name = ] &#123; <span class="string">'level2_object_name'</span> &#125; </span><br><span class="line">                        ] </span><br><span class="line">                ]</span><br><span class="line">        ] </span><br><span class="line">    ]</span><br></pre></td></tr></table></figure>
           
       
     </div>
@@ -1849,7 +1850,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <center><img src="/img/posts/HardSayGoodbye-1.jpeg"></img></center>
+              <center><img src="/img/posts/HardSayGoodbye-1.jpeg"></center>
 
 <p>还有一天，购买的服务器就要到期了，并没有续期的打算，意味着在服务器上运行的这个Solo博客就停掉了。其实也没有什么大不了的事情，只是想来这一路没有为自己能够坚持而愧疚。</p>
           

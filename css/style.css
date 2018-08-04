@@ -335,7 +335,8 @@ a {
     font-size: 14px;
   }
   #container .article {
-    margin: 0.625rem 10px;
+    margin: 0.625rem 5px;
+    max-width: 100%;
   }
   #container .article .article-entry {
     padding-left: 0;
@@ -419,13 +420,21 @@ a {
     padding: 10px 0;
     margin-left: 0;
   }
+  #container #footer {
+    bottom: 0px;
+    position: fixed;
+    left: 0;
+    width: 100%;
+    height: 5%;
+    background: rgba(255,255,255,0.65);
+  }
   #container #footer .footer-left {
-    float: initial;
+    display: none;
     margin-bottom: 0.5em;
   }
   #container #footer .footer-right {
     float: initial;
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
   }
   #container #footer .visit {
     margin: 0;
@@ -447,7 +456,7 @@ a {
     position: fixed;
     left: 0.5em;
     top: auto; /*In order to cover style in article.styl*/
-    bottom: 10px;
+    bottom: 5px;
     padding: 0.2em 0.4em;
     border-radius: 6px;
     border-style: outset;
@@ -464,14 +473,14 @@ a {
     display: none;
     z-index: 99;
     left: 0;
-    top: 38%;
+    top: 50%;
     bottom: 1em;
     height: auto;
-    max-height: 58%;
+    max-height: 42.4%;
     width: none;
     width: auto;
     min-width: 7em;
-    max-width: 61.8%;
+    max-width: 91.8%;
     overflow: auto;
     margin-left: 0;
     padding: 10px;
@@ -512,7 +521,7 @@ a {
     padding: 0.5em 0.8em;
   }
   #container .scroll {
-    right: 1.2em;
+    right: 0.5em;
   }
   #container .scroll li {
     font-size: 1.7em;
@@ -998,7 +1007,7 @@ a {
   background-size: 103%;
 }
 #header .header-nav .social .GitHub {
-  background: url("//cdn.bootcss.com/logos/0.2.0/github-octocat.svg") no-repeat #fff;
+  background: #fff;
   -webkit-background-size: 90%;
   -moz-background-size: 90%;
   background-size: 90%;
@@ -1224,12 +1233,12 @@ rgba(255,255,255,0.6)
   padding: 0 40px;
 }
 #scroll {
-  right: 0;
+  right: 1%;
 }
 .scroll {
   z-index: 999;
   position: fixed;
-  top: 61.8%;
+  top: 81.8%;
   text-align: center;
   line-height: 42px;
 }
@@ -1483,7 +1492,7 @@ body .ui-tooltip {
 }
 .article {
   margin: 30px auto 5px;
-  max-width: 85%;
+  max-width: 87%;
   position: relative;
   background: rgba(255,255,255,0.45);
   -webkit-transition: all 0.2s ease-in;
@@ -2542,14 +2551,15 @@ pre .javascript .function {
   font-size: 0.8rem;
   font-family: "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
   text-shadow: 0 1px #fff;
-  position: absolute;
-  bottom: 1%;
-  opacity: 0.75;
-  width: 100%;
+  position: fixed;
+  bottom: 0px;
+  opacity: 1;
+  left: 23.2%;
+  width: 76%;
+  height: 2%;
+  background: rgba(255,255,255,0.65);
   text-align: center;
-}
-#footer .footer-center {
-  margin: 0 auto;
+  padding: 0.4% 0 0 0;
 }
 #footer .footer-left {
   float: left;
@@ -2585,6 +2595,18 @@ pre .javascript .function {
 #footer .visit #site-visit:hover .fa,
 #footer .visit #page-visit:hover .fa {
   color: #333;
+}
+#left-col-footer {
+  font-size: 0.8rem;
+  font-family: "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
+  text-shadow: 0 1px #fff;
+  position: absolute;
+  bottom: 1%;
+  width: 100%;
+  text-align: center;
+}
+#left-col-footer .footer-center {
+  margin: 0 auto;
 }
 .share {
   padding-left: 40px;

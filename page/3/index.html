@@ -24,7 +24,6 @@
 <meta property="og:url" content="http://c-xuan.com/page/3/index.html">
 <meta property="og:site_name" content="靛青">
 <meta property="og:description" content="IT技术学习分享博客">
-<meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="靛青">
 <meta name="twitter:description" content="IT技术学习分享博客">
@@ -312,10 +311,10 @@
         </div>
     </header>                
 </div>
-<footer id="footer">
+<footer id="left-col-footer">
 	<div class="footer-center">
 		<i class="fa fa-copyright"></i> 
-		2016-2018 c-xuan
+		2016-2018  c-xuan
 	</div>
 </footer>
     </div>
@@ -327,11 +326,11 @@
       </div>
     <div class="intrude-less">
         <header id="header" class="inner">
-            <a href="/" class="profilepic">
+            <a href="/" class="profilepic" width="20%">
                 <img src="/img/cxuan.png" class="animated zoomIn">
             </a>
             <hgroup>
-              <h1 class="header-author"><a href="/" title="回到主页">c-xuan</a></h1>
+              <h1 class="header-author"><a href="/" title="回到主页">靛青</a></h1>
             </hgroup>
             
             <p class="header-subtitle">青，取之于藍而青于藍。</p>
@@ -353,15 +352,27 @@
             <nav class="header-nav">
                         <ul class="social">
                             
-                                <a class="fa Email" target="_blank" href="mailto:c-xuan@foxmail.com" title="Email"></a>
+                                <a class="fa Email" target="_blank" href="mailto:c-xuan@foxmail.com" title="Email">
+                                    
+                                </a>
                             
-                                <a class="fa 新浪微博" target="_blank" href="http://weibo.com/u/1794820305" title="新浪微博"></a>
+                                <a class="fa 新浪微博" target="_blank" href="http://weibo.com/u/1794820305" title="新浪微博">
+                                    
+                                </a>
                             
-                                <a class="fa GitHub" target="_blank" href="https://github.com/cxuan" title="GitHub"></a>
+                                <a class="fa GitHub" target="_blank" href="https://github.com/cxuan" title="GitHub">
+                                    
+                                        <svg height="37" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="37" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
+                                    
+                                </a>
                             
-                                <a class="fa 简书" target="_blank" href="http://www.jianshu.com/users/2e80e903099c/latest_articles" title="简书"></a>
+                                <a class="fa 简书" target="_blank" href="http://www.jianshu.com/users/2e80e903099c/latest_articles" title="简书">
+                                    
+                                </a>
                             
-                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS">
+                                    
+                                </a>
                             
                         </ul>
             </nav>
@@ -523,75 +534,6 @@ INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;)
 
 
   
-    <article id="post-SQL-Server-2014-SSDT-Install" class="article article-type-post " itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/04/24/SQL-Server-2014-SSDT-Install/" class="article-date">
-      <time datetime="2016-04-23T16:00:00.000Z" itemprop="datePublished">2016-04-24</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/24/SQL-Server-2014-SSDT-Install/">SQL Server 2014的BI开发工具SSDT(以前的BIDS)安装</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>当我们安装好SQL Server 2014以后，会发现以前随数据库安装的BI开发套件SQL Server Reporting Services (SSRS), SQL Server Analysis Services (SSAS), 和 SQL Server Integration Services (SSIS)都不见了，怎么弄回来呢？</p>
-<p>在安装开发版或者企业版的SQL Server 2014的时候，你可能已经注意到以前被我们熟知的Business Intelligence Development Studio (BIDS) 已经没有了。从SQL Server 2012开始，这套BI应用工具集已经变成了SQL Server Data Tools)(SSDT)，在SQL Server 2014中，SSDT已经完全在SQL Server的安装过程里消失了。但是，要把Business Intelligence (BI)应用工具安装回来也是很容易的。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/BI墨客/">BI墨客</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BI/">BI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原创/">原创</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/04/24/SQL-Server-2014-SSDT-Install/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-CSS3-transform-style-3D-Cool" class="article article-type-post " itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -643,6 +585,75 @@ INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;)
       
         <p class="article-more-link">
           <a href="/2016/04/24/CSS3-transform-style-3D-Cool/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-SQL-Server-2014-SSDT-Install" class="article article-type-post " itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/24/SQL-Server-2014-SSDT-Install/" class="article-date">
+      <time datetime="2016-04-23T16:00:00.000Z" itemprop="datePublished">2016-04-24</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/24/SQL-Server-2014-SSDT-Install/">SQL Server 2014的BI开发工具SSDT(以前的BIDS)安装</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>当我们安装好SQL Server 2014以后，会发现以前随数据库安装的BI开发套件SQL Server Reporting Services (SSRS), SQL Server Analysis Services (SSAS), 和 SQL Server Integration Services (SSIS)都不见了，怎么弄回来呢？</p>
+<p>在安装开发版或者企业版的SQL Server 2014的时候，你可能已经注意到以前被我们熟知的Business Intelligence Development Studio (BIDS) 已经没有了。从SQL Server 2012开始，这套BI应用工具集已经变成了SQL Server Data Tools)(SSDT)，在SQL Server 2014中，SSDT已经完全在SQL Server的安装过程里消失了。但是，要把Business Intelligence (BI)应用工具安装回来也是很容易的。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/BI墨客/">BI墨客</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BI/">BI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原创/">原创</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016/04/24/SQL-Server-2014-SSDT-Install/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -759,7 +770,7 @@ INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;)
       
           
               <p>你见过新版的<strong>Apple TV视差效</strong>果么?非常棒，我们用CSS和jQuery来实现它，尽量看起来和原效果一样。</p>
-<center><img src="/img/posts/35.gif"></center>
+<center><img src="/img/posts/35.gif"></img></center>
           
       
     </div>
@@ -780,6 +791,74 @@ INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;)
       
         <p class="article-more-link">
           <a href="/2016/03/27/AppleTV-Poster-Like/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-IconForEveryday" class="article article-type-post " itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/23/IconForEveryday/" class="article-date">
+      <time datetime="2016-03-22T16:00:00.000Z" itemprop="datePublished">2016-03-23</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/23/IconForEveryday/">365cons：每天一枚图标，可免费下载</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>大家都听过“An apple a day keeps the doctor away”这句俚语，现在网络上也开始流行养成习惯持续去做某一件事情，例如先前介绍过的100 Days UI百日设计挑战每天发布一个全新使用者界面设计来启发灵感，当然你也可以为自己设定一个习惯养成目标，HabitRPG甚至让生活变成游戏，让你通过每日任务来建立好的生活习惯，这些想法都值得我们好好思考如何在一成不变的工作中产生更多价值。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/IT看客/">IT看客</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计/">设计</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016/03/23/IconForEveryday/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -941,74 +1020,6 @@ INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;)
 
 
   
-    <article id="post-IconForEveryday" class="article article-type-post " itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/03/23/IconForEveryday/" class="article-date">
-      <time datetime="2016-03-22T16:00:00.000Z" itemprop="datePublished">2016-03-23</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/23/IconForEveryday/">365cons：每天一枚图标，可免费下载</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>大家都听过“An apple a day keeps the doctor away”这句俚语，现在网络上也开始流行养成习惯持续去做某一件事情，例如先前介绍过的100 Days UI百日设计挑战每天发布一个全新使用者界面设计来启发灵感，当然你也可以为自己设定一个习惯养成目标，HabitRPG甚至让生活变成游戏，让你通过每日任务来建立好的生活习惯，这些想法都值得我们好好思考如何在一成不变的工作中产生更多价值。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/IT看客/">IT看客</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计/">设计</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/03/23/IconForEveryday/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-CSS-For-Flip-Effect" class="article article-type-post " itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -1039,7 +1050,7 @@ INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;)
       
           
               <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CSS动画是非常有意思的，用一些简单的属性就可以创建出来，从优雅的淡入到更加惊艳的效果都可以，翻页效果就是其中之一，它通过在容器的正面跟反面包含不同的内容来加以实现。本文就是用尽可能简单的方法来实现这种效果。</p>
-<center><img src="/img/posts/CSS-For-Flip-Effect.png"></center>
+<center><img src="/img/posts/CSS-For-Flip-Effect.png"></img></center>
           
       
     </div>
@@ -1176,7 +1187,7 @@ INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;)
     <div class="article-entry" itemprop="articleBody">
       
           
-              <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>本文将介绍如何一步一步制作出一些3D效果的云彩，会用到一些高级的属性，主要是如何通过CSS的3D变换效果来实现，如果你想了解更多，<a href="https://developer.mozilla.org/En/CSS/Using_CSS_transforms" target="_blank" rel="noopener">这地方是个不错的开始</a>。</p>
+              <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>本文将介绍如何一步一步制作出一些3D效果的云彩，会用到一些高级的属性，主要是如何通过CSS的3D变换效果来实现，如果你想了解更多，<a href="https://developer.mozilla.org/En/CSS/Using_CSS_transforms">这地方是个不错的开始</a>。</p>
 <p><img src="/img/posts/41.png" alt="静态效果图"></p>
           
       
@@ -1318,11 +1329,11 @@ INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;)
     <div class="article-entry" itemprop="articleBody">
       
           
-              <center><img src="/img/posts/19.jpg"></center><br><center>目前，AlphaGo以总比分3:0领先李世石</center>
+              <center><img src="/img/posts/19.jpg"></img></center><br><center>目前，AlphaGo以总比分3:0领先李世石</center>
 
 <h3 id="为什么这场对弈成为“现象级事件”？"><a href="#为什么这场对弈成为“现象级事件”？" class="headerlink" title="为什么这场对弈成为“现象级事件”？"></a>为什么这场对弈成为“现象级事件”？</h3><blockquote>
 <p>　　为什么人工智能与李世石的对弈如此牵动人心？如果对围棋缺乏了解，可能很难懂得个中奥妙。围棋是一种古老的策略游戏，胜负不仅取决于精妙的计算，还和棋手的个性修养、文化底蕴、临场状态等息息相关。从一个顶尖棋手的棋谱中，你几乎可以窥见他的小宇宙。曾经有一种观点认为，由于围棋的极度复杂性和深厚的文化秉性，人工智能几乎不可能战胜人类。但这一天终于还是来了，而且来得如此之快、如此之突兀。</p>
-<p></p><p style="text-align:right"><em>——蔡方华（《北京青年报》评论员）</em> </p>
+<p><p style="text-align:right"><em>——蔡方华（《北京青年报》评论员）</em> </p>
 </blockquote>
           
       
@@ -1391,7 +1402,7 @@ INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;)
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p><span style="font-size: large;"><strong>1、会跳的青蛙</strong></span></p><br><p><span style="font-size: large;"><strong><a title="会跳的青蛙" href="/img/posts/1.gif" class="fancybox" data-fancybox-group="group"><img title="会跳的青蛙" src="/img/posts/1.gif" alt="会跳的青蛙" width="567" height="847"></a></strong></span></p>
+              <p><span style="font-size: large;"><strong>1、会跳的青蛙</strong></span></p><br><p><span style="font-size: large;"><strong><a title="会跳的青蛙" href="/img/posts/1.gif" class="fancybox" data-fancybox-group="group"><img title="会跳的青蛙" src="/img/posts/1.gif" alt="会跳的青蛙" width="567" height="847" /></a></strong></span></p>
           
       
     </div>
@@ -1527,7 +1538,7 @@ INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;)
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.<br>
+              <p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.<br>
           
       
     </div>
@@ -1572,7 +1583,9 @@ INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;)
     </nav>
   
 </div>
-      <footer id="footer">
+
+    </div>
+    <footer id="footer">
     <div class="outer">
         <div id="footer-info">
             <div class="footer-left">
@@ -1609,7 +1622,6 @@ INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;)
         
     </div>
 </footer>
-    </div>
     
 <script data-main="/js/main.js" src="/js/others/require.min.js"></script>
 

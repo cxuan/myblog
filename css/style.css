@@ -261,7 +261,7 @@ a {
   position: absolute;
   right: 0;
   min-height: 100%;
-  background: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.65);
   left: 23%;
   width: auto;
 }
@@ -561,9 +561,9 @@ a {
 }
 .header-author {
   text-align: center;
-  margin: 13px 0;
+  margin: 7% 0 2% 0;
   font-family: LiSu, Times, Georgia, serif;
-  font-size: 32px;
+  font-size: 34px;
   -webkit-transition: 0.3s;
   -moz-transition: 0.3s;
   -ms-transition: 0.3s;
@@ -749,8 +749,8 @@ a {
 }
 #header .header-menu li a {
   color: #009;
-  font-size: 0.875rem;
-  font-weight: 400;
+  font-size: 0.9375rem;
+  font-weight: 500;
   letter-spacing: 0px;
   margin: 0px 0px;
   outline: medium none;
@@ -1487,14 +1487,14 @@ body .ui-tooltip {
   background: transparent;
 }
 .body-wrap {
-  margin-bottom: 126px;
+  margin-bottom: 26px;
   overflow: hidden;
 }
 .article {
   margin: 30px auto 5px;
   max-width: 87%;
   position: relative;
-  background: rgba(255,255,255,0.45);
+  background: rgba(255,255,255,0.7);
   -webkit-transition: all 0.2s ease-in;
 }
 .article.show {
@@ -1583,8 +1583,8 @@ body .ui-tooltip {
   margin-bottom: 0px;
   padding-bottom: 0.5em;
   word-break: break-word;
-  -webkit-box-shadow: 3px 2px 8px rgba(0,0,0,0.07);
-  box-shadow: 3px 2px 8px rgba(0,0,0,0.07);
+  -webkit-box-shadow: 10px 11px 23px rgba(0,0,0,0.13);
+  box-shadow: 10px 11px 23px rgba(0,0,0,0.13);
 }
 .article-header {
   border-left: 6px solid #eee;
@@ -2555,7 +2555,7 @@ pre .javascript .function {
   bottom: 0px;
   opacity: 1;
   left: 23.2%;
-  width: 76%;
+  width: 76.4%;
   height: 2%;
   background: rgba(255,255,255,0.65);
   text-align: center;
@@ -2599,7 +2599,7 @@ pre .javascript .function {
 #left-col-footer {
   font-size: 0.8rem;
   font-family: "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
-  text-shadow: 0 1px #fff;
+/*text-shadow: 0 1px #fff;*/
   position: absolute;
   bottom: 1%;
   width: 100%;

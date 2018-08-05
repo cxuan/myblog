@@ -23,6 +23,7 @@
   - 修复社交Github图标失效问题
   - 固定footer在底部
   - 调整移动端显示样式
+  - http连接设置为https连接
 
 
 [c-xuan.com](http://c-xuan.com)

@@ -422,11 +422,9 @@ a {
   }
   #container #footer {
     bottom: 0px;
-    position: fixed;
+    position: absolute;
     left: 0;
     width: 100%;
-    height: 5%;
-    background: rgba(255,255,255,0.65);
   }
   #container #footer .footer-left {
     display: none;
@@ -1487,7 +1485,7 @@ body .ui-tooltip {
   background: transparent;
 }
 .body-wrap {
-  margin-bottom: 26px;
+  margin-bottom: 116px;
   overflow: hidden;
 }
 .article {
@@ -2550,16 +2548,10 @@ pre .javascript .function {
 #footer {
   font-size: 0.8rem;
   font-family: "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
-  text-shadow: 0 1px #fff;
-  position: fixed;
-  bottom: 0px;
-  opacity: 1;
-  left: 23.2%;
-  width: 76.4%;
-  height: 2%;
-  background: rgba(255,255,255,0.65);
+  position: absolute;
+  bottom: 5px;
+  width: 100%;
   text-align: center;
-  padding: 0.4% 0 0 0;
 }
 #footer .footer-left {
   float: left;

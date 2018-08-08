@@ -21,7 +21,6 @@
   - 站点页面添加[谷歌分析](https://analytics.google.com/)跟踪代码.
 - 2018-08-04:
   - 修复社交Github图标失效问题
-  - 固定footer在底部
   - 调整移动端显示样式
   - http连接设置为https连接
 

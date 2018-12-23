@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://c-xuan.com/"/>
-  <updated>2018-07-26T03:15:01.000Z</updated>
+  <updated>2018-12-23T15:42:01.470Z</updated>
   <id>http://c-xuan.com/</id>
   
   <author>
@@ -14,6 +14,84 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Flask服务本机之外不能访问</title>
+    <link href="http://c-xuan.com/2018/12/23/20181223001_flask_intranet_visit/"/>
+    <id>http://c-xuan.com/2018/12/23/20181223001_flask_intranet_visit/</id>
+    <published>2018-12-23T15:31:17.000Z</published>
+    <updated>2018-12-23T15:42:01.470Z</updated>
+    
+    <content type="html"><![CDATA[<p>Flask 开启服务后，默认是本机访问的，使用<code>localhost:5000</code>可以访问Web服务，但是使用如<code>192.168.1.10</code>这类本机IP地址却访问不了。 </p>
+<a id="more"></a>
+<p>启动Falsk服务后信息如下，</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">* Serving Flask app <span class="string">"app"</span> (lazy loading)</div><div class="line">* Environment: production</div><div class="line">  WARNING: Do <span class="keyword">not</span> use <span class="keyword">the</span> development server <span class="keyword">in</span> <span class="keyword">a</span> production environment.</div><div class="line">  Use <span class="keyword">a</span> production WSGI server instead.</div><div class="line">* Debug mode: <span class="keyword">on</span></div><div class="line">* Restarting <span class="keyword">with</span> stat</div><div class="line">* Debugger is active!</div><div class="line">* Debugger PIN: <span class="number">228</span><span class="number">-080</span><span class="number">-042</span></div><div class="line">* Running <span class="keyword">on</span> <span class="title">http</span>://<span class="title">127</span><span class="number">.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="title">5000</span>/ (<span class="title">Press</span> <span class="title">CTRL</span>+<span class="title">C</span> <span class="title">to</span> <span class="title">quit</span>)</div></pre></td></tr></table></figure>
+<p>除本机外是不能访问的，需要在<code>run</code>参数中设置,端口自定，主机为<code>0.0.0.0</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">app.run(host=<span class="string">'0.0.0.0'</span>, port=<span class="number">5000</span>)</div></pre></td></tr></table></figure>
+<p>再次启动后就可以了。</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">* Serving Flask app <span class="string">"app"</span> (lazy loading)</div><div class="line">* Environment: production</div><div class="line">  WARNING: Do <span class="keyword">not</span> use <span class="keyword">the</span> development server <span class="keyword">in</span> <span class="keyword">a</span> production environment.</div><div class="line">  Use <span class="keyword">a</span> production WSGI server instead.</div><div class="line">* Debug mode: <span class="keyword">on</span></div><div class="line">* Restarting <span class="keyword">with</span> stat</div><div class="line">* Debugger is active!</div><div class="line">* Debugger PIN: <span class="number">228</span><span class="number">-080</span><span class="number">-042</span></div><div class="line">* Running <span class="keyword">on</span> <span class="title">http</span>://<span class="title">0</span><span class="number">.0</span><span class="number">.0</span><span class="number">.0</span>:<span class="title">5000</span>/ (<span class="title">Press</span> <span class="title">CTRL</span>+<span class="title">C</span> <span class="title">to</span> <span class="title">quit</span>)</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Flask 开启服务后，默认是本机访问的，使用&lt;code&gt;localhost:5000&lt;/code&gt;可以访问Web服务，但是使用如&lt;code&gt;192.168.1.10&lt;/code&gt;这类本机IP地址却访问不了。 &lt;/p&gt;
+    
+    </summary>
+    
+      <category term="码路刺客" scheme="http://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
+    
+    
+      <category term="Flask" scheme="http://c-xuan.com/tags/Flask/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Atom插件aligner冒号(:)对齐的问题</title>
+    <link href="http://c-xuan.com/2018/12/21/20181221001_atom_aligner/"/>
+    <id>http://c-xuan.com/2018/12/21/20181221001_atom_aligner/</id>
+    <published>2018-12-21T15:31:17.000Z</published>
+    <updated>2018-12-23T16:33:10.200Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近在折腾Atom编辑器，写Python进行交互运行还是很方便的，代码提示什么的比Jupyter也好一些，还可以配置一堆插件，定制自己的开发环境。对于代码整齐性来说，<code>aligner</code>插件是不能错过的。</p>
+<a id="more"></a>
+<p><a href="https://github.com/adrianlee44/atom-aligner" target="_blank" rel="external">atom-aligner</a>是干什么的呢，就是用来对齐的，比如我们写这样一段变量赋值的程序：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var_a =<span class="number">1</span> <span class="comment">#我是变量1</span></div><div class="line">b = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]<span class="comment">#我是变量2</span></div><div class="line">cccc=(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)<span class="comment">#注释</span></div><div class="line">ddddddd=<span class="string">'rrrrrrrr'</span><span class="comment">#又一个注释</span></div></pre></td></tr></table></figure>
+<p>虽然也没问题，但是如果能按<code>=</code>对齐就更强迫症一些。安装插件后，选中要对齐的行，按快捷键:<br>Mac: <code>ctrl-cmd-/</code> Linux/Windows: <code>ctrl-alt-/</code><br>就会变为这样</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var_a   = <span class="number">1</span>         <span class="comment">#我是变量1</span></div><div class="line">b       = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>] <span class="comment">#我是变量2</span></div><div class="line">cccc    = (<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)   <span class="comment">#注释</span></div><div class="line">ddddddd = <span class="string">'rrrrrrrr'</span><span class="comment">#又一个注释</span></div></pre></td></tr></table></figure>
+<p>需要注意是，只安装一个<code>atom-aligner</code>插件是不够的，得配合不同语言的另一些插件，比如我写python代码，得另外装一个<code>aligner-python</code>插件才可以。</p>
+<p>如果是JSON格式的对象，也是可以按冒号:对齐的</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">obj = &#123;<span class="string">'aaa'</span>: <span class="number">11</span>,</div><div class="line">    <span class="string">'bbb'</span>: <span class="string">'terdff'</span>,</div><div class="line">  <span class="string">'ccc'</span>: <span class="number">123111</span>,</div><div class="line">    <span class="string">'array'</span>: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]&#125;</div></pre></td></tr></table></figure>
+<p>要注意的是，如果连同<code>=</code>,<code>{}</code>一起选中，按快捷键对齐是不起作用的，得写成这样：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">obj = &#123;</div><div class="line">  <span class="string">'aaa'</span>: <span class="number">11</span>,</div><div class="line">    <span class="string">'bbb'</span>: <span class="string">'terdff'</span>,</div><div class="line">  <span class="string">'ccc'</span>: <span class="number">123111</span>,</div><div class="line">    <span class="string">'array'</span>: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>对齐后是这样的</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">obj = &#123;</div><div class="line"> <span class="string">'aaa'</span>:      <span class="number">11</span>,</div><div class="line">    <span class="string">'bbb'</span>:   <span class="string">'terdff'</span>,</div><div class="line">  <span class="string">'ccc'</span>:     <span class="number">123111</span>,</div><div class="line">    <span class="string">'array'</span>: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>所以<code>:</code>左边是不会对齐的，我们在编辑器写代码的时候一般都会左对齐了，像这样</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">obj = &#123;</div><div class="line">    <span class="string">'aaa'</span>:   <span class="number">11</span>,</div><div class="line">    <span class="string">'bbb'</span>:   <span class="string">'terdff'</span>,</div><div class="line">    <span class="string">'ccc'</span>:   <span class="number">123111</span>,</div><div class="line">    <span class="string">'array'</span>: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>有个问题是，官方的说明里说是可以冒号对齐的，对齐成这样</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">obj = &#123;</div><div class="line">    <span class="string">'aaa'</span>  : <span class="number">11</span>,</div><div class="line">    <span class="string">'bbb'</span>  : <span class="string">'terdff'</span>,</div><div class="line">    <span class="string">'ccc'</span>  : <span class="number">123111</span>,</div><div class="line">    <span class="string">'array'</span>: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>插件设置中没有找到相关设置，官方说明看了半天也没找到怎么设置，最后无奈改了插件的源码。</p>
+<p>进入插件设置</p>
+<center><img src="/img/posts/20181221001-01.gif" alt=""></center>
+
+<p>找到插件包配置，修改默认为<code>left</code></p>
+<center><img src="/img/posts/20181221001-02.gif" alt=""></center>
+
+<p>重启编辑器就可以了。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近在折腾Atom编辑器，写Python进行交互运行还是很方便的，代码提示什么的比Jupyter也好一些，还可以配置一堆插件，定制自己的开发环境。对于代码整齐性来说，&lt;code&gt;aligner&lt;/code&gt;插件是不能错过的。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="码路刺客" scheme="http://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
+    
+    
+      <category term="原创" scheme="http://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+      <category term="Atom" scheme="http://c-xuan.com/tags/Atom/"/>
+    
+  </entry>
   
   <entry>
     <title>Aqua Data Studio 执行HiveSql的问题</title>
@@ -114,9 +192,9 @@
     
       <category term="原创" scheme="http://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
     
-      <category term="数据仓库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/"/>
-    
       <category term="Hive" scheme="http://c-xuan.com/tags/Hive/"/>
+    
+      <category term="数据仓库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/"/>
     
   </entry>
   
@@ -289,9 +367,9 @@
     
       <category term="原创" scheme="http://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
     
-      <category term="分布式" scheme="http://c-xuan.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
-    
       <category term="Hbase" scheme="http://c-xuan.com/tags/Hbase/"/>
+    
+      <category term="分布式" scheme="http://c-xuan.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
   </entry>
   
@@ -378,9 +456,9 @@
     
       <category term="原创" scheme="http://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
     
-      <category term="zookeeper" scheme="http://c-xuan.com/tags/zookeeper/"/>
-    
       <category term="分布式" scheme="http://c-xuan.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    
+      <category term="zookeeper" scheme="http://c-xuan.com/tags/zookeeper/"/>
     
   </entry>
   
@@ -1260,112 +1338,6 @@
       <category term="数据仓库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/"/>
     
       <category term="维度建模" scheme="http://c-xuan.com/tags/%E7%BB%B4%E5%BA%A6%E5%BB%BA%E6%A8%A1/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>宽表和窄表的建设该如何选择？</title>
-    <link href="http://c-xuan.com/2017/01/03/wide-table-thinking/"/>
-    <id>http://c-xuan.com/2017/01/03/wide-table-thinking/</id>
-    <published>2017-01-02T16:00:00.000Z</published>
-    <updated>2017-02-26T10:14:26.853Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote>
-<p>宽表从字面意义上讲就是字段比较多的数据库表。通常是指业务主题相关的指标、维度、属性关联在一起的一张数据库表。由于把不同的内容都放在同一张表存储，宽表已经不符合三范式的模型设计规范，随之带来的主要坏处就是数据的大量冗余，与之相对应的好处就是查询性能的提高与便捷。这种宽表的设计广泛应用于数据挖掘模型训练前的数据准备，通过把相关字段放在同一张表中，可以大大提高数据挖掘模型训练过程中迭代计算时的效率问题。<br>————百度百科</p>
-</blockquote>
-<a id="more"></a>
-<h3 id="宽表和窄表的建设该如何选择？"><a href="#宽表和窄表的建设该如何选择？" class="headerlink" title="宽表和窄表的建设该如何选择？"></a>宽表和窄表的建设该如何选择？</h3><p>这个问题相信纠结了很多从是数据库开发、数据仓库开发和后台开发人员；单单考虑这个问题，难给出一个绝对的答案；本人从事数据仓库开发工作到现在已经有一年半时间了，对于这个问题，我也曾经纠结过，但是是否有绝对的答案呢？事实上任何东西都没有绝对的说法。</p>
-<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>考虑这样的一个问题，一个公司有这样的一个需求：</p>
-<p>设计销售领域的订单事实表，该事实表应该包含哪些维度和度量？事实表和维表该分别如何去设计？</p>
-<p>好了，我们把关键信息拿出来，首先我们要有维度包括：销售员、销售员所属部门、下订单的时间；度量：销售量；</p>
-<p>那么，订单事实表，其实就是一个商品销售的清单。</p>
-<h3 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h3><p>依照这个思路，我们建立的第一个模型可能是以下这样的：</p>
-<center><img src="/img/posts/wide-table-thinking-1.gif"></center>
-
-<p>单单看上去，貌似是符合我们的问题的需要，而且符合数据库的范式设计：没有冗余字段；但是情况真的就是这样吗？</p>
-<p>答案是否定的，确实对于一般的OLTP系统而言这样的表设计确实减少了冗余和，增删改查等操作也很方便，但是往往对于我们的统计系统、OLAP、数据挖掘而言，情况却并非如此，举个例子：我们要统计每个部门各自的销售量为多少？那么对于上表,sql是这样的：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> a.*,b.sid <span class="keyword">into</span> #dep_saleser <span class="keyword">from</span> department a,saleser_dim b <span class="keyword">on</span> a.dep_id = b.dep_id;</div><div class="line"><span class="keyword">select</span> <span class="keyword">count</span>(<span class="number">1</span>),a.dep_name <span class="keyword">from</span> #dep_saleser a,order_fact b <span class="keyword">on</span> a.sid=b.sid <span class="keyword">group</span> <span class="keyword">by</span> a.dep_name;</div></pre></td></tr></table></figure>
-<p>对于这么一个简单的需求已经要写两了sql去实现了，其实数据库表模型的的设计是灵活的，我们完全可以根据我们的业务去设计我们的数据表；考虑到部门和销售员可以是同属于销售者这个维度，只是他们是有上下级别关系的。</p>
-<h3 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h3><p>那么依照这个思路，我们的模型可以建立为下面这样：</p>
-<center><img src="/img/posts/wide-table-thinking-2.gif"></center>
-
-<p>那么统计每个部门各自的销售量，可以用如下sql去实现：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> <span class="keyword">count</span>(<span class="number">1</span>),a.dep_name <span class="keyword">from</span> saleser_dim a,order_fact b</div><div class="line"><span class="keyword">on</span> a.sid=b.sid <span class="keyword">group</span> <span class="keyword">by</span> a.dep_name;</div></pre></td></tr></table></figure>
-<p>确实对于这个模型而言，有些情况下会出现冗余（填写用户，没有填写部门，填写部门没填写用户），但是对于提取数统计的逻辑又相对来说要简单了好多。</p>
-<h3 id="方案三"><a href="#方案三" class="headerlink" title="方案三"></a>方案三</h3><p>考虑到要实现取数简单，我们还可以想出另外一种方法：</p>
-<center><img src="/img/posts/wide-table-thinking-3.gif"></center>
-
-<p>看上去好像不错哦~~，取数据也就一句sql就搞掂了，但是却是最最槽糕的情况，有可能一个销售员，前几天登记的部门是a，但是其实他的所属于的部门为b，那么对于上面这个模型，我们得改动销售员和订单表；而对于上面的其他两个模型都仅仅需要改动一张表就行了，造成查询数据部一致往往也就是这种数据模型所造成的。</p>
-<p>所谓的宽表就是字段比较多的表，包含的维度层次比较多，造成冗余也比较多，毁范式设计，但是利于取数统计，而窄表往往对于OLTP比较合适，符合范式设计原则。</p>
-<p>转自<a href="http://www.cnblogs.com/super-d2/p/3384938.html" target="_blank" rel="external">http://www.cnblogs.com/super-d2/p/3384938.html</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;宽表从字面意义上讲就是字段比较多的数据库表。通常是指业务主题相关的指标、维度、属性关联在一起的一张数据库表。由于把不同的内容都放在同一张表存储，宽表已经不符合三范式的模型设计规范，随之带来的主要坏处就是数据的大量冗余，与之相对应的好处就是查询性能的提高与便捷。这种宽表的设计广泛应用于数据挖掘模型训练前的数据准备，通过把相关字段放在同一张表中，可以大大提高数据挖掘模型训练过程中迭代计算时的效率问题。&lt;br&gt;————百度百科&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="BI墨客" scheme="http://c-xuan.com/categories/BI%E5%A2%A8%E5%AE%A2/"/>
-    
-    
-      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
-      <category term="数据仓库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【SQL Server】编辑、修改字段说明（备注）</title>
-    <link href="http://c-xuan.com/2016/12/02/SQLAddColumnNote/"/>
-    <id>http://c-xuan.com/2016/12/02/SQLAddColumnNote/</id>
-    <published>2016-12-01T16:01:43.000Z</published>
-    <updated>2016-12-01T16:13:05.593Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">sp_addextendedproperty</div><div class="line">    [ @name = ] &#123; <span class="string">'property_name'</span> &#125;</div><div class="line">    [ , [ @value = ] &#123; <span class="string">'value'</span> &#125; </div><div class="line">        [ , [ @level0type = ] &#123; <span class="string">'level0_object_type'</span> &#125; </div><div class="line">                    , [ @level0name = ] &#123; <span class="string">'level0_object_name'</span> &#125; </div><div class="line">                [ , [ @level1type = ] &#123; <span class="string">'level1_object_type'</span> &#125; </div><div class="line">                                    , [ @level1name = ] &#123; <span class="string">'level1_object_name'</span> &#125; </div><div class="line">                        [ , [ @level2type = ] &#123; <span class="string">'level2_object_type'</span> &#125; </div><div class="line">                                                    , [ @level2name = ] &#123; <span class="string">'level2_object_name'</span> &#125; </div><div class="line">                        ] </div><div class="line">                ]</div><div class="line">        ] </div><div class="line">    ]</div></pre></td></tr></table></figure>
-<a id="more"></a>
-<h3 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h3><p>为了指定扩展属性，SQL Server 数据库中的对象分为三个级别（0、1 和 2）。级别 0 是最高级别，定义为包含在数据库作用域中的对象。级别 1 的对象包含在架构作用域或用户作用域中，而级别 ２ 的对象包含在级别 1 对象中。可以为这些级别中任一级别的对象定义扩展属性。</p>
-<p>引用某个级别中的对象必须用拥有或包含它们的更高级别对象的名称进行限制。例如，当将扩展属性添加到表列（级别 2）时，还必须指定包含该列的表名（级别 1）以及包含该表的架构（级别 0）。</p>
-<p>有关对象及其有效的级别 0、1 和 2 类型的完整列表，请参阅对数据库对象使用扩展属性。如果所有对象类型和名称都为空，则属性属于当前数据库本身。对于系统对象、用户定义数据库的作用域以外的对象或者未在 Arguments 中作为有效输入列出的对象，不允许使用扩展属性。</p>
-<h3 id="架构与用户"><a href="#架构与用户" class="headerlink" title="架构与用户"></a>架构与用户</h3><p>在 SQL Server 的早期版本中，用户拥有表、视图和触发器之类的数据库对象。因此，允许将扩展属性添加到这些对象之一以及将用户名指定为级别 0 类型。但在 SQL Server 2005 中，数据库对象包含在架构中。它们独立于拥有架构的用户。在 SQL Server 2005 中，我们建议不要在将扩展属性应用于数据库对象时指定 USER 作为级别 0 类型，因为这会导致名称解析不明确。例如，假定用户 Mary 拥有两个架构（Mary 和 MySchema），并且这两个架构都包含名为 MyTable 的表。如果 Mary 将扩展属性添加到表 MyTable 并指定 @level0type = N’USER’、@level0name = Mary，则扩展属性应用于哪个表并不明确。为了保持向后兼容，SQL Server 将属性应用于名为 Mary 的架构所包含的表。有关用户与架构的详细信息，请参阅用户架构分离。</p>
-<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><p><code>[ @name ] = { &#39;property_name&#39; }</code></p>
-<p>要添加的属性的名称。property_name 的数据类型为 sysname，不能为 NULL。名称还可以包括空格或非字母数字字符串以及二进制值。</p>
-<p><code>[ @value = ] { &#39;value&#39; }</code></p>
-<p>要与属性关联的值。value 的数据类型为 sql_variant，默认值为 NULL。value 的大小不能超过 7,500 个字节。</p>
-<p><code>[ @level0type = ] { &#39;level0_object_type&#39; }</code></p>
-<p>级别 0 对象的类型。level0_object_type 的数据类型为 varchar(128)，默认值为 NULL。<br>有效的输入包括：ASSEMBLY、CONTRACT、EVENT NOTIFICATION、FILEGROUP、MESSAGE TYPE、PARTITION FUNCTION、PARTITION SCHEME、REMOTE SERVICE BINDING、ROUTE、SCHEMA、SERVICE、USER、TRIGGER、TYPE 和 NULL。<br>重要事项：</p>
-<p>作为级别 0 类型的 USER 和 TYPE 将在 SQL Server 的未来版本中删除。请避免在新的开发工作中使用这些功能，并考虑修改当前使用这些功能的应用程序。改用 SCHEMA 代替 USER 作为级别 0 类型。对于 TYPE，请使用 SCHEMA 作为级别 0 类型，使用 TYPE 作为级别 1 类型。</p>
-<p><code>[ @level0name = ] { &#39;level0_object_name&#39; }</code></p>
-<p>所指定的级别 0 对象类型的名称。level0_object_name 的数据类型为 sysname，默认值为 NULL。</p>
-<p><code>[ @level1type = ] { &#39;level1_object_type&#39; }</code></p>
-<p>级别 1 对象的类型。level1_object_type 的数据类型为 varchar(128)，默认值为 NULL。有效的输入包括：AGGREGATE、DEFAULT、FUNCTION、LOGICAL FILE NAME、PROCEDURE、QUEUE、RULE、SYNONYM、TABLE、TYPE、VIEW、XML SCHEMA COLLECTION 和 NULL。</p>
-<p><code>[ @level1name = ] { &#39;level1_object_name&#39; }</code></p>
-<p>所指定的级别 1 对象类型的名称。level1_object_name 的数据类型为 sysname，默认值为 NULL。</p>
-<p><code>[ @level2type = ] { &#39;level2_object_type&#39; }</code></p>
-<p>级别 2 对象的类型。level2_object_type 的数据类型为 varchar(128)，默认值为 NULL。有效的输入包括：COLUMN、CONSTRAINT、EVENT NOTIFICATION、INDEX、PARAMETER、TRIGGER 和 NULL。</p>
-<p><code>[ @level2name = ] { &#39;level2_object_name&#39; }</code></p>
-<p>所指定的级别 2 对象类型的名称。level2_object_name 的数据类型为 sysname，默认值为 NULL。</p>
-<h3 id="返回代码值"><a href="#返回代码值" class="headerlink" title="返回代码值"></a>返回代码值</h3><p>0（成功）或 1（失败）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">EXEC sys.sp_addextendedproperty @name=N&apos;MS_Description&apos;, @value=N&apos;0:取消,1:已到,2:未到,3:预订违约&apos; ,@level0type=N&apos;SCHEMA&apos;, @level0name=N&apos;dbo&apos;, @level1type=N&apos;TABLE&apos;, @level1name=N&apos;Tab_Passenger&apos;, @level2type=N&apos;COLUMN&apos;, @level2name=N&apos;PassengerState&apos;</div><div class="line">-表及字段描述信息处理示例</div><div class="line"></div><div class="line">--创建表</div><div class="line">create table 表(a1 varchar(10),a2 char(2))</div><div class="line"></div><div class="line">--为表添加描述信息</div><div class="line">EXECUTE sp_addextendedproperty N&apos;MS_Description&apos;, &apos;人员信息表&apos;, N&apos;user&apos;, N&apos;dbo&apos;, N&apos;table&apos;, N&apos;表&apos;, NULL, NULL</div><div class="line"></div><div class="line">--为字段a1添加描述信息</div><div class="line">EXECUTE sp_addextendedproperty N&apos;MS_Description&apos;, &apos;姓名&apos;, N&apos;user&apos;, N&apos;dbo&apos;, N&apos;table&apos;, N&apos;表&apos;, N&apos;column&apos;, N&apos;a1&apos;</div><div class="line"></div><div class="line">--为字段a2添加描述信息</div><div class="line">EXECUTE sp_addextendedproperty N&apos;MS_Description&apos;, &apos;性别&apos;, N&apos;user&apos;, N&apos;dbo&apos;, N&apos;table&apos;, N&apos;表&apos;, N&apos;column&apos;, N&apos;a2&apos;</div><div class="line"></div><div class="line">--更新表中列a1的描述属性：</div><div class="line">EXEC sp_updateextendedproperty &apos;MS_Description&apos;,&apos;字段1&apos;,&apos;user&apos;,dbo,&apos;table&apos;,&apos;表&apos;,&apos;column&apos;,a1</div><div class="line"></div><div class="line">--删除表中列a1的描述属性：</div><div class="line">EXEC sp_dropextendedproperty &apos;MS_Description&apos;,&apos;user&apos;,dbo,&apos;table&apos;,&apos;表&apos;,&apos;column&apos;,a1</div><div class="line"></div><div class="line">--删除测试</div><div class="line">drop table 表</div></pre></td></tr></table></figure>
-<p>转自:<a href="http://blog.csdn.net/zanychou/article/details/7403336" target="_blank" rel="external">http://blog.csdn.net/zanychou/article/details/7403336</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;语法&quot;&gt;&lt;a href=&quot;#语法&quot; class=&quot;headerlink&quot; title=&quot;语法&quot;&gt;&lt;/a&gt;语法&lt;/h3&gt;&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;sp_addextendedproperty&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    [ @name = ] &amp;#123; &lt;span class=&quot;string&quot;&gt;&#39;property_name&#39;&lt;/span&gt; &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    [ , [ @value = ] &amp;#123; &lt;span class=&quot;string&quot;&gt;&#39;value&#39;&lt;/span&gt; &amp;#125; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        [ , [ @level0type = ] &amp;#123; &lt;span class=&quot;string&quot;&gt;&#39;level0_object_type&#39;&lt;/span&gt; &amp;#125; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;                    , [ @level0name = ] &amp;#123; &lt;span class=&quot;string&quot;&gt;&#39;level0_object_name&#39;&lt;/span&gt; &amp;#125; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;                [ , [ @level1type = ] &amp;#123; &lt;span class=&quot;string&quot;&gt;&#39;level1_object_type&#39;&lt;/span&gt; &amp;#125; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;                                    , [ @level1name = ] &amp;#123; &lt;span class=&quot;string&quot;&gt;&#39;level1_object_name&#39;&lt;/span&gt; &amp;#125; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;                        [ , [ @level2type = ] &amp;#123; &lt;span class=&quot;string&quot;&gt;&#39;level2_object_type&#39;&lt;/span&gt; &amp;#125; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;                                                    , [ @level2name = ] &amp;#123; &lt;span class=&quot;string&quot;&gt;&#39;level2_object_name&#39;&lt;/span&gt; &amp;#125; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;                        ] &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;                ]&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        ] &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ]&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="码路刺客" scheme="http://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
-    
-    
-      <category term="转载" scheme="http://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
-      <category term="数据库" scheme="http://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-      <category term="SQL Server" scheme="http://c-xuan.com/tags/SQL-Server/"/>
     
   </entry>
   

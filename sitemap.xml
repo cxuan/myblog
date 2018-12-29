@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://c-xuan.com/README.html</loc>
+    
+    <lastmod>2018-12-29T07:15:54.612Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://c-xuan.com/2018/12/21/20181221001_atom_aligner/</loc>
     
     <lastmod>2018-12-23T16:33:10.200Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>http://c-xuan.com/2018/12/23/20181223001_flask_intranet_visit/</loc>
     
     <lastmod>2018-12-23T15:42:01.470Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://c-xuan.com/README.html</loc>
-    
-    <lastmod>2018-11-08T14:53:41.652Z</lastmod>
     
   </url>
   

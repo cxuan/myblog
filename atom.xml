@@ -367,9 +367,9 @@
     
       <category term="原创" scheme="http://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
     
-      <category term="Hbase" scheme="http://c-xuan.com/tags/Hbase/"/>
-    
       <category term="分布式" scheme="http://c-xuan.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    
+      <category term="Hbase" scheme="http://c-xuan.com/tags/Hbase/"/>
     
   </entry>
   
@@ -456,9 +456,9 @@
     
       <category term="原创" scheme="http://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
     
-      <category term="分布式" scheme="http://c-xuan.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
-    
       <category term="zookeeper" scheme="http://c-xuan.com/tags/zookeeper/"/>
+    
+      <category term="分布式" scheme="http://c-xuan.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
   </entry>
   

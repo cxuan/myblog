@@ -18,33 +18,33 @@
 <meta name="description" content="Web Service简介Web Service是一种构建应用程序的普遍模型,可以在任何支持网络通信的操作系统中实施运行;它是一种新的web 应用程序分支，是自包含、自描述、模块化的应用，可以发布、定位、通过web调用。Web Service是一个应用组件,它逻辑性的为其他应用程序提供数据与服务.各应用程序通过网络协议和规定的一些标准数据格式（Http，XML，Soap)来访问Web Servic">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【SSIS】使用 Web Service 以及 解析XML 数据">
-<meta property="og:url" content="http://c-xuan.com/2016/05/15/SSIS-Web-Service/index.html">
+<meta property="og:url" content="https://c-xuan.com/2016/05/15/SSIS-Web-Service/index.html">
 <meta property="og:site_name" content="靛青">
 <meta property="og:description" content="Web Service简介Web Service是一种构建应用程序的普遍模型,可以在任何支持网络通信的操作系统中实施运行;它是一种新的web 应用程序分支，是自包含、自描述、模块化的应用，可以发布、定位、通过web调用。Web Service是一个应用组件,它逻辑性的为其他应用程序提供数据与服务.各应用程序通过网络协议和规定的一些标准数据格式（Http，XML，Soap)来访问Web Servic">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Web-Service-4.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Web-Service-5.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Web-Service-6.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Web-Service-1.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Web-Service-2.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Web-Service-3.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Web-Service-7.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Web-Service-8.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Web-Service-9.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Web-Service-10.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Web-Service-11.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Web-Service-12.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Web-Service-3.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Web-Service-3.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Web-Service-15.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Web-Service-16.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Web-Service-17.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Web-Service-18.jpg">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Web-Service-19.jpg">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Web-Service-4.jpg">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Web-Service-5.jpg">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Web-Service-6.jpg">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Web-Service-1.jpg">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Web-Service-2.jpg">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Web-Service-3.jpg">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Web-Service-7.jpg">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Web-Service-8.jpg">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Web-Service-9.jpg">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Web-Service-10.jpg">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Web-Service-11.jpg">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Web-Service-12.jpg">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Web-Service-3.jpg">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Web-Service-3.jpg">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Web-Service-15.jpg">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Web-Service-16.jpg">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Web-Service-17.jpg">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Web-Service-18.jpg">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Web-Service-19.jpg">
 <meta property="og:updated_time" content="2016-09-25T11:59:55.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【SSIS】使用 Web Service 以及 解析XML 数据">
 <meta name="twitter:description" content="Web Service简介Web Service是一种构建应用程序的普遍模型,可以在任何支持网络通信的操作系统中实施运行;它是一种新的web 应用程序分支，是自包含、自描述、模块化的应用，可以发布、定位、通过web调用。Web Service是一个应用组件,它逻辑性的为其他应用程序提供数据与服务.各应用程序通过网络协议和规定的一些标准数据格式（Http，XML，Soap)来访问Web Servic">
-<meta name="twitter:image" content="http://c-xuan.com/img/posts/SSIS-Web-Service-4.jpg">
+<meta name="twitter:image" content="https://c-xuan.com/img/posts/SSIS-Web-Service-4.jpg">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -505,8 +505,8 @@
         <p><span>发布时间:</span>2016-05-15, 00:00:00</p>
         <p><span>最后更新:</span>2016-09-25, 19:59:55</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/05/15/SSIS-Web-Service/" title="【SSIS】使用 Web Service 以及 解析XML 数据">http://c-xuan.com/2016/05/15/SSIS-Web-Service/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://c-xuan.com/2016/05/15/SSIS-Web-Service/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/05/15/SSIS-Web-Service/" title="【SSIS】使用 Web Service 以及 解析XML 数据">https://c-xuan.com/2016/05/15/SSIS-Web-Service/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://c-xuan.com/2016/05/15/SSIS-Web-Service/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>

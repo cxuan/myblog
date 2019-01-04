@@ -18,47 +18,47 @@
 <meta name="description" content="开篇介绍Precedence Constraint 优先约束 - 在控制流中使用，用来链接控制流中各种 Task，Container，并且要求满足一定的条件才能执行相关联的 Task 或者 Container。 比如下图中，第一个 Execute SQL Task 叫做 Precedence-Executable 优先可执行任务，而Script Task 由于在关联箭头的下游，所以它叫做 Cons">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【SSIS】中Precedence Constraint 优先约束的使用">
-<meta property="og:url" content="http://c-xuan.com/2016/05/21/SSIS-Precedence-Constraint/index.html">
+<meta property="og:url" content="https://c-xuan.com/2016/05/21/SSIS-Precedence-Constraint/index.html">
 <meta property="og:site_name" content="靛青">
 <meta property="og:description" content="开篇介绍Precedence Constraint 优先约束 - 在控制流中使用，用来链接控制流中各种 Task，Container，并且要求满足一定的条件才能执行相关联的 Task 或者 Container。 比如下图中，第一个 Execute SQL Task 叫做 Precedence-Executable 优先可执行任务，而Script Task 由于在关联箭头的下游，所以它叫做 Cons">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-1.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-2.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-3.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-4.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-5.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-6.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-7.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-8.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-9.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-10.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-11.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-12.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-13.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-14.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-15.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-16.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-17.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-18.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-19.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-20.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-21.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-22.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-23.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-24.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-25.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-26.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-27.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-28.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-29.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-30.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-31.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-32.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-33.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-1.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-2.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-3.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-4.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-5.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-6.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-7.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-8.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-9.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-10.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-11.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-12.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-13.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-14.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-15.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-16.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-17.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-18.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-19.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-20.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-21.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-22.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-23.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-24.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-25.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-26.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-27.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-28.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-29.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-30.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-31.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-32.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-33.png">
 <meta property="og:updated_time" content="2016-09-23T17:12:57.474Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【SSIS】中Precedence Constraint 优先约束的使用">
 <meta name="twitter:description" content="开篇介绍Precedence Constraint 优先约束 - 在控制流中使用，用来链接控制流中各种 Task，Container，并且要求满足一定的条件才能执行相关联的 Task 或者 Container。 比如下图中，第一个 Execute SQL Task 叫做 Precedence-Executable 优先可执行任务，而Script Task 由于在关联箭头的下游，所以它叫做 Cons">
-<meta name="twitter:image" content="http://c-xuan.com/img/posts/SSIS-Precedence-Constraint-1.png">
+<meta name="twitter:image" content="https://c-xuan.com/img/posts/SSIS-Precedence-Constraint-1.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -577,8 +577,8 @@
         <p><span>发布时间:</span>2016-05-21, 00:00:00</p>
         <p><span>最后更新:</span>2016-09-24, 01:12:57</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/05/21/SSIS-Precedence-Constraint/" title="【SSIS】中Precedence Constraint 优先约束的使用">http://c-xuan.com/2016/05/21/SSIS-Precedence-Constraint/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://c-xuan.com/2016/05/21/SSIS-Precedence-Constraint/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/05/21/SSIS-Precedence-Constraint/" title="【SSIS】中Precedence Constraint 优先约束的使用">https://c-xuan.com/2016/05/21/SSIS-Precedence-Constraint/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://c-xuan.com/2016/05/21/SSIS-Precedence-Constraint/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>

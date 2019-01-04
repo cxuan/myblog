@@ -18,36 +18,36 @@
 <meta name="description" content="ORACLE物化视图(MATERIALIZED VIEW)有自动提交刷新和手动刷新两种刷新方式，每种刷新方式下有增量刷新(FAST)、全量刷新(COMPLETE)、系统自动判断(FORCE)三种刷新方法。一般而言，增量刷新理论上是比全量刷新要快一些的，但是我发现某些情况下增量刷新将导致基表提交后延迟严重，下面将做一些测试。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【ORACLE】导致物化视图快速刷新变慢的原因和解决">
-<meta property="og:url" content="http://c-xuan.com/2017/11/19/20171119001/index.html">
+<meta property="og:url" content="https://c-xuan.com/2017/11/19/20171119001/index.html">
 <meta property="og:site_name" content="靛青">
 <meta property="og:description" content="ORACLE物化视图(MATERIALIZED VIEW)有自动提交刷新和手动刷新两种刷新方式，每种刷新方式下有增量刷新(FAST)、全量刷新(COMPLETE)、系统自动判断(FORCE)三种刷新方法。一般而言，增量刷新理论上是比全量刷新要快一些的，但是我发现某些情况下增量刷新将导致基表提交后延迟严重，下面将做一些测试。">
-<meta property="og:image" content="http://c-xuan.com/img/posts/20171119001-01.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/20171119001-02.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/20171119001-03.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/20171119001-04.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/20171119001-05.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/20171119001-06.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/20171119001-07.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/20171119001-08.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/20171119001-09.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/20171119001-10.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/20171119001-11.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/20171119001-12.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/20171119001-13.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/20171119001-14.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/20171119001-15.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/20171119001-16.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/20171119001-17.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/20171119001-18.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/20171119001-19.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/20171119001-20.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/20171119001-21.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/20171119001-22.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/20171119001-01.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/20171119001-02.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/20171119001-03.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/20171119001-04.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/20171119001-05.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/20171119001-06.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/20171119001-07.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/20171119001-08.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/20171119001-09.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/20171119001-10.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/20171119001-11.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/20171119001-12.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/20171119001-13.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/20171119001-14.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/20171119001-15.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/20171119001-16.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/20171119001-17.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/20171119001-18.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/20171119001-19.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/20171119001-20.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/20171119001-21.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/20171119001-22.png">
 <meta property="og:updated_time" content="2017-11-28T17:07:48.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【ORACLE】导致物化视图快速刷新变慢的原因和解决">
 <meta name="twitter:description" content="ORACLE物化视图(MATERIALIZED VIEW)有自动提交刷新和手动刷新两种刷新方式，每种刷新方式下有增量刷新(FAST)、全量刷新(COMPLETE)、系统自动判断(FORCE)三种刷新方法。一般而言，增量刷新理论上是比全量刷新要快一些的，但是我发现某些情况下增量刷新将导致基表提交后延迟严重，下面将做一些测试。">
-<meta name="twitter:image" content="http://c-xuan.com/img/posts/20171119001-01.png">
+<meta name="twitter:image" content="https://c-xuan.com/img/posts/20171119001-01.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -520,8 +520,8 @@
         <p><span>发布时间:</span>2017-11-19, 00:00:00</p>
         <p><span>最后更新:</span>2017-11-29, 01:07:48</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/11/19/20171119001/" title="【ORACLE】导致物化视图快速刷新变慢的原因和解决">http://c-xuan.com/2017/11/19/20171119001/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://c-xuan.com/2017/11/19/20171119001/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/11/19/20171119001/" title="【ORACLE】导致物化视图快速刷新变慢的原因和解决">https://c-xuan.com/2017/11/19/20171119001/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://c-xuan.com/2017/11/19/20171119001/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>

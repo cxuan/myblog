@@ -18,32 +18,32 @@
 <meta name="description" content="问题引入有如下格式的文件，需要转换成如图二的格式导入数据库里，这就是所谓的列传行的格式，是一种逆透视的操作。用Excel透视操作或者写个VBA宏程序是可以实现的，我们现在用SSIS的逆透视组件来实现下。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【SSIS】进行列转行格式的转换">
-<meta property="og:url" content="http://c-xuan.com/2016/04/07/SSIS-Pivot/index.html">
+<meta property="og:url" content="https://c-xuan.com/2016/04/07/SSIS-Pivot/index.html">
 <meta property="og:site_name" content="靛青">
 <meta property="og:description" content="问题引入有如下格式的文件，需要转换成如图二的格式导入数据库里，这就是所谓的列传行的格式，是一种逆透视的操作。用Excel透视操作或者写个VBA宏程序是可以实现的，我们现在用SSIS的逆透视组件来实现下。">
-<meta property="og:image" content="http://c-xuan.com/img/posts/48.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/49.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/50.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/51.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/52.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/53.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/54.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/55.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/56.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/57.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/58.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/59.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/60.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/61.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/62.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/63.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/64.png">
-<meta property="og:image" content="http://c-xuan.com/img/posts/65.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/48.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/49.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/50.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/51.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/52.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/53.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/54.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/55.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/56.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/57.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/58.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/59.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/60.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/61.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/62.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/63.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/64.png">
+<meta property="og:image" content="https://c-xuan.com/img/posts/65.png">
 <meta property="og:updated_time" content="2016-09-25T12:21:52.607Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【SSIS】进行列转行格式的转换">
 <meta name="twitter:description" content="问题引入有如下格式的文件，需要转换成如图二的格式导入数据库里，这就是所谓的列传行的格式，是一种逆透视的操作。用Excel透视操作或者写个VBA宏程序是可以实现的，我们现在用SSIS的逆透视组件来实现下。">
-<meta name="twitter:image" content="http://c-xuan.com/img/posts/48.png">
+<meta name="twitter:image" content="https://c-xuan.com/img/posts/48.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -507,8 +507,8 @@
         <p><span>发布时间:</span>2016-04-07, 00:00:00</p>
         <p><span>最后更新:</span>2016-09-25, 20:21:52</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/04/07/SSIS-Pivot/" title="【SSIS】进行列转行格式的转换">http://c-xuan.com/2016/04/07/SSIS-Pivot/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://c-xuan.com/2016/04/07/SSIS-Pivot/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/04/07/SSIS-Pivot/" title="【SSIS】进行列转行格式的转换">https://c-xuan.com/2016/04/07/SSIS-Pivot/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://c-xuan.com/2016/04/07/SSIS-Pivot/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>

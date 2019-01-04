@@ -3,6 +3,48 @@
   
     
     <entry>
+      <title><![CDATA[SQL如何实现查找节点依赖]]></title>
+      <url>/2019/01/04/20190104001_graph_sql/</url>
+      <content type="html"><![CDATA[<p>SQL如何运用递归查找有向无环图的节点依赖呢？</p>
+<center><img src="/img/posts/20190104001-01.png" alt="有向无环图"></center>
+
+<a id="more"></a>
+<h3 id="问题是这样的"><a href="#问题是这样的" class="headerlink" title="问题是这样的"></a>问题是这样的</h3><p>例如我有以上的两个图，节点<code>b</code>的前置节点是<code>a</code>,节点<code>c</code>的前置节点是<code>b</code>和<code>d</code>，以此类推。给出一个节点，需要找出以此节点为前置节点的所有链条节点。比如给出<code>a</code>，那出来的结果就是<code>a,b,c,d,e</code>,给出<code>f</code>,那出来的结果就是<code>f,g,h,i,j,k</code>。</p>
+<h3 id="数据准备"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备</h3><p>创建表以及插入数据，多个前置节点用<code>,</code>隔开，注意，使用的是PostgreSQL数据库。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="comment">-- Table structure for mytest</span></div><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> <span class="string">"public"</span>.<span class="string">"mytest"</span>;</div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">"public"</span>.<span class="string">"mytest"</span> (</div><div class="line"><span class="string">"node"</span> <span class="built_in">varchar</span>(<span class="number">256</span>) <span class="keyword">COLLATE</span> <span class="string">"default"</span>,</div><div class="line"><span class="string">"pre_nodes"</span> <span class="built_in">varchar</span>(<span class="number">10240</span>) <span class="keyword">COLLATE</span> <span class="string">"default"</span></div><div class="line">);</div><div class="line"></div><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="comment">-- Records of mytest</span></div><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"public"</span>.<span class="string">"mytest"</span> <span class="keyword">VALUES</span> (<span class="string">'a'</span>, <span class="literal">null</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"public"</span>.<span class="string">"mytest"</span> <span class="keyword">VALUES</span> (<span class="string">'b'</span>, <span class="string">'a'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"public"</span>.<span class="string">"mytest"</span> <span class="keyword">VALUES</span> (<span class="string">'c'</span>, <span class="string">'b,d'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"public"</span>.<span class="string">"mytest"</span> <span class="keyword">VALUES</span> (<span class="string">'d'</span>, <span class="string">'b'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"public"</span>.<span class="string">"mytest"</span> <span class="keyword">VALUES</span> (<span class="string">'e'</span>, <span class="string">'c'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"public"</span>.<span class="string">"mytest"</span> <span class="keyword">VALUES</span> (<span class="string">'f'</span>, <span class="literal">null</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"public"</span>.<span class="string">"mytest"</span> <span class="keyword">VALUES</span> (<span class="string">'g'</span>, <span class="string">'f'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"public"</span>.<span class="string">"mytest"</span> <span class="keyword">VALUES</span> (<span class="string">'h'</span>, <span class="string">'g'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"public"</span>.<span class="string">"mytest"</span> <span class="keyword">VALUES</span> (<span class="string">'i'</span>, <span class="string">'g'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"public"</span>.<span class="string">"mytest"</span> <span class="keyword">VALUES</span> (<span class="string">'j'</span>, <span class="string">'g'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"public"</span>.<span class="string">"mytest"</span> <span class="keyword">VALUES</span> (<span class="string">'k'</span>, <span class="string">'h,i,j'</span>);</div></pre></td></tr></table></figure>
+<center><img src="/img/posts/20190104001-02.png" alt="数据表"></center>
+
+<h3 id="SQL创建"><a href="#SQL创建" class="headerlink" title="SQL创建"></a>SQL创建</h3><p>方法有多种，用函数或者存储过程也可以，这里使用<code>WITH</code>递归，相关信息可以百度:<code>postgresql 递归</code>。第一个<code>select</code>语句中要给出起始节点。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">WITH RECURSIVE graph_depds AS (</div><div class="line">  <span class="keyword">SELECT</span> node,pre_nodes <span class="keyword">FROM</span> mytest a <span class="keyword">WHERE</span> node = <span class="string">'f'</span></div><div class="line">  <span class="keyword">UNION</span> ALL</div><div class="line">  <span class="keyword">SELECT</span> a.node,a.pre_nodes <span class="keyword">FROM</span> mytest a, graph_depds b <span class="keyword">WHERE</span> strpos(a.pre_nodes, b.node) &gt; <span class="number">0</span></div><div class="line">)</div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> node,pre_nodes <span class="keyword">FROM</span> graph_depds <span class="keyword">ORDER</span> <span class="keyword">BY</span> node;</div></pre></td></tr></table></figure>
+<center><img src="/img/posts/20190104001-03.png" alt="查询结果"></center>
+
+<h3 id="如果想向前查找呢"><a href="#如果想向前查找呢" class="headerlink" title="如果想向前查找呢"></a>如果想<code>向前</code>查找呢</h3><p>上面的查找相当于找出一个节点所有<code>影响</code>到的节点，其实就是向下递归，如果给出一个节点，想从这个节点往前追溯有关的节点呢？例如给出<code>c</code>节点，结果是<code>a,b,c,d</code>,其实就是向上递归，可以像下面这样写。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">WITH RECURSIVE graph_depds AS (</div><div class="line">  <span class="keyword">SELECT</span> node,pre_nodes <span class="keyword">FROM</span> mytest a <span class="keyword">WHERE</span> node = <span class="string">'i'</span></div><div class="line">  <span class="keyword">UNION</span> ALL</div><div class="line">  <span class="keyword">SELECT</span> a.node,a.pre_nodes <span class="keyword">FROM</span> mytest a, graph_depds b <span class="keyword">WHERE</span> strpos(b.pre_nodes,a.node) &gt; <span class="number">0</span></div><div class="line">)</div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> node,pre_nodes <span class="keyword">FROM</span> graph_depds <span class="keyword">ORDER</span> <span class="keyword">BY</span> node;</div></pre></td></tr></table></figure>
+<center><img src="/img/posts/20190104001-04.png" alt="查询结果"></center>
+
+<h3 id="其他数据库"><a href="#其他数据库" class="headerlink" title="其他数据库"></a>其他数据库</h3><p>如果像<code>Sql Server</code>等支持<code>WITH</code>语法的数据，以上写法可以移植，稍作修改就好。但是<code>mysql</code>等数据库中的实现方式不一样，百度mysql 递归相关的内容都能找到方法。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 码路刺客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 数据库 </tag>
+            
+            <tag> 原创 </tag>
+            
+            <tag> PostgreSQL </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Flask服务本机之外不能访问]]></title>
       <url>/2018/12/23/20181223001_flask_intranet_visit/</url>
       <content type="html"><![CDATA[<p>Flask 开启服务后，默认是本机访问的，使用<code>localhost:5000</code>可以访问Web服务，但是使用如<code>192.168.1.10</code>这类本机IP地址却访问不了。 </p>
@@ -168,9 +210,9 @@
             
             <tag> 原创 </tag>
             
-            <tag> Hive </tag>
-            
             <tag> 数据仓库 </tag>
+            
+            <tag> Hive </tag>
             
         </tags>
         
@@ -3656,37 +3698,6 @@ $ npm install bespoke-fx
     </entry>
     
     <entry>
-      <title><![CDATA[比尔·盖茨：如果你看完了这些极其难懂的书，请给我投简历！]]></title>
-      <url>/2016/05/06/The-Art-of-Computer-Programming/</url>
-      <content type="html"><![CDATA[<p>在硅谷的世界里，有几本比《计算机编程艺术》（ “The Art of Computer Programming”）更受人认可的书，这些书也是斯坦福大学名誉教授Donald Knuth点名的非常不错的书。而在比尔盖茨的演讲中，他甚至表示：“如果你自认为是个非常优秀的程序员。那么你如果全部读完了Knuth编写的《计算机编程艺术》这本书的话。你一定要给我发份简历”。而这句好像开完笑的话，便可以说明比尔盖茨对其的高度评价，同时这些话也被收录在了这本书的第一卷的第三版的封面上。</p>
-<a id="more"></a>
-<p><img src="/img/posts/The-Art-of-Computer-Programming-1.jpg" alt="The-Art-of-Computer-Programming-1"></p>
-<p>据说，这句话是自盖茨曾经工作的辛迪加报纸专栏里流传出来的，而该专栏还称这本书非常具有传奇色彩，而它的难度更让很多人把它拒之门外，下面是其具体描述：<br>“这是一门让人难懂的学科，我花了好几个月时间去读它，看了20页之后就把书丢到一边，一星期之后又回来读另外20页。如果有人傲慢的说他看明白了书中的一切，那么Knuth将帮助他们了解世界是如何的深刻而复杂。”</p>
-<p><img src="/img/posts/The-Art-of-Computer-Programming-2.jpg" alt="The-Art-of-Computer-Programming-2"></p>
-<p>《计算机编程艺术》第一卷于1962年问世，它是第一本深入探讨编程的数学性和科学性的书籍。Knuth将这本书视为其一生的工作，并表示如果情况允许的话，这本书将共有七卷。最新的一本书于2015年12月发布。<br>旧金山企业家Carl Tashian在最近的一篇媒体文章中说道：“Donald Knuth的《计算机编程艺术》有四个精装册，每本的封面都是暗紫色，让人看起来很舒服。而书的本身也像人们透了这样的一个信息：“外行者靠边站，因为这本书是给真正从事编程工作的程序员看的。”<br>就已经跨过这个阶段的Knuth来说，他的技术能力已经成为高科技产业一个传奇。而想要超越单纯的编码深入到程序员工作底层的复杂性，程序员们必须要熟读这本书。<br>Amazon评论家在1997年写道：“如果算机科学有可兰经，圣经等等经书，那也这就是它。”<br>这本书因全面而彻底的讲述编程而闻名，当然，其同时也极大地挑战和挫伤了很多程序员的自尊心。这本书对Knuth的案例和其i严谨的数学证明即使是对于比尔盖茨来说仍是有着很大的困惑的。<br>尽管它有悠久的出版历史，Knuth通过不断更新《计算机编程艺术》的版本来获得更多的粉丝。如果你发现他的书中有任何错误，你就可能得到有名的Knuth奖励检查，总数为2.56美元的奖金。而这笔奖金还被他专门赋予了“一个十六进制的美元”的特殊意义。因此，我们可以认为这笔奖金的获得对于那些想要证明自己知道自己在说些什么的人来说是一笔宝贵的奖励。<br>当然，众所周知天下之大，我们不可能什么都知道。就像你需要开车，你并不需要知道内燃机是如何工作的这件事情一样，你也没有必要为了了解如何编写程序来强硬的读这本书，所以不要把这个事情看成一个必须的读本就好。当然，如果想要有更多的这方面探索的话，这本书还是非常不错的。</p>
-<p>原文链接：<a href="http://toutiao.com/a6279342772928119041/" target="_blank" rel="external">http://toutiao.com/a6279342772928119041/</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> IT看客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 转载 </tag>
-            
-            <tag> IT资讯 </tag>
-            
-            <tag> 计算机基原理 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[【SSIS】利用SSIS模板快速开发SSIS Package]]></title>
       <url>/2016/05/06/SSIS-Template-For-SSISPackage/</url>
       <content type="html"><![CDATA[<p>在做 ETL 项目的时候，往往很多 Package 的开发都是基于相同的模型和流程。比如在 Package 开始运行时需要向 Process Log 表中插入记录，在 Package 运行结束的时候更新运行状态。</p>
@@ -3726,6 +3737,37 @@ $ npm install bespoke-fx
             <tag> BI </tag>
             
             <tag> SSIS </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[比尔·盖茨：如果你看完了这些极其难懂的书，请给我投简历！]]></title>
+      <url>/2016/05/06/The-Art-of-Computer-Programming/</url>
+      <content type="html"><![CDATA[<p>在硅谷的世界里，有几本比《计算机编程艺术》（ “The Art of Computer Programming”）更受人认可的书，这些书也是斯坦福大学名誉教授Donald Knuth点名的非常不错的书。而在比尔盖茨的演讲中，他甚至表示：“如果你自认为是个非常优秀的程序员。那么你如果全部读完了Knuth编写的《计算机编程艺术》这本书的话。你一定要给我发份简历”。而这句好像开完笑的话，便可以说明比尔盖茨对其的高度评价，同时这些话也被收录在了这本书的第一卷的第三版的封面上。</p>
+<a id="more"></a>
+<p><img src="/img/posts/The-Art-of-Computer-Programming-1.jpg" alt="The-Art-of-Computer-Programming-1"></p>
+<p>据说，这句话是自盖茨曾经工作的辛迪加报纸专栏里流传出来的，而该专栏还称这本书非常具有传奇色彩，而它的难度更让很多人把它拒之门外，下面是其具体描述：<br>“这是一门让人难懂的学科，我花了好几个月时间去读它，看了20页之后就把书丢到一边，一星期之后又回来读另外20页。如果有人傲慢的说他看明白了书中的一切，那么Knuth将帮助他们了解世界是如何的深刻而复杂。”</p>
+<p><img src="/img/posts/The-Art-of-Computer-Programming-2.jpg" alt="The-Art-of-Computer-Programming-2"></p>
+<p>《计算机编程艺术》第一卷于1962年问世，它是第一本深入探讨编程的数学性和科学性的书籍。Knuth将这本书视为其一生的工作，并表示如果情况允许的话，这本书将共有七卷。最新的一本书于2015年12月发布。<br>旧金山企业家Carl Tashian在最近的一篇媒体文章中说道：“Donald Knuth的《计算机编程艺术》有四个精装册，每本的封面都是暗紫色，让人看起来很舒服。而书的本身也像人们透了这样的一个信息：“外行者靠边站，因为这本书是给真正从事编程工作的程序员看的。”<br>就已经跨过这个阶段的Knuth来说，他的技术能力已经成为高科技产业一个传奇。而想要超越单纯的编码深入到程序员工作底层的复杂性，程序员们必须要熟读这本书。<br>Amazon评论家在1997年写道：“如果算机科学有可兰经，圣经等等经书，那也这就是它。”<br>这本书因全面而彻底的讲述编程而闻名，当然，其同时也极大地挑战和挫伤了很多程序员的自尊心。这本书对Knuth的案例和其i严谨的数学证明即使是对于比尔盖茨来说仍是有着很大的困惑的。<br>尽管它有悠久的出版历史，Knuth通过不断更新《计算机编程艺术》的版本来获得更多的粉丝。如果你发现他的书中有任何错误，你就可能得到有名的Knuth奖励检查，总数为2.56美元的奖金。而这笔奖金还被他专门赋予了“一个十六进制的美元”的特殊意义。因此，我们可以认为这笔奖金的获得对于那些想要证明自己知道自己在说些什么的人来说是一笔宝贵的奖励。<br>当然，众所周知天下之大，我们不可能什么都知道。就像你需要开车，你并不需要知道内燃机是如何工作的这件事情一样，你也没有必要为了了解如何编写程序来强硬的读这本书，所以不要把这个事情看成一个必须的读本就好。当然，如果想要有更多的这方面探索的话，这本书还是非常不错的。</p>
+<p>原文链接：<a href="http://toutiao.com/a6279342772928119041/" target="_blank" rel="external">http://toutiao.com/a6279342772928119041/</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> IT看客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 转载 </tag>
+            
+            <tag> IT资讯 </tag>
+            
+            <tag> 计算机基原理 </tag>
             
         </tags>
         
@@ -3872,58 +3914,6 @@ SELECT * FROM dbo.duplicateTest
     </entry>
     
     <entry>
-      <title><![CDATA[SQL Server 2014的BI开发工具SSDT(以前的BIDS)安装]]></title>
-      <url>/2016/04/24/SQL-Server-2014-SSDT-Install/</url>
-      <content type="html"><![CDATA[<p>当我们安装好SQL Server 2014以后，会发现以前随数据库安装的BI开发套件SQL Server Reporting Services (SSRS), SQL Server Analysis Services (SSAS), 和 SQL Server Integration Services (SSIS)都不见了，怎么弄回来呢？</p>
-<p>在安装开发版或者企业版的SQL Server 2014的时候，你可能已经注意到以前被我们熟知的Business Intelligence Development Studio (BIDS) 已经没有了。从SQL Server 2012开始，这套BI应用工具集已经变成了SQL Server Data Tools)(SSDT)，在SQL Server 2014中，SSDT已经完全在SQL Server的安装过程里消失了。但是，要把Business Intelligence (BI)应用工具安装回来也是很容易的。</p>
-<a id="more"></a>
-<h3 id="安装SQL-Server-2014-BI-Tools"><a href="#安装SQL-Server-2014-BI-Tools" class="headerlink" title="安装SQL Server 2014 BI Tools"></a>安装SQL Server 2014 BI Tools</h3><p>在以前版本的SQL Server里，用来开发SSIS,SSAS,SSRS的BI解决方案都是包含在SQL Server的安装过程里的，在特性部分里可以进行勾选，如下图所示：</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-1.jpg" alt="SQL-Server-2014-SSDT-Install-1"></p>
-<p>但是，当你安装SQL Server 2014的时候，你会发现选项没有了，如下图：</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-2.jpg" alt="SQL-Server-2014-SSDT-Install-2"></p>
-<h3 id="SQL-Server-Data-Tools-SSDT和SSDT-BI-的演变"><a href="#SQL-Server-Data-Tools-SSDT和SSDT-BI-的演变" class="headerlink" title="SQL Server Data Tools (SSDT和SSDT-BI)的演变"></a>SQL Server Data Tools (SSDT和SSDT-BI)的演变</h3><p>由于微软公司在这方面的说明较少，让情况变得有点复杂。事实上，SQL Server 2014的SSDT已经成为了Visual Studio的插件为数据库重构，架构比较以及各种诸如视图、存储过程等对象的创建提供服务支持。而SSDT-BI这个工具也已经成为Visual Studio的一个组件，它才是开发SSIS,SSAS,SSRS解决方案的真正的开发工具。</p>
-<p>以上两个工具都可以在<a href="http://msdn.microsoft.com/en-us/hh297027.aspx" target="_blank" rel="external">http://msdn.microsoft.com/en-us/hh297027.aspx</a> 下载到。每个工具各提供两个版本，一个是Visual Studio 2012的，一个是 Visual Studio 2013的。</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-3.jpg" alt="SQL-Server-2014-SSDT-Install-3"></p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-4.jpg" alt="SQL-Server-2014-SSDT-Install-4"></p>
-<h3 id="安装SQL-Server-Data-Tools-SSDT"><a href="#安装SQL-Server-Data-Tools-SSDT" class="headerlink" title="安装SQL Server Data Tools(SSDT)"></a>安装SQL Server Data Tools(SSDT)</h3><p>微软已经完全把SSDT的安装从SQL Server安装中独立出来了。安装过程也是非常简单，你只需要决定是否让BI工具成为Visual Studio 2013或者Visual Studio 2012的一部分就可以了。</p>
-<p>我们以Visual Studio 2013版本的为例。注意下，咱们不需要先安装Visual Studio 2013在电脑上然后再安装SSDT-BI。安装程序会安装Visual Studio 2013 shell然后提供BI工具作为一个组件。SSDT-BI安装将会添加以下组件：</p>
-<ul>
-<li>Microsoft .NET Framework 4.5.1,</li>
-<li>Microsoft Visual Studio 2012 Shell (Isolated) Redistributable Package,</li>
-<li>Microsoft Visual Studio 2012 Shell (Integrated) Redistributable Package,</li>
-<li>Microsoft Visual Studio 2013 Shell (Isolated) Redistributable Package,</li>
-<li>Microsoft Visual Studio 2013 Shell (Integrated) Redistributable Package,</li>
-<li>Microsoft Visual Studio Tools for Applications 2012,</li>
-<li>Microsoft Report Viewer 2014 Runtime.</li>
-</ul>
-<p>正式的安装过程跟SQL Server安装过程也很像。注意不管是否安装SQL Server 2014数据库程序，以下界面都选择全新安装。我安装的文件名称：SSDTBI_x86_CHS.exe，你可能会去找x64版本的，但是没有这个版本，官网下载的都是x86的，但是不影响安装。</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-8.jpg" alt="SQL-Server-2014-SSDT-Install-8"></p>
-<p>安装过程的以下界面勾选SQL Server Data Tools - Business Intelligence就可以了。</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-5.jpg" alt="SQL-Server-2014-SSDT-Install-5"></p>
-<p>安装好以后，在开始菜单出现 SQL Server Data Tools for Visual Studio 2013选项。</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-6.jpg" alt="SQL-Server-2014-SSDT-Install-6"></p>
-<p>现在，我们可以打开SSDT for Visual Studio 2013来创建SSIS,SSAS,SSRS项目方案了。</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-7.jpg" alt="SQL-Server-2014-SSDT-Install-7"></p>
-]]></content>
-      
-        <categories>
-            
-            <category> BI墨客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 原创 </tag>
-            
-            <tag> BI </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[学习制作CSS3 3D旋转透视效果]]></title>
       <url>/2016/04/24/CSS3-transform-style-3D-Cool/</url>
       <content type="html"><![CDATA[<p>之前学习 react+webpack ，偶然路过 webpack 官网 ，看到顶部的 LOGO ，就很感兴趣。</p>
@@ -4053,6 +4043,58 @@ SELECT * FROM dbo.duplicateTest
             <tag> CSS </tag>
             
             <tag> 设计 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[SQL Server 2014的BI开发工具SSDT(以前的BIDS)安装]]></title>
+      <url>/2016/04/24/SQL-Server-2014-SSDT-Install/</url>
+      <content type="html"><![CDATA[<p>当我们安装好SQL Server 2014以后，会发现以前随数据库安装的BI开发套件SQL Server Reporting Services (SSRS), SQL Server Analysis Services (SSAS), 和 SQL Server Integration Services (SSIS)都不见了，怎么弄回来呢？</p>
+<p>在安装开发版或者企业版的SQL Server 2014的时候，你可能已经注意到以前被我们熟知的Business Intelligence Development Studio (BIDS) 已经没有了。从SQL Server 2012开始，这套BI应用工具集已经变成了SQL Server Data Tools)(SSDT)，在SQL Server 2014中，SSDT已经完全在SQL Server的安装过程里消失了。但是，要把Business Intelligence (BI)应用工具安装回来也是很容易的。</p>
+<a id="more"></a>
+<h3 id="安装SQL-Server-2014-BI-Tools"><a href="#安装SQL-Server-2014-BI-Tools" class="headerlink" title="安装SQL Server 2014 BI Tools"></a>安装SQL Server 2014 BI Tools</h3><p>在以前版本的SQL Server里，用来开发SSIS,SSAS,SSRS的BI解决方案都是包含在SQL Server的安装过程里的，在特性部分里可以进行勾选，如下图所示：</p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-1.jpg" alt="SQL-Server-2014-SSDT-Install-1"></p>
+<p>但是，当你安装SQL Server 2014的时候，你会发现选项没有了，如下图：</p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-2.jpg" alt="SQL-Server-2014-SSDT-Install-2"></p>
+<h3 id="SQL-Server-Data-Tools-SSDT和SSDT-BI-的演变"><a href="#SQL-Server-Data-Tools-SSDT和SSDT-BI-的演变" class="headerlink" title="SQL Server Data Tools (SSDT和SSDT-BI)的演变"></a>SQL Server Data Tools (SSDT和SSDT-BI)的演变</h3><p>由于微软公司在这方面的说明较少，让情况变得有点复杂。事实上，SQL Server 2014的SSDT已经成为了Visual Studio的插件为数据库重构，架构比较以及各种诸如视图、存储过程等对象的创建提供服务支持。而SSDT-BI这个工具也已经成为Visual Studio的一个组件，它才是开发SSIS,SSAS,SSRS解决方案的真正的开发工具。</p>
+<p>以上两个工具都可以在<a href="http://msdn.microsoft.com/en-us/hh297027.aspx" target="_blank" rel="external">http://msdn.microsoft.com/en-us/hh297027.aspx</a> 下载到。每个工具各提供两个版本，一个是Visual Studio 2012的，一个是 Visual Studio 2013的。</p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-3.jpg" alt="SQL-Server-2014-SSDT-Install-3"></p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-4.jpg" alt="SQL-Server-2014-SSDT-Install-4"></p>
+<h3 id="安装SQL-Server-Data-Tools-SSDT"><a href="#安装SQL-Server-Data-Tools-SSDT" class="headerlink" title="安装SQL Server Data Tools(SSDT)"></a>安装SQL Server Data Tools(SSDT)</h3><p>微软已经完全把SSDT的安装从SQL Server安装中独立出来了。安装过程也是非常简单，你只需要决定是否让BI工具成为Visual Studio 2013或者Visual Studio 2012的一部分就可以了。</p>
+<p>我们以Visual Studio 2013版本的为例。注意下，咱们不需要先安装Visual Studio 2013在电脑上然后再安装SSDT-BI。安装程序会安装Visual Studio 2013 shell然后提供BI工具作为一个组件。SSDT-BI安装将会添加以下组件：</p>
+<ul>
+<li>Microsoft .NET Framework 4.5.1,</li>
+<li>Microsoft Visual Studio 2012 Shell (Isolated) Redistributable Package,</li>
+<li>Microsoft Visual Studio 2012 Shell (Integrated) Redistributable Package,</li>
+<li>Microsoft Visual Studio 2013 Shell (Isolated) Redistributable Package,</li>
+<li>Microsoft Visual Studio 2013 Shell (Integrated) Redistributable Package,</li>
+<li>Microsoft Visual Studio Tools for Applications 2012,</li>
+<li>Microsoft Report Viewer 2014 Runtime.</li>
+</ul>
+<p>正式的安装过程跟SQL Server安装过程也很像。注意不管是否安装SQL Server 2014数据库程序，以下界面都选择全新安装。我安装的文件名称：SSDTBI_x86_CHS.exe，你可能会去找x64版本的，但是没有这个版本，官网下载的都是x86的，但是不影响安装。</p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-8.jpg" alt="SQL-Server-2014-SSDT-Install-8"></p>
+<p>安装过程的以下界面勾选SQL Server Data Tools - Business Intelligence就可以了。</p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-5.jpg" alt="SQL-Server-2014-SSDT-Install-5"></p>
+<p>安装好以后，在开始菜单出现 SQL Server Data Tools for Visual Studio 2013选项。</p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-6.jpg" alt="SQL-Server-2014-SSDT-Install-6"></p>
+<p>现在，我们可以打开SSDT for Visual Studio 2013来创建SSIS,SSAS,SSRS项目方案了。</p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-7.jpg" alt="SQL-Server-2014-SSDT-Install-7"></p>
+]]></content>
+      
+        <categories>
+            
+            <category> BI墨客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 原创 </tag>
+            
+            <tag> BI </tag>
             
         </tags>
         
@@ -4353,144 +4395,6 @@ $layer = $(&apos;div[class*=&quot;layer-&quot;]’);
     </entry>
     
     <entry>
-      <title><![CDATA[365cons：每天一枚图标，可免费下载]]></title>
-      <url>/2016/03/23/IconForEveryday/</url>
-      <content type="html"><![CDATA[<p>大家都听过“An apple a day keeps the doctor away”这句俚语，现在网络上也开始流行养成习惯持续去做某一件事情，例如先前介绍过的100 Days UI百日设计挑战每天发布一个全新使用者界面设计来启发灵感，当然你也可以为自己设定一个习惯养成目标，HabitRPG甚至让生活变成游戏，让你通过每日任务来建立好的生活习惯，这些想法都值得我们好好思考如何在一成不变的工作中产生更多价值。</p>
-<a id="more"></a>
-<center><img src="/img/posts/21.jpg"></center>
-
-
-<p>最近发现一个很棒的项目365cons，由一位西雅图视觉设计师Amy开发，网站每天会更新释出一个免费图标让使用者下载！Amy给自己立下一个目标：在2016年的每一天都发布一款全新图标，借此探索各种风格及练习设计相关技术。这些图标都与设计师生活息息相关，不局限于特定主题。</p>
-<p>365cons提供的图标格式包括：SVG、PNG两种版本，每一个图标都能在网页预览，无须注册就能免费下载使用。图标授权方式采MIT License，可被免费下载使用于任何地方。</p>
-<p>站点名称：<strong>365cons</strong></p>
-<p>网站连接：<a href="http://www.365cons.com/" target="_blank" rel="external">http://www.365cons.com/</a></p>
-<p><strong>使用教学</strong></p>
-<p><strong>STEP 1</strong></p>
-<p>开启365cons网站后，可以看到网站收录的免费图标项目，这些图标都是由设计师亲自设计开发，每日更新，不过网站没有提供订阅方式，如果你想追踪更新，那么可以定时回到网站来逛逛。</p>
-<center><img src="/img/posts/22.jpg"></center>
-
-<p><strong>STEP 2</strong></p>
-<p>在每一个图标下方，会有该图标编号、名称，以及SVG和PNG档案下载连接。</p>
-<center><img src="/img/posts/23.jpg"></center>
-
-<p>如果你有任何想法或建议，都可以通过网站上的网址与设计师联系，这些图标设计都非常可爱，也跟一般在外面看到的图标集不太一样，多了那么一点独特与天真浪漫！喜欢的话能将它下载下来使用，完全免费。</p>
-<p>转自 <a href="http://toutiao.com/a6262086085100273922/" target="_blank" rel="external">http://toutiao.com/a6262086085100273922/</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> IT看客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 转载 </tag>
-            
-            <tag> 设计 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[有道笔记支持Markdown啦]]></title>
-      <url>/2016/03/23/YouDaoNoteMarkdownSupport/</url>
-      <content type="html"><![CDATA[<p>继有道云协作率先支持markdown语法之后，令人振奋的markdown编辑功能现已在web版有道云笔记优雅上线，移动端也已支持预览！<br>不要着急，PC客户端也将随后支持markdown的编辑预览！</p>
-<h2 id="何为Markdown？"><a href="#何为Markdown？" class="headerlink" title="何为Markdown？"></a>何为Markdown？</h2><p>Markdown是一种轻量级的<strong>「标记语言」</strong>，通常为程序员群体所用，目前它已是全球最大的技术分享网站GitHub和技术问答网站StackOverFlow的御用书写格式。</p>
-<a id="more"></a>
-<p>非技术类笔记用户，千万不要被<strong>「标记」</strong>、<strong>「语言」</strong>吓到，markdown的语法十分简单，常用的标记符号不超过十个，用于日常写作记录绰绰有余，不到半小时就能完全掌握。</p>
-<p>就是这十个不到的标记符号，却能让人优雅地沉浸式记录，专注内容而不是纠结排版，达到<strong>「心中无尘，码字入神」</strong>的境界。</p>
-<h2 id="Markdown有哪些优点？"><a href="#Markdown有哪些优点？" class="headerlink" title="Markdown有哪些优点？"></a>Markdown有哪些优点？</h2><ul>
-<li>易写：纵使文科出身的你，半小时也能完全掌握常用的markdown基本语法.</li>
-<li>易读：兼顾「什么人都能打开」和「排版样式不变」。所谓「什么人都能打开」是指，Markdown属于兼容性极强的纯文本，可以用所有文本编辑器打开，避免了「用Windows的人打不开.pages文件」的情况发生;Markdown文本轻松可转成HTML、电子书等格式，而HTML是整个万维网（web）的标记语言，也是目前主流电子书格式（EPUB、mobi、Kindle专有格式.azw）所用的标记语言。人们如果采用Markdown标注格式，对日后的文件转换工作将大有裨益。所谓「排版样式不变」是指，在转化为富文本/HTML等格式后依然可以保留原本的排版和阅读体验。不会出现「我这篇稿子是用旧版Word写的，你用新版Word看可能格式会有点问题」的情况。</li>
-</ul>
-<h2 id="利用新增markdown功能做什么？"><a href="#利用新增markdown功能做什么？" class="headerlink" title="利用新增markdown功能做什么？"></a>利用新增markdown功能做什么？</h2><ul>
-<li><strong>1.代码高亮</strong></li>
-</ul>
-<center><img src="/img/posts/24.jpg"></center>
-
-<ul>
-<li><strong>2.制作待办事项Todo list</strong></li>
-</ul>
-<center><img src="/img/posts/25.jpg"></center>
-
-<ul>
-<li><strong>3.高效绘制 流程图、序列图、甘特图、表格</strong></li>
-</ul>
-<p><strong>流程图：</strong></p>
-<center><img src="/img/posts/26.jpg"></center>
-
-<p><strong>序列图：</strong></p>
-<center><img src="/img/posts/27.jpg"></center>
-
-<p><strong>甘特图：</strong></p>
-<center><img src="/img/posts/28.jpg"></center>
-
-<p><strong>表格：</strong></p>
-<center><img src="/img/posts/29.jpg"></center>
-
-<ul>
-<li><strong>4.书写LaTeX公式</strong></li>
-</ul>
-<center><img src="/img/posts/30.jpg"></center>
-
-<p>够酷吗？？</p>
-<p>如果你是<strong>程序员</strong>，你可以用来写日志、技术文稿、记录代码片段、起草邮件</p>
-<p>如果你是<strong>科研人员/工科学生</strong>，你可以用来撰写科技论文，记录工科笔记</p>
-<p>如果你是<strong>文字工作者/热爱文字</strong>的人，你可以用来写作</p>
-<p>如果你是<strong>微信运营人员</strong>，你可以用来替微信编辑器编写微信文章</p>
-<h2 id="web版有道云笔记做到了什么？"><a href="#web版有道云笔记做到了什么？" class="headerlink" title="web版有道云笔记做到了什么？"></a>web版有道云笔记做到了什么？</h2><ul>
-<li><strong>1.实时同步预览，即看即所得</strong></li>
-</ul>
-<p>我们将笔记编辑界面一分为二，左边为编辑区，右边为预览区，两区滚动条同步。在编辑区的操作能够实时反映在预览区，方便及时调整和查看最终版面效果。</p>
-<ul>
-<li><strong>2.工具栏内置markdown语法，方便新手学习</strong></li>
-</ul>
-<p>编辑页面顶端的工具栏有对应代码，如果你是一个不熟悉markdown语法的新手，可以先尝试用编辑栏辅助操作。也可以在网上搜索「markdown语法指南」进行学习。</p>
-<p>当然，如果你觉得工具栏太打扰，点击下方分界条即可隐藏工具栏，切换到极简编辑环境。</p>
-<ul>
-<li><strong>3.实时云端保存</strong></li>
-</ul>
-<p>markdown模式继承了有道云笔记的优良传统，你每一次击键的内容都会实时保存在云端，无需担心浏览器崩溃、设备没电、突然断网等情况。对于写作者来说，更是再也不用担心因为各种原因痛失文稿的情况了。</p>
-<h2 id="web版Markdown实操指南"><a href="#web版Markdown实操指南" class="headerlink" title="web版Markdown实操指南"></a>web版Markdown实操指南</h2><ul>
-<li>1.点击“新建”按钮，可选择新建markdown文件</li>
-</ul>
-<center><img src="/img/posts/31.jpg"></center>
-
-<ul>
-<li>2.可直接通过markdown语句编辑文件，也可以使用编辑器实现格式调整</li>
-</ul>
-<center><img src="/img/posts/32.jpg"></center>
-
-<ul>
-<li>3.界面大小可点击分界条调整。<br>点击“1”处，编辑器收起；<br>点击“2”处，左侧编辑区域全屏。</li>
-</ul>
-<center><img src="/img/posts/33.jpg"></center>
-
-<p>点击后效果如配图4</p>
-<center><img src="/img/posts/34.jpg"></center>
-
-<p>转自 <a href="http://toutiao.com/a6265175131246657794/" target="_blank" rel="external">http://toutiao.com/a6265175131246657794/</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> IT看客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> IT资讯 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[17个jQuery实用技巧]]></title>
       <url>/2016/03/23/17JqueryTips/</url>
       <content type="html"><![CDATA[<h2 id="检查-jQuery-是否加载"><a href="#检查-jQuery-是否加载" class="headerlink" title="检查 jQuery 是否加载"></a>检查 jQuery 是否加载</h2><p>在使用 jQuery 进行任何操作之前，你需要先确认它已经加载：</p>
@@ -4649,6 +4553,144 @@ $elem.otherStuff();
             <tag> 前端编程 </tag>
             
             <tag> jQuery </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[365cons：每天一枚图标，可免费下载]]></title>
+      <url>/2016/03/23/IconForEveryday/</url>
+      <content type="html"><![CDATA[<p>大家都听过“An apple a day keeps the doctor away”这句俚语，现在网络上也开始流行养成习惯持续去做某一件事情，例如先前介绍过的100 Days UI百日设计挑战每天发布一个全新使用者界面设计来启发灵感，当然你也可以为自己设定一个习惯养成目标，HabitRPG甚至让生活变成游戏，让你通过每日任务来建立好的生活习惯，这些想法都值得我们好好思考如何在一成不变的工作中产生更多价值。</p>
+<a id="more"></a>
+<center><img src="/img/posts/21.jpg"></center>
+
+
+<p>最近发现一个很棒的项目365cons，由一位西雅图视觉设计师Amy开发，网站每天会更新释出一个免费图标让使用者下载！Amy给自己立下一个目标：在2016年的每一天都发布一款全新图标，借此探索各种风格及练习设计相关技术。这些图标都与设计师生活息息相关，不局限于特定主题。</p>
+<p>365cons提供的图标格式包括：SVG、PNG两种版本，每一个图标都能在网页预览，无须注册就能免费下载使用。图标授权方式采MIT License，可被免费下载使用于任何地方。</p>
+<p>站点名称：<strong>365cons</strong></p>
+<p>网站连接：<a href="http://www.365cons.com/" target="_blank" rel="external">http://www.365cons.com/</a></p>
+<p><strong>使用教学</strong></p>
+<p><strong>STEP 1</strong></p>
+<p>开启365cons网站后，可以看到网站收录的免费图标项目，这些图标都是由设计师亲自设计开发，每日更新，不过网站没有提供订阅方式，如果你想追踪更新，那么可以定时回到网站来逛逛。</p>
+<center><img src="/img/posts/22.jpg"></center>
+
+<p><strong>STEP 2</strong></p>
+<p>在每一个图标下方，会有该图标编号、名称，以及SVG和PNG档案下载连接。</p>
+<center><img src="/img/posts/23.jpg"></center>
+
+<p>如果你有任何想法或建议，都可以通过网站上的网址与设计师联系，这些图标设计都非常可爱，也跟一般在外面看到的图标集不太一样，多了那么一点独特与天真浪漫！喜欢的话能将它下载下来使用，完全免费。</p>
+<p>转自 <a href="http://toutiao.com/a6262086085100273922/" target="_blank" rel="external">http://toutiao.com/a6262086085100273922/</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> IT看客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 转载 </tag>
+            
+            <tag> 设计 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[有道笔记支持Markdown啦]]></title>
+      <url>/2016/03/23/YouDaoNoteMarkdownSupport/</url>
+      <content type="html"><![CDATA[<p>继有道云协作率先支持markdown语法之后，令人振奋的markdown编辑功能现已在web版有道云笔记优雅上线，移动端也已支持预览！<br>不要着急，PC客户端也将随后支持markdown的编辑预览！</p>
+<h2 id="何为Markdown？"><a href="#何为Markdown？" class="headerlink" title="何为Markdown？"></a>何为Markdown？</h2><p>Markdown是一种轻量级的<strong>「标记语言」</strong>，通常为程序员群体所用，目前它已是全球最大的技术分享网站GitHub和技术问答网站StackOverFlow的御用书写格式。</p>
+<a id="more"></a>
+<p>非技术类笔记用户，千万不要被<strong>「标记」</strong>、<strong>「语言」</strong>吓到，markdown的语法十分简单，常用的标记符号不超过十个，用于日常写作记录绰绰有余，不到半小时就能完全掌握。</p>
+<p>就是这十个不到的标记符号，却能让人优雅地沉浸式记录，专注内容而不是纠结排版，达到<strong>「心中无尘，码字入神」</strong>的境界。</p>
+<h2 id="Markdown有哪些优点？"><a href="#Markdown有哪些优点？" class="headerlink" title="Markdown有哪些优点？"></a>Markdown有哪些优点？</h2><ul>
+<li>易写：纵使文科出身的你，半小时也能完全掌握常用的markdown基本语法.</li>
+<li>易读：兼顾「什么人都能打开」和「排版样式不变」。所谓「什么人都能打开」是指，Markdown属于兼容性极强的纯文本，可以用所有文本编辑器打开，避免了「用Windows的人打不开.pages文件」的情况发生;Markdown文本轻松可转成HTML、电子书等格式，而HTML是整个万维网（web）的标记语言，也是目前主流电子书格式（EPUB、mobi、Kindle专有格式.azw）所用的标记语言。人们如果采用Markdown标注格式，对日后的文件转换工作将大有裨益。所谓「排版样式不变」是指，在转化为富文本/HTML等格式后依然可以保留原本的排版和阅读体验。不会出现「我这篇稿子是用旧版Word写的，你用新版Word看可能格式会有点问题」的情况。</li>
+</ul>
+<h2 id="利用新增markdown功能做什么？"><a href="#利用新增markdown功能做什么？" class="headerlink" title="利用新增markdown功能做什么？"></a>利用新增markdown功能做什么？</h2><ul>
+<li><strong>1.代码高亮</strong></li>
+</ul>
+<center><img src="/img/posts/24.jpg"></center>
+
+<ul>
+<li><strong>2.制作待办事项Todo list</strong></li>
+</ul>
+<center><img src="/img/posts/25.jpg"></center>
+
+<ul>
+<li><strong>3.高效绘制 流程图、序列图、甘特图、表格</strong></li>
+</ul>
+<p><strong>流程图：</strong></p>
+<center><img src="/img/posts/26.jpg"></center>
+
+<p><strong>序列图：</strong></p>
+<center><img src="/img/posts/27.jpg"></center>
+
+<p><strong>甘特图：</strong></p>
+<center><img src="/img/posts/28.jpg"></center>
+
+<p><strong>表格：</strong></p>
+<center><img src="/img/posts/29.jpg"></center>
+
+<ul>
+<li><strong>4.书写LaTeX公式</strong></li>
+</ul>
+<center><img src="/img/posts/30.jpg"></center>
+
+<p>够酷吗？？</p>
+<p>如果你是<strong>程序员</strong>，你可以用来写日志、技术文稿、记录代码片段、起草邮件</p>
+<p>如果你是<strong>科研人员/工科学生</strong>，你可以用来撰写科技论文，记录工科笔记</p>
+<p>如果你是<strong>文字工作者/热爱文字</strong>的人，你可以用来写作</p>
+<p>如果你是<strong>微信运营人员</strong>，你可以用来替微信编辑器编写微信文章</p>
+<h2 id="web版有道云笔记做到了什么？"><a href="#web版有道云笔记做到了什么？" class="headerlink" title="web版有道云笔记做到了什么？"></a>web版有道云笔记做到了什么？</h2><ul>
+<li><strong>1.实时同步预览，即看即所得</strong></li>
+</ul>
+<p>我们将笔记编辑界面一分为二，左边为编辑区，右边为预览区，两区滚动条同步。在编辑区的操作能够实时反映在预览区，方便及时调整和查看最终版面效果。</p>
+<ul>
+<li><strong>2.工具栏内置markdown语法，方便新手学习</strong></li>
+</ul>
+<p>编辑页面顶端的工具栏有对应代码，如果你是一个不熟悉markdown语法的新手，可以先尝试用编辑栏辅助操作。也可以在网上搜索「markdown语法指南」进行学习。</p>
+<p>当然，如果你觉得工具栏太打扰，点击下方分界条即可隐藏工具栏，切换到极简编辑环境。</p>
+<ul>
+<li><strong>3.实时云端保存</strong></li>
+</ul>
+<p>markdown模式继承了有道云笔记的优良传统，你每一次击键的内容都会实时保存在云端，无需担心浏览器崩溃、设备没电、突然断网等情况。对于写作者来说，更是再也不用担心因为各种原因痛失文稿的情况了。</p>
+<h2 id="web版Markdown实操指南"><a href="#web版Markdown实操指南" class="headerlink" title="web版Markdown实操指南"></a>web版Markdown实操指南</h2><ul>
+<li>1.点击“新建”按钮，可选择新建markdown文件</li>
+</ul>
+<center><img src="/img/posts/31.jpg"></center>
+
+<ul>
+<li>2.可直接通过markdown语句编辑文件，也可以使用编辑器实现格式调整</li>
+</ul>
+<center><img src="/img/posts/32.jpg"></center>
+
+<ul>
+<li>3.界面大小可点击分界条调整。<br>点击“1”处，编辑器收起；<br>点击“2”处，左侧编辑区域全屏。</li>
+</ul>
+<center><img src="/img/posts/33.jpg"></center>
+
+<p>点击后效果如配图4</p>
+<center><img src="/img/posts/34.jpg"></center>
+
+<p>转自 <a href="http://toutiao.com/a6265175131246657794/" target="_blank" rel="external">http://toutiao.com/a6265175131246657794/</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> IT看客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> IT资讯 </tag>
             
         </tags>
         

@@ -321,7 +321,7 @@ a {
   }
   #container .header-author.fixed {
     position: fixed;
-    top: -8px;
+    top: -0.7em;
     width: 100%;
     color: #ddd;
   }
@@ -560,6 +560,7 @@ a {
   }
   #container .scroll {
     right: 0.5em;
+    top: 77%;
   }
   #container .scroll li {
     font-size: 1.7em;
@@ -595,6 +596,15 @@ a {
   }
   #container .tags a {
     line-height: 45px;
+  }
+  #container #donate_guide {
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+  }
+  #container #donate_guide img {
+    height: 100px;
+    height: 100px;
   }
 }
 .header-author {

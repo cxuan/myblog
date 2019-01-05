@@ -454,7 +454,7 @@
         <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
         <span class="donate_txt">
            ↑<br>
-            欣赏此文？求鼓励，求支持！
+            有所帮助？赏包辣条！
         </span>
         <br>
     </div>
@@ -516,25 +516,35 @@
 
 
     
-        <section class="livere" id="comments" style="width:86%; margin:0 auto;">
-	<!-- 来必力City版安装代码 -->
-	<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ2NS82MDMz">
-		<script type="text/javascript">
-			(function(d, s) {
-				var j, e = d.getElementsByTagName(s)[0];
-
-				if (typeof LivereTower === 'function') { return; }
-
-				j = d.createElement(s);
-				j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-				j.async = true;
-
-				e.parentNode.insertBefore(j, e);
-			})(document, 'script');
-		</script>
-		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
-	</div>
-	<!-- City版安装代码已完成 -->
+        <section id="comments" class="valine" style="width:85%; margin:0 auto;background:rgba(255, 255, 255, 0.7);padding:1% 1% 0 1%;-webkit-border-radius: 8px;-moz-border-radius: 8px;border-radius: 8px;">
+	<div id="vcomment"></div>
+	<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+	<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+	<script>
+		var notify = 'false' == true ? true : false;
+		var verify = 'false' == true ? true : false;
+		new Valine({
+			av: AV,
+			el: '#vcomment',
+			notify: notify,
+			verify: verify,
+			app_id: "wKQ5QBjSGMEviU0fVawpBJo0-gzGzoHsz",
+			app_key: "1zPWBxCFNb0UPr85TMeCNLOK",
+			placeholder: "说点什么吧... ps:昵称/邮箱/网址都可以选填哦",
+			avatar: "wavatar",
+			avatar_cdn: "https://sdn.geekzu.org/avatar/",
+			pageSize: 20,
+			meta: ['nick','mail','link']
+		});
+		if(window.location.hash){
+			var checkExist = setInterval(function() {
+				if ($(window.location.hash).length) {
+					$('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+					clearInterval(checkExist);
+				}
+			}, 100);
+		}
+	</script>
 </section>
     
 

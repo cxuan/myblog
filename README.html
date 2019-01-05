@@ -39,7 +39,7 @@
 
 2016-09-27:主页添加社交链接.
 2016-09-28:">
-<meta property="og:updated_time" content="2018-12-29T07:15:54.612Z">
+<meta property="og:updated_time" content="2019-01-05T08:53:23.345Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="靛青">
 <meta name="twitter:description" content="这是什么？这是博客网站的站点，由Hexo生成的静态网页，部署到github pages，无须购买服务器，可以绑定自己的域名，使用Markdown撰写博客文章，适合折腾。
@@ -407,7 +407,7 @@
   
     <div class="article-meta">
       <a href="/README.html" class="article-date">
-      <time datetime="2018-12-29T07:15:54.617Z" itemprop="datePublished">2018-12-29</time>
+      <time datetime="2019-01-05T08:53:23.367Z" itemprop="datePublished">2019-01-05</time>
 </a>
 
 
@@ -472,7 +472,8 @@
 </ul>
 </li>
 <li>2018-11-08:修复<a href="http://busuanzi.ibruce.info/" target="_blank" rel="external">不蒜子</a>域名更换导致站点访问失效问题.</li>
-<li>2018-12-29:无耻地添加了打赏 O(∩_∩)O </li>
+<li>2018-12-29:无耻地添加了打赏 O(∩_∩)O</li>
+<li>评论系统<a href="https://livere.com/" target="_blank" rel="external">来必力</a>国内访问太慢了，改社会化评论为<a href="https://valine.js.org/" target="_blank" rel="external">Valine</a></li>
 </ul>
 <p><a href="https://c-xuan.com">c-xuan.com</a></p>
 
@@ -493,7 +494,7 @@
         <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
         <span class="donate_txt">
            ↑<br>
-            欣赏此文？求鼓励，求支持！
+            有所帮助？赏包辣条！
         </span>
         <br>
     </div>
@@ -555,25 +556,35 @@
 
 
     
-        <section class="livere" id="comments" style="width:86%; margin:0 auto;">
-	<!-- 来必力City版安装代码 -->
-	<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ2NS82MDMz">
-		<script type="text/javascript">
-			(function(d, s) {
-				var j, e = d.getElementsByTagName(s)[0];
-
-				if (typeof LivereTower === 'function') { return; }
-
-				j = d.createElement(s);
-				j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-				j.async = true;
-
-				e.parentNode.insertBefore(j, e);
-			})(document, 'script');
-		</script>
-		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
-	</div>
-	<!-- City版安装代码已完成 -->
+        <section id="comments" class="valine" style="width:85%; margin:0 auto;background:rgba(255, 255, 255, 0.7);padding:1% 1% 0 1%;-webkit-border-radius: 8px;-moz-border-radius: 8px;border-radius: 8px;">
+	<div id="vcomment"></div>
+	<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+	<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+	<script>
+		var notify = 'false' == true ? true : false;
+		var verify = 'false' == true ? true : false;
+		new Valine({
+			av: AV,
+			el: '#vcomment',
+			notify: notify,
+			verify: verify,
+			app_id: "wKQ5QBjSGMEviU0fVawpBJo0-gzGzoHsz",
+			app_key: "1zPWBxCFNb0UPr85TMeCNLOK",
+			placeholder: "说点什么吧... ps:昵称/邮箱/网址都可以选填哦",
+			avatar: "wavatar",
+			avatar_cdn: "https://sdn.geekzu.org/avatar/",
+			pageSize: 20,
+			meta: ['nick','mail','link']
+		});
+		if(window.location.hash){
+			var checkExist = setInterval(function() {
+				if ($(window.location.hash).length) {
+					$('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+					clearInterval(checkExist);
+				}
+			}, 100);
+		}
+	</script>
 </section>
     
 

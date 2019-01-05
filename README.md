@@ -24,6 +24,7 @@
   - 调整移动端显示样式
   - http连接设置为https连接
 - 2018-11-08:修复[不蒜子](http://busuanzi.ibruce.info/)域名更换导致站点访问失效问题.
-- 2018-12-29:无耻地添加了打赏 O(∩_∩)O 
+- 2018-12-29:无耻地添加了打赏 O(∩_∩)O
+- 评论系统[来必力](https://livere.com/)国内访问太慢了，改社会化评论为[Valine](https://valine.js.org/)
 
 [c-xuan.com](https://c-xuan.com)

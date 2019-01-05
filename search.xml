@@ -1055,9 +1055,9 @@
         
         <tags>
             
-            <tag> 转载 </tag>
-            
             <tag> 数据库 </tag>
+            
+            <tag> 转载 </tag>
             
         </tags>
         
@@ -1125,9 +1125,9 @@
         
         <tags>
             
-            <tag> 转载 </tag>
-            
             <tag> 数据库 </tag>
+            
+            <tag> 转载 </tag>
             
         </tags>
         
@@ -1177,9 +1177,9 @@
         
         <tags>
             
-            <tag> 转载 </tag>
-            
             <tag> 数据库 </tag>
+            
+            <tag> 转载 </tag>
             
         </tags>
         
@@ -1220,9 +1220,9 @@
         
         <tags>
             
-            <tag> 转载 </tag>
-            
             <tag> 数据库 </tag>
+            
+            <tag> 转载 </tag>
             
         </tags>
         
@@ -1264,9 +1264,9 @@
         
         <tags>
             
-            <tag> 转载 </tag>
-            
             <tag> 数据库 </tag>
+            
+            <tag> 转载 </tag>
             
         </tags>
         
@@ -1407,9 +1407,9 @@
         
         <tags>
             
-            <tag> 转载 </tag>
-            
             <tag> 数据库 </tag>
+            
+            <tag> 转载 </tag>
             
             <tag> SQL Server </tag>
             
@@ -2952,45 +2952,6 @@
     </entry>
     
     <entry>
-      <title><![CDATA[【T-SQL】group by 和grouping sets]]></title>
-      <url>/2016/06/13/SQL-GroupByAndGroupingSets/</url>
-      <content type="html"><![CDATA[<p>遇到一个情况，需要在内网系统中出一个统计报表。需要根据不同条件使用多个group by语句，需要将所有聚合的数据进行union操作来完成不同维度的统计查看。<br>知道发现了在SQL  Server 2008之后引入了grouping sets这个对于group by的增强后，上面的需求实现起来就简单的多，下面我们用AdventureWork中的表作为demo来解释一下grouping sets.</p>
-<a id="more"></a>
-<p>假设我现在需要两个维度查询我的销售额度，查询T-SQL如下：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-1.png" alt="SQL-GroupByAndGroupingSets-1"></p>
-<p>而使用SQL Server 2008之后新增的grouping sets语句，仅仅需要这样写：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-3.png" alt="SQL-GroupByAndGroupingSets-3"></p>
-<p>值得注意的是，虽然上面使用grouping sets语句和多个group by语句差生的结果完全一样，但顺序完全不同。</p>
-<p>grouping  sets，仅仅是语法糖？</p>
-<p>从上面的结果来看，使用grouping  sets仅仅是一个可以少写代码的语法糖，但实际情况是，group sets在遇到多个条件时，聚合是一次性从数据库中取出所有需要的操作的数据，在内存中对数据库进行聚合操作并生成结果。而union all是多次扫描表，将返回的结果进行union操作。这也就是为什么grouping  sets和union操作所返回的数据顺序是不同的原因。</p>
-<p>下面通过查看上面两个语句的IO和CPU来进行对比：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-5.png" alt="SQL-GroupByAndGroupingSets-5"></p>
-<p>通过上面的图来看grouping sets不仅仅只是语法糖，而是从执行原理做出了改变</p>
-<p>对于grouping sets来说，还经常和grouping函数联合使用，这个函数是反应目标列是否聚合，如果聚合则返回1，否则返回0，如下：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-6.png" alt="SQL-GroupByAndGroupingSets-6"></p>
-<p>转自：<a href="http://www.cnblogs.com/CareySon/archive/2011/12/19/2293245.html" target="_blank" rel="external">http://www.cnblogs.com/CareySon/archive/2011/12/19/2293245.html</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> 码路刺客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 转载 </tag>
-            
-            <tag> 数据库 </tag>
-            
-            <tag> SQL Server </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[【SSIS】几个通用属性]]></title>
       <url>/2016/06/13/SSIS-GeneralAttribures/</url>
       <content type="html"><![CDATA[<p>记录几个简单常用SSIS包常用属性，都是通用属性：</p>
@@ -3026,6 +2987,45 @@
             <tag> BI </tag>
             
             <tag> SSIS </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[【T-SQL】group by 和grouping sets]]></title>
+      <url>/2016/06/13/SQL-GroupByAndGroupingSets/</url>
+      <content type="html"><![CDATA[<p>遇到一个情况，需要在内网系统中出一个统计报表。需要根据不同条件使用多个group by语句，需要将所有聚合的数据进行union操作来完成不同维度的统计查看。<br>知道发现了在SQL  Server 2008之后引入了grouping sets这个对于group by的增强后，上面的需求实现起来就简单的多，下面我们用AdventureWork中的表作为demo来解释一下grouping sets.</p>
+<a id="more"></a>
+<p>假设我现在需要两个维度查询我的销售额度，查询T-SQL如下：</p>
+<p><img src="/img/posts/SQL-GroupByAndGroupingSets-1.png" alt="SQL-GroupByAndGroupingSets-1"></p>
+<p>而使用SQL Server 2008之后新增的grouping sets语句，仅仅需要这样写：</p>
+<p><img src="/img/posts/SQL-GroupByAndGroupingSets-3.png" alt="SQL-GroupByAndGroupingSets-3"></p>
+<p>值得注意的是，虽然上面使用grouping sets语句和多个group by语句差生的结果完全一样，但顺序完全不同。</p>
+<p>grouping  sets，仅仅是语法糖？</p>
+<p>从上面的结果来看，使用grouping  sets仅仅是一个可以少写代码的语法糖，但实际情况是，group sets在遇到多个条件时，聚合是一次性从数据库中取出所有需要的操作的数据，在内存中对数据库进行聚合操作并生成结果。而union all是多次扫描表，将返回的结果进行union操作。这也就是为什么grouping  sets和union操作所返回的数据顺序是不同的原因。</p>
+<p>下面通过查看上面两个语句的IO和CPU来进行对比：</p>
+<p><img src="/img/posts/SQL-GroupByAndGroupingSets-5.png" alt="SQL-GroupByAndGroupingSets-5"></p>
+<p>通过上面的图来看grouping sets不仅仅只是语法糖，而是从执行原理做出了改变</p>
+<p>对于grouping sets来说，还经常和grouping函数联合使用，这个函数是反应目标列是否聚合，如果聚合则返回1，否则返回0，如下：</p>
+<p><img src="/img/posts/SQL-GroupByAndGroupingSets-6.png" alt="SQL-GroupByAndGroupingSets-6"></p>
+<p>转自：<a href="http://www.cnblogs.com/CareySon/archive/2011/12/19/2293245.html" target="_blank" rel="external">http://www.cnblogs.com/CareySon/archive/2011/12/19/2293245.html</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> 码路刺客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 数据库 </tag>
+            
+            <tag> 转载 </tag>
+            
+            <tag> SQL Server </tag>
             
         </tags>
         
@@ -3914,6 +3914,58 @@ SELECT * FROM dbo.duplicateTest
     </entry>
     
     <entry>
+      <title><![CDATA[SQL Server 2014的BI开发工具SSDT(以前的BIDS)安装]]></title>
+      <url>/2016/04/24/SQL-Server-2014-SSDT-Install/</url>
+      <content type="html"><![CDATA[<p>当我们安装好SQL Server 2014以后，会发现以前随数据库安装的BI开发套件SQL Server Reporting Services (SSRS), SQL Server Analysis Services (SSAS), 和 SQL Server Integration Services (SSIS)都不见了，怎么弄回来呢？</p>
+<p>在安装开发版或者企业版的SQL Server 2014的时候，你可能已经注意到以前被我们熟知的Business Intelligence Development Studio (BIDS) 已经没有了。从SQL Server 2012开始，这套BI应用工具集已经变成了SQL Server Data Tools)(SSDT)，在SQL Server 2014中，SSDT已经完全在SQL Server的安装过程里消失了。但是，要把Business Intelligence (BI)应用工具安装回来也是很容易的。</p>
+<a id="more"></a>
+<h3 id="安装SQL-Server-2014-BI-Tools"><a href="#安装SQL-Server-2014-BI-Tools" class="headerlink" title="安装SQL Server 2014 BI Tools"></a>安装SQL Server 2014 BI Tools</h3><p>在以前版本的SQL Server里，用来开发SSIS,SSAS,SSRS的BI解决方案都是包含在SQL Server的安装过程里的，在特性部分里可以进行勾选，如下图所示：</p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-1.jpg" alt="SQL-Server-2014-SSDT-Install-1"></p>
+<p>但是，当你安装SQL Server 2014的时候，你会发现选项没有了，如下图：</p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-2.jpg" alt="SQL-Server-2014-SSDT-Install-2"></p>
+<h3 id="SQL-Server-Data-Tools-SSDT和SSDT-BI-的演变"><a href="#SQL-Server-Data-Tools-SSDT和SSDT-BI-的演变" class="headerlink" title="SQL Server Data Tools (SSDT和SSDT-BI)的演变"></a>SQL Server Data Tools (SSDT和SSDT-BI)的演变</h3><p>由于微软公司在这方面的说明较少，让情况变得有点复杂。事实上，SQL Server 2014的SSDT已经成为了Visual Studio的插件为数据库重构，架构比较以及各种诸如视图、存储过程等对象的创建提供服务支持。而SSDT-BI这个工具也已经成为Visual Studio的一个组件，它才是开发SSIS,SSAS,SSRS解决方案的真正的开发工具。</p>
+<p>以上两个工具都可以在<a href="http://msdn.microsoft.com/en-us/hh297027.aspx" target="_blank" rel="external">http://msdn.microsoft.com/en-us/hh297027.aspx</a> 下载到。每个工具各提供两个版本，一个是Visual Studio 2012的，一个是 Visual Studio 2013的。</p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-3.jpg" alt="SQL-Server-2014-SSDT-Install-3"></p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-4.jpg" alt="SQL-Server-2014-SSDT-Install-4"></p>
+<h3 id="安装SQL-Server-Data-Tools-SSDT"><a href="#安装SQL-Server-Data-Tools-SSDT" class="headerlink" title="安装SQL Server Data Tools(SSDT)"></a>安装SQL Server Data Tools(SSDT)</h3><p>微软已经完全把SSDT的安装从SQL Server安装中独立出来了。安装过程也是非常简单，你只需要决定是否让BI工具成为Visual Studio 2013或者Visual Studio 2012的一部分就可以了。</p>
+<p>我们以Visual Studio 2013版本的为例。注意下，咱们不需要先安装Visual Studio 2013在电脑上然后再安装SSDT-BI。安装程序会安装Visual Studio 2013 shell然后提供BI工具作为一个组件。SSDT-BI安装将会添加以下组件：</p>
+<ul>
+<li>Microsoft .NET Framework 4.5.1,</li>
+<li>Microsoft Visual Studio 2012 Shell (Isolated) Redistributable Package,</li>
+<li>Microsoft Visual Studio 2012 Shell (Integrated) Redistributable Package,</li>
+<li>Microsoft Visual Studio 2013 Shell (Isolated) Redistributable Package,</li>
+<li>Microsoft Visual Studio 2013 Shell (Integrated) Redistributable Package,</li>
+<li>Microsoft Visual Studio Tools for Applications 2012,</li>
+<li>Microsoft Report Viewer 2014 Runtime.</li>
+</ul>
+<p>正式的安装过程跟SQL Server安装过程也很像。注意不管是否安装SQL Server 2014数据库程序，以下界面都选择全新安装。我安装的文件名称：SSDTBI_x86_CHS.exe，你可能会去找x64版本的，但是没有这个版本，官网下载的都是x86的，但是不影响安装。</p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-8.jpg" alt="SQL-Server-2014-SSDT-Install-8"></p>
+<p>安装过程的以下界面勾选SQL Server Data Tools - Business Intelligence就可以了。</p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-5.jpg" alt="SQL-Server-2014-SSDT-Install-5"></p>
+<p>安装好以后，在开始菜单出现 SQL Server Data Tools for Visual Studio 2013选项。</p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-6.jpg" alt="SQL-Server-2014-SSDT-Install-6"></p>
+<p>现在，我们可以打开SSDT for Visual Studio 2013来创建SSIS,SSAS,SSRS项目方案了。</p>
+<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-7.jpg" alt="SQL-Server-2014-SSDT-Install-7"></p>
+]]></content>
+      
+        <categories>
+            
+            <category> BI墨客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 原创 </tag>
+            
+            <tag> BI </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[学习制作CSS3 3D旋转透视效果]]></title>
       <url>/2016/04/24/CSS3-transform-style-3D-Cool/</url>
       <content type="html"><![CDATA[<p>之前学习 react+webpack ，偶然路过 webpack 官网 ，看到顶部的 LOGO ，就很感兴趣。</p>
@@ -4043,58 +4095,6 @@ SELECT * FROM dbo.duplicateTest
             <tag> CSS </tag>
             
             <tag> 设计 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[SQL Server 2014的BI开发工具SSDT(以前的BIDS)安装]]></title>
-      <url>/2016/04/24/SQL-Server-2014-SSDT-Install/</url>
-      <content type="html"><![CDATA[<p>当我们安装好SQL Server 2014以后，会发现以前随数据库安装的BI开发套件SQL Server Reporting Services (SSRS), SQL Server Analysis Services (SSAS), 和 SQL Server Integration Services (SSIS)都不见了，怎么弄回来呢？</p>
-<p>在安装开发版或者企业版的SQL Server 2014的时候，你可能已经注意到以前被我们熟知的Business Intelligence Development Studio (BIDS) 已经没有了。从SQL Server 2012开始，这套BI应用工具集已经变成了SQL Server Data Tools)(SSDT)，在SQL Server 2014中，SSDT已经完全在SQL Server的安装过程里消失了。但是，要把Business Intelligence (BI)应用工具安装回来也是很容易的。</p>
-<a id="more"></a>
-<h3 id="安装SQL-Server-2014-BI-Tools"><a href="#安装SQL-Server-2014-BI-Tools" class="headerlink" title="安装SQL Server 2014 BI Tools"></a>安装SQL Server 2014 BI Tools</h3><p>在以前版本的SQL Server里，用来开发SSIS,SSAS,SSRS的BI解决方案都是包含在SQL Server的安装过程里的，在特性部分里可以进行勾选，如下图所示：</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-1.jpg" alt="SQL-Server-2014-SSDT-Install-1"></p>
-<p>但是，当你安装SQL Server 2014的时候，你会发现选项没有了，如下图：</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-2.jpg" alt="SQL-Server-2014-SSDT-Install-2"></p>
-<h3 id="SQL-Server-Data-Tools-SSDT和SSDT-BI-的演变"><a href="#SQL-Server-Data-Tools-SSDT和SSDT-BI-的演变" class="headerlink" title="SQL Server Data Tools (SSDT和SSDT-BI)的演变"></a>SQL Server Data Tools (SSDT和SSDT-BI)的演变</h3><p>由于微软公司在这方面的说明较少，让情况变得有点复杂。事实上，SQL Server 2014的SSDT已经成为了Visual Studio的插件为数据库重构，架构比较以及各种诸如视图、存储过程等对象的创建提供服务支持。而SSDT-BI这个工具也已经成为Visual Studio的一个组件，它才是开发SSIS,SSAS,SSRS解决方案的真正的开发工具。</p>
-<p>以上两个工具都可以在<a href="http://msdn.microsoft.com/en-us/hh297027.aspx" target="_blank" rel="external">http://msdn.microsoft.com/en-us/hh297027.aspx</a> 下载到。每个工具各提供两个版本，一个是Visual Studio 2012的，一个是 Visual Studio 2013的。</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-3.jpg" alt="SQL-Server-2014-SSDT-Install-3"></p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-4.jpg" alt="SQL-Server-2014-SSDT-Install-4"></p>
-<h3 id="安装SQL-Server-Data-Tools-SSDT"><a href="#安装SQL-Server-Data-Tools-SSDT" class="headerlink" title="安装SQL Server Data Tools(SSDT)"></a>安装SQL Server Data Tools(SSDT)</h3><p>微软已经完全把SSDT的安装从SQL Server安装中独立出来了。安装过程也是非常简单，你只需要决定是否让BI工具成为Visual Studio 2013或者Visual Studio 2012的一部分就可以了。</p>
-<p>我们以Visual Studio 2013版本的为例。注意下，咱们不需要先安装Visual Studio 2013在电脑上然后再安装SSDT-BI。安装程序会安装Visual Studio 2013 shell然后提供BI工具作为一个组件。SSDT-BI安装将会添加以下组件：</p>
-<ul>
-<li>Microsoft .NET Framework 4.5.1,</li>
-<li>Microsoft Visual Studio 2012 Shell (Isolated) Redistributable Package,</li>
-<li>Microsoft Visual Studio 2012 Shell (Integrated) Redistributable Package,</li>
-<li>Microsoft Visual Studio 2013 Shell (Isolated) Redistributable Package,</li>
-<li>Microsoft Visual Studio 2013 Shell (Integrated) Redistributable Package,</li>
-<li>Microsoft Visual Studio Tools for Applications 2012,</li>
-<li>Microsoft Report Viewer 2014 Runtime.</li>
-</ul>
-<p>正式的安装过程跟SQL Server安装过程也很像。注意不管是否安装SQL Server 2014数据库程序，以下界面都选择全新安装。我安装的文件名称：SSDTBI_x86_CHS.exe，你可能会去找x64版本的，但是没有这个版本，官网下载的都是x86的，但是不影响安装。</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-8.jpg" alt="SQL-Server-2014-SSDT-Install-8"></p>
-<p>安装过程的以下界面勾选SQL Server Data Tools - Business Intelligence就可以了。</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-5.jpg" alt="SQL-Server-2014-SSDT-Install-5"></p>
-<p>安装好以后，在开始菜单出现 SQL Server Data Tools for Visual Studio 2013选项。</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-6.jpg" alt="SQL-Server-2014-SSDT-Install-6"></p>
-<p>现在，我们可以打开SSDT for Visual Studio 2013来创建SSIS,SSAS,SSRS项目方案了。</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-7.jpg" alt="SQL-Server-2014-SSDT-Install-7"></p>
-]]></content>
-      
-        <categories>
-            
-            <category> BI墨客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 原创 </tag>
-            
-            <tag> BI </tag>
             
         </tags>
         
@@ -4380,11 +4380,11 @@ $layer = $(&apos;div[class*=&quot;layer-&quot;]’);
         
         <tags>
             
+            <tag> 翻译 </tag>
+            
             <tag> 前端编程 </tag>
             
             <tag> jQuery </tag>
-            
-            <tag> 翻译 </tag>
             
             <tag> CSS </tag>
             
@@ -4877,9 +4877,9 @@ $elem.otherStuff();
         
         <tags>
             
-            <tag> 前端编程 </tag>
-            
             <tag> 翻译 </tag>
+            
+            <tag> 前端编程 </tag>
             
             <tag> CSS </tag>
             
@@ -5150,9 +5150,9 @@ function update (){
         
         <tags>
             
-            <tag> 前端编程 </tag>
-            
             <tag> 翻译 </tag>
+            
+            <tag> 前端编程 </tag>
             
             <tag> CSS </tag>
             

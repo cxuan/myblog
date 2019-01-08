@@ -3920,13 +3920,13 @@ SELECT * FROM dbo.duplicateTest
 <p>在安装开发版或者企业版的SQL Server 2014的时候，你可能已经注意到以前被我们熟知的Business Intelligence Development Studio (BIDS) 已经没有了。从SQL Server 2012开始，这套BI应用工具集已经变成了SQL Server Data Tools)(SSDT)，在SQL Server 2014中，SSDT已经完全在SQL Server的安装过程里消失了。但是，要把Business Intelligence (BI)应用工具安装回来也是很容易的。</p>
 <a id="more"></a>
 <h3 id="安装SQL-Server-2014-BI-Tools"><a href="#安装SQL-Server-2014-BI-Tools" class="headerlink" title="安装SQL Server 2014 BI Tools"></a>安装SQL Server 2014 BI Tools</h3><p>在以前版本的SQL Server里，用来开发SSIS,SSAS,SSRS的BI解决方案都是包含在SQL Server的安装过程里的，在特性部分里可以进行勾选，如下图所示：</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-1.jpg" alt="SQL-Server-2014-SSDT-Install-1"></p>
+<p><img src="/img/posts/SQL-Server-2014-SSDT-Install-1.jpg" alt="SQL-Server-2014-SSDT-Install-1"></p>
 <p>但是，当你安装SQL Server 2014的时候，你会发现选项没有了，如下图：</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-2.jpg" alt="SQL-Server-2014-SSDT-Install-2"></p>
+<p><img src="/img/posts/SQL-Server-2014-SSDT-Install-2.jpg" alt="SQL-Server-2014-SSDT-Install-2"></p>
 <h3 id="SQL-Server-Data-Tools-SSDT和SSDT-BI-的演变"><a href="#SQL-Server-Data-Tools-SSDT和SSDT-BI-的演变" class="headerlink" title="SQL Server Data Tools (SSDT和SSDT-BI)的演变"></a>SQL Server Data Tools (SSDT和SSDT-BI)的演变</h3><p>由于微软公司在这方面的说明较少，让情况变得有点复杂。事实上，SQL Server 2014的SSDT已经成为了Visual Studio的插件为数据库重构，架构比较以及各种诸如视图、存储过程等对象的创建提供服务支持。而SSDT-BI这个工具也已经成为Visual Studio的一个组件，它才是开发SSIS,SSAS,SSRS解决方案的真正的开发工具。</p>
 <p>以上两个工具都可以在<a href="http://msdn.microsoft.com/en-us/hh297027.aspx" target="_blank" rel="external">http://msdn.microsoft.com/en-us/hh297027.aspx</a> 下载到。每个工具各提供两个版本，一个是Visual Studio 2012的，一个是 Visual Studio 2013的。</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-3.jpg" alt="SQL-Server-2014-SSDT-Install-3"></p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-4.jpg" alt="SQL-Server-2014-SSDT-Install-4"></p>
+<p><img src="/img/posts/SQL-Server-2014-SSDT-Install-3.jpg" alt="SQL-Server-2014-SSDT-Install-3"></p>
+<p><img src="/img/posts/SQL-Server-2014-SSDT-Install-4.jpg" alt="SQL-Server-2014-SSDT-Install-4"></p>
 <h3 id="安装SQL-Server-Data-Tools-SSDT"><a href="#安装SQL-Server-Data-Tools-SSDT" class="headerlink" title="安装SQL Server Data Tools(SSDT)"></a>安装SQL Server Data Tools(SSDT)</h3><p>微软已经完全把SSDT的安装从SQL Server安装中独立出来了。安装过程也是非常简单，你只需要决定是否让BI工具成为Visual Studio 2013或者Visual Studio 2012的一部分就可以了。</p>
 <p>我们以Visual Studio 2013版本的为例。注意下，咱们不需要先安装Visual Studio 2013在电脑上然后再安装SSDT-BI。安装程序会安装Visual Studio 2013 shell然后提供BI工具作为一个组件。SSDT-BI安装将会添加以下组件：</p>
 <ul>
@@ -3939,13 +3939,13 @@ SELECT * FROM dbo.duplicateTest
 <li>Microsoft Report Viewer 2014 Runtime.</li>
 </ul>
 <p>正式的安装过程跟SQL Server安装过程也很像。注意不管是否安装SQL Server 2014数据库程序，以下界面都选择全新安装。我安装的文件名称：SSDTBI_x86_CHS.exe，你可能会去找x64版本的，但是没有这个版本，官网下载的都是x86的，但是不影响安装。</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-8.jpg" alt="SQL-Server-2014-SSDT-Install-8"></p>
+<p><img src="/img/posts/SQL-Server-2014-SSDT-Install-8.jpg" alt="SQL-Server-2014-SSDT-Install-8"></p>
 <p>安装过程的以下界面勾选SQL Server Data Tools - Business Intelligence就可以了。</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-5.jpg" alt="SQL-Server-2014-SSDT-Install-5"></p>
+<p><img src="/img/posts/SQL-Server-2014-SSDT-Install-5.jpg" alt="SQL-Server-2014-SSDT-Install-5"></p>
 <p>安装好以后，在开始菜单出现 SQL Server Data Tools for Visual Studio 2013选项。</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-6.jpg" alt="SQL-Server-2014-SSDT-Install-6"></p>
+<p><img src="/img/posts/SQL-Server-2014-SSDT-Install-6.jpg" alt="SQL-Server-2014-SSDT-Install-6"></p>
 <p>现在，我们可以打开SSDT for Visual Studio 2013来创建SSIS,SSAS,SSRS项目方案了。</p>
-<p><img src="http://www.c-xuan.com/images/posts/SQL-Server-2014-SSDT-Install-7.jpg" alt="SQL-Server-2014-SSDT-Install-7"></p>
+<p><img src="/img/posts/SQL-Server-2014-SSDT-Install-7.jpg" alt="SQL-Server-2014-SSDT-Install-7"></p>
 ]]></content>
       
         <categories>

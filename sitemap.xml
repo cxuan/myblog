@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://c-xuan.com/about/index.html</loc>
+    
+    <lastmod>2019-01-08T15:15:45.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://c-xuan.com/2016/04/24/SQL-Server-2014-SSDT-Install/</loc>
+    
+    <lastmod>2019-01-08T15:09:55.870Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://c-xuan.com/README.html</loc>
     
-    <lastmod>2019-01-05T08:53:23.345Z</lastmod>
+    <lastmod>2019-01-05T09:01:20.241Z</lastmod>
     
   </url>
   
@@ -103,13 +117,6 @@
     <loc>https://c-xuan.com/2017/11/28/20171128001/</loc>
     
     <lastmod>2017-11-27T16:00:00.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://c-xuan.com/about/index.html</loc>
-    
-    <lastmod>2017-11-11T05:38:50.925Z</lastmod>
     
   </url>
   
@@ -306,13 +313,6 @@
     <loc>https://c-xuan.com/2016/04/07/SSIS-Pivot/</loc>
     
     <lastmod>2016-09-25T12:21:52.607Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://c-xuan.com/2016/04/24/SQL-Server-2014-SSDT-Install/</loc>
-    
-    <lastmod>2016-09-25T12:19:02.047Z</lastmod>
     
   </url>
   

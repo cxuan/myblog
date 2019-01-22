@@ -175,6 +175,161 @@
   </entry>
   
   <entry>
+    <title>有趣的403页面设计</title>
+    <link href="https://c-xuan.com/2018/11/18/20181118001_403_pages/"/>
+    <id>https://c-xuan.com/2018/11/18/20181118001_403_pages/</id>
+    <published>2018-11-18T11:16:42.000Z</published>
+    <updated>2019-01-22T13:59:08.580Z</updated>
+    
+    <content type="html"><![CDATA[<p>在访问网站的时候，会时不时的出现403 Forbidden错误，浏览器会给出403 Forbidden错误提示，在打开Access Error中列出的URL之后, 出现以下错误：</p>
+<blockquote>
+<p>403 Forbidden<br> Access to this resource on the server is denied!<br> Powered By LiteSpeed Web Server<br> LiteSpeed Technologies is not responsible for administration and contents of this web site!</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="403状态码"><a href="#403状态码" class="headerlink" title="403状态码"></a>403状态码</h3><p>403错误是网站访问过程中，常见的错误提示。资源不可用，服务器理解客户的请求，但拒绝处理它。通常由于服务器上文件或目录的权限设置导致，比如IIS或者apache设置了访问权限不当。</p>
+<p>下面看一些有意思的403页面设计，撇开实不实用，能看见几回等等等，，，专注于设计。</p>
+<center><img src="/img/posts/20181118001-01.gif" alt="404page"></center>
+
+<ul>
+<li>作者：Mansoour</li>
+<li>使用技术：HTML / CSS</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/Mansoour/pen/LgGGvm" target="_blank" rel="external">https://codepen.io/Mansoour/pen/LgGGvm</a></li>
+</ul>
+<center><img src="/img/posts/20181118001-02.gif" alt="404page"></center>
+
+<ul>
+<li>作者：lsgrrd</li>
+<li>使用技术：HTML / CSS (SCSS)</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/lsgrrd/pen/BObbYY" target="_blank" rel="external">https://codepen.io/lsgrrd/pen/BObbYY</a></li>
+</ul>
+<center><img src="/img/posts/20181118001-03.gif" alt="404page"></center>
+
+<ul>
+<li>作者：ycw</li>
+<li>使用技术：HTML (Pug) / CSS (Less)</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/ycw/pen/BObmJr" target="_blank" rel="external">https://codepen.io/ycw/pen/BObmJr</a></li>
+</ul>
+<center><img src="/img/posts/20181118001-04.gif" alt="404page"></center>
+
+<ul>
+<li>作者：Aimie | Blissful Lemon</li>
+<li>使用技术：HTML / CSS</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/ablissfullemon/pen/zJepap" target="_blank" rel="external">https://codepen.io/ablissfullemon/pen/zJepap</a></li>
+</ul>
+<center><img src="/img/posts/20181118001-05.gif" alt="404page"></center>
+
+<ul>
+<li>作者：Sean B</li>
+<li>使用技术：HTML / CSS (SCSS) / JavaScript</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/Chesswithsean/pen/ZMwagQ" target="_blank" rel="external">https://codepen.io/Chesswithsean/pen/ZMwagQ</a></li>
+</ul>
+<center><img src="/img/posts/20181118001-06.png" alt="404page"></center>
+
+<ul>
+<li>作者：Blessing Oni</li>
+<li>使用技术：HTML / CSS (SCSS)</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/blecaf/pen/EervOE" target="_blank" rel="external">https://codepen.io/blecaf/pen/EervOE</a></li>
+</ul>
+<center><img src="/img/posts/20181118001-07.gif" alt="404page"></center>
+
+<ul>
+<li>作者：Arturo Wibawa</li>
+<li>使用技术：HTML / CSS (SCSS)</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/artcoholic/pen/ZMVNMw" target="_blank" rel="external">https://codepen.io/artcoholic/pen/ZMVNMw</a></li>
+</ul>
+<center><img src="/img/posts/20181118001-08.png" alt="404page"></center>
+
+<ul>
+<li>作者：Leena Lavanya</li>
+<li>使用技术：HTML / CSS / JavaScript</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/leenalavanya/pen/RYqvgK" target="_blank" rel="external">https://codepen.io/leenalavanya/pen/RYqvgK</a></li>
+</ul>
+<center><img src="/img/posts/20181118001-09.gif" alt="404page"></center>
+
+<ul>
+<li>作者：Cassidy Williams</li>
+<li>使用技术：HTML (Haml) / CSS (Less)</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/cassidoo/pen/rZQQrj" target="_blank" rel="external">https://codepen.io/cassidoo/pen/rZQQrj</a></li>
+</ul>
+<center><img src="/img/posts/20181118001-10.gif" alt="404page"></center>
+
+<ul>
+<li>作者：creme</li>
+<li>使用技术：HTML / CSS (SCSS) / JavaScript</li>
+<li>依赖库：jquery.js, tweenmax.js</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/creme/pen/VGVpbJ" target="_blank" rel="external">https://codepen.io/creme/pen/VGVpbJ</a></li>
+</ul>
+<center><img src="/img/posts/20181118001-11.gif" alt="404page"></center>
+
+<ul>
+<li>作者：Mariana</li>
+<li>使用技术：HTML / CSS / JavaScript</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/marianab/pen/EedpEb" target="_blank" rel="external">https://codepen.io/marianab/pen/EedpEb</a></li>
+</ul>
+<center><img src="/img/posts/20181118001-12.png" alt="404page"></center>
+
+<ul>
+<li>作者：A van Hagen</li>
+<li>使用技术：HTML / CSS (SCSS)</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/anjanas_dh/pen/ZMqKwb" target="_blank" rel="external">https://codepen.io/anjanas_dh/pen/ZMqKwb</a></li>
+</ul>
+<center><img src="/img/posts/20181118001-13.gif" alt="404page"></center>
+
+<ul>
+<li>作者：Nuuou</li>
+<li>使用技术：HTML / CSS (SCSS) / JavaScript (Babel)</li>
+<li>依赖库：bootstrap-reboot.css, tweenmax.js</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/Nuuou/pen/GXYmJv" target="_blank" rel="external">https://codepen.io/Nuuou/pen/GXYmJv</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在访问网站的时候，会时不时的出现403 Forbidden错误，浏览器会给出403 Forbidden错误提示，在打开Access Error中列出的URL之后, 出现以下错误：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;403 Forbidden&lt;br&gt; Access to this resource on the server is denied!&lt;br&gt; Powered By LiteSpeed Web Server&lt;br&gt; LiteSpeed Technologies is not responsible for administration and contents of this web site!&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="码路刺客" scheme="https://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
+    
+    
+      <category term="原创" scheme="https://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+      <category term="CSS" scheme="https://c-xuan.com/tags/CSS/"/>
+    
+      <category term="JavaScript" scheme="https://c-xuan.com/tags/JavaScript/"/>
+    
+      <category term="前端" scheme="https://c-xuan.com/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+  </entry>
+  
+  <entry>
     <title>有趣的404页面设计</title>
     <link href="https://c-xuan.com/2018/11/14/20181114001_404_pages/"/>
     <id>https://c-xuan.com/2018/11/14/20181114001_404_pages/</id>
@@ -1327,60 +1482,6 @@
     
       &lt;p&gt;在基于数据库的一般应用中，查询的需求总要大于删除和修改。为了避免对于树形结构查询时的“递归”过程，基于Tree的前序遍历设计一种全新的无递归查询、无限分组的左右值编码方案，来保存该树的数据。&lt;/p&gt;
 &lt;center&gt;&lt;img src=&quot;/img/posts/tree-table-store4-1.gif&quot;&gt;&lt;/img&gt;&lt;/center&gt;
-    
-    </summary>
-    
-      <category term="码路刺客" scheme="https://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
-    
-    
-      <category term="数据库" scheme="https://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-      <category term="转载" scheme="https://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>树形结构数据存储方案（三）：闭包表</title>
-    <link href="https://c-xuan.com/2017/03/06/tree-table-store3/"/>
-    <id>https://c-xuan.com/2017/03/06/tree-table-store3/</id>
-    <published>2017-03-06T15:50:20.000Z</published>
-    <updated>2017-03-06T16:05:44.650Z</updated>
-    
-    <content type="html"><![CDATA[<p>将Closure Table翻译成闭包表不知道是否合适，闭包表的思路和物化路径差不多，都是空间换时间，Closure Table，一种更为彻底的全路径结构，分别记录路径上相关结点的全展开形式。能明晰任意两结点关系而无须多余查询，级联删除和结点移动也很方便。但是它的存储开销会大一些，除了表示结点的Meta信息，还需要一张专用的关系表。</p>
-<a id="more"></a>
-<p>以下图举例数据举例：</p>
-<center><img src="/img/posts/tree-table-store3-1.gif"></center>
-
-<p>创建主表：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> nodeInfo (</div><div class="line">node_id <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</div><div class="line">node_name <span class="built_in">VARCHAR</span> (<span class="number">255</span>),</div><div class="line">PRIMARY <span class="keyword">KEY</span> (<span class="string">`node_id`</span>)</div><div class="line">) <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span> = utf8;</div></pre></td></tr></table></figure>
-<p>创建关系表：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> nodeRelationship (</div><div class="line">ancestor <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</div><div class="line">descendant <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</div><div class="line">distance <span class="built_in">INT</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</div><div class="line">PRIMARY <span class="keyword">KEY</span> (ancestor, descendant)</div><div class="line">) <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span> = utf8;</div></pre></td></tr></table></figure>
-<p>其中</p>
-<ul>
-<li>Ancestor代表祖先节点</li>
-<li>Descendant代表后代节点</li>
-<li>Distance 祖先距离后代的距离</li>
-</ul>
-<p>添加数据（创建存储过程）</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> DEFINER = <span class="string">`root`</span>@<span class="string">`localhost`</span> <span class="keyword">PROCEDURE</span> <span class="string">`AddNode`</span>(<span class="string">`_parent_name`</span> <span class="built_in">varchar</span>(<span class="number">255</span>),<span class="string">`_node_name`</span> <span class="built_in">varchar</span>(<span class="number">255</span>))</div><div class="line"><span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">DECLARE</span> _ancestor <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">DECLARE</span> _descendant <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">DECLARE</span> _parent <span class="built_in">INT</span>;</div><div class="line">IF NOT EXISTS(<span class="keyword">SELECT</span> node_id <span class="keyword">From</span> nodeinfo <span class="keyword">WHERE</span> node_name = _node_name)</div><div class="line"><span class="keyword">THEN</span></div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> nodeinfo (node_name) <span class="keyword">VALUES</span>(_node_name);</div><div class="line"><span class="keyword">SET</span> _descendant = (<span class="keyword">SELECT</span> node_id <span class="keyword">FROM</span> nodeinfo <span class="keyword">WHERE</span> node_name = _node_name);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> noderelationship (ancestor,descendant,distance) <span class="keyword">VALUES</span>(_descendant,_descendant,<span class="number">0</span>);</div><div class="line">IF EXISTS (<span class="keyword">SELECT</span> node_id <span class="keyword">FROM</span> nodeinfo <span class="keyword">WHERE</span> node_name = _parent_name)</div><div class="line"><span class="keyword">THEN</span></div><div class="line"><span class="keyword">SET</span> _parent = (<span class="keyword">SELECT</span> node_id <span class="keyword">FROM</span> nodeinfo <span class="keyword">WHERE</span> node_name = _parent_name);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> noderelationship (ancestor,descendant,distance) <span class="keyword">SELECT</span> ancestor,_descendant,distance+<span class="number">1</span> <span class="keyword">from</span> noderelationship <span class="keyword">where</span> descendant = _parent;</div><div class="line"><span class="keyword">END</span> <span class="keyword">IF</span>;</div><div class="line"><span class="keyword">END</span> <span class="keyword">IF</span>;</div><div class="line"><span class="keyword">END</span>;</div></pre></td></tr></table></figure>
-<p>完成后2张表的数据大致是这样的：（注意：每个节点都有一条到其本身的记录。）</p>
-<center><img src="/img/posts/tree-table-store3-2.gif"></center>
-
-<p>查询Fruit下所有的子节点：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span></div><div class="line">n3.node_name</div><div class="line"><span class="keyword">FROM</span></div><div class="line">nodeinfo n1</div><div class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> noderelationship n2 <span class="keyword">ON</span> n1.node_id = n2.ancestor</div><div class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> nodeinfo n3 <span class="keyword">ON</span> n2.descendant = n3.node_id</div><div class="line"><span class="keyword">WHERE</span></div><div class="line">n1.node_name = <span class="string">'Fruit'</span></div><div class="line"><span class="keyword">AND</span> n2.distance != <span class="number">0</span></div></pre></td></tr></table></figure>
-<p>查询Fruit下直属子节点</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span></div><div class="line">n3.node_name</div><div class="line"><span class="keyword">FROM</span></div><div class="line">nodeinfo n1</div><div class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> noderelationship n2 <span class="keyword">ON</span> n1.node_id = n2.ancestor</div><div class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> nodeinfo n3 <span class="keyword">ON</span> n2.descendant = n3.node_id</div><div class="line"><span class="keyword">WHERE</span></div><div class="line">n1.node_name = <span class="string">'Fruit'</span></div><div class="line"><span class="keyword">AND</span> n2.distance = <span class="number">1</span></div></pre></td></tr></table></figure>
-<p>查询Fruit所处的层级：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span></div><div class="line">n2.*, n3.node_name</div><div class="line"><span class="keyword">FROM</span></div><div class="line">nodeinfo n1</div><div class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> noderelationship n2 <span class="keyword">ON</span> n1.node_id = n2.descendant</div><div class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> nodeinfo n3 <span class="keyword">ON</span> n2.ancestor = n3.node_id</div><div class="line"><span class="keyword">WHERE</span></div><div class="line">n1.node_name = <span class="string">'Fruit'</span></div><div class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span></div><div class="line">n2.distance <span class="keyword">DESC</span></div></pre></td></tr></table></figure>
-<p>另外要删除节点也非常的简单，这里就不再做过多的阐述。<br>参考链接：</p>
-<p>  ● <a href="https://coderwall.com/p/lixing/closure-tables-for-browsing-trees-in-sql" target="_blank" rel="external">https://coderwall.com/p/lixing/closure-tables-for-browsing-trees-in-sql</a></p>
-<p>转自<a href="https://www.biaodianfu.com/closure-table.html" target="_blank" rel="external">https://www.biaodianfu.com/closure-table.html</a></p>
-<p>作者：标点符</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;将Closure Table翻译成闭包表不知道是否合适，闭包表的思路和物化路径差不多，都是空间换时间，Closure Table，一种更为彻底的全路径结构，分别记录路径上相关结点的全展开形式。能明晰任意两结点关系而无须多余查询，级联删除和结点移动也很方便。但是它的存储开销会大一些，除了表示结点的Meta信息，还需要一张专用的关系表。&lt;/p&gt;
     
     </summary>
     

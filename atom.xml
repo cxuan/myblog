@@ -175,6 +175,116 @@
   </entry>
   
   <entry>
+    <title>Html中使用CSS制作火焰燃烧动画</title>
+    <link href="https://c-xuan.com/2018/11/24/20181124001_css_fire/"/>
+    <id>https://c-xuan.com/2018/11/24/20181124001_css_fire/</id>
+    <published>2018-11-24T11:16:42.000Z</published>
+    <updated>2018-11-24T11:16:42.000Z</updated>
+    
+    <content type="html"><![CDATA[<center><img src="/img/posts/20181124001-01.gif" alt="css fire"></center>
+
+<a id="more"></a>
+<ul>
+<li>作者：Chalda Pnuzig</li>
+<li>使用技术：HTML (Pug) / CSS (SCSS)</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/chalda/pen/wRJYmz" target="_blank" rel="external">https://codepen.io/chalda/pen/wRJYmz</a></li>
+</ul>
+<center><img src="/img/posts/20181124001-02.gif" alt="css fire"></center>
+
+<ul>
+<li>作者：Jamie Coulter</li>
+<li>使用技术：HTML / CSS (SCSS)</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/jcoulterdesign/pen/yGgxOY" target="_blank" rel="external">https://codepen.io/jcoulterdesign/pen/yGgxOY</a></li>
+</ul>
+<center><img src="/img/posts/20181124001-03.gif" alt="css fire"></center>
+
+<ul>
+<li>作者：Ivan Grozdic</li>
+<li>使用技术：HTML / CSS / JavaScript</li>
+<li>依赖库：bootstrap.css, jquery.js, popper.js, bootstrap.js</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/ig_design/pen/NeRxzj" target="_blank" rel="external">https://codepen.io/ig_design/pen/NeRxzj</a></li>
+</ul>
+<center><img src="/img/posts/20181124001-04.gif" alt="css fire"></center>
+
+<ul>
+<li>作者：Jon Kantner</li>
+<li>使用技术：HTML (Pug) / CSS (SCSS)</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/jkantner/pen/gKRKKb" target="_blank" rel="external">https://codepen.io/jkantner/pen/gKRKKb</a></li>
+</ul>
+<center><img src="/img/posts/20181124001-05.gif" alt="css fire"></center>
+
+<ul>
+<li>作者：Yusuke Nakaya</li>
+<li>使用技术：HTML (Pug) / CSS (SCSS)</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/YusukeNakaya/pen/vJKwZw" target="_blank" rel="external">https://codepen.io/YusukeNakaya/pen/vJKwZw</a></li>
+</ul>
+<center><img src="/img/posts/20181124001-06.gif" alt="css fire"></center>
+
+<ul>
+<li>作者：Satrio Yamanda</li>
+<li>使用技术：HTML / CSS</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/yamanda/pen/RpNMaY" target="_blank" rel="external">https://codepen.io/yamanda/pen/RpNMaY</a></li>
+</ul>
+<center><img src="/img/posts/20181124001-07.gif" alt="css fire"></center>
+
+<ul>
+<li>作者：Tahina</li>
+<li>使用技术：HTML / CSS</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/tahina/pen/WRXNwQ" target="_blank" rel="external">https://codepen.io/tahina/pen/WRXNwQ</a></li>
+</ul>
+<center><img src="/img/posts/20181124001-08.gif" alt="css fire"></center>
+
+<ul>
+<li>作者：Zed Dash</li>
+<li>使用技术：HTML / CSS (SCSS)</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/z-/pen/JXVpgp" target="_blank" rel="external">https://codepen.io/z-/pen/JXVpgp</a></li>
+</ul>
+<center><img src="/img/posts/20181124001-09.gif" alt="css fire"></center>
+
+<ul>
+<li>作者：Deepak K Vijayan</li>
+<li>使用技术：HTML (Haml) / CSS (SCSS)</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/BrianBravo/pen/JaFfz" target="_blank" rel="external">https://codepen.io/BrianBravo/pen/JaFfz</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;center&gt;&lt;img src=&quot;/img/posts/20181124001-01.gif&quot; alt=&quot;css fire&quot;&gt;&lt;/img&gt;&lt;/center&gt;
+    
+    </summary>
+    
+      <category term="码路刺客" scheme="https://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
+    
+    
+      <category term="原创" scheme="https://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+      <category term="CSS" scheme="https://c-xuan.com/tags/CSS/"/>
+    
+      <category term="JavaScript" scheme="https://c-xuan.com/tags/JavaScript/"/>
+    
+      <category term="前端" scheme="https://c-xuan.com/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+  </entry>
+  
+  <entry>
     <title>有趣的403页面设计</title>
     <link href="https://c-xuan.com/2018/11/18/20181118001_403_pages/"/>
     <id>https://c-xuan.com/2018/11/18/20181118001_403_pages/</id>
@@ -1409,79 +1519,6 @@
       &lt;p&gt;前面的一篇文章介绍了左右值编码，不知道大家注意到了没有，如果数据庞大，每次更新都需要更新差不多全表，效率较低没有更好的方式？今天我们就来研究下区间嵌套法。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;区间嵌套法原理&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;如果节点区间&lt;code&gt;[clft, crgt]&lt;/code&gt;与&lt;code&gt;[plft, prgt]&lt;/code&gt;存在如下关系：&lt;code&gt;plft &amp;lt;= clft and crgt &amp;gt;= prgt&lt;/code&gt;，则&lt;code&gt;[clft, crgt]&lt;/code&gt;区间里的点是&lt;code&gt;[plft, prgt]&lt;/code&gt;的子节点。基于此假设我们就可以通过对区间的不断的向下划来获取新的区间。举例：如果在区间&lt;code&gt;[plft, prgt]&lt;/code&gt;中存在一个空白区间&lt;code&gt;[lft1, rgt1]&lt;/code&gt;，如果要加入一个&lt;code&gt;[plft,lft1]&lt;/code&gt;、&lt;code&gt;[rgt1,prgt]&lt;/code&gt;同级的区间，只需插入节点：&lt;code&gt;[(2*lft1+rgt1)/3&lt;/code&gt;,  &lt;code&gt;(rgt1+2*lft)/3]&lt;/code&gt;。在添加完节点后我们还留下&lt;code&gt;[lft1,(2*lft1+rgt1)/3]&lt;/code&gt;和 &lt;code&gt;[(rgt1+2*lft)/3,rgt1]&lt;/code&gt;两个空余的空间用来添加更多的子节点。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="码路刺客" scheme="https://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
-    
-    
-      <category term="数据库" scheme="https://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-      <category term="转载" scheme="https://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>树形结构数据存储方案（四）：左右值编码</title>
-    <link href="https://c-xuan.com/2017/03/07/tree-table-store4/"/>
-    <id>https://c-xuan.com/2017/03/07/tree-table-store4/</id>
-    <published>2017-03-07T15:34:08.000Z</published>
-    <updated>2017-03-07T16:12:54.036Z</updated>
-    
-    <content type="html"><![CDATA[<p>在基于数据库的一般应用中，查询的需求总要大于删除和修改。为了避免对于树形结构查询时的“递归”过程，基于Tree的前序遍历设计一种全新的无递归查询、无限分组的左右值编码方案，来保存该树的数据。</p>
-<center><img src="/img/posts/tree-table-store4-1.gif"></center>
-
-<a id="more"></a>
-<p>第一次看见这种表结构，相信大部分人都不清楚左值（Lft）和右值（Rgt）是如何计算出来的，而且这种表设计似乎并没有保存父子节点的继承关系。但当你用手指指着表中的数字从1数到18，你应该会发现点什么吧。对，你手指移动的顺序就是对这棵树进行前序遍历的顺序，如下图所示。当我们从根节点Food左侧开始，标记为1，并沿前序遍历的方向，依次在遍历的路径上标注数字，最后我们回到了根节点Food，并在右边写上了18。</p>
-<center><img src="/img/posts/tree-table-store4-2.gif"></center>
-
-<p>依据此设计，我们可以推断出所有左值大于2，并且右值小于11的节点都是Fruit的后续节点，整棵树的结构通过左值和右值存储了下来。然而，这还不够，我们的目的是能够对树进行CRUD操作，即需要构造出与之配套的相关算法。按照深度优先，由左到右的原则遍历整个树，从1开始给每个节点标注上left值和right值，并将这两个值存入对应的name之中。</p>
-<p>如何查询？</p>
-<p>1、获取某个节点下的所有子孙节点，以Fruit为例：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Tree <span class="keyword">WHERE</span> Lft &gt; <span class="number">2</span> <span class="keyword">AND</span> Lft &lt; <span class="number">11</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> Lft <span class="keyword">ASC</span></div></pre></td></tr></table></figure>
-<p>2、获取子孙节点总数<br>子孙总数 = (右值–左值–1)/2，以Fruit为例，其子孙总数为：(11–2–1)/2 = 4</p>
-<p>3、 获取节点在树中所处的层数，以Fruit为例：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(*) <span class="keyword">FROM</span> Tree <span class="keyword">WHERE</span> Lft &lt;= <span class="number">2</span> <span class="keyword">AND</span> Rgt &gt;=<span class="number">11</span></div></pre></td></tr></table></figure>
-<p>4、 获取当前节点所在路径，以Fruit为例：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Tree <span class="keyword">WHERE</span> Lft &lt;= <span class="number">2</span> <span class="keyword">AND</span> Rgt &gt;=<span class="number">11</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> Lft <span class="keyword">ASC</span></div></pre></td></tr></table></figure>
-<p>在日常的处理中我们经常还会遇到的需要获取某一个节点的直属上级、同级、直属下级。为了更好的描述层级关系，我们可以为Tree建立一个视图，添加一个层次列，该列数值可以编写一个自定义函数来计算：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">FUNCTION</span> <span class="string">`CountLayer`</span>(<span class="string">`_node_id`</span> <span class="built_in">int</span>)</div><div class="line"><span class="keyword">RETURNS</span> <span class="built_in">int</span>(<span class="number">11</span>)</div><div class="line"><span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">DECLARE</span> _result <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">DECLARE</span> _lft <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">DECLARE</span> _rgt <span class="built_in">INT</span>;</div><div class="line">IF EXISTS(<span class="keyword">SELECT</span> Node_id <span class="keyword">FROM</span> Tree <span class="keyword">WHERE</span> Node_id = _node_id)</div><div class="line"><span class="keyword">THEN</span></div><div class="line"><span class="keyword">SELECT</span> Lft,Rgt <span class="keyword">FROM</span> Tree <span class="keyword">WHERE</span> Node_id = _node_id <span class="keyword">INTO</span> _lft,_rgt;</div><div class="line"><span class="keyword">SET</span> _result = (<span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(<span class="number">1</span>) <span class="keyword">FROM</span> Tree <span class="keyword">WHERE</span> Lft &lt;= _lft <span class="keyword">AND</span> Rgt &gt;= _rgt); </div><div class="line">RETURN _result;</div><div class="line">ELSE</div><div class="line">RETURN 0;</div><div class="line"><span class="keyword">END</span> <span class="keyword">IF</span>;</div><div class="line"><span class="keyword">END</span>;</div></pre></td></tr></table></figure>
-<p>在添加完函数以后，我们创建一个a视图，添加新的层次列：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">VIEW</span> <span class="string">`NewView`</span><span class="keyword">AS</span> </div><div class="line"><span class="keyword">SELECT</span> Node_id, <span class="keyword">Name</span>, Lft, Rgt, CountLayer(Node_id) <span class="keyword">AS</span> Layer <span class="keyword">FROM</span> Tree <span class="keyword">ORDER</span> <span class="keyword">BY</span> Lft ;</div></pre></td></tr></table></figure>
-<p>5、 获取当前节点父节点,以Fruit为例：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> treeview <span class="keyword">WHERE</span> Lft &lt;= <span class="number">2</span> <span class="keyword">AND</span> Rgt &gt;=<span class="number">11</span> <span class="keyword">AND</span> Layer=<span class="number">1</span></div></pre></td></tr></table></figure>
-<p>6、 获取所有直属子节点，以Fruit为例：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> treeview <span class="keyword">WHERE</span> Lft <span class="keyword">BETWEEN</span> <span class="number">2</span> <span class="keyword">AND</span> <span class="number">11</span> <span class="keyword">AND</span> Layer=<span class="number">3</span></div></pre></td></tr></table></figure>
-<p>7、 获取所有兄弟节点，以Fruit为例：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> treeview <span class="keyword">WHERE</span> Rgt &gt; <span class="number">11</span> <span class="keyword">AND</span> Rgt &lt; (<span class="keyword">SELECT</span> Rgt <span class="keyword">FROM</span> treeview <span class="keyword">WHERE</span> Lft &lt;= <span class="number">2</span> <span class="keyword">AND</span> Rgt &gt;=<span class="number">11</span> <span class="keyword">AND</span> Layer=<span class="number">1</span>) <span class="keyword">AND</span> Layer=<span class="number">2</span></div></pre></td></tr></table></figure>
-<p>8、 返回所有叶子节点</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Tree <span class="keyword">WHERE</span> Rgt = Lft + <span class="number">1</span></div></pre></td></tr></table></figure>
-<p><strong>如何创建树？如何新增数据？</strong></p>
-<p>上面已经介绍了如何检索结果，那么如何才能增加新的节点呢？Nested set 最重要是一定要有一个根节点作为所有节点的起点，而且通常这个节点是不被使用的。为了便于控制查询级别，在建表的时候建议添加parent_id配合之联结列表方式一起使用。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> <span class="string">`Tree`</span> (</div><div class="line"><span class="string">`node_id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</div><div class="line"><span class="string">`parent_id`</span> <span class="built_in">int</span>(<span class="number">10</span>) <span class="keyword">UNSIGNED</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,</div><div class="line"><span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</div><div class="line"><span class="string">`lft`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,</div><div class="line"><span class="string">`rgt`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0'</span>,</div><div class="line">PRIMARY <span class="keyword">KEY</span> (<span class="string">`node_id`</span>),</div><div class="line"><span class="keyword">KEY</span> <span class="string">`idx_left_right`</span> (<span class="string">`lft`</span>,<span class="string">`rgt`</span>)</div><div class="line">) <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8;</div></pre></td></tr></table></figure>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`Tree`</span> (parent_id,<span class="keyword">name</span>,lft,rgt) <span class="keyword">VALUES</span> ( <span class="number">0</span>,<span class="string">'Food'</span>,<span class="number">1</span>,<span class="number">2</span>)</div></pre></td></tr></table></figure>
-<p>添加子节点（子节点起始处），以在Food下添加子节点Fruit为例：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">LOCK</span> <span class="keyword">TABLE</span> Tree WRITE;</div><div class="line"><span class="keyword">SELECT</span> @parent_id := node_id, @myLeft := lft <span class="keyword">FROM</span> Tree <span class="keyword">WHERE</span> <span class="keyword">name</span> = <span class="string">'Food'</span>;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> rgt = rgt + <span class="number">2</span> <span class="keyword">WHERE</span> rgt &gt; @myLeft;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> lft = lft + <span class="number">2</span> <span class="keyword">WHERE</span> lft &gt; @myLeft;</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> Tree(parent_id, <span class="keyword">name</span>, lft, rgt) <span class="keyword">VALUES</span>(@parent_id, <span class="string">'Fruit'</span>, @myLeft + <span class="number">1</span>, @myLeft + <span class="number">2</span>);</div><div class="line"><span class="keyword">UNLOCK</span> <span class="keyword">TABLES</span>;</div></pre></td></tr></table></figure>
-<p>如需在末尾追加就需要以下方式进行（以在Red下添加Apple为例）：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">LOCK</span> <span class="keyword">TABLE</span> Tree WRITE;</div><div class="line"><span class="keyword">SELECT</span> @parent_id := node_id , @myRight := rgt <span class="keyword">FROM</span> Tree <span class="keyword">WHERE</span> <span class="keyword">name</span> = <span class="string">'Red'</span>;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> rgt = rgt + <span class="number">2</span> <span class="keyword">WHERE</span> rgt &gt;= @myRight;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> lft = lft + <span class="number">2</span> <span class="keyword">WHERE</span> lft &gt; @myRight;</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> Tree(parent_id, <span class="keyword">name</span>, lft, rgt) <span class="keyword">VALUES</span>(@parent_id, <span class="string">'Apple'</span>, @myRight, @myRight + <span class="number">1</span>);</div><div class="line"><span class="keyword">UNLOCK</span> <span class="keyword">TABLES</span>;</div></pre></td></tr></table></figure>
-<p>在节点A后面添加同级节点（以在Yellow后面添加Green为例）</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">LOCK</span> <span class="keyword">TABLE</span> Tree WRITE;</div><div class="line"><span class="keyword">SELECT</span> @parent_id := parent_id , @myRight := rgt <span class="keyword">FROM</span> Tree <span class="keyword">WHERE</span> <span class="keyword">name</span> = <span class="string">'Yellow'</span>;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> rgt = rgt + <span class="number">2</span> <span class="keyword">WHERE</span> rgt &gt; @myRight;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> lft = lft + <span class="number">2</span> <span class="keyword">WHERE</span> lft &gt; @myRight;</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> Tree(parent_id, <span class="keyword">name</span>, lft, rgt) <span class="keyword">VALUES</span>(@parent_id, <span class="string">'Green'</span>, @myRight+<span class="number">1</span>, @myRight+<span class="number">2</span>);</div><div class="line"><span class="keyword">UNLOCK</span> <span class="keyword">TABLES</span>;</div></pre></td></tr></table></figure>
-<p>以上讨论的添加节点指的都是添加末端节点，即插入的这个节点不是当前已存在节点的父节点。如果需要插入非末端节点要怎么办呢？<br>这个过程可以将流程分为2步，首先新增节点，接下里再将需要的节点移到新增的节点下级。节点移动方法(以将Apple移到Yellow中为例)：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">LOCK</span> <span class="keyword">TABLE</span> Tree WRITE;</div><div class="line"><span class="keyword">SELECT</span> @nodeId := node_id , @myLeft := lft , @myRight := rgt <span class="keyword">FROM</span> Tree <span class="keyword">WHERE</span> <span class="keyword">name</span> = <span class="string">'Apple'</span>;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> lft = lft - (@myRight - @myLeft) - <span class="number">1</span> <span class="keyword">WHERE</span> lft &gt; @myRight;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> rgt = rgt - (@myRight - @myLeft) - <span class="number">1</span> <span class="keyword">WHERE</span> rgt &gt; @myRight;</div><div class="line"><span class="keyword">SELECT</span> @parent_id := node_id , @<span class="keyword">Left</span> := lft , @<span class="keyword">Right</span> := rgt <span class="keyword">FROM</span> Tree <span class="keyword">WHERE</span> <span class="keyword">name</span> = <span class="string">'Yellow'</span>;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> lft = lft + (@myRight - @myLeft) + <span class="number">1</span> <span class="keyword">WHERE</span> lft &gt; @<span class="keyword">Left</span>;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> rgt = rgt + (@myRight - @myLeft) + <span class="number">1</span> <span class="keyword">WHERE</span> lft &gt; @<span class="keyword">Left</span>;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> parent_id = @parent_id <span class="keyword">WHERE</span> <span class="keyword">name</span> = node_id = @nodeId;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> lft = @<span class="keyword">Left</span> + lft - @myLeft + <span class="number">1</span>, rgt = @<span class="keyword">Left</span> + lft - @myLeft + <span class="number">1</span> + (@myRight - @myLeft) <span class="keyword">WHERE</span> lft &gt;= @myLeft <span class="keyword">AND</span> rgt &lt;= @myRight;</div><div class="line"><span class="keyword">UNLOCK</span> <span class="keyword">TABLES</span>;</div></pre></td></tr></table></figure>
-<p><strong>删除节点（包含子节点）</strong></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">LOCK</span> <span class="keyword">TABLE</span> Tree WRITE;</div><div class="line"><span class="keyword">SELECT</span> @myLeft := lft , @myRight := rgt <span class="keyword">FROM</span> Tree <span class="keyword">WHERE</span> <span class="keyword">name</span> = <span class="string">'Apple'</span>;</div><div class="line"><span class="keyword">DELETE</span> Tree <span class="keyword">WHERE</span> lft &gt;= @myLeft <span class="keyword">AND</span> rgt &lt;= @myRight;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> lft = lft - (@myRight - @myLeft) - <span class="number">1</span> <span class="keyword">WHERE</span> lft &gt; @myRight;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> rgt = rgt - (@myRight - @myLeft) - <span class="number">1</span> <span class="keyword">WHERE</span> rgt &gt; @myRight;</div><div class="line"><span class="keyword">UNLOCK</span> <span class="keyword">TABLES</span>;</div></pre></td></tr></table></figure>
-<p>如果需要只删除该节点，子节点自动上移一级如何处理？</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">LOCK</span> <span class="keyword">TABLE</span> Tree WRITE;</div><div class="line"><span class="keyword">SELECT</span> @parent_id := parent_id , @node_id :=node_id , @myLeft := lft , @myRight := rgt <span class="keyword">FROM</span> Tree <span class="keyword">WHERE</span> <span class="keyword">name</span> = <span class="string">'Red'</span>;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> parent_id = @parent_id <span class="keyword">WHERE</span> parent_id = @node_id</div><div class="line"><span class="keyword">DELETE</span> Tree <span class="keyword">WHERE</span> lft = @myLeft;</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> lft = lft - <span class="number">1</span>,rgt = rgt<span class="number">-1</span> <span class="keyword">Where</span> lft &gt; @myLeft <span class="keyword">AND</span> @rgt &lt; @myRight</div><div class="line"><span class="keyword">UPDATE</span> Tree <span class="keyword">SET</span> lft = lft - <span class="number">2</span>,rgt = rgt<span class="number">-2</span> <span class="keyword">Where</span> lft &gt; @rgt &gt; @myRight</div><div class="line"><span class="keyword">UNLOCK</span> <span class="keyword">TABLES</span>;</div></pre></td></tr></table></figure>
-<p>以上为Nested Set的CURD操作，具体在使用时建议结合事务和存储过程一起使用。本方案的优点时查询非常的方便，缺点就是每次插入删除数据涉及到的更新内容太多，如果树非常大，插入一条数据可能花很长的时间。</p>
-<p>参考链接：<br>  ● <a href="https://www.sitepoint.com/hierarchical-data-database/" target="_blank" rel="external">https://www.sitepoint.com/hierarchical-data-database/</a><br>  ● <a href="https://packagist.org/search/?q=Nested+Set" target="_blank" rel="external">https://packagist.org/search/?q=Nested+Set</a></p>
-<p>转自<a href="https://www.biaodianfu.com/the-nested-set-model.html" target="_blank" rel="external">https://www.biaodianfu.com/the-nested-set-model.html</a></p>
-<p>作者：标点符</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;在基于数据库的一般应用中，查询的需求总要大于删除和修改。为了避免对于树形结构查询时的“递归”过程，基于Tree的前序遍历设计一种全新的无递归查询、无限分组的左右值编码方案，来保存该树的数据。&lt;/p&gt;
-&lt;center&gt;&lt;img src=&quot;/img/posts/tree-table-store4-1.gif&quot;&gt;&lt;/img&gt;&lt;/center&gt;
     
     </summary>
     

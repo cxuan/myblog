@@ -3,6 +3,361 @@
   
     
     <entry>
+      <title><![CDATA[【Atom】autocomplete-python插件报乱码异常问题]]></title>
+      <url>/2019/02/20/20190220002_atom_atuo_err/</url>
+      <content type="html"><![CDATA[<p><a href="https://atom.io/packages/autocomplete-python" target="_blank" rel="external">autocomplete-python</a>插件可以帮助在写python代码时给出丰富的提示并且自动补全代码，换电脑重装该插件后发现按下键盘后，atom右上角总弹出<code>autocomplete-python traceback output:</code>的提示，提示信息还是乱码。</p>
+<center><img src="/img/posts/20190220002-01.png" alt="pyvenv"></center>
+
+<a id="more"></a>
+<p>解决方式是设置<code>Python Executable Paths</code></p>
+<p>进入Atom设置<code>Packages</code>,找到该插件，进入<code>Settings</code></p>
+<center><img src="/img/posts/20190220002-02.png" alt="pyvenv"></center>
+
+<p>在<code>Python Executable Paths</code>中设置python的执行路径，因为本机是安装的Anaconda，环境变量中没有python执行路径。</p>
+<center><img src="/img/posts/20190220002-03.png" alt="pyvenv"></center>
+
+<p>重启Atom后就可以了。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 码路刺客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 原创 </tag>
+            
+            <tag> 工具 </tag>
+            
+            <tag> atom </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Python多个数组合并]]></title>
+      <url>/2019/02/20/20190220001_py_list_merge/</url>
+      <content type="html"><![CDATA[<p>Python中多个数组合并为一个数组的方法整理。</p>
+<a id="more"></a>
+<h3 id="extend方法"><a href="#extend方法" class="headerlink" title="extend方法"></a>extend方法</h3><p>该方法可以扩展数组，会改变原始数组。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">7</span>,<span class="number">5</span>,<span class="number">6</span>]</div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'c'</span>]</div><div class="line">a.extend(b)</div><div class="line">a.extend(c)</div><div class="line">print(a)</div><div class="line"></div><div class="line"><span class="comment">#结果：[1, 2, 3, 4, 7, 5, 6, 'a', 'b', 'h', 12, 'c']</span></div></pre></td></tr></table></figure>
+<h3 id="直接相加"><a href="#直接相加" class="headerlink" title="直接相加"></a>直接相加</h3><p>用<code>+</code>将各数组连接起来。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">7</span>,<span class="number">5</span>,<span class="number">6</span>]</div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'c'</span>]</div><div class="line"></div><div class="line">d = a + b +c</div><div class="line">print(d)</div><div class="line"></div><div class="line"><span class="comment">#结果：[1, 2, 3, 4, 7, 5, 6, 'a', 'b', 'h', 12, 'c']</span></div></pre></td></tr></table></figure>
+<h3 id="flatten方法"><a href="#flatten方法" class="headerlink" title="flatten方法"></a>flatten方法</h3><p><code>flatten()</code>方法是numpy中array数组的方法，使用时要导入包和类型转换。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> array</div><div class="line"></div><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'k'</span>]</div><div class="line">e = [a,b,c]</div><div class="line">e = array(e)</div><div class="line">print(e.flatten())</div><div class="line"></div><div class="line"><span class="comment">#结果：['1' '2' '3' 'a' 'b' 'c' 'h' '12' 'k']</span></div></pre></td></tr></table></figure>
+<p>值得注意的是该方法不适用各数组中元素个数不同的情况。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]  <span class="comment">#元素个数不同</span></div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'k'</span>]</div><div class="line">e = [a,b,c]</div><div class="line">e = array(e)</div><div class="line">print(e.flatten())</div><div class="line"></div><div class="line"><span class="comment">#结果：[list([1, 2, 3, 4]) list(['a', 'b', 'c']) list(['h', 12, 'k'])]</span></div></pre></td></tr></table></figure>
+<h3 id="列表表达式"><a href="#列表表达式" class="headerlink" title="列表表达式"></a>列表表达式</h3><p>使用前得把多个数组放在一个数组中，应用在一个二维数组上。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>] </div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'k'</span>]</div><div class="line">e = [a,b,c]</div><div class="line">e = [y <span class="keyword">for</span> x <span class="keyword">in</span> e <span class="keyword">for</span> y <span class="keyword">in</span> x]</div><div class="line">print(e)</div><div class="line"></div><div class="line">结果：[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'h'</span>, <span class="number">12</span>, <span class="string">'k'</span>]</div></pre></td></tr></table></figure>]]></content>
+      
+        <categories>
+            
+            <category> 码路刺客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 原创 </tag>
+            
+            <tag> Python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Atom编辑器中使用Hydrogen切换Python虚拟环境]]></title>
+      <url>/2019/02/18/20190218001_hydrogen_venv/</url>
+      <content type="html"><![CDATA[<p>使用Anaconda的集成Python环境，自带的Jupyter代码编辑器很不错，可以进行代码交互运行。后来折腾Atom编辑器，在Atom中安装Hydrogen插件也可以达到交互运行目的，而且在Atom中编写代码体验稍微好点。有时候我们会在自己的项目中创建Python虚拟环境，Hydrogen连接Anaconda中的python内核，如何增加python虚拟环境的内核给Hydrogen使用呢？</p>
+<a id="more"></a>
+<h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><p>配置前先确认电脑上安装了<a href="https://www.anaconda.com/" target="_blank" rel="external">Anaconda</a>,代码编辑器<a href="http://www.atom.io/" target="_blank" rel="external">Atom</a>,Atom中安装了<a href="https://nteract.gitbooks.io/hydrogen/" target="_blank" rel="external">Hydrogen</a>插件.</p>
+<p>开始菜单中打开<code>Anaconda Prompt</code>命令行窗口。</p>
+<p>查看当前可用的kernel</p>
+<p><code>jupyter kernelspec list</code></p>
+<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(base) C:<span class="symbol">\W</span>indows<span class="symbol">\s</span>ystem32&gt;jupyter kernelspec list</div><div class="line">Available kernels:</div><div class="line">  python3    C:<span class="symbol">\U</span>sers<span class="symbol">\c</span>xuan<span class="symbol">\A</span>ppData<span class="symbol">\R</span>oaming<span class="symbol">\j</span>upyter<span class="symbol">\k</span>ernels<span class="symbol">\p</span>ython3</div><div class="line">  venv       C:<span class="symbol">\P</span>rogramData<span class="symbol">\j</span>upyter<span class="symbol">\k</span>ernels<span class="symbol">\v</span>env</div></pre></td></tr></table></figure>
+<p>默认只有第一个，第二个是后加的，在Atom中运行Python启动kernel默认只有第一个。</p>
+<center><img src="/img/posts/20190220001-01.png" alt="pyvenv"></center>
+
+<h3 id="创建python虚拟环境"><a href="#创建python虚拟环境" class="headerlink" title="创建python虚拟环境"></a>创建python虚拟环境</h3><p><code>python -m venv E:\PythonProject\test\pyvenv</code></p>
+<p>创建后文件夹下出现这些文件目录</p>
+<center><img src="/img/posts/20190220001-02.png" alt="pyvenv"></center>
+
+<h3 id="安装python内核"><a href="#安装python内核" class="headerlink" title="安装python内核"></a>安装python内核</h3><p>激活新的虚拟环境</p>
+<p><code>E:\PythonProject\test\pyvenv\Scripts\activate</code></p>
+<center><img src="/img/posts/20190220001-03.png" alt="pyvenv"></center>
+
+<p>安装python kernel (ipykernel)到虚拟环境里</p>
+<p><code>python -m pip install ipykernel</code></p>
+<center><img src="/img/posts/20190220001-04.png" alt="pyvenv"></center>
+
+<p>安装python kernel到可用的kernel列表中,<code>--name</code>是自定义名称参数。</p>
+<p><code>python -m ipykernel install --name pyvenv</code></p>
+<center><img src="/img/posts/20190220001-05.png" alt="pyvenv"></center>
+
+<p>重启Atom编辑器，启动python内核时多出了一个选项，就是刚刚我们配置的虚拟环境内核。</p>
+<center><img src="/img/posts/20190220001-06.png" alt="pyvenv"></center>
+
+<h3 id="删除python内核"><a href="#删除python内核" class="headerlink" title="删除python内核"></a>删除python内核</h3><p>删除python keernel</p>
+<p>remove后指定要删除的kernel名称</p>
+<p><code>jupyter kernelspec remove pyvenv</code></p>
+<center><img src="/img/posts/20190220001-07.png" alt="pyvenv"></center>
+
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://nteract.io/kernels" target="_blank" rel="external">https://nteract.io/kernels</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> 码路刺客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 原创 </tag>
+            
+            <tag> Python </tag>
+            
+            <tag> 工具 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[【Web前端】11个使用CSS制作产品展示卡片样例]]></title>
+      <url>/2019/02/14/20190214001_product_card/</url>
+      <content type="html"><![CDATA[<center><img src="/img/posts/20190214001-01.png" alt="product card"></center>
+
+<a id="more"></a>
+<ul>
+<li>作者：John Mantas</li>
+<li>使用技术：HTML / CSS (SCSS)</li>
+<li>是否自适应：否</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/john-mantas/full/bxmrBq" target="_blank" rel="external">https://codepen.io/john-mantas/full/bxmrBq</a></li>
+</ul>
+<center><img src="/img/posts/20190214001-02.png" alt="product card"></center>
+
+<ul>
+<li>作者：George Gedox</li>
+<li>使用技术：HTML / CSS (SCSS)</li>
+<li>是否自适应：否</li>
+<li>依赖库：font-awesome.css</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/GeorgeGedox/pen/yEwoqP" target="_blank" rel="external">https://codepen.io/GeorgeGedox/pen/yEwoqP</a></li>
+</ul>
+<center><img src="/img/posts/20190214001-03.png" alt="product card"></center>
+
+<ul>
+<li>作者：Julie Park</li>
+<li>使用技术：HTML / CSS (SCSS)</li>
+<li>是否自适应：否</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/juliepark/pen/aKbYVp" target="_blank" rel="external">https://codepen.io/juliepark/pen/aKbYVp</a></li>
+</ul>
+<center><img src="/img/posts/20190214001-04.png" alt="product card"></center>
+
+<ul>
+<li>作者：Fatih Takey</li>
+<li>使用技术：HTML / CSS</li>
+<li>是否自适应：否</li>
+<li>依赖库：font-awesome.css</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/fatihtakey/pen/eyyWVr" target="_blank" rel="external">https://codepen.io/fatihtakey/pen/eyyWVr</a></li>
+</ul>
+<center><img src="/img/posts/20190214001-05.gif" alt="product card"></center>
+
+<ul>
+<li>作者：Omar Dsoky</li>
+<li>使用技术：HTML / CSS</li>
+<li>是否自适应：否</li>
+<li>依赖库：font-awesome.css</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/linux/pen/LjWrPZ" target="_blank" rel="external">https://codepen.io/linux/pen/LjWrPZ</a></li>
+</ul>
+<center><img src="/img/posts/20190214001-06.gif" alt="product card"></center>
+
+<ul>
+<li>作者：SliceCrowd</li>
+<li>使用技术：HTML / CSS</li>
+<li>是否自适应：否</li>
+<li>依赖库：bootstrap.css, swiper.css</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/slicecrowd/pen/GWJEZB" target="_blank" rel="external">https://codepen.io/slicecrowd/pen/GWJEZB</a></li>
+</ul>
+<center><img src="/img/posts/20190214001-07.jpg" alt="product card"></center>
+
+<ul>
+<li>作者：Tobi Balogun</li>
+<li>使用技术：HTML / CSS</li>
+<li>是否自适应：否</li>
+<li>依赖库：ionicons.css, animate.css</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/cupofmint/pen/wgyrRX" target="_blank" rel="external">https://codepen.io/cupofmint/pen/wgyrRX</a></li>
+</ul>
+<center><img src="/img/posts/20190214001-08.png" alt="product card"></center>
+
+<ul>
+<li>作者：CodeFrog</li>
+<li>使用技术：HTML / CSS</li>
+<li>是否自适应：否</li>
+<li>依赖库：font-awesome.css</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/CodeFrogShow/pen/rWjYrP" target="_blank" rel="external">https://codepen.io/CodeFrogShow/pen/rWjYrP</a></li>
+</ul>
+<center><img src="/img/posts/20190214001-09.gif" alt="product card"></center>
+
+<ul>
+<li>作者：Oscar</li>
+<li>使用技术：HTML / CSS (SCSS) / JavaScript</li>
+<li>是否自适应：否</li>
+<li>依赖库：jquery.js</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/olhilton/pen/dXaqxE" target="_blank" rel="external">https://codepen.io/olhilton/pen/dXaqxE</a></li>
+</ul>
+<center><img src="/img/posts/20190214001-10.png" alt="product card"></center>
+
+<ul>
+<li>作者：Alexandra K</li>
+<li>使用技术：HTML / CSS</li>
+<li>是否自适应：否</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/ff0004-red/pen/WxJEJZ" target="_blank" rel="external">https://codepen.io/ff0004-red/pen/WxJEJZ</a></li>
+</ul>
+<center><img src="/img/posts/20190214001-11.png" alt="product card"></center>
+
+<ul>
+<li>作者：Jacob Sauerhoefer</li>
+<li>使用技术：HTML / CSS (SCSS)</li>
+<li>是否自适应：否</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/jacobsauerhoefer/pen/mVZwLB" target="_blank" rel="external">https://codepen.io/jacobsauerhoefer/pen/mVZwLB</a></li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> 码路刺客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 原创 </tag>
+            
+            <tag> CSS </tag>
+            
+            <tag> JavaScript </tag>
+            
+            <tag> 前端 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[CSS制作水滴效果]]></title>
+      <url>/2019/02/07/20190207001_css_water_effects/</url>
+      <content type="html"><![CDATA[<center><img src="/img/posts/20190207001-01.gif" alt="css fire"></center>
+
+<a id="more"></a>
+<ul>
+<li>作者：Nicholas Gratton</li>
+<li>使用技术：HTML / CSS</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/ngratton/pen/MZKJvr" target="_blank" rel="external">https://codepen.io/ngratton/pen/MZKJvr</a></li>
+</ul>
+<center><img src="/img/posts/20190207001-02.gif" alt="css fire"></center>
+
+<ul>
+<li>作者：Jhey</li>
+<li>使用技术：HTML (Pug) / CSS (Stylus)</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/jh3y/full/WyNdMG" target="_blank" rel="external">https://codepen.io/jh3y/full/WyNdMG</a></li>
+</ul>
+<center><img src="/img/posts/20190207001-03.gif" alt="css fire"></center>
+
+<ul>
+<li>作者：Danny</li>
+<li>使用技术：HTML (Haml) / CSS (SCSS)</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/edanny/full/JXwgdK" target="_blank" rel="external">https://codepen.io/edanny/full/JXwgdK</a></li>
+</ul>
+<center><img src="/img/posts/20190207001-04.gif" alt="css fire"></center>
+
+<ul>
+<li>作者：Jaron White</li>
+<li>使用技术：HTML / CSS</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/jaronwhite/full/zrmozE" target="_blank" rel="external">https://codepen.io/jaronwhite/full/zrmozE</a></li>
+</ul>
+<center><img src="/img/posts/20190207001-05.gif" alt="css fire"></center>
+
+<ul>
+<li>作者：Adib Behjat</li>
+<li>使用技术：HTML / CSS</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/abehjat/full/oXMENv" target="_blank" rel="external">https://codepen.io/abehjat/full/oXMENv</a></li>
+</ul>
+<center><img src="/img/posts/20190207001-06.gif" alt="css fire"></center>
+
+<ul>
+<li>作者：Jér?me Beau</li>
+<li>使用技术：HTML / CSS (SCSS)</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/Javarome/pen/ogEoJM" target="_blank" rel="external">https://codepen.io/Javarome/pen/ogEoJM</a></li>
+</ul>
+<center><img src="/img/posts/20190207001-07.gif" alt="css fire"></center>
+
+<ul>
+<li>作者：Lucas Bebber</li>
+<li>使用技术：HTML / CSS (SCSS)</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/lbebber/full/xrwja" target="_blank" rel="external">https://codepen.io/lbebber/full/xrwja</a></li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> 码路刺客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 原创 </tag>
+            
+            <tag> CSS </tag>
+            
+            <tag> JavaScript </tag>
+            
+            <tag> 前端 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Python连接数据库将查询结果转换为DataFrame(列名和表字段一致)]]></title>
       <url>/2019/01/15/20190115001_python_db_select_to_df/</url>
       <content type="html"><![CDATA[<p>很多时候，我们用Python处理数据，需要连接到Mysql、Postgresql等数据库，获取表数据，再构建pandas的DataFrame进行进一步处理。但是查询数据库结果集是没有表字段名称的，我们希望构建的DataFrame的列名和表字段一样。</p>
@@ -3352,47 +3707,6 @@
     </entry>
     
     <entry>
-      <title><![CDATA[【SSIS】几个通用属性]]></title>
-      <url>/2016/06/13/SSIS-GeneralAttribures/</url>
-      <content type="html"><![CDATA[<p>记录几个简单常用SSIS包常用属性，都是通用属性：</p>
-<ul>
-<li>1.<code>Disable</code> 设置属性为<code>true</code>是该任务不能执行</li>
-<li>2.<code>DelayValidation</code> 设置为<code>true</code>只至运行时才验证任务中的属性，在非连接状态下和为任务包输入一个外部参数值但是直到部署时才验证这种情况下会很有用。它的默认设置为<code>false</code></li>
-<li>3.<code>Description</code> 该属性描述任务包的情形。默认的值是<code>&lt;task name&gt;</code>,如果多个任务类型相同则设置为<code>&lt;task name 1&gt;</code>(数字1递增)。这个属性不是唯一的，只需要准确描述任务包项目方便其他人理解</li>
-<li>4.<code>ExecValueVariable</code> 存储任务输出的用户变量，默认的值是<code>&lt;none&gt;</code>,不输出。</li>
-<li>5.<code>FailPackageonFailure</code> 设置这个属性为<code>true</code>,当<code>package</code>中有一个任务失败那么他的上层的任务也将失败。它的上层任务可能是一个package或者container。 </li>
-</ul>
-<a id="more"></a>
-<ul>
-<li>6.ID 自动为每个任务产生的唯一ID,是一个GUID形式的字符串</li>
-<li>7.<code>IsolationLevel</code> 如果设置了事务模式，那么可以设置事务的隔离级别。事务的隔离级别有好几种：读取提交<code>ReadCommitted</code>，重复读<code>ReapeatableRead</code>,串行化的<code>Seralizable</code>，不设置的<code>Unapecified</code>，快照<code>Snapshot</code>。默认的属性使串行化的。这些选项依据SQL Server的事务而来。</li>
-<li>8.<code>LoggingMode</code> 设置任务的支持记录模式。可选值有：使用父任务设置<code>UseParentSetting</code>，可用<code>Enable</code>,不可用<code>Disabled</code>。默认值是使用父任务设置，意思是告诉任务使用上层task的日志记录模式。</li>
-<li>9.<code>Name</code> 该属性和任务相关联，默认的值是<code>&lt;task name&gt;</code>，如果有多个相同类型的任务可以设置<code>&lt;task name1&gt;</code>(数字1自增)。作为一个ssis设计值，应该时常修改这个属性，使得它更具有可读性，但是它必须在这个package中必须是唯一。</li>
-<li>10.<code>TransctionOption</code>:设置task的事务属性。他的值可以使不支持<code>NotSupported</code>，支持<code>Supported</code>，根据需要的<code>Required</code>。默认的设置是支持的，使得整个任务中可以使用事务。</li>
-</ul>
-<p>转自 指尖流淌<br><a href="http://www.cnblogs.com/zhijianliutang/archive/2012/04/25/2470546.html" target="_blank" rel="external">http://www.cnblogs.com/zhijianliutang/archive/2012/04/25/2470546.html</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> BI墨客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 转载 </tag>
-            
-            <tag> BI </tag>
-            
-            <tag> SSIS </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[【T-SQL】group by 和grouping sets]]></title>
       <url>/2016/06/13/SQL-GroupByAndGroupingSets/</url>
       <content type="html"><![CDATA[<p>遇到一个情况，需要在内网系统中出一个统计报表。需要根据不同条件使用多个group by语句，需要将所有聚合的数据进行union操作来完成不同维度的统计查看。<br>知道发现了在SQL  Server 2008之后引入了grouping sets这个对于group by的增强后，上面的需求实现起来就简单的多，下面我们用AdventureWork中的表作为demo来解释一下grouping sets.</p>
@@ -3432,25 +3746,25 @@
     </entry>
     
     <entry>
-      <title><![CDATA[放开那程序猿！构建业务导向的大数据云平台]]></title>
-      <url>/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/</url>
-      <content type="html"><![CDATA[<p>按数据处理方式及使用目标，企业级IT系统可分为OLTP和OLAP系统。简而言之，OLTP系统生产数据，OLAP系统加工数据。从数据到智慧的转换金字塔上看，OLTP系统实现了底层的数据产生和存储以及面向事务的信息整合，在这之上的各层就要依赖OLAP系统了。OLAP概念源自决策支持系统（DSS），企业中的数据仓库、数据集市、统计报表、驾驶舱、数据挖掘等都属于OLAP体系。其中，数据仓库和数据集市主要实现信息整合，一般统称为数据整合平台。统计报表、驾驶舱、数据挖掘进一步利用数据整合平台的成果，帮助用户发现知识并最终形成智慧。 </p>
+      <title><![CDATA[【SSIS】几个通用属性]]></title>
+      <url>/2016/06/13/SSIS-GeneralAttribures/</url>
+      <content type="html"><![CDATA[<p>记录几个简单常用SSIS包常用属性，都是通用属性：</p>
+<ul>
+<li>1.<code>Disable</code> 设置属性为<code>true</code>是该任务不能执行</li>
+<li>2.<code>DelayValidation</code> 设置为<code>true</code>只至运行时才验证任务中的属性，在非连接状态下和为任务包输入一个外部参数值但是直到部署时才验证这种情况下会很有用。它的默认设置为<code>false</code></li>
+<li>3.<code>Description</code> 该属性描述任务包的情形。默认的值是<code>&lt;task name&gt;</code>,如果多个任务类型相同则设置为<code>&lt;task name 1&gt;</code>(数字1递增)。这个属性不是唯一的，只需要准确描述任务包项目方便其他人理解</li>
+<li>4.<code>ExecValueVariable</code> 存储任务输出的用户变量，默认的值是<code>&lt;none&gt;</code>,不输出。</li>
+<li>5.<code>FailPackageonFailure</code> 设置这个属性为<code>true</code>,当<code>package</code>中有一个任务失败那么他的上层的任务也将失败。它的上层任务可能是一个package或者container。 </li>
+</ul>
 <a id="more"></a>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-1.png" alt="BuildBusinessOrientedBigDataCloudPlatform-1"></p>
-<p>OLAP系统的主要用户是分析人员和管理人员，目标是支持管理决策，依据是企业生产经营过程中产生的全量数据，是一个按目标使用场景对数据进行加工、利用的过程。这过程一般可以划分五个阶段：业务部门定义需求；IT部门根据需求获取并整合相关数据；IT部门根据需求设计分析模型；IT部门开发实施并发布；业务部门应用并衡量实际成效。在传统的数据基础和技术环境下，这个周期可能要经历较漫长的时间。还在建设OLAP体系的情况自不必多说，即便已建成OLAP体系统，要及时响应业务部门的需求也是较困难的，而且很有可能最终的交付质量不能达到需求方的预期。</p>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-2.png" alt="BuildBusinessOrientedBigDataCloudPlatform-2"></p>
-<p>下图是目前较常见的OLAP体系简图，上游系统指那些OLTP系统，是数据源。数据整合平台包括ODS、数据仓库、数据集市等，主要实现数据整合。下游系统指那些利用数据整合平台成果的系统，包括统计报表、驾驶舱、数据挖掘等。其中，数据整合平台承上启下，在整个OLAP体系中非常重要。按照目前较普遍的架构，从上游到下游的数据流向，至少分为同构层、整合层、应用层。其中同构层在模型上基本与上游接入数据源基本保持一致，整合层一般会采用高范式模型进行数据整合，应用层面向下游具体应用采用星型模型。这个架构是在Inmon帮和Kimball派十几年如一日的不断撕逼和妥协中演进出来的，应该是一种最佳实践。但随着互联网+大数据时代到来，对数据应用有着更高效、更深入的要求，这种架构本身固有的缺点被不断放大。</p>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-3.png" alt="BuildBusinessOrientedBigDataCloudPlatform-3"></p>
-<p><strong>开发周期长</strong></p>
-<p>为了避免因上游系统接入模型的变化而导致数据整合平台模型的被动调整，整合层建模时一般会采用较高范式实现高内聚、低耦合，ER实体较多、关系复杂。这样就增加了ETL设计、开发以及测试的复杂度，同时ETL程序执行效率也低。业务部门提出的需求，IT首先由下至上逐层对模型进行分析，即便只需在应用层开发，基于上述原因也需要一周以上。如果涉及要改动整合层，开发周期要一个月左右，业务部门显然是不能接受的。最后的结局不用猜都知道，苦逼的程序猿只能再一次强睁熊猫眼天天加班赶工。但是故事并没有到此结束，马上一个意想不到但细细想想又是顺理成章的伴生问题发生了。</p>
-<p><strong>架构迅速变坏</strong></p>
-<p>在日复一日的高压下，程序猿只能另辟蹊径为自己减负。既然工作量是由于数据模型和层次的复杂性引起的，那最有效的减少工作量的方法无非就是：1、绕过整合层，数据直接从同构层到应用层。2、还是从通过整合层，但使用面向应用的自建模型。无论哪种方法，都使整合层形同虚设，从同构层到应用层形成一个个数据井道。虽然单个开发任务的开发时间缩短了，但各数据井道之间无法复用，所以总的开发时间绝对要更多，而且后期的维护工作将是一场噩梦。</p>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-4.png" alt="BuildBusinessOrientedBigDataCloudPlatform-4"></p>
-<p><strong>效率低</strong></p>
-<p>架构变坏后，数据一致性无法保证，大量数据重复存储，大量指标重复计算，ETL作业数急剧上升，数据整合平台效率自然会越来越差。即便架构还能保持，但随着时间的推移，数据量及业务需求不断增加，架构上倾向分割出更多的层次，以便实现更多的复用。随着层次的增加，数据迁移的路径就变长了，长久以往也难逃低效率的宿命。</p>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-5.png" alt="BuildBusinessOrientedBigDataCloudPlatform-5"></p>
-<p>再回顾下OLAP数据应用的五个阶段，从业务提出需求到业务应用验证形成闭环，这过程是由IT导向推动的，IT首先与业务讨论分析需求，在业务模型层面中达成共识，然后再映射到系统模型，实现对来自上游系统的数据进行加工处理，最后通过OLAP系统将结果在业务语境中展现给用户，之前讨论的所有弊病都此有关。而对于像银行、保险等发展较成熟的行业，其业务语境、模型是较稳定的，支持业务开展的上游IT系统的系统模型也应该是相对稳定的，因此业务模型和系统模型间能形成较稳定的映射关系。这样只要能达到足够细的粒度，就能实现操纵业务模型来改变系统模型的目的。而业务模型又能被业务所能理解，因此这个闭环过程就可以完全由业务导向不需要IT的参与，整个过程可以简化为：业务设计模型，业务应用验证。</p>
-<p>文／season7（简书作者）<br>原文链接：<a href="http://www.jianshu.com/p/d55d8eeac219" target="_blank" rel="external">http://www.jianshu.com/p/d55d8eeac219</a></p>
+<ul>
+<li>6.ID 自动为每个任务产生的唯一ID,是一个GUID形式的字符串</li>
+<li>7.<code>IsolationLevel</code> 如果设置了事务模式，那么可以设置事务的隔离级别。事务的隔离级别有好几种：读取提交<code>ReadCommitted</code>，重复读<code>ReapeatableRead</code>,串行化的<code>Seralizable</code>，不设置的<code>Unapecified</code>，快照<code>Snapshot</code>。默认的属性使串行化的。这些选项依据SQL Server的事务而来。</li>
+<li>8.<code>LoggingMode</code> 设置任务的支持记录模式。可选值有：使用父任务设置<code>UseParentSetting</code>，可用<code>Enable</code>,不可用<code>Disabled</code>。默认值是使用父任务设置，意思是告诉任务使用上层task的日志记录模式。</li>
+<li>9.<code>Name</code> 该属性和任务相关联，默认的值是<code>&lt;task name&gt;</code>，如果有多个相同类型的任务可以设置<code>&lt;task name1&gt;</code>(数字1自增)。作为一个ssis设计值，应该时常修改这个属性，使得它更具有可读性，但是它必须在这个package中必须是唯一。</li>
+<li>10.<code>TransctionOption</code>:设置task的事务属性。他的值可以使不支持<code>NotSupported</code>，支持<code>Supported</code>，根据需要的<code>Required</code>。默认的设置是支持的，使得整个任务中可以使用事务。</li>
+</ul>
+<p>转自 指尖流淌<br><a href="http://www.cnblogs.com/zhijianliutang/archive/2012/04/25/2470546.html" target="_blank" rel="external">http://www.cnblogs.com/zhijianliutang/archive/2012/04/25/2470546.html</a></p>
 ]]></content>
       
         <categories>
@@ -3466,7 +3780,7 @@
             
             <tag> BI </tag>
             
-            <tag> BigData </tag>
+            <tag> SSIS </tag>
             
         </tags>
         
@@ -3509,6 +3823,47 @@
             <tag> 转载 </tag>
             
             <tag> BI </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[放开那程序猿！构建业务导向的大数据云平台]]></title>
+      <url>/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/</url>
+      <content type="html"><![CDATA[<p>按数据处理方式及使用目标，企业级IT系统可分为OLTP和OLAP系统。简而言之，OLTP系统生产数据，OLAP系统加工数据。从数据到智慧的转换金字塔上看，OLTP系统实现了底层的数据产生和存储以及面向事务的信息整合，在这之上的各层就要依赖OLAP系统了。OLAP概念源自决策支持系统（DSS），企业中的数据仓库、数据集市、统计报表、驾驶舱、数据挖掘等都属于OLAP体系。其中，数据仓库和数据集市主要实现信息整合，一般统称为数据整合平台。统计报表、驾驶舱、数据挖掘进一步利用数据整合平台的成果，帮助用户发现知识并最终形成智慧。 </p>
+<a id="more"></a>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-1.png" alt="BuildBusinessOrientedBigDataCloudPlatform-1"></p>
+<p>OLAP系统的主要用户是分析人员和管理人员，目标是支持管理决策，依据是企业生产经营过程中产生的全量数据，是一个按目标使用场景对数据进行加工、利用的过程。这过程一般可以划分五个阶段：业务部门定义需求；IT部门根据需求获取并整合相关数据；IT部门根据需求设计分析模型；IT部门开发实施并发布；业务部门应用并衡量实际成效。在传统的数据基础和技术环境下，这个周期可能要经历较漫长的时间。还在建设OLAP体系的情况自不必多说，即便已建成OLAP体系统，要及时响应业务部门的需求也是较困难的，而且很有可能最终的交付质量不能达到需求方的预期。</p>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-2.png" alt="BuildBusinessOrientedBigDataCloudPlatform-2"></p>
+<p>下图是目前较常见的OLAP体系简图，上游系统指那些OLTP系统，是数据源。数据整合平台包括ODS、数据仓库、数据集市等，主要实现数据整合。下游系统指那些利用数据整合平台成果的系统，包括统计报表、驾驶舱、数据挖掘等。其中，数据整合平台承上启下，在整个OLAP体系中非常重要。按照目前较普遍的架构，从上游到下游的数据流向，至少分为同构层、整合层、应用层。其中同构层在模型上基本与上游接入数据源基本保持一致，整合层一般会采用高范式模型进行数据整合，应用层面向下游具体应用采用星型模型。这个架构是在Inmon帮和Kimball派十几年如一日的不断撕逼和妥协中演进出来的，应该是一种最佳实践。但随着互联网+大数据时代到来，对数据应用有着更高效、更深入的要求，这种架构本身固有的缺点被不断放大。</p>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-3.png" alt="BuildBusinessOrientedBigDataCloudPlatform-3"></p>
+<p><strong>开发周期长</strong></p>
+<p>为了避免因上游系统接入模型的变化而导致数据整合平台模型的被动调整，整合层建模时一般会采用较高范式实现高内聚、低耦合，ER实体较多、关系复杂。这样就增加了ETL设计、开发以及测试的复杂度，同时ETL程序执行效率也低。业务部门提出的需求，IT首先由下至上逐层对模型进行分析，即便只需在应用层开发，基于上述原因也需要一周以上。如果涉及要改动整合层，开发周期要一个月左右，业务部门显然是不能接受的。最后的结局不用猜都知道，苦逼的程序猿只能再一次强睁熊猫眼天天加班赶工。但是故事并没有到此结束，马上一个意想不到但细细想想又是顺理成章的伴生问题发生了。</p>
+<p><strong>架构迅速变坏</strong></p>
+<p>在日复一日的高压下，程序猿只能另辟蹊径为自己减负。既然工作量是由于数据模型和层次的复杂性引起的，那最有效的减少工作量的方法无非就是：1、绕过整合层，数据直接从同构层到应用层。2、还是从通过整合层，但使用面向应用的自建模型。无论哪种方法，都使整合层形同虚设，从同构层到应用层形成一个个数据井道。虽然单个开发任务的开发时间缩短了，但各数据井道之间无法复用，所以总的开发时间绝对要更多，而且后期的维护工作将是一场噩梦。</p>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-4.png" alt="BuildBusinessOrientedBigDataCloudPlatform-4"></p>
+<p><strong>效率低</strong></p>
+<p>架构变坏后，数据一致性无法保证，大量数据重复存储，大量指标重复计算，ETL作业数急剧上升，数据整合平台效率自然会越来越差。即便架构还能保持，但随着时间的推移，数据量及业务需求不断增加，架构上倾向分割出更多的层次，以便实现更多的复用。随着层次的增加，数据迁移的路径就变长了，长久以往也难逃低效率的宿命。</p>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-5.png" alt="BuildBusinessOrientedBigDataCloudPlatform-5"></p>
+<p>再回顾下OLAP数据应用的五个阶段，从业务提出需求到业务应用验证形成闭环，这过程是由IT导向推动的，IT首先与业务讨论分析需求，在业务模型层面中达成共识，然后再映射到系统模型，实现对来自上游系统的数据进行加工处理，最后通过OLAP系统将结果在业务语境中展现给用户，之前讨论的所有弊病都此有关。而对于像银行、保险等发展较成熟的行业，其业务语境、模型是较稳定的，支持业务开展的上游IT系统的系统模型也应该是相对稳定的，因此业务模型和系统模型间能形成较稳定的映射关系。这样只要能达到足够细的粒度，就能实现操纵业务模型来改变系统模型的目的。而业务模型又能被业务所能理解，因此这个闭环过程就可以完全由业务导向不需要IT的参与，整个过程可以简化为：业务设计模型，业务应用验证。</p>
+<p>文／season7（简书作者）<br>原文链接：<a href="http://www.jianshu.com/p/d55d8eeac219" target="_blank" rel="external">http://www.jianshu.com/p/d55d8eeac219</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> BI墨客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 转载 </tag>
+            
+            <tag> BI </tag>
+            
+            <tag> BigData </tag>
             
         </tags>
         
@@ -4891,6 +5246,48 @@ $layer = $(&apos;div[class*=&quot;layer-&quot;]’);
     </entry>
     
     <entry>
+      <title><![CDATA[365cons：每天一枚图标，可免费下载]]></title>
+      <url>/2016/03/23/IconForEveryday/</url>
+      <content type="html"><![CDATA[<p>大家都听过“An apple a day keeps the doctor away”这句俚语，现在网络上也开始流行养成习惯持续去做某一件事情，例如先前介绍过的100 Days UI百日设计挑战每天发布一个全新使用者界面设计来启发灵感，当然你也可以为自己设定一个习惯养成目标，HabitRPG甚至让生活变成游戏，让你通过每日任务来建立好的生活习惯，这些想法都值得我们好好思考如何在一成不变的工作中产生更多价值。</p>
+<a id="more"></a>
+<center><img src="/img/posts/21.jpg"></center>
+
+
+<p>最近发现一个很棒的项目365cons，由一位西雅图视觉设计师Amy开发，网站每天会更新释出一个免费图标让使用者下载！Amy给自己立下一个目标：在2016年的每一天都发布一款全新图标，借此探索各种风格及练习设计相关技术。这些图标都与设计师生活息息相关，不局限于特定主题。</p>
+<p>365cons提供的图标格式包括：SVG、PNG两种版本，每一个图标都能在网页预览，无须注册就能免费下载使用。图标授权方式采MIT License，可被免费下载使用于任何地方。</p>
+<p>站点名称：<strong>365cons</strong></p>
+<p>网站连接：<a href="http://www.365cons.com/" target="_blank" rel="external">http://www.365cons.com/</a></p>
+<p><strong>使用教学</strong></p>
+<p><strong>STEP 1</strong></p>
+<p>开启365cons网站后，可以看到网站收录的免费图标项目，这些图标都是由设计师亲自设计开发，每日更新，不过网站没有提供订阅方式，如果你想追踪更新，那么可以定时回到网站来逛逛。</p>
+<center><img src="/img/posts/22.jpg"></center>
+
+<p><strong>STEP 2</strong></p>
+<p>在每一个图标下方，会有该图标编号、名称，以及SVG和PNG档案下载连接。</p>
+<center><img src="/img/posts/23.jpg"></center>
+
+<p>如果你有任何想法或建议，都可以通过网站上的网址与设计师联系，这些图标设计都非常可爱，也跟一般在外面看到的图标集不太一样，多了那么一点独特与天真浪漫！喜欢的话能将它下载下来使用，完全免费。</p>
+<p>转自 <a href="http://toutiao.com/a6262086085100273922/" target="_blank" rel="external">http://toutiao.com/a6262086085100273922/</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> IT看客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 转载 </tag>
+            
+            <tag> 设计 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[17个jQuery实用技巧]]></title>
       <url>/2016/03/23/17JqueryTips/</url>
       <content type="html"><![CDATA[<h2 id="检查-jQuery-是否加载"><a href="#检查-jQuery-是否加载" class="headerlink" title="检查 jQuery 是否加载"></a>检查 jQuery 是否加载</h2><p>在使用 jQuery 进行任何操作之前，你需要先确认它已经加载：</p>
@@ -5049,48 +5446,6 @@ $elem.otherStuff();
             <tag> 前端编程 </tag>
             
             <tag> jQuery </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[365cons：每天一枚图标，可免费下载]]></title>
-      <url>/2016/03/23/IconForEveryday/</url>
-      <content type="html"><![CDATA[<p>大家都听过“An apple a day keeps the doctor away”这句俚语，现在网络上也开始流行养成习惯持续去做某一件事情，例如先前介绍过的100 Days UI百日设计挑战每天发布一个全新使用者界面设计来启发灵感，当然你也可以为自己设定一个习惯养成目标，HabitRPG甚至让生活变成游戏，让你通过每日任务来建立好的生活习惯，这些想法都值得我们好好思考如何在一成不变的工作中产生更多价值。</p>
-<a id="more"></a>
-<center><img src="/img/posts/21.jpg"></center>
-
-
-<p>最近发现一个很棒的项目365cons，由一位西雅图视觉设计师Amy开发，网站每天会更新释出一个免费图标让使用者下载！Amy给自己立下一个目标：在2016年的每一天都发布一款全新图标，借此探索各种风格及练习设计相关技术。这些图标都与设计师生活息息相关，不局限于特定主题。</p>
-<p>365cons提供的图标格式包括：SVG、PNG两种版本，每一个图标都能在网页预览，无须注册就能免费下载使用。图标授权方式采MIT License，可被免费下载使用于任何地方。</p>
-<p>站点名称：<strong>365cons</strong></p>
-<p>网站连接：<a href="http://www.365cons.com/" target="_blank" rel="external">http://www.365cons.com/</a></p>
-<p><strong>使用教学</strong></p>
-<p><strong>STEP 1</strong></p>
-<p>开启365cons网站后，可以看到网站收录的免费图标项目，这些图标都是由设计师亲自设计开发，每日更新，不过网站没有提供订阅方式，如果你想追踪更新，那么可以定时回到网站来逛逛。</p>
-<center><img src="/img/posts/22.jpg"></center>
-
-<p><strong>STEP 2</strong></p>
-<p>在每一个图标下方，会有该图标编号、名称，以及SVG和PNG档案下载连接。</p>
-<center><img src="/img/posts/23.jpg"></center>
-
-<p>如果你有任何想法或建议，都可以通过网站上的网址与设计师联系，这些图标设计都非常可爱，也跟一般在外面看到的图标集不太一样，多了那么一点独特与天真浪漫！喜欢的话能将它下载下来使用，完全免费。</p>
-<p>转自 <a href="http://toutiao.com/a6262086085100273922/" target="_blank" rel="external">http://toutiao.com/a6262086085100273922/</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> IT看客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 转载 </tag>
-            
-            <tag> 设计 </tag>
             
         </tags>
         

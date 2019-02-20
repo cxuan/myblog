@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://c-xuan.com/"/>
-  <updated>2019-01-15T13:59:34.439Z</updated>
+  <updated>2019-02-20T05:40:29.000Z</updated>
   <id>https://c-xuan.com/</id>
   
   <author>
@@ -14,6 +14,372 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【Atom】autocomplete-python插件报乱码异常问题</title>
+    <link href="https://c-xuan.com/2019/02/20/20190220002_atom_atuo_err/"/>
+    <id>https://c-xuan.com/2019/02/20/20190220002_atom_atuo_err/</id>
+    <published>2019-02-20T05:40:29.000Z</published>
+    <updated>2019-02-20T05:40:29.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://atom.io/packages/autocomplete-python" target="_blank" rel="external">autocomplete-python</a>插件可以帮助在写python代码时给出丰富的提示并且自动补全代码，换电脑重装该插件后发现按下键盘后，atom右上角总弹出<code>autocomplete-python traceback output:</code>的提示，提示信息还是乱码。</p>
+<center><img src="/img/posts/20190220002-01.png" alt="pyvenv"></center>
+
+<a id="more"></a>
+<p>解决方式是设置<code>Python Executable Paths</code></p>
+<p>进入Atom设置<code>Packages</code>,找到该插件，进入<code>Settings</code></p>
+<center><img src="/img/posts/20190220002-02.png" alt="pyvenv"></center>
+
+<p>在<code>Python Executable Paths</code>中设置python的执行路径，因为本机是安装的Anaconda，环境变量中没有python执行路径。</p>
+<center><img src="/img/posts/20190220002-03.png" alt="pyvenv"></center>
+
+<p>重启Atom后就可以了。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;https://atom.io/packages/autocomplete-python&quot;&gt;autocomplete-python&lt;/a&gt;插件可以帮助在写python代码时给出丰富的提示并且自动补全代码，换电脑重装该插件后发现按下键盘后，atom右上角总弹出&lt;code&gt;autocomplete-python traceback output:&lt;/code&gt;的提示，提示信息还是乱码。&lt;/p&gt;
+&lt;center&gt;&lt;img src=&quot;/img/posts/20190220002-01.png&quot; alt=&quot;pyvenv&quot;&gt;&lt;/img&gt;&lt;/center&gt;
+    
+    </summary>
+    
+      <category term="码路刺客" scheme="https://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
+    
+    
+      <category term="原创" scheme="https://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+      <category term="工具" scheme="https://c-xuan.com/tags/%E5%B7%A5%E5%85%B7/"/>
+    
+      <category term="atom" scheme="https://c-xuan.com/tags/atom/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python多个数组合并</title>
+    <link href="https://c-xuan.com/2019/02/20/20190220001_py_list_merge/"/>
+    <id>https://c-xuan.com/2019/02/20/20190220001_py_list_merge/</id>
+    <published>2019-02-20T05:40:29.000Z</published>
+    <updated>2019-02-20T05:40:29.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Python中多个数组合并为一个数组的方法整理。</p>
+<a id="more"></a>
+<h3 id="extend方法"><a href="#extend方法" class="headerlink" title="extend方法"></a>extend方法</h3><p>该方法可以扩展数组，会改变原始数组。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">7</span>,<span class="number">5</span>,<span class="number">6</span>]</div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'c'</span>]</div><div class="line">a.extend(b)</div><div class="line">a.extend(c)</div><div class="line">print(a)</div><div class="line"></div><div class="line"><span class="comment">#结果：[1, 2, 3, 4, 7, 5, 6, 'a', 'b', 'h', 12, 'c']</span></div></pre></td></tr></table></figure>
+<h3 id="直接相加"><a href="#直接相加" class="headerlink" title="直接相加"></a>直接相加</h3><p>用<code>+</code>将各数组连接起来。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">7</span>,<span class="number">5</span>,<span class="number">6</span>]</div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'c'</span>]</div><div class="line"></div><div class="line">d = a + b +c</div><div class="line">print(d)</div><div class="line"></div><div class="line"><span class="comment">#结果：[1, 2, 3, 4, 7, 5, 6, 'a', 'b', 'h', 12, 'c']</span></div></pre></td></tr></table></figure>
+<h3 id="flatten方法"><a href="#flatten方法" class="headerlink" title="flatten方法"></a>flatten方法</h3><p><code>flatten()</code>方法是numpy中array数组的方法，使用时要导入包和类型转换。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> array</div><div class="line"></div><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'k'</span>]</div><div class="line">e = [a,b,c]</div><div class="line">e = array(e)</div><div class="line">print(e.flatten())</div><div class="line"></div><div class="line"><span class="comment">#结果：['1' '2' '3' 'a' 'b' 'c' 'h' '12' 'k']</span></div></pre></td></tr></table></figure>
+<p>值得注意的是该方法不适用各数组中元素个数不同的情况。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]  <span class="comment">#元素个数不同</span></div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'k'</span>]</div><div class="line">e = [a,b,c]</div><div class="line">e = array(e)</div><div class="line">print(e.flatten())</div><div class="line"></div><div class="line"><span class="comment">#结果：[list([1, 2, 3, 4]) list(['a', 'b', 'c']) list(['h', 12, 'k'])]</span></div></pre></td></tr></table></figure>
+<h3 id="列表表达式"><a href="#列表表达式" class="headerlink" title="列表表达式"></a>列表表达式</h3><p>使用前得把多个数组放在一个数组中，应用在一个二维数组上。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>] </div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'k'</span>]</div><div class="line">e = [a,b,c]</div><div class="line">e = [y <span class="keyword">for</span> x <span class="keyword">in</span> e <span class="keyword">for</span> y <span class="keyword">in</span> x]</div><div class="line">print(e)</div><div class="line"></div><div class="line">结果：[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'h'</span>, <span class="number">12</span>, <span class="string">'k'</span>]</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Python中多个数组合并为一个数组的方法整理。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="码路刺客" scheme="https://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
+    
+    
+      <category term="原创" scheme="https://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+      <category term="Python" scheme="https://c-xuan.com/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Atom编辑器中使用Hydrogen切换Python虚拟环境</title>
+    <link href="https://c-xuan.com/2019/02/18/20190218001_hydrogen_venv/"/>
+    <id>https://c-xuan.com/2019/02/18/20190218001_hydrogen_venv/</id>
+    <published>2019-02-18T10:12:24.000Z</published>
+    <updated>2019-02-18T10:12:24.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>使用Anaconda的集成Python环境，自带的Jupyter代码编辑器很不错，可以进行代码交互运行。后来折腾Atom编辑器，在Atom中安装Hydrogen插件也可以达到交互运行目的，而且在Atom中编写代码体验稍微好点。有时候我们会在自己的项目中创建Python虚拟环境，Hydrogen连接Anaconda中的python内核，如何增加python虚拟环境的内核给Hydrogen使用呢？</p>
+<a id="more"></a>
+<h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><p>配置前先确认电脑上安装了<a href="https://www.anaconda.com/" target="_blank" rel="external">Anaconda</a>,代码编辑器<a href="http://www.atom.io/" target="_blank" rel="external">Atom</a>,Atom中安装了<a href="https://nteract.gitbooks.io/hydrogen/" target="_blank" rel="external">Hydrogen</a>插件.</p>
+<p>开始菜单中打开<code>Anaconda Prompt</code>命令行窗口。</p>
+<p>查看当前可用的kernel</p>
+<p><code>jupyter kernelspec list</code></p>
+<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">(base) C:<span class="symbol">\W</span>indows<span class="symbol">\s</span>ystem32&gt;jupyter kernelspec list</div><div class="line">Available kernels:</div><div class="line">  python3    C:<span class="symbol">\U</span>sers<span class="symbol">\c</span>xuan<span class="symbol">\A</span>ppData<span class="symbol">\R</span>oaming<span class="symbol">\j</span>upyter<span class="symbol">\k</span>ernels<span class="symbol">\p</span>ython3</div><div class="line">  venv       C:<span class="symbol">\P</span>rogramData<span class="symbol">\j</span>upyter<span class="symbol">\k</span>ernels<span class="symbol">\v</span>env</div></pre></td></tr></table></figure>
+<p>默认只有第一个，第二个是后加的，在Atom中运行Python启动kernel默认只有第一个。</p>
+<center><img src="/img/posts/20190220001-01.png" alt="pyvenv"></center>
+
+<h3 id="创建python虚拟环境"><a href="#创建python虚拟环境" class="headerlink" title="创建python虚拟环境"></a>创建python虚拟环境</h3><p><code>python -m venv E:\PythonProject\test\pyvenv</code></p>
+<p>创建后文件夹下出现这些文件目录</p>
+<center><img src="/img/posts/20190220001-02.png" alt="pyvenv"></center>
+
+<h3 id="安装python内核"><a href="#安装python内核" class="headerlink" title="安装python内核"></a>安装python内核</h3><p>激活新的虚拟环境</p>
+<p><code>E:\PythonProject\test\pyvenv\Scripts\activate</code></p>
+<center><img src="/img/posts/20190220001-03.png" alt="pyvenv"></center>
+
+<p>安装python kernel (ipykernel)到虚拟环境里</p>
+<p><code>python -m pip install ipykernel</code></p>
+<center><img src="/img/posts/20190220001-04.png" alt="pyvenv"></center>
+
+<p>安装python kernel到可用的kernel列表中,<code>--name</code>是自定义名称参数。</p>
+<p><code>python -m ipykernel install --name pyvenv</code></p>
+<center><img src="/img/posts/20190220001-05.png" alt="pyvenv"></center>
+
+<p>重启Atom编辑器，启动python内核时多出了一个选项，就是刚刚我们配置的虚拟环境内核。</p>
+<center><img src="/img/posts/20190220001-06.png" alt="pyvenv"></center>
+
+<h3 id="删除python内核"><a href="#删除python内核" class="headerlink" title="删除python内核"></a>删除python内核</h3><p>删除python keernel</p>
+<p>remove后指定要删除的kernel名称</p>
+<p><code>jupyter kernelspec remove pyvenv</code></p>
+<center><img src="/img/posts/20190220001-07.png" alt="pyvenv"></center>
+
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://nteract.io/kernels" target="_blank" rel="external">https://nteract.io/kernels</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;使用Anaconda的集成Python环境，自带的Jupyter代码编辑器很不错，可以进行代码交互运行。后来折腾Atom编辑器，在Atom中安装Hydrogen插件也可以达到交互运行目的，而且在Atom中编写代码体验稍微好点。有时候我们会在自己的项目中创建Python虚拟环境，Hydrogen连接Anaconda中的python内核，如何增加python虚拟环境的内核给Hydrogen使用呢？&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="码路刺客" scheme="https://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
+    
+    
+      <category term="原创" scheme="https://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+      <category term="Python" scheme="https://c-xuan.com/tags/Python/"/>
+    
+      <category term="工具" scheme="https://c-xuan.com/tags/%E5%B7%A5%E5%85%B7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【Web前端】11个使用CSS制作产品展示卡片样例</title>
+    <link href="https://c-xuan.com/2019/02/14/20190214001_product_card/"/>
+    <id>https://c-xuan.com/2019/02/14/20190214001_product_card/</id>
+    <published>2019-02-14T11:16:42.000Z</published>
+    <updated>2019-02-14T11:16:42.000Z</updated>
+    
+    <content type="html"><![CDATA[<center><img src="/img/posts/20190214001-01.png" alt="product card"></center>
+
+<a id="more"></a>
+<ul>
+<li>作者：John Mantas</li>
+<li>使用技术：HTML / CSS (SCSS)</li>
+<li>是否自适应：否</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/john-mantas/full/bxmrBq" target="_blank" rel="external">https://codepen.io/john-mantas/full/bxmrBq</a></li>
+</ul>
+<center><img src="/img/posts/20190214001-02.png" alt="product card"></center>
+
+<ul>
+<li>作者：George Gedox</li>
+<li>使用技术：HTML / CSS (SCSS)</li>
+<li>是否自适应：否</li>
+<li>依赖库：font-awesome.css</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/GeorgeGedox/pen/yEwoqP" target="_blank" rel="external">https://codepen.io/GeorgeGedox/pen/yEwoqP</a></li>
+</ul>
+<center><img src="/img/posts/20190214001-03.png" alt="product card"></center>
+
+<ul>
+<li>作者：Julie Park</li>
+<li>使用技术：HTML / CSS (SCSS)</li>
+<li>是否自适应：否</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/juliepark/pen/aKbYVp" target="_blank" rel="external">https://codepen.io/juliepark/pen/aKbYVp</a></li>
+</ul>
+<center><img src="/img/posts/20190214001-04.png" alt="product card"></center>
+
+<ul>
+<li>作者：Fatih Takey</li>
+<li>使用技术：HTML / CSS</li>
+<li>是否自适应：否</li>
+<li>依赖库：font-awesome.css</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/fatihtakey/pen/eyyWVr" target="_blank" rel="external">https://codepen.io/fatihtakey/pen/eyyWVr</a></li>
+</ul>
+<center><img src="/img/posts/20190214001-05.gif" alt="product card"></center>
+
+<ul>
+<li>作者：Omar Dsoky</li>
+<li>使用技术：HTML / CSS</li>
+<li>是否自适应：否</li>
+<li>依赖库：font-awesome.css</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/linux/pen/LjWrPZ" target="_blank" rel="external">https://codepen.io/linux/pen/LjWrPZ</a></li>
+</ul>
+<center><img src="/img/posts/20190214001-06.gif" alt="product card"></center>
+
+<ul>
+<li>作者：SliceCrowd</li>
+<li>使用技术：HTML / CSS</li>
+<li>是否自适应：否</li>
+<li>依赖库：bootstrap.css, swiper.css</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/slicecrowd/pen/GWJEZB" target="_blank" rel="external">https://codepen.io/slicecrowd/pen/GWJEZB</a></li>
+</ul>
+<center><img src="/img/posts/20190214001-07.jpg" alt="product card"></center>
+
+<ul>
+<li>作者：Tobi Balogun</li>
+<li>使用技术：HTML / CSS</li>
+<li>是否自适应：否</li>
+<li>依赖库：ionicons.css, animate.css</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/cupofmint/pen/wgyrRX" target="_blank" rel="external">https://codepen.io/cupofmint/pen/wgyrRX</a></li>
+</ul>
+<center><img src="/img/posts/20190214001-08.png" alt="product card"></center>
+
+<ul>
+<li>作者：CodeFrog</li>
+<li>使用技术：HTML / CSS</li>
+<li>是否自适应：否</li>
+<li>依赖库：font-awesome.css</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/CodeFrogShow/pen/rWjYrP" target="_blank" rel="external">https://codepen.io/CodeFrogShow/pen/rWjYrP</a></li>
+</ul>
+<center><img src="/img/posts/20190214001-09.gif" alt="product card"></center>
+
+<ul>
+<li>作者：Oscar</li>
+<li>使用技术：HTML / CSS (SCSS) / JavaScript</li>
+<li>是否自适应：否</li>
+<li>依赖库：jquery.js</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/olhilton/pen/dXaqxE" target="_blank" rel="external">https://codepen.io/olhilton/pen/dXaqxE</a></li>
+</ul>
+<center><img src="/img/posts/20190214001-10.png" alt="product card"></center>
+
+<ul>
+<li>作者：Alexandra K</li>
+<li>使用技术：HTML / CSS</li>
+<li>是否自适应：否</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/ff0004-red/pen/WxJEJZ" target="_blank" rel="external">https://codepen.io/ff0004-red/pen/WxJEJZ</a></li>
+</ul>
+<center><img src="/img/posts/20190214001-11.png" alt="product card"></center>
+
+<ul>
+<li>作者：Jacob Sauerhoefer</li>
+<li>使用技术：HTML / CSS (SCSS)</li>
+<li>是否自适应：否</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/jacobsauerhoefer/pen/mVZwLB" target="_blank" rel="external">https://codepen.io/jacobsauerhoefer/pen/mVZwLB</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;center&gt;&lt;img src=&quot;/img/posts/20190214001-01.png&quot; alt=&quot;product card&quot;&gt;&lt;/img&gt;&lt;/center&gt;
+    
+    </summary>
+    
+      <category term="码路刺客" scheme="https://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
+    
+    
+      <category term="原创" scheme="https://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+      <category term="CSS" scheme="https://c-xuan.com/tags/CSS/"/>
+    
+      <category term="JavaScript" scheme="https://c-xuan.com/tags/JavaScript/"/>
+    
+      <category term="前端" scheme="https://c-xuan.com/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CSS制作水滴效果</title>
+    <link href="https://c-xuan.com/2019/02/07/20190207001_css_water_effects/"/>
+    <id>https://c-xuan.com/2019/02/07/20190207001_css_water_effects/</id>
+    <published>2019-02-07T15:00:48.000Z</published>
+    <updated>2019-02-07T15:00:48.000Z</updated>
+    
+    <content type="html"><![CDATA[<center><img src="/img/posts/20190207001-01.gif" alt="css fire"></center>
+
+<a id="more"></a>
+<ul>
+<li>作者：Nicholas Gratton</li>
+<li>使用技术：HTML / CSS</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/ngratton/pen/MZKJvr" target="_blank" rel="external">https://codepen.io/ngratton/pen/MZKJvr</a></li>
+</ul>
+<center><img src="/img/posts/20190207001-02.gif" alt="css fire"></center>
+
+<ul>
+<li>作者：Jhey</li>
+<li>使用技术：HTML (Pug) / CSS (Stylus)</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/jh3y/full/WyNdMG" target="_blank" rel="external">https://codepen.io/jh3y/full/WyNdMG</a></li>
+</ul>
+<center><img src="/img/posts/20190207001-03.gif" alt="css fire"></center>
+
+<ul>
+<li>作者：Danny</li>
+<li>使用技术：HTML (Haml) / CSS (SCSS)</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/edanny/full/JXwgdK" target="_blank" rel="external">https://codepen.io/edanny/full/JXwgdK</a></li>
+</ul>
+<center><img src="/img/posts/20190207001-04.gif" alt="css fire"></center>
+
+<ul>
+<li>作者：Jaron White</li>
+<li>使用技术：HTML / CSS</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/jaronwhite/full/zrmozE" target="_blank" rel="external">https://codepen.io/jaronwhite/full/zrmozE</a></li>
+</ul>
+<center><img src="/img/posts/20190207001-05.gif" alt="css fire"></center>
+
+<ul>
+<li>作者：Adib Behjat</li>
+<li>使用技术：HTML / CSS</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/abehjat/full/oXMENv" target="_blank" rel="external">https://codepen.io/abehjat/full/oXMENv</a></li>
+</ul>
+<center><img src="/img/posts/20190207001-06.gif" alt="css fire"></center>
+
+<ul>
+<li>作者：Jér?me Beau</li>
+<li>使用技术：HTML / CSS (SCSS)</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/Javarome/pen/ogEoJM" target="_blank" rel="external">https://codepen.io/Javarome/pen/ogEoJM</a></li>
+</ul>
+<center><img src="/img/posts/20190207001-07.gif" alt="css fire"></center>
+
+<ul>
+<li>作者：Lucas Bebber</li>
+<li>使用技术：HTML / CSS (SCSS)</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>源码链接：<a href="https://codepen.io/lbebber/full/xrwja" target="_blank" rel="external">https://codepen.io/lbebber/full/xrwja</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;center&gt;&lt;img src=&quot;/img/posts/20190207001-01.gif&quot; alt=&quot;css fire&quot;&gt;&lt;/img&gt;&lt;/center&gt;
+    
+    </summary>
+    
+      <category term="码路刺客" scheme="https://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
+    
+    
+      <category term="原创" scheme="https://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+      <category term="CSS" scheme="https://c-xuan.com/tags/CSS/"/>
+    
+      <category term="JavaScript" scheme="https://c-xuan.com/tags/JavaScript/"/>
+    
+      <category term="前端" scheme="https://c-xuan.com/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+  </entry>
   
   <entry>
     <title>Python连接数据库将查询结果转换为DataFrame(列名和表字段一致)</title>
@@ -1155,379 +1521,6 @@
       <category term="原创" scheme="https://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
     
       <category term="cmd" scheme="https://c-xuan.com/tags/cmd/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【ORACLE】导致物化视图快速刷新变慢的原因和解决</title>
-    <link href="https://c-xuan.com/2017/11/19/20171119001/"/>
-    <id>https://c-xuan.com/2017/11/19/20171119001/</id>
-    <published>2017-11-18T16:00:00.000Z</published>
-    <updated>2017-11-28T17:07:48.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>ORACLE物化视图(MATERIALIZED VIEW)有自动提交刷新和手动刷新两种刷新方式，每种刷新方式下有增量刷新(FAST)、全量刷新(COMPLETE)、系统自动判断(FORCE)三种刷新方法。一般而言，增量刷新理论上是比全量刷新要快一些的，但是我发现某些情况下增量刷新将导致基表提交后延迟严重，下面将做一些测试。</p>
-<a id="more"></a>
-<h3 id="测试环境"><a href="#测试环境" class="headerlink" title="测试环境"></a>测试环境</h3><ul>
-<li>操作系统：Red Hat Enterprise Linux Server release 5.8 虚拟机</li>
-<li>处理器：Intel(R) Core(TM) i7-4700MQ CPU @ 2.40GHz</li>
-<li>内存大小：4G</li>
-<li>数据库：Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - 64bit Production</li>
-</ul>
-<h3 id="准备测试数据"><a href="#准备测试数据" class="headerlink" title="准备测试数据"></a>准备测试数据</h3><p>创建三个表结构相同的测试表，id为自增长主键，这三个表作为物化视图的基表。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> t1 (</div><div class="line">    <span class="keyword">id</span> <span class="built_in">INT</span>,</div><div class="line">    c1 <span class="built_in">INT</span>,</div><div class="line">    c2 <span class="built_in">INT</span>,</div><div class="line">    <span class="keyword">constraint</span> pk1 primary <span class="keyword">key</span>(<span class="keyword">id</span>));</div><div class="line">    </div><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> t2 (</div><div class="line">    <span class="keyword">id</span> <span class="built_in">INT</span>,</div><div class="line">    c1 <span class="built_in">INT</span>,</div><div class="line">    c2 <span class="built_in">INT</span>,</div><div class="line">    <span class="keyword">constraint</span> pk2 primary <span class="keyword">key</span>(<span class="keyword">id</span>));</div><div class="line">    </div><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> t3 (</div><div class="line">    <span class="keyword">id</span> <span class="built_in">INT</span>,</div><div class="line">    c1 <span class="built_in">INT</span>,</div><div class="line">    c2 <span class="built_in">INT</span>,</div><div class="line">    <span class="keyword">constraint</span> pk3 primary <span class="keyword">key</span>(<span class="keyword">id</span>));</div></pre></td></tr></table></figure>
-<p>每个表插入30000行数据，并给三个基表创建物化视图日志(MATERIALIZED VIEW LOG)：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> <span class="keyword">LOG</span> <span class="keyword">ON</span> t1 <span class="keyword">WITH</span> <span class="keyword">ROWID</span>,<span class="keyword">SEQUENCE</span>(<span class="keyword">id</span>,c1,c2) <span class="keyword">INCLUDING</span> <span class="keyword">NEW</span> <span class="keyword">VALUES</span>;</div><div class="line"></div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> <span class="keyword">LOG</span> <span class="keyword">ON</span> t2 <span class="keyword">WITH</span> <span class="keyword">ROWID</span>,<span class="keyword">SEQUENCE</span>(<span class="keyword">id</span>,c1,c2) <span class="keyword">INCLUDING</span> <span class="keyword">NEW</span> <span class="keyword">VALUES</span>;</div><div class="line"></div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> <span class="keyword">LOG</span> <span class="keyword">ON</span> t3 <span class="keyword">WITH</span> <span class="keyword">ROWID</span>,<span class="keyword">SEQUENCE</span>(<span class="keyword">id</span>,c1,c2) <span class="keyword">INCLUDING</span> <span class="keyword">NEW</span> <span class="keyword">VALUES</span>;</div></pre></td></tr></table></figure>
-<h3 id="物化视图中不包含列计算"><a href="#物化视图中不包含列计算" class="headerlink" title="物化视图中不包含列计算"></a>物化视图中不包含列计算</h3><p>首先创建的物化视图如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> mv1</div><div class="line"><span class="keyword">BUILD</span> <span class="keyword">IMMEDIATE</span></div><div class="line"><span class="keyword">REFRESH</span> <span class="keyword">FAST</span> <span class="keyword">ON</span> <span class="keyword">COMMIT</span></div><div class="line"><span class="keyword">WITH</span> <span class="keyword">ROWID</span></div><div class="line"><span class="keyword">AS</span></div><div class="line"><span class="keyword">SELECT</span> a.id aid,a.c1 ac1,a.c2 ac2,b.c1 bc1,b.c2 bc2,</div><div class="line">       a.rowid rida,b.rowid ridb</div><div class="line">  <span class="keyword">FROM</span> t1 a,t2 b</div><div class="line"> <span class="keyword">WHERE</span> a.id=b.id(+)</div><div class="line">   <span class="keyword">AND</span> a.c1=b.c1(+);</div></pre></td></tr></table></figure></p>
-<p>该物化视图采用的是基表提交(commit)触发快速刷新(FAST)的方式刷新数据，物化视图为两个基表t1,t2的外联接，SELECT后面的列只是简单列出t1,t2表中的列而已。</p>
-<h4 id="更新外联接主表数据"><a href="#更新外联接主表数据" class="headerlink" title="更新外联接主表数据"></a>更新外联接主表数据</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> mv1 <span class="keyword">where</span> aid = <span class="number">9</span>;</div></pre></td></tr></table></figure>
-<p><img src="/img/posts/20171119001-01.png" alt="20171119001-01"></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">update</span> t1 <span class="keyword">set</span> c2=<span class="number">3</span> <span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">9</span>;</div></pre></td></tr></table></figure>
-<p><img src="/img/posts/20171119001-02.png" alt="20171119001-02"></p>
-<p>可见提交耗时很短，再查看物化视图数据，已经更新。</p>
-<p><img src="/img/posts/20171119001-03.png" alt="20171119001-03"></p>
-<p>使用如下语句查询物化视图的刷新方式，刷新时间等信息。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> MVIEW_NAME,</div><div class="line">       REFRESH_MODE,</div><div class="line">       REFRESH_METHOD,</div><div class="line">       FAST_REFRESHABLE,</div><div class="line">       LAST_REFRESH_TYPE,</div><div class="line">       LAST_REFRESH_DATE,</div><div class="line">       STALENESS </div><div class="line">  <span class="keyword">FROM</span> USER_MVIEWS </div><div class="line"> <span class="keyword">WHERE</span> MVIEW_NAME = <span class="string">'MV1'</span>;</div></pre></td></tr></table></figure>
-<p><img src="/img/posts/20171119001-04.png" alt="20171119001-04"></p>
-<h4 id="更新外联接非主表数据"><a href="#更新外联接非主表数据" class="headerlink" title="更新外联接非主表数据"></a>更新外联接非主表数据</h4><p>更新非主表t2的同一行的数据，提交后耗时也很短。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">update</span> t2 <span class="keyword">set</span> c2=<span class="number">13</span> <span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">9</span>;</div></pre></td></tr></table></figure>
-<p><img src="/img/posts/20171119001-05.png" alt="20171119001-05"></p>
-<p><img src="/img/posts/20171119001-06.png" alt="20171119001-06"></p>
-<p><img src="/img/posts/20171119001-07.png" alt="20171119001-07"></p>
-<p>所以这种情况下，物化视图的增量刷新是没有多少延迟的。</p>
-<h3 id="物化视图中包含列计算"><a href="#物化视图中包含列计算" class="headerlink" title="物化视图中包含列计算"></a>物化视图中包含列计算</h3><p>将MV1物化视图删除，重新创建一个。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">DROP</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> mv1;</div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> mv1</div><div class="line"><span class="keyword">BUILD</span> <span class="keyword">IMMEDIATE</span></div><div class="line"><span class="keyword">REFRESH</span> <span class="keyword">FAST</span> <span class="keyword">ON</span> <span class="keyword">COMMIT</span></div><div class="line"><span class="keyword">WITH</span> <span class="keyword">ROWID</span></div><div class="line"><span class="keyword">AS</span></div><div class="line"><span class="keyword">SELECT</span> a.id aid,a.c1 ac1,a.c2 ac2,b.c1 bc1,b.c2 bc2,</div><div class="line">       a.c2+b.c2 <span class="keyword">as</span> d,</div><div class="line">       a.rowid rida,b.rowid ridb</div><div class="line"> <span class="keyword">FROM</span> t1 a,t2 b</div><div class="line"><span class="keyword">WHERE</span> a.id=b.id(+)</div><div class="line">  <span class="keyword">AND</span> a.c1=b.c1(+);</div></pre></td></tr></table></figure></p>
-<p>在之前的基础上增加了d列，这列是t1和t2基表中各一列的计算。</p>
-<h4 id="更新外联接主表数据-1"><a href="#更新外联接主表数据-1" class="headerlink" title="更新外联接主表数据"></a>更新外联接主表数据</h4><p>测试更新主表数据，查看提交耗时。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> mv1 <span class="keyword">where</span> aid = <span class="number">9</span>;</div></pre></td></tr></table></figure>
-<p><img src="/img/posts/20171119001-08.png" alt="20171119001-08"></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">update</span> t1 <span class="keyword">set</span> c2=<span class="number">6</span> <span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">9</span>;</div></pre></td></tr></table></figure>
-<p><img src="/img/posts/20171119001-09.png" alt="20171119001-09"></p>
-<p><img src="/img/posts/20171119001-10.png" alt="20171119001-10"></p>
-<p><img src="/img/posts/20171119001-11.png" alt="20171119001-11"></p>
-<p>基表数据提交时延迟很小。</p>
-<h4 id="更新外联接非主表数据-1"><a href="#更新外联接非主表数据-1" class="headerlink" title="更新外联接非主表数据"></a>更新外联接非主表数据</h4><p>测试更新t2表数据，查看提交耗时。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">update</span> t2 <span class="keyword">set</span> c2=<span class="number">1</span> <span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">9</span>;</div></pre></td></tr></table></figure>
-<p><img src="/img/posts/20171119001-12.png" alt="20171119001-12"></p>
-<p><img src="/img/posts/20171119001-13.png" alt="20171119001-13"></p>
-<p><img src="/img/posts/20171119001-14.png" alt="20171119001-14"></p>
-<p>基表更新数据提交时，显示<strong>20多秒</strong>才完成，显然，这种情况会导致物化视图增量刷新延迟严重。</p>
-<p>将MV1删除后重建为下列情况，相加的两列是同一个表的两列，这时再更新t2表的一行数据，发现提交没有延迟。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">DROP</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> mv1;</div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> mv1</div><div class="line"><span class="keyword">BUILD</span> <span class="keyword">IMMEDIATE</span></div><div class="line"><span class="keyword">REFRESH</span> <span class="keyword">FAST</span> <span class="keyword">ON</span> <span class="keyword">COMMIT</span></div><div class="line"><span class="keyword">WITH</span> <span class="keyword">ROWID</span></div><div class="line"><span class="keyword">AS</span></div><div class="line"><span class="keyword">SELECT</span> a.id aid,a.c1 ac1,a.c2 ac2,b.c1 bc1,b.c2 bc2,</div><div class="line">       b.c1+b.c2 <span class="keyword">as</span> d,</div><div class="line">       a.rowid rida,b.rowid ridb</div><div class="line">  <span class="keyword">FROM</span> t1 a,t2 b</div><div class="line"> <span class="keyword">WHERE</span> a.id=b.id;</div></pre></td></tr></table></figure>
-<h3 id="一种解决方案"><a href="#一种解决方案" class="headerlink" title="一种解决方案"></a>一种解决方案</h3><p>既然含有外联接的物化视图多表列运算有问题，可以在MV1中将运算列都SELECT出来，再创建一个嵌套物化视图MV2，将MV1中的列进行运算处理。<br>物化视图MV1创建如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> mv1</div><div class="line"><span class="keyword">BUILD</span> <span class="keyword">IMMEDIATE</span></div><div class="line"><span class="keyword">REFRESH</span> <span class="keyword">FAST</span> <span class="keyword">ON</span> <span class="keyword">COMMIT</span></div><div class="line"><span class="keyword">WITH</span> <span class="keyword">ROWID</span></div><div class="line"><span class="keyword">AS</span></div><div class="line"><span class="keyword">SELECT</span> a.id aid,a.c1 ac1,a.c2 ac2,b.c1 bc1,b.c2 bc2,</div><div class="line">       a.rowid rida,b.rowid ridb</div><div class="line">  <span class="keyword">FROM</span> t1 a,t2 b</div><div class="line"> <span class="keyword">WHERE</span> a.id=b.id(+)</div><div class="line">   <span class="keyword">AND</span> a.c1=b.c1(+);</div><div class="line"><span class="comment">--因为MV1将作为MV2的基本表，所以要建物化视图日志</span></div><div class="line"><span class="keyword">create</span> <span class="keyword">materialized</span> <span class="keyword">view</span> <span class="keyword">log</span> <span class="keyword">on</span> mv1 <span class="keyword">with</span> <span class="keyword">rowid</span>,<span class="keyword">sequence</span>(aid) <span class="keyword">including</span> <span class="keyword">new</span> <span class="keyword">values</span>;</div></pre></td></tr></table></figure></p>
-<p>物化视图MV2创建如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">materialized</span> <span class="keyword">view</span> mv2</div><div class="line"><span class="keyword">build</span> <span class="keyword">immediate</span></div><div class="line"><span class="keyword">refresh</span> <span class="keyword">fast</span> <span class="keyword">on</span> <span class="keyword">commit</span></div><div class="line"><span class="keyword">with</span> <span class="keyword">rowid</span></div><div class="line"><span class="keyword">as</span></div><div class="line"><span class="keyword">select</span> aid,ac1,ac2,bc1,bc2,</div><div class="line">       ac2+bc2 <span class="keyword">as</span> d, <span class="comment">--原本在MV1中计算的列在这里计算</span></div><div class="line">       a.rowid rida,b.rowid ridb</div><div class="line">  <span class="keyword">from</span> mv1 a,t3 b <span class="comment">--这里注意，在这个ORACLE版本中，创建嵌套物化视图必须要有表关联或者聚合计算，单独from mv1创建不了MV2.</span></div><div class="line"> <span class="keyword">where</span> a.aid=b.id(+);</div></pre></td></tr></table></figure></p>
-<p>查看初始数据<code>select * from mv2 where aid = 99;</code><br><img src="/img/posts/20171119001-15.png" alt="20171119001-15"><br>更新t2表数据<code>update t2 set c2=37 where id = 99;</code>，查看提交耗时<br><img src="/img/posts/20171119001-16.png" alt="20171119001-16"><br>查看MV2结果<br><img src="/img/posts/20171119001-17.png" alt="20171119001-17"><br>查看物化视图刷新情况<br><img src="/img/posts/20171119001-18.png" alt="20171119001-18"><br>可见，两个物化视图在基表数据更新后提交不会耗时很久。用这种方式将一个运算分开两步完成，虽然可行，但是代价也很明显，要多创建嵌套物化视图，不敢保证复杂情况下，嵌套物化视图会有其他问题。</p>
-<h3 id="另两种解决方案"><a href="#另两种解决方案" class="headerlink" title="另两种解决方案"></a>另两种解决方案</h3><ul>
-<li>1.将含有多表列运算的外联接快速刷新物化视图改为定时全量刷新。</li>
-<li>2.将外联接重写为内连接。</li>
-</ul>
-<h3 id="最终解决"><a href="#最终解决" class="headerlink" title="最终解决"></a>最终解决</h3><p>经测试，除以上方法外，有一个方法比较完美的解决延迟问题的方案，就是在物化视图上的ROWID列创建索引。测试如下：<br>这里做了一个相对复杂的嵌套物化视图测试。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">drop</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> mv1;</div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> mv1</div><div class="line"><span class="keyword">BUILD</span> <span class="keyword">IMMEDIATE</span></div><div class="line"><span class="keyword">REFRESH</span> <span class="keyword">FAST</span> <span class="keyword">ON</span> <span class="keyword">COMMIT</span></div><div class="line"><span class="keyword">WITH</span> <span class="keyword">ROWID</span></div><div class="line"><span class="keyword">AS</span></div><div class="line"><span class="keyword">SELECT</span> a.id aid,a.c1 ac1,a.c2 ac2,b.c1 bc1,b.c2 bc2,</div><div class="line">       a.c2+b.c2 <span class="keyword">as</span> d,</div><div class="line">       (a.c2+b.c2)*b.c1 <span class="keyword">as</span> e,</div><div class="line">       a.rowid rida,b.rowid ridb</div><div class="line"> <span class="keyword">FROM</span> t1 a,t2 b</div><div class="line"><span class="keyword">WHERE</span> a.id=b.id(+)</div><div class="line">  <span class="keyword">AND</span> a.c1=b.c1(+);</div><div class="line"><span class="comment">--在mv1上所有rowid创建索引</span></div><div class="line"><span class="keyword">create</span> <span class="keyword">index</span> idx1 <span class="keyword">on</span> mv1(rida,ridb);</div><div class="line"><span class="comment">--创建mv1物化视图日志</span></div><div class="line"><span class="keyword">create</span> <span class="keyword">materialized</span> <span class="keyword">view</span> <span class="keyword">log</span> <span class="keyword">on</span> mv1 <span class="keyword">with</span> <span class="keyword">rowid</span>(aid,ac1,ac2,bc1,bc2) <span class="keyword">including</span> <span class="keyword">new</span> <span class="keyword">values</span>;</div><div class="line"><span class="comment">--mv2引用mv1</span></div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> mv2</div><div class="line"><span class="keyword">BUILD</span> <span class="keyword">IMMEDIATE</span></div><div class="line"><span class="keyword">REFRESH</span> <span class="keyword">FAST</span> <span class="keyword">ON</span> <span class="keyword">COMMIT</span></div><div class="line"><span class="keyword">WITH</span> <span class="keyword">ROWID</span></div><div class="line"><span class="keyword">AS</span></div><div class="line"><span class="keyword">select</span> a.aid,a.ac1,a.ac2,b.c1 bc1,b.c2 bc2,a.e,</div><div class="line">       a.e+b.c2 <span class="keyword">as</span> d,</div><div class="line">       a.rowid rida,b.rowid ridb</div><div class="line"><span class="keyword">from</span> mv1 a,t2 b</div><div class="line"><span class="keyword">where</span> a.aid=b.id(+)</div><div class="line">  <span class="keyword">and</span> a.ac1=b.c1(+);</div><div class="line"><span class="comment">--在mv2上所有rowid创建索引</span></div><div class="line"><span class="keyword">create</span> <span class="keyword">index</span> idx2 <span class="keyword">on</span> mv2(rida,ridb);</div></pre></td></tr></table></figure></p>
-<p>以上脚本，创建了两个物化视图mv1,mv2，每个物化视图都含有外联接，且select列中含有多个表列结算，mv1嵌套在mv2中，基表t2被两个物化视图引用，且t2的字段在两个物化视图中都参与计算，这样的情况应该算比较复杂了，注意每个物化视图都建立索引。</p>
-<p>查询mv2初始值:<br><code>select * from mv2 where aid = 509;</code><br><img src="/img/posts/20171119001-19.png" alt="20171119001-19"><br>修改基表t2的数据：<br><code>update t2 set c2=85 where id = 509;</code><br><img src="/img/posts/20171119001-20.png" alt="20171119001-20"><br>查看结果：<br><code>select * from mv2 where aid = 509;</code><br><img src="/img/posts/20171119001-21.png" alt="20171119001-21"><br>查看物化视图状态：<br><img src="/img/posts/20171119001-22.png" alt="20171119001-22"><br>可见物化视图为增量刷新，且没有之前发生的严重延迟的情况，需要注意的是，物化视图都要建立索引，且索引列都是包含rowid列的复合索引，如果是其他不是rowid列索引，可能没有任何效果。经测试，对基表增删改都是有效果的。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
-<li>1.创建含有外联接且刷新方式为REFRESH FAST ON COMMIT的物化视图时，如果select列里含有多个表中取某些列做运算，注意了，这时更新非主表的数据(增删改)，那么基表提交数据后将有可能导致延迟阻塞，这个时间比物化视图全量刷新还要慢。</li>
-<li>2.除上述情况，例如物化视图都是内连接，有外联接但是没有多个表列做运算等，增量刷新都没问题。</li>
-<li><del>3.至于多表列运算的外联接物化视图增量刷新很慢的原因，与ORACLE物化视图的刷新机制有关，官方文档也有提及这种情况会影响效率，建议最好改为内连接。</del></li>
-<li><del>4.解决方法是改为定时全量刷新或者改外联接为内连接或者利用嵌套物化视图，或者还有其他方法，总之就是为了避开这种情况。</del></li>
-<li>3.比较靠谱的解决方案是在多表列运算的外联接物化视图上创建包含rowid列的索引，创建与不创建索引在这个问题上显现出天壤之别。</li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;ORACLE物化视图(MATERIALIZED VIEW)有自动提交刷新和手动刷新两种刷新方式，每种刷新方式下有增量刷新(FAST)、全量刷新(COMPLETE)、系统自动判断(FORCE)三种刷新方法。一般而言，增量刷新理论上是比全量刷新要快一些的，但是我发现某些情况下增量刷新将导致基表提交后延迟严重，下面将做一些测试。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="码路刺客" scheme="https://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
-    
-    
-      <category term="数据库" scheme="https://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-      <category term="ORACLE" scheme="https://c-xuan.com/tags/ORACLE/"/>
-    
-      <category term="物化视图" scheme="https://c-xuan.com/tags/%E7%89%A9%E5%8C%96%E8%A7%86%E5%9B%BE/"/>
-    
-      <category term="原创" scheme="https://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【ORACLE】常用物化视图相关元数据查询语句</title>
-    <link href="https://c-xuan.com/2017/08/15/20170815001/"/>
-    <id>https://c-xuan.com/2017/08/15/20170815001/</id>
-    <published>2017-08-14T16:00:00.000Z</published>
-    <updated>2017-08-14T16:00:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>对物化视图的状态等信息进行查询，监控和管理时，需要对系统视图进行查询，以下列出了常用的物化视图状态、依赖关联，批量维护时能用到的查询语句，根据具体情况进行适当修改。</p>
-<a id="more"></a>
-<p>语句中使用到的系统表字段说明请查看<a href="/2017/08/13/20170813001">物化视图相关元数据视图字段说明</a></p>
-<h3 id="基本信息查询"><a href="#基本信息查询" class="headerlink" title="基本信息查询"></a>基本信息查询</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 物化视图基本信息</span></div><div class="line">	<span class="keyword">SELECT</span> OWNER            , <span class="comment">--所有者账户</span></div><div class="line">		   MVIEW_NAME       , <span class="comment">--名称</span></div><div class="line">		   LAST_REFRESH_DATE, <span class="comment">--上次更新时间</span></div><div class="line">		   REFRESH_METHOD   , <span class="comment">--更新方式</span></div><div class="line">		   INVALID          , <span class="comment">--是否失效</span></div><div class="line">		   <span class="keyword">QUERY</span>              <span class="comment">--查询语句</span></div><div class="line">	  <span class="keyword">FROM</span> USER_MVIEW_ANALYSIS </div><div class="line">  <span class="keyword">ORDER</span> <span class="keyword">BY</span> LAST_REFRESH_DATE <span class="keyword">DESC</span>;</div></pre></td></tr></table></figure>
-<h3 id="物化视图输出列"><a href="#物化视图输出列" class="headerlink" title="物化视图输出列"></a>物化视图输出列</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">    <span class="keyword">SELECT</span> a.OWNER        , <span class="comment">--所有者账户</span></div><div class="line">		a.MVIEW_NAME   , <span class="comment">--名称</span></div><div class="line">		b.COLUMN_NAME  , <span class="comment">--列名称</span></div><div class="line">		b.COMMENTS       <span class="comment">--列注释</span></div><div class="line">      <span class="keyword">FROM</span> USER_MVIEW_ANALYSIS a</div><div class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> USER_COL_COMMENTS b</div><div class="line">        <span class="keyword">ON</span> a.MVIEW_NAME = b.TABLE_NAME;</div></pre></td></tr></table></figure>
-<h3 id="物化视图引用了哪些基表"><a href="#物化视图引用了哪些基表" class="headerlink" title="物化视图引用了哪些基表"></a>物化视图引用了哪些基表</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 物化视图关联表</span></div><div class="line">		<span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> </div><div class="line">			   A.OWNER,          <span class="comment">--所有者账户</span></div><div class="line">			   A.MVIEW_NAME     ,<span class="comment">--物化视图名称</span></div><div class="line">		       B.COMMENTS       ,<span class="comment">--视图注释</span></div><div class="line">		       A.DETAILOBJ_OWNER,<span class="comment">--基表所有者账号</span></div><div class="line">		       A.DETAILOBJ_NAME  <span class="comment">--基表名称</span></div><div class="line">		  <span class="keyword">FROM</span> USER_MVIEW_DETAIL_RELATIONS A</div><div class="line">    <span class="keyword">INNER</span> <span class="keyword">JOIN</span> USER_MVIEW_COMMENTS B <span class="keyword">ON</span> A.MVIEW_NAME = B.MVIEW_NAME</div><div class="line">		 <span class="keyword">WHERE</span> DETAILOBJ_NAME <span class="keyword">NOT</span> <span class="keyword">LIKE</span> <span class="string">'BIN%'</span>;</div></pre></td></tr></table></figure>
-<h3 id="物化视图-基表-存储过程引用关系"><a href="#物化视图-基表-存储过程引用关系" class="headerlink" title="物化视图-基表-存储过程引用关系"></a>物化视图-基表-存储过程引用关系</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 物化视图或普通视图引用了什么普通表，视图被哪些存储过程引用</span></div><div class="line">WITH CTE AS (</div><div class="line">    <span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> </div><div class="line">           A.OWNER,               <span class="comment">-- 所有者账户</span></div><div class="line">           A.MVIEW_NAME         , <span class="comment">-- 物化视图名称</span></div><div class="line">           A.DETAILOBJ_OWNER    , <span class="comment">-- 被引用表账号</span></div><div class="line">           A.DETAILOBJ_NAME       <span class="comment">-- 被引用表名称</span></div><div class="line">      <span class="keyword">FROM</span> USER_MVIEW_DETAIL_RELATIONS A</div><div class="line">     <span class="keyword">WHERE</span> A.DETAILOBJ_NAME <span class="keyword">NOT</span> <span class="keyword">LIKE</span> <span class="string">'BIN%'</span></div><div class="line"> <span class="keyword">UNION</span> ALL</div><div class="line">    <span class="keyword">SELECT</span> <span class="string">''</span> <span class="keyword">AS</span> OWNER,</div><div class="line">           <span class="keyword">NAME</span> <span class="keyword">AS</span> MVIEW_NAME,</div><div class="line">           REFERENCED_OWNER <span class="keyword">AS</span> DETAILOBJ_OWNER,</div><div class="line">           REFERENCED_NAME <span class="keyword">AS</span> DETAILOBJ_NAME</div><div class="line">      <span class="keyword">FROM</span> USER_DEPENDENCIES </div><div class="line">     <span class="keyword">WHERE</span> <span class="keyword">TYPE</span> =<span class="string">'VIEW'</span></div><div class="line">)</div><div class="line">    <span class="keyword">SELECT</span> A.OWNER            ,<span class="comment">-- 视图所有者账户</span></div><div class="line">           A.MVIEW_NAME <span class="keyword">AS</span> MV ,<span class="comment">-- 视图名称</span></div><div class="line">           A.DETAILOBJ_OWNER  ,<span class="comment">-- 基表所有者账户</span></div><div class="line">           A.DETAILOBJ_NAME   ,<span class="comment">-- 基表/视图</span></div><div class="line">           NVL(B.NAME,<span class="string">'-'</span>) <span class="keyword">AS</span> PROC_NAME <span class="comment">-- 存储过程名称</span></div><div class="line">      <span class="keyword">FROM</span> CTE A</div><div class="line"> <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> (<span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> <span class="keyword">NAME</span>,REFERENCED_NAME </div><div class="line">              <span class="keyword">FROM</span> USER_DEPENDENCIES B </div><div class="line">             <span class="keyword">WHERE</span> B.TYPE = <span class="string">'PROCEDURE'</span> </div><div class="line">            ) B <span class="keyword">ON</span> A.MVIEW_NAME = B.REFERENCED_NAME</div><div class="line">  <span class="keyword">ORDER</span> <span class="keyword">BY</span> A.MVIEW_NAME,A.DETAILOBJ_NAME,B.NAME</div><div class="line">    ;</div></pre></td></tr></table></figure>
-<h3 id="批量删除物化视图日志"><a href="#批量删除物化视图日志" class="headerlink" title="批量删除物化视图日志"></a>批量删除物化视图日志</h3><p>将结果复制出来执行。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 批量删除物化视图日志</span></div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">MASTER</span>,<span class="string">'DROP MATERIALIZED VIEW LOG ON '</span> || <span class="keyword">MASTER</span> || <span class="string">' ;'</span> <span class="keyword">AS</span> DSQL </div><div class="line">  <span class="keyword">FROM</span> USER_MVIEW_LOGS;</div></pre></td></tr></table></figure></p>
-<h3 id="删除没有被引用的基表的物化视图日志"><a href="#删除没有被引用的基表的物化视图日志" class="headerlink" title="删除没有被引用的基表的物化视图日志"></a>删除没有被引用的基表的物化视图日志</h3><p>将结果复制出来执行。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 删除没有被物化视图引用的基表的物化视图日志</span></div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">MASTER</span>,<span class="string">'DROP MATERIALIZED VIEW LOG ON '</span> || <span class="keyword">MASTER</span> || <span class="string">';'</span>  <span class="keyword">AS</span> A</div><div class="line">  <span class="keyword">FROM</span> ALL_MVIEW_LOGS </div><div class="line"> <span class="keyword">WHERE</span> <span class="keyword">MASTER</span> <span class="keyword">NOT</span> <span class="keyword">IN</span> (</div><div class="line">           <span class="keyword">SELECT</span> DETAILOBJ_NAME </div><div class="line">             <span class="keyword">FROM</span> USER_MVIEW_DETAIL_RELATIONS </div><div class="line">        );</div></pre></td></tr></table></figure></p>
-<h3 id="批量修改物化视图刷新方式"><a href="#批量修改物化视图刷新方式" class="headerlink" title="批量修改物化视图刷新方式"></a>批量修改物化视图刷新方式</h3><p>将结果复制出来执行。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">--修改物化视图为手动增量刷新</span></div><div class="line"><span class="keyword">SELECT</span> <span class="string">'ALTER MATERIALIZED VIEW '</span> || MVIEW_NAME || <span class="string">' REFRESH FAST ON DEMAND;'</span> <span class="keyword">AS</span> S</div><div class="line"><span class="keyword">FROM</span> USER_MVIEWS <span class="keyword">WHERE</span> MVIEW_NAME <span class="keyword">LIKE</span> <span class="string">'MV_%'</span>;</div><div class="line"><span class="comment">--手动执行物化视图增量刷新</span></div><div class="line"><span class="keyword">SELECT</span> <span class="string">'DBMS_MVIEW.REFRESH('''</span> || MVIEW_NAME || <span class="string">''',''F'');'</span> <span class="keyword">AS</span> S</div><div class="line"><span class="keyword">FROM</span> USER_MVIEWS <span class="keyword">WHERE</span> MVIEW_NAME <span class="keyword">LIKE</span> <span class="string">'MV_%'</span>;</div><div class="line"><span class="comment">--修改物化视图为自动增量刷新</span></div><div class="line"><span class="keyword">SELECT</span> <span class="string">'ALTER MATERIALIZED VIEW '</span> || MVIEW_NAME || <span class="string">' REFRESH FAST ON COMMIT;'</span> <span class="keyword">AS</span> S</div><div class="line"><span class="keyword">FROM</span> USER_MVIEWS <span class="keyword">WHERE</span> MVIEW_NAME <span class="keyword">LIKE</span> <span class="string">'MV_%'</span>;</div><div class="line"><span class="comment">--修改引用了某个基表的所有物化视图为手动增量刷新</span></div><div class="line"><span class="keyword">SELECT</span> <span class="string">'ALTER MATERIALIZED VIEW '</span> || MVIEW_NAME || <span class="string">' REFRESH FAST ON DEMAND;'</span> <span class="keyword">AS</span> S</div><div class="line"><span class="keyword">FROM</span> USER_MVIEWS</div><div class="line"><span class="keyword">WHERE</span> MVIEW_NAME <span class="keyword">IN</span> (</div><div class="line">      <span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> <span class="keyword">NAME</span> </div><div class="line">      <span class="keyword">FROM</span> USER_DEPENDENCIES </div><div class="line">      <span class="keyword">WHERE</span> <span class="keyword">TYPE</span> = <span class="string">'MATERIALIZED VIEW'</span> </div><div class="line">      <span class="keyword">AND</span> REFERENCED_NAME <span class="keyword">LIKE</span> <span class="string">'%table_name%'</span> <span class="comment">-- 基表名称</span></div><div class="line">);</div></pre></td></tr></table></figure></p>
-<h3 id="物化视图刷新信息"><a href="#物化视图刷新信息" class="headerlink" title="物化视图刷新信息"></a>物化视图刷新信息</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">--物化视图刷新信息</span></div><div class="line"><span class="keyword">SELECT</span> MVIEW_NAME,<span class="comment">--物化视图名称</span></div><div class="line">       REFRESH_MODE,<span class="comment">--刷新方式</span></div><div class="line">       REFRESH_METHOD,<span class="comment">--刷新类型</span></div><div class="line">       FAST_REFRESHABLE,<span class="comment">--是否可刷新</span></div><div class="line">       LAST_REFRESH_TYPE,<span class="comment">--最近一次刷新类型</span></div><div class="line">       LAST_REFRESH_DATE,<span class="comment">--最近一次刷新时间</span></div><div class="line">       STALENESS <span class="comment">--数据是否过时</span></div><div class="line">  <span class="keyword">FROM</span> USER_MVIEWS </div><div class="line"> <span class="comment">--WHERE MVIEW_NAME = 'MV1'</span></div><div class="line"> <span class="keyword">ORDER</span> <span class="keyword">BY</span> LAST_REFRESH_DATE <span class="keyword">DESC</span>;</div></pre></td></tr></table></figure>
-<h3 id="物化视图最近一次刷新信息"><a href="#物化视图最近一次刷新信息" class="headerlink" title="物化视图最近一次刷新信息"></a>物化视图最近一次刷新信息</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">--查询物化视图最近一次刷新信息</span></div><div class="line"> <span class="keyword">SELECT</span> MVIEW_NAME,  <span class="comment">--物化视图名称</span></div><div class="line">	    LAST_REFRESH_DATE <span class="string">"START_TIME"</span>, <span class="comment">--刷新开始时间</span></div><div class="line">	    <span class="keyword">CASE</span> <span class="keyword">WHEN</span> FULLREFRESHTIM &lt;&gt; <span class="number">0</span> </div><div class="line">			 <span class="keyword">THEN</span> LAST_REFRESH_DATE + FULLREFRESHTIM/<span class="number">60</span>/<span class="number">60</span>/<span class="number">24</span></div><div class="line">		     <span class="keyword">WHEN</span> INCREFRESHTIM &lt;&gt; <span class="number">0</span> </div><div class="line">			 <span class="keyword">THEN</span> LAST_REFRESH_DATE + INCREFRESHTIM/<span class="number">60</span>/<span class="number">60</span>/<span class="number">24</span></div><div class="line">		     <span class="keyword">ELSE</span> LAST_REFRESH_DATE</div><div class="line">	    <span class="keyword">END</span> <span class="string">"END_TIME"</span>, <span class="comment">--刷新结束时间</span></div><div class="line">	    FULLREFRESHTIM, <span class="comment">--全量刷新耗时</span></div><div class="line">	    INCREFRESHTIM , <span class="comment">--增量刷新耗时</span></div><div class="line">	    REFRESH_METHOD, <span class="comment">--最近一次刷新方式</span></div><div class="line">	    SUMMARY       , <span class="comment">--是否含有聚合查询</span></div><div class="line">	    INC_REFRESHABLE,<span class="comment">--是否支持增量刷新</span></div><div class="line">	    INVALID       , <span class="comment">--是否失效</span></div><div class="line">	    REWRITE_ENABLED <span class="comment">--是否支持查询重写</span></div><div class="line">   <span class="keyword">FROM</span> ALL_MVIEW_ANALYSIS</div><div class="line">  <span class="keyword">WHERE</span> OWNER=<span class="string">'OWNER'</span> <span class="comment">--物化视图所有者账户</span></div><div class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> LAST_REFRESH_DATE <span class="keyword">DESC</span>;</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;对物化视图的状态等信息进行查询，监控和管理时，需要对系统视图进行查询，以下列出了常用的物化视图状态、依赖关联，批量维护时能用到的查询语句，根据具体情况进行适当修改。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="码路刺客" scheme="https://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
-    
-    
-      <category term="数据库" scheme="https://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-      <category term="ORACLE" scheme="https://c-xuan.com/tags/ORACLE/"/>
-    
-      <category term="物化视图" scheme="https://c-xuan.com/tags/%E7%89%A9%E5%8C%96%E8%A7%86%E5%9B%BE/"/>
-    
-      <category term="原创" scheme="https://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【ORACLE】物化视图相关元数据视图字段说明</title>
-    <link href="https://c-xuan.com/2017/08/13/20170813001/"/>
-    <id>https://c-xuan.com/2017/08/13/20170813001/</id>
-    <published>2017-08-12T16:00:00.000Z</published>
-    <updated>2017-08-12T16:00:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>当需要对物化视图的状态等信息进行查询，监控和管理时，就要用到相关的系统元数据表了，本文介绍了Oracle物化视图相关的元数据系统视图的表结构，这些视图有：<br><code>ALL_VIEWS</code>,<code>DBA_MVIEWS</code>,<code>USER_MVIEWS</code>，<code>ALL_MVIEW_ANALYSIS</code>，<code>DBA_MVIEW_ANALYSIS</code>，<code>USER_MVIEW_ANALYSIS</code>，<code>ALL_MVIEW_AGGREGATES</code>，<code>DBA_MVIEW_AGGREGATES</code>，<code>USER_MVIEW_AGGREGATES</code>，<code>ALL_MVIEW_REFRESH_TIMES</code>，<code>DBA_MVIEW_REFRESH_TIMES</code>，<code>USER_MVIEW_REFRESH_TIMES</code>，<code>ALL_MVIEW_JOINS</code>，<code>DBA_MVIEW_JOINS</code>，<code>USER_MVIEW_JOINS</code>，<code>ALL_MVIEW_KEYS</code>，<code>DBA_MVIEW_KEYS</code>，<code>USER_MVIEW_KEYS</code>，<code>ALL_MVIEW_LOGS</code>，<code>DBA_MVIEW_LOGS</code>，<code>USER_MVIEW_LOGS</code>。</p>
-<a id="more"></a>
-<h3 id="ALL-MVIEWS"><a href="#ALL-MVIEWS" class="headerlink" title="ALL_MVIEWS"></a>ALL_MVIEWS</h3><p><code>ALL_MVIEWS</code>系统视图描述了当前用户下所有可以访问的物化视图的相关信息。<br>相关视图</p>
-<ul>
-<li><code>DBA_MVIEWS</code>描述了数据库中创建的所有物化视图的相关信息。</li>
-<li><code>USER_MVIEWS</code>描述了所属于当前用户下的所有物化视图的相关信息。</li>
-</ul>
-<table style="font-size:14px;"><tr><th width="16.78%">列名称</th><th width="14.24%">数据类型</th><th width="11.44%">是否可为NULL</th><th width="57.58%">字段描述</th></tr><tr><td>OWNER</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>创建物化视图所用的Schema.</td></tr><tr><td>MVIEW_NAME</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>物化视图名称</td></tr><tr><td>CONTAINER_NAME</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>存储物化视图数据的容器名称。一般跟MVIEWNAME是一样的。对于早于Oracle8i的版本，数据库附上了SNAP$的前缀。如果MVIEW_NAME超过里了19比特长度，数据库将会把名称截断至19比特，外加了4位的序列号以免发生名称重复。</td></tr><tr><td>QUERY</td><td>LONG</td><td></td><td>定义物化视图查询的语句</td></tr><tr><td>QUERY_LEN</td><td>NUMBER(38)</td><td></td><td>定义的物化视图查询语句的长度，以比特为单位</td></tr><tr><td>UPDATABLE</td><td>VARCHAR2(1)</td><td></td><td>指明物化视图是(Y)否(N)可更新</td></tr><tr><td>UPDATE_LOG</td><td>VARCHAR2(30)</td><td></td><td>对于可更新的物化视图，更新日志的文件名称</td></tr><tr><td>MASTER_ROLLBACK_SEG</td><td>VARCHAR2(30)</td><td></td><td>Rollback segment for the master site or the master materialized view site</td></tr><tr><td>MASTER_LINK</td><td>VARCHAR2(128)</td><td></td><td>基表端的数据库链接</td></tr><tr><td>REWRITE_ENABLED</td><td>VARCHAR2(1)</td><td></td><td>指出是(Y)否(N)支持物化视图的查询重写</td></tr><tr><td>REWRITE_CAPABILITY</td><td>VARCHAR2(9)</td><td></td><td>指出物化视图是否适合查询重写。会有以下三种情况：<br>NONE：物化视图不能被用于查询重写以为查询重写选项被禁用了。<br>TEXTMATCH：物化视图的查询语句中包含查询重写的相关限制。<br>GENETAL：物化视图的查询语句中没有任何限制，所以数据库将在物化视图上应用支持的查询重写功能。</td></tr><tr><td>REFRESH_MODE</td><td>VARCHAR2(6)</td><td></td><td>物化视图的刷新模式：<br>DEMAND：物化视图将在调用刷新物化视图的存储过程时刷新。<br>COMMIT：物化视图将在基表上的事物提交后刷新。<br>NEVER：物化视图永远不会被刷新。</td></tr><tr><td>REFRESH_METHOD</td><td>VARCHAR2(8)</td><td></td><td>物化视图的刷新方法：<br>COMPLETE：物化视图会对基表的数据进行全量刷新。<br>FORCE：数据库引擎自动判断，如果物化视图可被增量刷新则执行增量刷新，否则全量刷新。<br>FAST：物化视图将从上一次刷新后，对于基表的数据变化进行增量刷新。<br>NEVER：用户告诉数据库该物化视图不用刷新。</td></tr><tr><td>BUILD_MODE</td><td>VARCHAR2(9)</td><td></td><td>指明物化视图在创建时是否填充数据：<br>IMMEDIATE：在创建物化视图时填充数据。<br>DEFERRED：在创建时不填充数据，之后用户要手动更新数据。<br>PREBUILT：在创建物化视图时用一个已经存在的表的数据填充物化视图。</td></tr><tr><td>FAST_REFRESHABLE</td><td>VARCHAR2(18)</td><td></td><td>指明物化视图是否适合增量刷新。Oracle数据库会基于定义物化视图的查询语句静态计算这个值。<br>NO：物化视图不支持增量刷新。<br>DML；只支持DML操作的增量刷新。<br>DIRLOAD_DML；适合于直接装载和DML操作的增加刷新。<br>DIRLOAD_LIMITEDDML；只支持直接装载和某些类型的DML操作的增量刷新。</td></tr><tr><td>LAST_REFRESH_TYPE</td><td>VARCHAR2(8)</td><td></td><td>最近一次刷新方法：COMPLETE：全量刷新。FAST：增量刷新。NA：还没有刷新过，比如创建时没指定填充数据的时候。</td></tr><tr><td>LAST_REFRESH_DATE</td><td>DATE</td><td></td><td>最近一次刷新的日期时间，如果从没刷新过就是空。</td></tr><tr><td>STALENESS</td><td>VARCHAR2(19)</td><td></td><td>物化视图的数据和基表数据的关系：<br>FRESH：物化视图数据跟基表的数据是一致的。<br>STALE：物化视图过期了，因为有一个或多个基表的数据已经变了，如果物化视图在此之前是FRESH，然后才变成STALE，那物化视图的数据跟基表表数据变更前是一致的。<br>NEEDS_COMPILE：物化视图的某些基表已经改了，要用ALTER MATERIALIZED VIEW…COMPILE语句来重新计算物化视图该状态。<br>UNUSABLE：物化视图的数据跟基表的数据任何时间都不一致。<br>UNKNOWN：Oracle数据库无法得知物化视图的数据跟基表的关系。这可能是基于prebuilt table来创建的物化视图。<br>UNDEFINED：物化视图有远程的基表，对于这类物化视图该状态不适用。</td></tr><tr><td>AFTER_FAST_REFRESH</td><td>VARCHAR2(19)</td><td></td><td>指明在物化视图执行增量刷新后是啥状态，状态值跟STALENESS列是一样的，只是多了一个NA，当执行增量刷新后变为不适用增量了出现这个值。</td></tr><tr><td>UNKNOWN_PREBUILT</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether the materialized view is prebuilt (Y) or not (N)</td></tr><tr><td>UNKNOWN_PLSQL_FUNC</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether the materialized view contains PL/SQL functions (Y) or not (N)</td></tr><tr><td>UNKNOWN_EXTERNAL_TABLE</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether the materialized view contains external tables (Y) or not (N)</td></tr><tr><td>UNKNOWN_CONSIDER_FRESH</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether the materialized view is considered fresh (Y) or not (N)</td></tr><tr><td>UNKNOWN_IMPORT</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether the materialized view is imported (Y) or not (N)</td></tr><tr><td>UNKNOWN_TRUSTED_FD</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether the materialized view uses trusted constraints for refresh (Y) or not (N)</td></tr><tr><td>COMPILE_STATE</td><td>VARCHAR2(19)</td><td></td><td>检查物化视图的相关基表都是否合法：<br>VALID：物化视图是没问题的，物化视图的基表没有变更。<br>NEEDS_COMPILE：物化视图的某些基表被改变了，要重新编译。<br>ERROR：物化视图有错误。</td></tr><tr><td>USE_NO_INDEX</td><td>VARCHAR2(1)</td><td></td><td>指出创建物化视图的时候是否使用USING NO INDEX子句，或者物化视图创建时默认了索引。</td></tr><tr><td>STALE_SINCE</td><td>DATE</td><td></td><td>Time from when the materialized view became stale</td></tr><tr><td>NUM_PCT_TABLES</td><td>NUMBER</td><td></td><td>Number of PCT detail tables</td></tr><tr><td>NUM_FRESH_PCT_REGIONS</td><td>NUMBER</td><td></td><td>Number of fresh PCT partition regions</td></tr><tr><td>NUM_STALE_PCT_REGIONS</td><td>NUMBER</td><td></td><td>Number of stale PCT partition regions</td></tr></table>
-
-
-<p>参考<a href="https://docs.oracle.com/cd/E11882_01/server.112/e40402/statviews_1153.htm#REFRN20139" target="_blank" rel="external">https://docs.oracle.com/cd/E11882_01/server.112/e40402/statviews_1153.htm#REFRN20139</a></p>
-<h3 id="ALL-MVIEW-ANALYSIS"><a href="#ALL-MVIEW-ANALYSIS" class="headerlink" title="ALL_MVIEW_ANALYSIS"></a>ALL_MVIEW_ANALYSIS</h3><p>ALL_MVIEW_ANALYSIS describes the materialized views accessible to the current user. It provides additional information for analysis by applications. Minimal information is displayed for materialized views that do not support query rewrite (such as materialized views with remote master tables or nondeterministic functions).<br>Related Views<br>  ● DBA_MVIEW_ANALYSIS describes all such materialized views in the database.<br>  ● USER_MVIEW_ANALYSIS describes all such materialized views owned by the current user.<br>Note:<br>All of the information in these views is also displayed in ALL_MVIEWS and its related views. Oracle recommends that you refer to ALL_MVIEWSfor this information instead of these views.</p>
-<table style="font-size:14px;"><tr><th width="16.78%">Column</th><th width="14.24%">Datatype</th><th width="11.44%">NULL</th><th width="57.58%">Description</th></tr><tr><td>OWNER</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Owner of the materialized view</td></tr><tr><td>MVIEW_NAME</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Name of the materialized view</td></tr><tr><td>MVIEW_TABLE_OWNER</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Owner of the container table (see next column)</td></tr><tr><td>CONTAINER_NAME</td><td>VARCHAR2(30)</td><td></td><td>Name of the internal container in which the materialized view data is held. Normally this is the same asMVIEW<em>NAME. For materialized views created prior to Oracle8i, Oracle Database attaches the 6-byte prefix?SNAP$</em>. If?MVIEW_NAMEhas more than 19 bytes, then Oracle Database truncates the name to 19 bytes and adds a 4-byte sequence number as a suffix to produce a nonambiguousCONTAINER_NAME.</td></tr><tr><td>LAST_REFRESH_SCN</td><td>NUMBER</td><td></td><td>System change number (SCN) of the last refresh operation</td></tr><tr><td>LAST_REFRESH_DATE</td><td>DATE</td><td></td><td>SYSDATE?of the last refresh</td></tr><tr><td>REFRESH_METHOD</td><td>VARCHAR2(8)</td><td></td><td>Default refresh method:<br>FORCE<br>FAST<br>COMPLETE<br>NEVER</td></tr><tr><td>SUMMARY</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether this materialized view includes a?GROUP BY?clause or aggregation (Y) or not (N)</td></tr><tr><td>FULLREFRESHTIM</td><td>NUMBER</td><td></td><td>Approximate refresh time, in seconds, for full refresh (defined only when?SUMMARY?=?Y)</td></tr><tr><td>INCREFRESHTIM</td><td>NUMBER</td><td></td><td>Approximate refresh time, in seconds, for fast refresh (defined only when?SUMMARY?=?Y)</td></tr><tr><td>CONTAINS_VIEWS</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether this materialized view contains a view in its definition (Y) or not (N)</td></tr><tr><td>UNUSABLE</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether this materialized view is?UNUSABLE?(inconsistent data) (Y) or not (N). A materialized view can be?UNUSABLE?if a system failure occurs during a full refresh.</td></tr><tr><td>RESTRICTED_SYNTAX</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether this materialized view had a restriction in its defining query that limits the use of query rewrite (Y) or not (N). More complete information is provided by theREWRITE_CAPABILITY?column of the?*_MVIEWS?view.</td></tr><tr><td>INC_REFRESHABLE</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether this materialized view can be fast refreshed (Y) or not (N)</td></tr><tr><td>KNOWN_STALE</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether the data contained in the materialized view is known to be inconsistent with the master table data because that has been updated since the last successful refresh (Y) or not (N)</td></tr><tr><td>INVALID</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether this materialized view is in an invalid state (inconsistent metadata) (Y) or not (N)</td></tr><tr><td>REWRITE_ENABLED</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether this materialized view is currently enabled for query rewrite (Y) or not (N)</td></tr><tr><td>QUERY_LEN</td><td>NUMBER</td><td></td><td>Length (in bytes) of the query field</td></tr><tr><td>QUERY</td><td>LONG</td><td></td><td>SELECT?expression of the materialized view definition</td></tr><tr><td>REVISION</td><td>NUMBER</td><td>NOT NULL</td><td>Reserved for internal use</td></tr></table>
-
-<p>参考<br><a href="https://docs.oracle.com/cd/E11882_01/server.112/e40402/statviews_1144.htm#REFRN20132" target="_blank" rel="external">https://docs.oracle.com/cd/E11882_01/server.112/e40402/statviews_1144.htm#REFRN20132</a></p>
-<h3 id="ALL-MVIEW-AGGREGATES"><a href="#ALL-MVIEW-AGGREGATES" class="headerlink" title="ALL_MVIEW_AGGREGATES"></a>ALL_MVIEW_AGGREGATES</h3><p>ALL_MVIEW_AGGREGATES describes the grouping functions (aggregate operations) that appear in the SELECT list of materialized aggregate views accessible to the current user.<br>Related Views<br>  ● DBA_MVIEW_AGGREGATES describes all such grouping functions defined for all materialized views in the database.<br>  ● USER_MVIEW_AGGREGATES describes all such grouping functions defined for all materialized views owned by the current user.<br>Note:<br>All three views exclude materialized views that reference remote tables or that include references to a nonstatic value such as SYSDATE orUSER. These views also exclude materialized views that were created as “snapshots” prior to Oracle8i and that were never altered to enable query rewrite.</p>
-<table style="font-size:14px;"><tr><th width="16.78%">Column</th><th width="14.24%">Datatype</th><th width="11.44%">NULL</th><th width="57.58%">Description</th></tr><tr><td>OWNER</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Owner of the materialized view</td></tr><tr><td>MVIEW_NAME</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Name of the materialized view</td></tr><tr><td>POSITION_IN_SELECT</td><td>NUMBER</td><td>NOT NULL</td><td>Ordinal position of this aggregation within the?SELECT?list. For the position of nonaggregate elements of the select list, see”ALL_MVIEW_KEYS”.</td></tr><tr><td>CONTAINER_COLUMN</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Name of this column in the container table</td></tr><tr><td>AGG_FUNCTION</td><td>VARCHAR2(8)</td><td></td><td>Aggregation function</td></tr><tr><td>DISTINCTFLAG</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether this aggregation is distinct (Y) or not (N)</td></tr><tr><td>MEASURE</td><td>LONG</td><td></td><td>SQL text of the measure, excluding the aggregation function. Equal to?<em>?for?COUNT(</em>).</td></tr></table>
-
-<p>参考<br><a href="https://docs.oracle.com/cd/E11882_01/server.112/e40402/statviews_1143.htm#REFRN20131" target="_blank" rel="external">https://docs.oracle.com/cd/E11882_01/server.112/e40402/statviews_1143.htm#REFRN20131</a></p>
-<h3 id="ALL-MVIEW-REFRESH-TIMES"><a href="#ALL-MVIEW-REFRESH-TIMES" class="headerlink" title="ALL_MVIEW_REFRESH_TIMES"></a>ALL_MVIEW_REFRESH_TIMES</h3><p>ALL_MVIEW_REFRESH_TIMES describes refresh times of the materialized views accessible to the current user.<br>Related Views<br>  ● DBA_MVIEW_REFRESH_TIMES describes refresh times of all materialized views in the database.<br>  ● USER_MVIEW_REFRESH_TIMES describes refresh times of the materialized views owned by the current user.</p>
-<table style="font-size:14px;"><tr><th width="16.78%">Column</th><th width="14.24%">Datatype</th><th width="11.44%">NULL</th><th width="57.58%">Description</th></tr><tr><td>OWNER</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Owner of the materialized view</td></tr><tr><td>NAME</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Name of the materialized view</td></tr><tr><td>MASTER_OWNER</td><td>VARCHAR2(30)</td><td></td><td>Owner of the master table</td></tr><tr><td>MASTER</td><td>VARCHAR2(30)</td><td></td><td>Name of the master table</td></tr><tr><td>LAST_REFRESH</td><td>DATE</td><td></td><td>SYSDATE?from the master site at the time of the last refresh</td></tr></table>
-
-<h3 id="ALL-MVIEW-JOINS"><a href="#ALL-MVIEW-JOINS" class="headerlink" title="ALL_MVIEW_JOINS"></a>ALL_MVIEW_JOINS</h3><p>ALL_MVIEW_JOINS describes joins between two columns in the WHERE clause of the subquery that defines a materialized view accessible to the current user.<br>Related Views<br>  ● DBA_MVIEW_JOINS describes all such joins for all materialized views in the database.<br>  ● USER_MVIEW_JOINS describes such joins for all materialized views owned by the current user.<br>Note:<br>All three views exclude materialized views that reference remote tables or that includes references to a nonstatic value such as SYSDATE orUSER. These views also exclude materialized views that were created as “snapshots” prior to Oracle8i and that were never altered to enable query rewrite.</p>
-<table style="font-size:14px;"><tr><th width="16.78%">Column</th><th width="14.24%">Datatype</th><th width="11.44%">NULL</th><th width="57.58%">Description</th></tr><tr><td>OWNER</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Owner of the materialized view</td></tr><tr><td>MVIEW_NAME</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Materialized view name</td></tr><tr><td>DETAILOBJ1_OWNER</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Owner of the first object in the joinFoot?1?</td></tr><tr><td>DETAILOBJ1_RELATION</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Name of the first object in the joinFootref?1</td></tr><tr><td>DETAILOBJ1_COLUMN</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Join column of the first object in the joinFootref?1</td></tr><tr><td>OPERATOR</td><td>CHAR(1)</td><td></td><td>Join operatorFootref?1</td></tr><tr><td>OPERATOR_TYPE</td><td>VARCHAR2(1)</td><td></td><td>Indicates whether the join is an inner join (I) or the?DETAILOBJ1table is the left side of an outer join (L)Footref?1</td></tr><tr><td>DETAILOBJ2_OWNER</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Owner of the second object in the joinFootref?1</td></tr><tr><td>DETAILOBJ2_RELATION</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Name of the second object in the joinFootref?1</td></tr><tr><td>DETAILOBJ2_COLUMN</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Join column of the second object in the joinFootref?1</td></tr></table>
-
-<p>Footnote 1 These rows relate only to materialized join views and materialized aggregate views. They describe the two detail objects of a materialized view join.</p>
-<p>参考<br><a href="https://docs.oracle.com/cd/E11882_01/server.112/e40402/statviews_1149.htm#REFRN20134" target="_blank" rel="external">https://docs.oracle.com/cd/E11882_01/server.112/e40402/statviews_1149.htm#REFRN20134</a></p>
-<h3 id="ALL-MVIEW-KEYS"><a href="#ALL-MVIEW-KEYS" class="headerlink" title="ALL_MVIEW_KEYS"></a>ALL_MVIEW_KEYS</h3><p>ALL_MVIEW_KEYS describes the columns or expressions in the SELECT list upon which materialized views accessible to the current user are based.<br>Related Views<br>  ● DBA_MVIEW_KEYS describes such columns and expressions for all materialized views in the database.<br>  ● USER_MVIEW_KEYS describes such columns and expressions for all materialized views owned by the current user.<br>Note:<br>All three views exclude materialized views that reference remote tables or that includes references to a nonstatic value such as SYSDATE orUSER. These views also exclude materialized views that were created as snapshots prior to Oracle8i and that were never altered to enable query rewrite.</p>
-<table style="font-size:14px;"><tr><th width="16.78%">Column</th><th width="14.24%">Datatype</th><th width="11.44%">NULL</th><th width="57.58%">Description</th></tr><tr><td>OWNER</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Owner of the materialized view</td></tr><tr><td>MVIEW_NAME</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Materialized view name</td></tr><tr><td>POSITION_IN_SELECT</td><td>NUMBER</td><td>NOT NULL</td><td>Ordinal position of this key within the?SELECT?list</td></tr><tr><td>CONTAINER_COLUMN</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Name of the column in the container table</td></tr><tr><td>DETAILOBJ_OWNER</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Detail object owner</td></tr><tr><td>DETAILOBJ_NAME</td><td>VARCHAR2(30)</td><td>NOT NULL</td><td>Detail object name (for example, the name of a table or view)</td></tr><tr><td>DETAILOBJ_ALIAS</td><td>VARCHAR2(30)</td><td></td><td>Implicit or explicit alias for detail relation</td></tr><tr><td>DETAILOBJ_TYPE</td><td>VARCHAR2(5)</td><td></td><td>Detail object type:</td></tr></table>
-
-<p>参考<br><a href="https://docs.oracle.com/cd/E11882_01/server.112/e40402/statviews_1150.htm#REFRN20135" target="_blank" rel="external">https://docs.oracle.com/cd/E11882_01/server.112/e40402/statviews_1150.htm#REFRN20135</a></p>
-<h3 id="ALL-MVIEW-LOGS"><a href="#ALL-MVIEW-LOGS" class="headerlink" title="ALL_MVIEW_LOGS"></a>ALL_MVIEW_LOGS</h3><p>ALL_MVIEW_LOGS describes all materialized view logs accessible to the current user.<br>Related Views<br>  ● DBA_MVIEW_LOGS describes all materialized view logs in the database.<br>  ● USER_MVIEW_LOGS describes all materialized view logs owned by the current user.</p>
-<table style="font-size:14px;"><tr><th width="16.78%">Column</th><th width="14.24%">Datatype</th><th width="11.44%">NULL</th><th width="57.58%">Description</th></tr><tr><td>LOG_OWNER</td><td>VARCHAR2(30)</td><td></td><td>Owner of the materialized view log</td></tr><tr><td>MASTER</td><td>VARCHAR2(30)</td><td></td><td>Name of the master table or master materialized view whose changes are logged</td></tr><tr><td>LOG_TABLE</td><td>VARCHAR2(30)</td><td></td><td>Name of the table where the changes to the master table or master materialized view are logged</td></tr><tr><td>LOG_TRIGGER</td><td>VARCHAR2(30)</td><td></td><td>Obsolete with Oracle8i?and later. Set to NULL. Formerly, this parameter was an after-row trigger on the master which inserted rows into the log.</td></tr><tr><td>ROWIDS</td><td>VARCHAR2(3)</td><td></td><td>Indicates whether rowid information is recorded (YES) or not (NO)</td></tr><tr><td>PRIMARY_KEY</td><td>VARCHAR2(3)</td><td></td><td>Indicates whether primary key information is recorded (YES) or not (NO)</td></tr><tr><td>OBJECT_ID</td><td>VARCHAR2(3)</td><td></td><td>Indicates whether object identifier information in an object table is recorded (YES) or not (NO)</td></tr><tr><td>FILTER_COLUMNS</td><td>VARCHAR2(3)</td><td></td><td>Indicates whether filter column information is recorded (YES) or not (NO)</td></tr><tr><td>SEQUENCE</td><td>VARCHAR2(3)</td><td></td><td>Indicates whether the sequence value, which provides additional ordering information, is recorded (YES) or not (NO)</td></tr><tr><td>INCLUDE_NEW_VALUES</td><td>VARCHAR2(3)</td><td></td><td>Indicates whether both old and new values are recorded (YES) or old values are recorded but new values are not recorded (NO)</td></tr><tr><td>PURGE_ASYNCHRONOUS</td><td>VARCHAR2(3)</td><td></td><td>Indicates whether the materialized view log is purged asynchronously (YES) or not (NO)</td></tr><tr><td>PURGE_DEFERRED</td><td>VARCHAR2(3)</td><td></td><td>Indicates whether the materialized view log is purged in a deferred manner (YES) or not (NO)</td></tr><tr><td>PURGE_START</td><td>DATE</td><td></td><td>For deferred purge, the purge start date</td></tr><tr><td>PURGE_INTERVAL</td><td>VARCHAR2(200)</td><td></td><td>For deferred purge, the purge interval</td></tr><tr><td>LAST_PURGE_DATE</td><td>DATE</td><td></td><td>Date of the last purge</td></tr><tr><td>LAST_PURGE_STATUS</td><td>NUMBER</td><td></td><td>Status of the last purge (error code or?0?for success)</td></tr><tr><td>NUM_ROWS_PURGED</td><td>NUMBER</td><td></td><td>Number of rows purged in the last purge</td></tr><tr><td>COMMIT_SCN_BASED</td><td>VARCHAR2(3)</td><td></td><td>Indicates whether the materialized view log is commit SCN-based (YES) or not (NO)</td></tr></table>
-
-<p>参考<br><a href="https://docs.oracle.com/cd/E11882_01/server.112/e40402/statviews_1151.htm#REFRN20137" target="_blank" rel="external">https://docs.oracle.com/cd/E11882_01/server.112/e40402/statviews_1151.htm#REFRN20137</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;当需要对物化视图的状态等信息进行查询，监控和管理时，就要用到相关的系统元数据表了，本文介绍了Oracle物化视图相关的元数据系统视图的表结构，这些视图有：&lt;br&gt;&lt;code&gt;ALL_VIEWS&lt;/code&gt;,&lt;code&gt;DBA_MVIEWS&lt;/code&gt;,&lt;code&gt;USER_MVIEWS&lt;/code&gt;，&lt;code&gt;ALL_MVIEW_ANALYSIS&lt;/code&gt;，&lt;code&gt;DBA_MVIEW_ANALYSIS&lt;/code&gt;，&lt;code&gt;USER_MVIEW_ANALYSIS&lt;/code&gt;，&lt;code&gt;ALL_MVIEW_AGGREGATES&lt;/code&gt;，&lt;code&gt;DBA_MVIEW_AGGREGATES&lt;/code&gt;，&lt;code&gt;USER_MVIEW_AGGREGATES&lt;/code&gt;，&lt;code&gt;ALL_MVIEW_REFRESH_TIMES&lt;/code&gt;，&lt;code&gt;DBA_MVIEW_REFRESH_TIMES&lt;/code&gt;，&lt;code&gt;USER_MVIEW_REFRESH_TIMES&lt;/code&gt;，&lt;code&gt;ALL_MVIEW_JOINS&lt;/code&gt;，&lt;code&gt;DBA_MVIEW_JOINS&lt;/code&gt;，&lt;code&gt;USER_MVIEW_JOINS&lt;/code&gt;，&lt;code&gt;ALL_MVIEW_KEYS&lt;/code&gt;，&lt;code&gt;DBA_MVIEW_KEYS&lt;/code&gt;，&lt;code&gt;USER_MVIEW_KEYS&lt;/code&gt;，&lt;code&gt;ALL_MVIEW_LOGS&lt;/code&gt;，&lt;code&gt;DBA_MVIEW_LOGS&lt;/code&gt;，&lt;code&gt;USER_MVIEW_LOGS&lt;/code&gt;。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="码路刺客" scheme="https://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
-    
-    
-      <category term="数据库" scheme="https://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-      <category term="ORACLE" scheme="https://c-xuan.com/tags/ORACLE/"/>
-    
-      <category term="物化视图" scheme="https://c-xuan.com/tags/%E7%89%A9%E5%8C%96%E8%A7%86%E5%9B%BE/"/>
-    
-      <category term="翻译" scheme="https://c-xuan.com/tags/%E7%BF%BB%E8%AF%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【ORACLE】物化视图快速刷新限制条件</title>
-    <link href="https://c-xuan.com/2017/07/13/20170713001/"/>
-    <id>https://c-xuan.com/2017/07/13/20170713001/</id>
-    <published>2017-07-12T16:00:00.000Z</published>
-    <updated>2017-07-12T16:00:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>快速刷新的物化视图创建比较麻烦，限制条件比较多，本文参考Oracle 11g 11.2版本官方文档，总结一般情况、含有联接、含有聚合计算、UNION ALL等情况下的限制条件。</p>
-<a id="more"></a>
-<h3 id="所有快速刷新的物化视图都必须满足的条件"><a href="#所有快速刷新的物化视图都必须满足的条件" class="headerlink" title="所有快速刷新的物化视图都必须满足的条件"></a><span id="here">所有快速刷新的物化视图都必须满足的条件</span></h3><p>定义物化视图的查询语句限制如下：</p>
-<ul>
-<li>1.物化视图中不能含有非重复表达式的引用，例如<code>SYSDATE</code>和<code>ROWNUM</code>.</li>
-<li>2.物化视图中不能出现<code>RAW</code>或<code>LONG RAW</code>数据类型的引用。</li>
-<li>3.查询语句的<code>SELECT</code>部分语不能出现子查询。</li>
-<li>4.<code>SELECT</code>子句部分不能包含分析性质的函数，例如<code>RANK</code>。</li>
-<li>5.不能含有<code>MODEL</code>子句。</li>
-<li>6.子查询中不能含有<code>HAVING</code>子句。</li>
-<li>7.不能出现含有<code>ANY</code>,<code>ALL</code>或<code>NOT EXISTS</code>的嵌套子查询。</li>
-<li>8.不能含有<code>[START WITH …] CONNECT BY</code>子句。</li>
-<li>9.不能包含不同站点的多个明细表。</li>
-<li>10.<code>ON COMMIT</code>刷新方式的物化视图不能有远程明细表的引用。</li>
-<li>11.嵌套物化视图必须含有表联接或者聚合计算。</li>
-<li>12.物化视图包含联接和<code>GROUP BY</code>子句的聚合计算时，不能select from 一个有索引的表。</li>
-</ul>
-<h3 id="只包含联接的物化视图快速刷新限制条件"><a href="#只包含联接的物化视图快速刷新限制条件" class="headerlink" title="只包含联接的物化视图快速刷新限制条件"></a>只包含联接的物化视图快速刷新限制条件</h3><p>定义物化视图的查询语句只含有联接且没有聚合计算，实现快速刷新除满足<a href="#here">通用条件</a>外，还要满足条件如下：</p>
-<ul>
-<li>1.不能含有<code>GROUP BY</code>子句或聚合计算。</li>
-<li>2.<code>FROM</code>中出现的每个基表的<code>ROWID</code>必须出现在<code>SELECT</code>子句中。</li>
-<li>3.<code>FROM</code>中出现的每个基表都必须创建基于<code>ROWID</code>的物化视图日志(MATERIALIZED VIEW LOG)。</li>
-<li>4.<code>SELECT</code>子句中不能含有object类型的列。</li>
-</ul>
-<p><font color="red"><strong>另外，以下情况将会影响快速刷新的效率：</strong></font></p>
-<ul>
-<li><strong><font color="red">1.定义的查询语句含有外联接，如果这样的话，请考虑重写查询语句改为内连接。</font></strong></li>
-<li><strong><font color="red">2.<code>SELECT</code>子句中含有多个表的列运算。</font></strong></li>
-</ul>
-<h3 id="包含聚合的物化视图快速刷新限制"><a href="#包含聚合的物化视图快速刷新限制" class="headerlink" title="包含聚合的物化视图快速刷新限制"></a>包含聚合的物化视图快速刷新限制</h3><p>定义物化视图的查询语句含有聚合计算，实现快速刷新除满足<a href="#here">通用条件</a>外，还要满足条件如下：</p>
-<ul>
-<li>1.所有基表必须建立物化视图日志，创建日志必须满足：<ul>
-<li>1.1 包含在物化视图中引用的所有列，确保这些列没有被加密。</li>
-<li>1.2 需要指定<code>ROWID</code>和<code>INCLUDING NEW VAUES</code>。</li>
-<li>1.3 如果基表会有插入/直接导入，删除，更新数据的混合操作，需要指定<code>SEQUENCE</code>子句。</li>
-</ul>
-</li>
-<li>2.只有<code>SUM</code>,<code>COUNT</code>,<code>AVG</code>,<code>STDDEV</code>,<code>VARIANCE</code>,<code>MIN</code>和<code>MAX</code>才支持快速刷新。</li>
-<li>3.必须有写<code>COUNT(*)</code>。</li>
-<li>4.聚合函数必须出现在表达式的最外层，也就是说像<code>AVG(AVG(X))</code>或<code>AVG(x)+AVG(x)</code>都是不允许的。</li>
-<li>5.对每一个聚集计算如<code>AVG(expr)</code>,相应的<code>COUNT(expr)</code>也必须要有，Oracle建议<code>SUM(expr)</code>也写上。</li>
-<li>6.如果含有<code>VARIANCE(expr)</code>或<code>STDDEV(expr)</code>,<code>COUNT(expr)</code>和<code>SUM(expr)</code>都必须写，Oracle建议<code>SUM(expr*expr)</code>也写上。</li>
-<li>7.查询中定义的<code>SELECT</code>列不能是来自多个表的列复杂运算，可以考虑使用嵌套物化视图作为变通方案。</li>
-<li>8.<code>GROUP BY</code>中的列都要在<code>SELECT</code>里出现。</li>
-<li>9.如果物化视图日志中过滤列字段类型为<code>CHAR</code>，那么基表所在的数据库和物化视图所在的数据库的字符集必须要一样。</li>
-<li>10.如果物化视图有以下情况，增量刷新只支持DML操作中的<code>INSERT</code>和直接装载(direct loads)操作，这种物化视图叫只能插入(insert-only)的物化视图：<ul>
-<li>10.1 物化视图有<code>MIN</code>或者<code>MAX</code>聚合计算。</li>
-<li>10.2 物化视图有<code>SUM(expr)</code>但是没有<code>COUNT(expr)</code>。</li>
-<li>10.3 物化视图没有指定<code>COUNT(*)</code>。</li>
-</ul>
-</li>
-<li>11.含有<code>MAX</code>或<code>MIN</code>聚合计算的物化视图如果没有<code>WHERE</code>子句，是支持基表增删改的增量刷新的。</li>
-<li>12.物化视图的<code>FROM</code>子句中有普通视图或者子查询，如果普通视图可以被完全合并是可以支持增量刷新的。(PS.这一条不懂啥意思)</li>
-<li>13.如果没有外联接，<code>WHERE</code>子句没有限制。<br>-14.有外联接和聚合计算的物化视图是支持增量刷新的，只有外接表数据变更的时候。另外，唯一约束必须存在于表的内连接列上。如果有外联接，所有连接必须用<code>AND</code>和<code>=</code>操作符。</li>
-<li>15.对于含有<code>CUBE</code>，<code>ROLLUP</code>，<code>GOUPING SETS</code>的物化视图，会有以下限制：<ul>
-<li>15.1<code>SELECT</code>列表要包含<code>GROUP BY</code>所有字段的<code>GROUPING_ID</code>或<code>GROUPING</code>。举个例子，<code>GROUP BY</code>子句是<code>GROUP BY CUBE(a, b)</code>，那么<code>SELECT</code>列表中应该包含<code>GROUPING_ID(a, b)</code>或<code>GROUPING(a) , GROUPING(b)</code>，这样才会使物化视图增量刷新。</li>
-<li>15.2 <code>GROUP BY</code>不能导致多个groupings的情况，比如，<code>GROUP BY a, ROLLUP(a, b)</code>就不会增量刷新因为这会导致多个groupings，<code>(a), (a, b), (a)</code>。</li>
-</ul>
-</li>
-</ul>
-<h3 id="包含UNION-ALL的物化视图快速刷新限制"><a href="#包含UNION-ALL的物化视图快速刷新限制" class="headerlink" title="包含UNION ALL的物化视图快速刷新限制"></a>包含UNION ALL的物化视图快速刷新限制</h3><p>含有<code>UNION ALL</code>的物化视图<code>REFRESH FAST</code>需要满足以下条件：</p>
-<ul>
-<li>1.<code>UNION ALL</code>操作必须在查询语句的顶层。<code>UNION ALL</code>不能被嵌套在一个子查询里面，这里有一个例外：<code>SELECT * FROM</code>后面直接跟含有<code>UNION ALL</code>的子查询。</li>
-</ul>
-<p>例如：<br>  <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">VIEW</span> view_with_unionall <span class="keyword">AS</span></div><div class="line">(<span class="keyword">SELECT</span> c.rowid crid, c.cust_id, <span class="number">2</span> umarker</div><div class="line">   <span class="keyword">FROM</span> customers c <span class="keyword">WHERE</span> c.cust_last_name = <span class="string">'Smith'</span></div><div class="line">  <span class="keyword">UNION</span> ALL</div><div class="line"> <span class="keyword">SELECT</span> c.rowid crid, c.cust_id, <span class="number">3</span> umarker</div><div class="line">   <span class="keyword">FROM</span> customers c <span class="keyword">WHERE</span> c.cust_last_name = <span class="string">'Jones'</span>);</div><div class="line"></div><div class="line"> <span class="keyword">CREATE</span> <span class="keyword">MATERIALIZED</span> <span class="keyword">VIEW</span> unionall_inside_view_mv</div><div class="line"><span class="keyword">REFRESH</span> <span class="keyword">FAST</span> <span class="keyword">ON</span> <span class="keyword">DEMAND</span> <span class="keyword">AS</span></div><div class="line"> <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> view_with_unionall;</div></pre></td></tr></table></figure></p>
-<ul>
-<li>2.<code>UNION ALL</code>的每一部分查询必须满足聚合物化视图货连接物化视图的增量刷新条件。相应的物化视图日志也要建上。</li>
-<li>3.<code>UNION ALL</code>的每一部分查询必须包含一列标记列，这个标识列必须是数值或者字符型的固定数值，而且这一列在每一部分的查询中<code>SELECT</code>列顺序相同。</li>
-<li>4.一些特性如外联接，只能插入(insert-only)的物化视图查询和远程表都是不支持<code>UNION ALL</code>物化视图的。然而，那些被用于复制的不包含联接和聚集计算的物化视图，是可以增量刷新的。</li>
-<li>5.创建包含<code>UNION ALL</code>的增量刷新物化视图，版本需满足9.2.0或更高才能满足兼容。</li>
-</ul>
-<p>参考：<br><a href="https://docs.oracle.com/cd/E11882_01/server.112/e25554/basicmv.htm#i1007013" target="_blank" rel="external">https://docs.oracle.com/cd/E11882_01/server.112/e25554/basicmv.htm#i1007013</a></p>
-<p>更多：<br><a href="http://c-xuan.com/2017/07/13/20170713001">http://c-xuan.com/2017/07/13/20170713001</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;快速刷新的物化视图创建比较麻烦，限制条件比较多，本文参考Oracle 11g 11.2版本官方文档，总结一般情况、含有联接、含有聚合计算、UNION ALL等情况下的限制条件。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="码路刺客" scheme="https://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
-    
-    
-      <category term="数据库" scheme="https://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-      <category term="ORACLE" scheme="https://c-xuan.com/tags/ORACLE/"/>
-    
-      <category term="物化视图" scheme="https://c-xuan.com/tags/%E7%89%A9%E5%8C%96%E8%A7%86%E5%9B%BE/"/>
-    
-      <category term="翻译" scheme="https://c-xuan.com/tags/%E7%BF%BB%E8%AF%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>树形结构数据存储方案（五）：区间嵌套</title>
-    <link href="https://c-xuan.com/2017/03/07/tree-table-store5/"/>
-    <id>https://c-xuan.com/2017/03/07/tree-table-store5/</id>
-    <published>2017-03-07T15:44:08.000Z</published>
-    <updated>2017-03-07T16:11:16.129Z</updated>
-    
-    <content type="html"><![CDATA[<p>前面的一篇文章介绍了左右值编码，不知道大家注意到了没有，如果数据庞大，每次更新都需要更新差不多全表，效率较低没有更好的方式？今天我们就来研究下区间嵌套法。</p>
-<p><strong>区间嵌套法原理</strong></p>
-<p>如果节点区间<code>[clft, crgt]</code>与<code>[plft, prgt]</code>存在如下关系：<code>plft &lt;= clft and crgt &gt;= prgt</code>，则<code>[clft, crgt]</code>区间里的点是<code>[plft, prgt]</code>的子节点。基于此假设我们就可以通过对区间的不断的向下划来获取新的区间。举例：如果在区间<code>[plft, prgt]</code>中存在一个空白区间<code>[lft1, rgt1]</code>，如果要加入一个<code>[plft,lft1]</code>、<code>[rgt1,prgt]</code>同级的区间，只需插入节点：<code>[(2*lft1+rgt1)/3</code>,  <code>(rgt1+2*lft)/3]</code>。在添加完节点后我们还留下<code>[lft1,(2*lft1+rgt1)/3]</code>和 <code>[(rgt1+2*lft)/3,rgt1]</code>两个空余的空间用来添加更多的子节点。</p>
-<a id="more"></a>
-<center><img src="/img/posts/tree-table-store5-1.gif"></center>
-
-<p>如果我们把区间放在二位平面上，把<code>rgt</code>当成是x轴，<code>lft</code>当做是y轴，纳闷嵌套的区间数差不多是这样的：</p>
-<center><img src="/img/posts/tree-table-store5-2.gif"></center>
-
-<p>每个节点<code>[lft, rgt]</code>拥有的子节点都被包含在<code>y &gt;= lft &amp; x &lt;= rgt</code>中。同时<code>y &gt;= clft &amp; x &lt;= crgt</code>所在的空间也是<code>y &gt;= plft  &amp; x &lt;= prgt</code>的子集。另外由于新增的右区间都小于已有的左区间，所以新增的节点均在y=x这条直线以下。</p>
-<p><strong>区间嵌套法实现</strong></p>
-<p>了解了区间嵌套法的原理后，接下来我们就要考虑如何实现他，原则上初始的区间使用任何区间都是可以的，这里我们使用的是[0,1]作为根区间。</p>
-<center><img src="/img/posts/tree-table-store5-3.gif"></center>
-
-<p>首先，我们在XY平面上定义2个点。深度优先集合点和广度有限集合点，针对点<code>&lt;x=1,y=1/2&gt;</code>的深度优先集合点为<code>&lt;x=1,y=1&gt;</code>，广度优先集合点为<code>&lt;x=1/2,y=1/2&gt;</code>。接下来我们定义第一个子节点的位置为父节点和深度优先集合点的中间点。兄弟节点则为前一个子节点到广度优先集合点的中间点，如上图所示，节点1.2的位置为<code>&lt;x=3/4, y=5/8&gt;</code>。</p>
-<p>另外仔细看我们可以看到点与点之间的关系。另外如果我们知道x和y的和，我们就能反推出x,y的值（具体的逻辑是什么，我现在也还没有搞懂，有知道的朋友可以帮忙解释下）。</p>
-<p>我们以节点<code>&lt;x=3/4, y=5/8&gt;</code>为例，我们可以得到他的和为11/8。</p>
-<p>我们定义11为分子（numerator），8为分母（denominator），则x点的分子为：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> DEFINER = <span class="string">`root`</span>@<span class="string">`localhost`</span> <span class="keyword">FUNCTION</span> <span class="string">`x_numer`</span>(<span class="string">`numer`</span> <span class="built_in">int</span>,<span class="string">`denom`</span> <span class="built_in">int</span>)</div><div class="line"><span class="keyword">RETURNS</span> <span class="built_in">int</span>(<span class="number">11</span>)</div><div class="line"><span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">DECLARE</span> ret_num <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">DECLARE</span> ret_den <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">SET</span> ret_num := numer+<span class="number">1</span>;</div><div class="line"><span class="keyword">SET</span> ret_den := denom*<span class="number">2</span>;</div><div class="line">WHILE floor(ret_num/2) = ret_num/2 <span class="keyword">DO</span></div><div class="line"><span class="keyword">SET</span> ret_num := ret_num/<span class="number">2</span>;</div><div class="line"><span class="keyword">SET</span> ret_den := ret_den/<span class="number">2</span>;</div><div class="line"><span class="keyword">END</span> <span class="keyword">WHILE</span>;</div><div class="line">RETURN ret_num;</div><div class="line"><span class="keyword">END</span>;</div></pre></td></tr></table></figure>
-<p>x点的分母为：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> DEFINER = <span class="string">`root`</span>@<span class="string">`localhost`</span> <span class="keyword">FUNCTION</span> <span class="string">`x_ denom`</span>(<span class="string">`numer`</span> <span class="built_in">int</span>,<span class="string">`denom`</span> <span class="built_in">int</span>)</div><div class="line"><span class="keyword">RETURNS</span> <span class="built_in">int</span>(<span class="number">11</span>)</div><div class="line"><span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">DECLARE</span> ret_num <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">DECLARE</span> ret_den <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">SET</span> ret_num := numer+<span class="number">1</span>;</div><div class="line"><span class="keyword">SET</span> ret_den := denom*<span class="number">2</span>;</div><div class="line">WHILE floor(ret_num/2) = ret_num/2 <span class="keyword">DO</span></div><div class="line"><span class="keyword">SET</span> ret_num := ret_num/<span class="number">2</span>;</div><div class="line"><span class="keyword">SET</span> ret_den := ret_den/<span class="number">2</span>;</div><div class="line"><span class="keyword">END</span> <span class="keyword">WHILE</span>;</div><div class="line">RETURN ret_den;</div><div class="line"><span class="keyword">END</span>;</div></pre></td></tr></table></figure>
-<p>Y点的分子:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">CREATE DEFINER = `root`@`localhost` FUNCTION `y_numer`(`numer` int,`denom` int)</div><div class="line">RETURNS int(11)</div><div class="line">BEGIN</div><div class="line">DECLARE num INT;</div><div class="line">DECLARE den INT;</div><div class="line">SET num := x_numer(numer, denom);</div><div class="line">SET den := x_denom(numer, denom);</div><div class="line">WHILE den &lt; denom DO</div><div class="line">SET num := num*2;</div><div class="line">SET den := den*2;</div><div class="line">END WHILE;</div><div class="line">SET num := (numer - num);</div><div class="line">WHILE floor(num/2) = num/2 DO</div><div class="line">SET num := num/2;</div><div class="line">SET den := den/2;</div><div class="line">END WHILE;</div><div class="line">RETURN num;</div><div class="line">END;</div></pre></td></tr></table></figure>
-<p>Y 的分母：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">CREATE DEFINER = `root`@`localhost` FUNCTION `y_denom`(`numer` int,`denom` int)</div><div class="line">RETURNS int(11)</div><div class="line">BEGIN</div><div class="line">DECLARE num INT;</div><div class="line">DECLARE den INT;</div><div class="line">SET num := x_numer(numer, denom);</div><div class="line">SET den := x_denom(numer, denom);</div><div class="line">WHILE den &lt; denom DO</div><div class="line">SET num := num*2;</div><div class="line">SET den := den*2;</div><div class="line">END WHILE;</div><div class="line">SET num := (numer - num);</div><div class="line">WHILE floor(num/2) = num/2 DO</div><div class="line">SET num := num/2;</div><div class="line">SET den := den/2;</div><div class="line">END WHILE;</div><div class="line">RETURN den;</div><div class="line">END;</div></pre></td></tr></table></figure>
-<p>接下来我们来测试下，X与Y是否能解码出来：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span></div><div class="line"><span class="keyword">CONCAT</span>(x_numer (<span class="number">11</span>, <span class="number">8</span>),<span class="string">'/'</span>,x_denom (<span class="number">11</span>, <span class="number">8</span>)) <span class="keyword">AS</span> X,</div><div class="line"><span class="keyword">CONCAT</span>(y_numer (<span class="number">11</span>, <span class="number">8</span>),<span class="string">'/'</span>,y_denom (<span class="number">11</span>, <span class="number">8</span>)) <span class="keyword">AS</span> Y</div></pre></td></tr></table></figure>
-<center><img src="/img/posts/tree-table-store5-4.gif"></center>
-
-<p>结果与节点1.2的位置为<code>&lt;x=3/4, y=5/8&gt;</code>完全一致。现在我们知道只需要一个分数即可表示平面上的一个点。</p>
-<p>如有已经有分数11/8如何获取该节点的父节点？(如果分子为3，则代表其为根节点)</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> DEFINER = <span class="string">`root`</span>@<span class="string">`localhost`</span> <span class="keyword">FUNCTION</span> <span class="string">`parent_numer`</span>(<span class="string">`numer`</span> <span class="built_in">int</span>,<span class="string">`denom`</span> <span class="built_in">int</span>)</div><div class="line"><span class="keyword">RETURNS</span> <span class="built_in">int</span>(<span class="number">11</span>)</div><div class="line"><span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">DECLARE</span> ret_num <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">DECLARE</span> ret_den <span class="built_in">INT</span>;</div><div class="line">IF numer=3 THEN</div><div class="line">RETURN denom/2;</div><div class="line"><span class="keyword">END</span> <span class="keyword">IF</span>;</div><div class="line"><span class="keyword">SET</span> ret_num := (numer<span class="number">-1</span>)/<span class="number">2</span>;</div><div class="line"><span class="keyword">SET</span> ret_den := denom/<span class="number">2</span>;</div><div class="line">WHILE floor((ret_num-1)/4) = (ret_num-1)/4 <span class="keyword">DO</span></div><div class="line"><span class="keyword">SET</span> ret_num := (ret_num+<span class="number">1</span>)/<span class="number">2</span>;</div><div class="line"><span class="keyword">SET</span> ret_den := ret_den/<span class="number">2</span>;</div><div class="line"><span class="keyword">END</span> <span class="keyword">WHILE</span>;</div><div class="line">RETURN ret_num;</div><div class="line"><span class="keyword">END</span>;</div><div class="line"></div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">CONCAT</span>(parent_numer(<span class="number">11</span>,<span class="number">8</span>),<span class="string">'/'</span>,parent_denom(<span class="number">11</span>,<span class="number">8</span>)) <span class="keyword">AS</span> <span class="keyword">parent</span></div></pre></td></tr></table></figure>
-<p>计算当前节点在同级所在的位置：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> DEFINER = <span class="string">`root`</span>@<span class="string">`localhost`</span> <span class="keyword">FUNCTION</span> <span class="string">`parent_denom`</span>(<span class="string">`numer`</span> <span class="built_in">int</span>,<span class="string">`denom`</span> <span class="built_in">int</span>)</div><div class="line"><span class="keyword">RETURNS</span> <span class="built_in">int</span>(<span class="number">11</span>)</div><div class="line"><span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">DECLARE</span> ret_num <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">DECLARE</span> ret_den <span class="built_in">INT</span>;</div><div class="line">IF numer=3 THEN</div><div class="line">RETURN NULL;</div><div class="line"><span class="keyword">END</span> <span class="keyword">IF</span>;</div><div class="line"><span class="keyword">SET</span> ret_num := (numer<span class="number">-1</span>)/<span class="number">2</span>;</div><div class="line"><span class="keyword">SET</span> ret_den := denom/<span class="number">2</span>;</div><div class="line">WHILE floor((ret_num-1)/4) = (ret_num-1)/4 <span class="keyword">DO</span></div><div class="line"><span class="keyword">SET</span> ret_num := (ret_num+<span class="number">1</span>)/<span class="number">2</span>;</div><div class="line"><span class="keyword">SET</span> ret_den := ret_den/<span class="number">2</span>;</div><div class="line"><span class="keyword">END</span> <span class="keyword">WHILE</span>;</div><div class="line">RETURN ret_den;</div><div class="line"><span class="keyword">END</span>;</div></pre></td></tr></table></figure>
-<p>有了查询父节点的方法及当前节点所在同级中的位置的方法，即可通过这两个的组合，将节点的路径给计算出来。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> DEFINER = <span class="string">`root`</span>@<span class="string">`localhost`</span> <span class="keyword">FUNCTION</span> <span class="string">`path`</span>(<span class="string">`numer`</span> <span class="built_in">int</span>,<span class="string">`denom`</span> <span class="built_in">int</span>)</div><div class="line"><span class="keyword">RETURNS</span> <span class="built_in">varchar</span>(<span class="number">255</span>)</div><div class="line"><span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">IF</span> numer <span class="keyword">is</span> <span class="literal">NULL</span> <span class="keyword">THEN</span></div><div class="line"><span class="keyword">RETURN</span> <span class="string">''</span>;</div><div class="line"><span class="keyword">END</span> <span class="keyword">IF</span>;</div><div class="line">RETURN path(parent_numer(numer, denom),parent_denom(numer, denom))|| ‘.’ || sibling_number(numer, denom);</div><div class="line"><span class="keyword">END</span>;</div></pre></td></tr></table></figure>
-<p>按照以上方法添加后进行测试，返回<br><strong>[Err] 1424 – Recursive stored functions and triggers are not allowed.</strong>即MySQL的自定义函数不支持递归查询。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> DEFINER = <span class="string">`root`</span>@<span class="string">`localhost`</span> <span class="keyword">FUNCTION</span> <span class="string">`path`</span>(<span class="string">`numer`</span> <span class="built_in">int</span>,<span class="string">`denom`</span> <span class="built_in">int</span>)</div><div class="line"><span class="keyword">RETURNS</span> <span class="built_in">varchar</span>(<span class="number">255</span>)</div><div class="line"><span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">DECLARE</span> numer_temp <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">DECLARE</span> denom_temp <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">DECLARE</span> path_result <span class="built_in">VARCHAR</span>(<span class="number">255</span>);</div><div class="line"><span class="keyword">DECLARE</span> path_temp <span class="built_in">VARCHAR</span>(<span class="number">255</span>);</div><div class="line"><span class="keyword">DECLARE</span> sn <span class="built_in">VARCHAR</span>(<span class="number">255</span>);</div><div class="line"><span class="keyword">SET</span> path_temp := <span class="string">''</span>;</div><div class="line">WHILE numer IS NOT NULL <span class="keyword">DO</span></div><div class="line"><span class="keyword">IF</span> path_temp = <span class="string">''</span></div><div class="line"><span class="keyword">THEN</span></div><div class="line"><span class="keyword">SET</span> path_result := sibling_number(numer, denom);</div><div class="line">ELSE</div><div class="line"><span class="keyword">SET</span> path_result := <span class="keyword">CONCAT</span>(sibling_number(numer, denom),<span class="string">'.'</span>,path_temp);</div><div class="line"><span class="keyword">END</span> <span class="keyword">IF</span>;</div><div class="line"><span class="keyword">SET</span> path_temp := path_result;</div><div class="line"><span class="keyword">SET</span> numer_temp := parent_numer(numer, denom);</div><div class="line"><span class="keyword">SET</span> denom_temp := parent_denom(numer, denom);</div><div class="line"><span class="keyword">SET</span> numer := numer_temp;</div><div class="line"><span class="keyword">SET</span> denom := denom_temp;</div><div class="line"><span class="keyword">END</span> <span class="keyword">WHILE</span>;</div><div class="line">RETURN path_result;</div><div class="line"><span class="keyword">END</span>;</div></pre></td></tr></table></figure>
-<p><code>SELECT path (11, 8)</code>的结果为 1.2</p>
-<p>计算节点层级的方法：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> DEFINER = <span class="string">`root`</span>@<span class="string">`localhost`</span> <span class="keyword">FUNCTION</span> <span class="string">`node_level`</span>(<span class="string">`numer`</span> <span class="built_in">int</span>,<span class="string">`denom`</span> <span class="built_in">int</span>)</div><div class="line"><span class="keyword">RETURNS</span> <span class="built_in">int</span>(<span class="number">11</span>)</div><div class="line"><span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">DECLARE</span> ret_num <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">DECLARE</span> ret_den <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">DECLARE</span> ret <span class="built_in">INT</span>;</div><div class="line"><span class="keyword">SET</span> ret =<span class="number">1</span>;</div><div class="line">IF numer=3 THEN</div><div class="line">return 1;</div><div class="line"><span class="keyword">END</span> <span class="keyword">IF</span>;</div><div class="line">WHILE numer!=3 <span class="keyword">DO</span></div><div class="line"><span class="keyword">SET</span> ret_num := parent_numer(numer, denom);</div><div class="line"><span class="keyword">SET</span> ret_den := parent_denom(numer, denom);</div><div class="line"><span class="keyword">SET</span> numer := ret_num;</div><div class="line"><span class="keyword">SET</span> denom := ret_den;</div><div class="line"><span class="keyword">SET</span> ret := ret + <span class="number">1</span>;</div><div class="line"><span class="keyword">END</span> <span class="keyword">WHILE</span>;</div><div class="line">RETURN ret;</div><div class="line"><span class="keyword">END</span>;</div></pre></td></tr></table></figure>
-<p>我们知道了如何将编码过的节点转成目录形式，如何逆转呢？以下是方法：</p>
-<p>先添加2个辅助函数：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> DEFINER = <span class="string">`root`</span>@<span class="string">`localhost`</span> <span class="keyword">FUNCTION</span> <span class="string">`child_numer`</span>(<span class="string">`num`</span> <span class="built_in">int</span>,<span class="string">`den`</span> <span class="built_in">int</span>,<span class="string">`child`</span> <span class="built_in">int</span>)</div><div class="line"><span class="keyword">RETURNS</span> <span class="built_in">int</span>(<span class="number">11</span>)</div><div class="line"><span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">RETURN</span> <span class="keyword">num</span> * <span class="keyword">power</span>(<span class="number">2</span>, <span class="keyword">child</span>) + <span class="number">3</span> - <span class="keyword">power</span>(<span class="number">2</span>, <span class="keyword">child</span>);</div><div class="line"><span class="keyword">END</span>;</div></pre></td></tr></table></figure>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> DEFINER = <span class="string">`root`</span>@<span class="string">`localhost`</span> <span class="keyword">FUNCTION</span> <span class="string">`child_denom`</span>(<span class="string">`num`</span> <span class="built_in">int</span>,<span class="string">`den`</span> <span class="built_in">int</span>,<span class="string">`child`</span> <span class="built_in">int</span>)</div><div class="line"><span class="keyword">RETURNS</span> <span class="built_in">int</span>(<span class="number">11</span>)</div><div class="line"><span class="keyword">BEGIN</span></div><div class="line"><span class="keyword">RETURN</span> den*<span class="keyword">power</span>(<span class="number">2</span>, <span class="keyword">child</span>);</div><div class="line"><span class="keyword">END</span>;</div></pre></td></tr></table></figure>
-<p>再来编写逆转函数：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">CREATE DEFINER = `root`@`localhost` FUNCTION `path_numer`(`path` varchar(255))</div><div class="line">RETURNS int(11)</div><div class="line">BEGIN</div><div class="line">DECLARE num INT;</div><div class="line">DECLARE den INT;</div><div class="line">DECLARE postfix VARCHAR(255);</div><div class="line">DECLARE sibling VARCHAR(255);</div><div class="line">SET num := 1;</div><div class="line">SET den := 1;</div><div class="line">SET postfix := CONCAT(path,'.');</div><div class="line">WHILE length(postfix) &gt; 1 DO</div><div class="line">SET sibling := SUBSTR(postfix, 1, instr(postfix,'.')-1);</div><div class="line">SET postfix := SUBSTR(postfix, instr(postfix,'.')+1);</div><div class="line">SET num := child_numer(num,den,sibling+0);</div><div class="line">SET den := child_denom(num,den,sibling+0);</div><div class="line">END WHILE;</div><div class="line">RETURN num;</div><div class="line">END;</div></pre></td></tr></table></figure>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">CREATE DEFINER = `root`@`localhost` FUNCTION `path_denom`(`path` varchar(255))</div><div class="line">RETURNS int(11)</div><div class="line">BEGIN</div><div class="line">DECLARE num INT;</div><div class="line">DECLARE den INT;</div><div class="line">DECLARE postfix VARCHAR(255);</div><div class="line">DECLARE sibling VARCHAR(255);</div><div class="line">SET num := 1;</div><div class="line">SET den := 1;</div><div class="line">SET postfix := CONCAT(path,'.');</div><div class="line">WHILE length(postfix) &gt; 1 DO</div><div class="line">SET sibling := SUBSTR(postfix, 1, instr(postfix,'.')-1);</div><div class="line">SET postfix := SUBSTR(postfix, instr(postfix,'.')+1);</div><div class="line">SET num := child_numer(num,den,sibling+0);</div><div class="line">SET den := child_denom(num,den,sibling+0);</div><div class="line">END WHILE;</div><div class="line">RETURN den;</div><div class="line">END;</div></pre></td></tr></table></figure>
-<p><code>select CONCAT(path_numer(‘2.1.3′),’/’,path_denom(‘2.1.3’))</code>结果为51/64</p>
-<p>参考资料：<br>  ● <a href="http://www.rampant-books.com/art_vadim_nested_sets_sql_trees.htm" target="_blank" rel="external">http://www.rampant-books.com/art_vadim_nested_sets_sql_trees.htm</a></p>
-<p>转自<a href="https://www.biaodianfu.com/nested-intervals.html" target="_blank" rel="external">https://www.biaodianfu.com/nested-intervals.html</a></p>
-<p>作者：标点符</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;前面的一篇文章介绍了左右值编码，不知道大家注意到了没有，如果数据庞大，每次更新都需要更新差不多全表，效率较低没有更好的方式？今天我们就来研究下区间嵌套法。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;区间嵌套法原理&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;如果节点区间&lt;code&gt;[clft, crgt]&lt;/code&gt;与&lt;code&gt;[plft, prgt]&lt;/code&gt;存在如下关系：&lt;code&gt;plft &amp;lt;= clft and crgt &amp;gt;= prgt&lt;/code&gt;，则&lt;code&gt;[clft, crgt]&lt;/code&gt;区间里的点是&lt;code&gt;[plft, prgt]&lt;/code&gt;的子节点。基于此假设我们就可以通过对区间的不断的向下划来获取新的区间。举例：如果在区间&lt;code&gt;[plft, prgt]&lt;/code&gt;中存在一个空白区间&lt;code&gt;[lft1, rgt1]&lt;/code&gt;，如果要加入一个&lt;code&gt;[plft,lft1]&lt;/code&gt;、&lt;code&gt;[rgt1,prgt]&lt;/code&gt;同级的区间，只需插入节点：&lt;code&gt;[(2*lft1+rgt1)/3&lt;/code&gt;,  &lt;code&gt;(rgt1+2*lft)/3]&lt;/code&gt;。在添加完节点后我们还留下&lt;code&gt;[lft1,(2*lft1+rgt1)/3]&lt;/code&gt;和 &lt;code&gt;[(rgt1+2*lft)/3,rgt1]&lt;/code&gt;两个空余的空间用来添加更多的子节点。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="码路刺客" scheme="https://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
-    
-    
-      <category term="数据库" scheme="https://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-      <category term="转载" scheme="https://c-xuan.com/tags/%E8%BD%AC%E8%BD%BD/"/>
     
   </entry>
   

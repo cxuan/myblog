@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://c-xuan.com/"/>
-  <updated>2019-02-20T05:40:29.000Z</updated>
+  <updated>2019-02-21T05:40:29.000Z</updated>
   <id>https://c-xuan.com/</id>
   
   <author>
@@ -14,6 +14,64 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>类Jupyter notebook编辑器桌面版nteract</title>
+    <link href="https://c-xuan.com/2019/02/21/20190221001_nteract/"/>
+    <id>https://c-xuan.com/2019/02/21/20190221001_nteract/</id>
+    <published>2019-02-21T05:40:29.000Z</published>
+    <updated>2019-02-21T05:40:29.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Jupyter notebook是一款学习和科研的神奇，相信很多小伙伴已经利用它在学术科研、研究开发的道路上收获了便捷易用、可视直观的优点。我们使用的Jupyter notebook都是网页形式的，在浏览器中进行操作，保存的文件格式是<code>.ipynb</code>的。似乎在其他编辑器工具中打不开这种格式。有没有不想在网页中的Jupyter notebook编写代码，也可以直接编辑<code>.ipynb</code>格式的文件的方法呢？</p>
+<a id="more"></a>
+<p>有这样一个软件似乎可以：<a href="https://nteract.io/" target="_blank" rel="external">nteract</a>，这个软件我理解为桌面版的Jupyter notebook，下面是nteract的官网.</p>
+<center><img src="/img/posts/20190221001-02.gif" alt="pyvenv"></center>
+
+<h3 id="软件安装"><a href="#软件安装" class="headerlink" title="软件安装"></a>软件安装</h3><p>官网上可以下载安装文件，支持跨平台，有windows,linux,mac版本，免费的。软件安装好后，启动进入，界面比较简洁。</p>
+<center><img src="/img/posts/20190221001-03.png" alt="pyvenv"></center>
+
+<p>可以看到，系统中<code>.ipynb</code>格式的文件打开方式变成了nteract，直接双击文件就能打开进行编辑，保存，跟在Jupyter notebook一样。</p>
+<center><img src="/img/posts/20190221001-04.png" alt="pyvenv"></center>
+
+<h3 id="执行代码"><a href="#执行代码" class="headerlink" title="执行代码"></a>执行代码</h3><p>软件安装前确保本机有Python执行环境，推荐安装Anaconda，nteract需要连接Jupyter内核才能执行代码，如果已安装有Anaconda，打开nteract后可以看到左下角连接的Jupyter内核名称。</p>
+<center><img src="/img/posts/20190221001-06.png" alt="pyvenv"></center>
+
+<p>如果需要切换python虚拟环境，就需要安装多个python内核，如何安装参考<a href="/2019/02/18/20190218001_hydrogen_venv">Atom编辑器中使用Hydrogen切换Python虚拟环境</a>，安装好后在nteract中切换方法如下</p>
+<center><img src="/img/posts/20190221001-07.gif" alt="pyvenv"></center>
+
+<p>和在Jupyter notebook一样，执行单元格的代码可用<code>Shift+Enter</code>等快捷键，或者单元格靠右侧有个执行程序的小按钮。</p>
+<center><img src="/img/posts/20190221001-05.gif" alt="pyvenv"></center>
+
+<p>敲代码时可以看到是支持代码自动提示与补全的。</p>
+<h3 id="终止代码执行"><a href="#终止代码执行" class="headerlink" title="终止代码执行"></a>终止代码执行</h3><p>如果不小心写了死循环或者想临时终止代码的运行，可以在<code>Runtime</code>菜单下进行操作。</p>
+<center><img src="/img/posts/20190221001-09.gif" alt="pyvenv"></center>
+
+<h3 id="Markdown和Code切换"><a href="#Markdown和Code切换" class="headerlink" title="Markdown和Code切换"></a>Markdown和Code切换</h3><p>单元格右侧下拉菜单中可以切换单元格内容是Markdown文本还是代码，如果是MD文本，双击单元格即可显示原始内容。其他单元格操作及相关快捷键看下<code>Edit</code>或者<code>Cell</code>菜单就明白了。</p>
+<center><img src="/img/posts/20190221001-08.gif" alt="pyvenv"></center>
+
+<h3 id="暗色主题"><a href="#暗色主题" class="headerlink" title="暗色主题"></a>暗色主题</h3><p>软件可以切换亮色与暗色主题。</p>
+<center><img src="/img/posts/20190221001-10.gif" alt="pyvenv"></center>
+
+<h3 id="小问题"><a href="#小问题" class="headerlink" title="小问题"></a>小问题</h3><p>如果是直接启动软件，第一次保存文件按<code>Ctrl+s</code>保存会报错，得用另存为。</p>
+<center><img src="/img/posts/20190221001-11.gif" alt="pyvenv"></center>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>相比于Jupyter notebook，nteract显得简洁很多，平时开发作为替代也是可以的。单元格操作上，nteract没有Jupyter notebook那么丰富。Jupyter notebook可以额外安装插件进行功能扩展，虽然nteract也可以安装插件，官网上有介绍，但功能似乎没那么强大。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Jupyter notebook是一款学习和科研的神奇，相信很多小伙伴已经利用它在学术科研、研究开发的道路上收获了便捷易用、可视直观的优点。我们使用的Jupyter notebook都是网页形式的，在浏览器中进行操作，保存的文件格式是&lt;code&gt;.ipynb&lt;/code&gt;的。似乎在其他编辑器工具中打不开这种格式。有没有不想在网页中的Jupyter notebook编写代码，也可以直接编辑&lt;code&gt;.ipynb&lt;/code&gt;格式的文件的方法呢？&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="码路刺客" scheme="https://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
+    
+    
+      <category term="原创" scheme="https://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+      <category term="工具" scheme="https://c-xuan.com/tags/%E5%B7%A5%E5%85%B7/"/>
+    
+  </entry>
   
   <entry>
     <title>【Atom】autocomplete-python插件报乱码异常问题</title>
@@ -1365,162 +1423,6 @@
       <category term="原创" scheme="https://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
     
       <category term="Markdown" scheme="https://c-xuan.com/tags/Markdown/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【cmd】IF ELSE 复制(copy)文件问题</title>
-    <link href="https://c-xuan.com/2017/11/28/20171128001/"/>
-    <id>https://c-xuan.com/2017/11/28/20171128001/</id>
-    <published>2017-11-27T16:00:00.000Z</published>
-    <updated>2017-11-27T16:00:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>cmd中复制文件<code>COPY</code>命令一般都不会有问题，但是如果把<code>COPY</code>放在<code>IF ELSE</code>中可能导致批处理文件无法运行。</p>
-<a id="more"></a>
-<h3 id="测试场景"><a href="#测试场景" class="headerlink" title="测试场景"></a>测试场景</h3><p>文件夹结构如下：</p>
-<p>test <br><br>|—folder1<br><br>|—|—a(b).txt<br><br>|—folder2</p>
-<p>选择是否从folder1文件夹复制a(b).txt文件到folder2文件夹。</p>
-<h3 id="测试1"><a href="#测试1" class="headerlink" title="测试1"></a>测试1</h3><p>不进行选择交互，直接复制，脚本如下：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">@<span class="built_in">echo</span> off &amp; <span class="built_in">setlocal</span> EnableDelayedExpansion</div><div class="line"></div><div class="line"><span class="built_in">set</span> currentDir=<span class="variable">!cd!</span></div><div class="line"></div><div class="line"><span class="built_in">DEL</span> /Q <span class="variable">!currentDir!</span>\folder2\*.* </div><div class="line"></div><div class="line"><span class="built_in">copy</span> <span class="variable">!currentDir!</span>\folder1\a(b).txt <span class="variable">!currentDir!</span>\folder2</div></pre></td></tr></table></figure></p>
-<p>保存为test.bat文件后执行结果：<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">已复制         <span class="number">1</span> 个文件。</div><div class="line">请按任意键继续. . .</div></pre></td></tr></table></figure></p>
-<p>copy复制语句似乎没有问题。</p>
-<h3 id="测试2"><a href="#测试2" class="headerlink" title="测试2"></a>测试2</h3><p>修改以上脚本，添加选择交互：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">@<span class="built_in">echo</span> off &amp; <span class="built_in">setlocal</span> EnableDelayedExpansion</div><div class="line"></div><div class="line"><span class="built_in">set</span> /p yesno=是否复制(<span class="number">0</span>:否，<span class="number">1</span>:是): </div><div class="line"></div><div class="line"><span class="built_in">set</span> currentDir=<span class="variable">!cd!</span></div><div class="line"></div><div class="line"><span class="built_in">DEL</span> /Q <span class="variable">!currentDir!</span>\folder2\*.*</div><div class="line"></div><div class="line"><span class="keyword">if</span> <span class="variable">!yesno!</span> <span class="keyword">equ</span> <span class="number">1</span> ( </div><div class="line">    <span class="built_in">copy</span> <span class="variable">!currentDir!</span>\folder1\a(b).txt <span class="variable">!currentDir!</span>\folder2</div><div class="line">)<span class="keyword">else</span> (</div><div class="line">    <span class="built_in">echo</span> 没复制</div><div class="line">)</div><div class="line"></div><div class="line"><span class="built_in">pause</span></div></pre></td></tr></table></figure></p>
-<p>保存为test.bat文件后执行,发现一闪而过，看不到什么报错。</p>
-<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><p>经过多次测试，发现将copy中的路径用双引号(“”)包裹起来就可以了。<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">@<span class="built_in">echo</span> off &amp; <span class="built_in">setlocal</span> EnableDelayedExpansion</div><div class="line"></div><div class="line"><span class="built_in">set</span> /p yesno=是否复制(<span class="number">0</span>:否，<span class="number">1</span>:是): </div><div class="line"></div><div class="line"><span class="built_in">set</span> currentDir=<span class="variable">!cd!</span></div><div class="line"></div><div class="line"><span class="built_in">DEL</span> /Q <span class="variable">!currentDir!</span>\folder2\*.*</div><div class="line"></div><div class="line"><span class="keyword">if</span> <span class="variable">!yesno!</span> <span class="keyword">equ</span> <span class="number">1</span> ( </div><div class="line">    <span class="built_in">copy</span> "<span class="variable">!currentDir!</span>\folder1\a(b).txt" <span class="variable">!currentDir!</span>\folder2</div><div class="line">)<span class="keyword">else</span> (</div><div class="line">    <span class="built_in">echo</span> 没复制</div><div class="line">)</div><div class="line"></div><div class="line"><span class="built_in">pause</span></div></pre></td></tr></table></figure></p>
-<p>由此可见，应该是路径中某些符号没有转义导致的，目测是文件名中的<code>()</code>，修改脚本，用<code>^</code>将<code>()</code>转义：<br><figure class="highlight dos"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">@<span class="built_in">echo</span> off &amp; <span class="built_in">setlocal</span> EnableDelayedExpansion</div><div class="line"></div><div class="line"><span class="built_in">set</span> /p yesno=是否复制(<span class="number">0</span>:否，<span class="number">1</span>:是): </div><div class="line"></div><div class="line"><span class="built_in">set</span> currentDir=<span class="variable">!cd!</span></div><div class="line"></div><div class="line"><span class="built_in">DEL</span> /Q <span class="variable">!currentDir!</span>\folder2\*.*</div><div class="line"></div><div class="line"><span class="keyword">if</span> <span class="variable">!yesno!</span> <span class="keyword">equ</span> <span class="number">1</span> ( </div><div class="line">    <span class="built_in">copy</span> <span class="variable">!currentDir!</span>\folder1\a^(b^).txt <span class="variable">!currentDir!</span>\folder2</div><div class="line">)<span class="keyword">else</span> (</div><div class="line">    <span class="built_in">echo</span> 没复制</div><div class="line">)</div><div class="line"></div><div class="line"><span class="built_in">pause</span></div></pre></td></tr></table></figure></p>
-<p>运行结果：<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">是否复制(<span class="number">0</span>:否，<span class="number">1</span>:是): <span class="number">1</span></div><div class="line">已复制         <span class="number">1</span> 个文件。</div><div class="line">请按任意键继续. . .</div></pre></td></tr></table></figure></p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>虽然测试1中直接执行复制没问题，但是，将同样的语句放入IF ELSE中居然无法执行，还很难定位问题在哪里，所以解决方法是最好把路径放在双引号(“”)里面，就不用担心这个问题了，如果不这样就在IF ELSE中的路径把特殊字符转义。附上CMD中特殊字符转义说明。</p>
-<table>
-<thead>
-<tr>
-<th>Character to be escaped</th>
-<th>Escape Sequence</th>
-<th>Remark</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>%</td>
-<td>%%</td>
-<td>May not always be required in doublequoted strings, just try</td>
-</tr>
-<tr>
-<td>^</td>
-<td>^^</td>
-<td>May not always be required in doublequoted strings, but it won’t hurt</td>
-</tr>
-<tr>
-<td>&amp;</td>
-<td>^&amp;</td>
-<td>May not always be required in doublequoted strings, but it won’t hurt</td>
-</tr>
-<tr>
-<td>&lt;</td>
-<td>^&lt;</td>
-<td>May not always be required in doublequoted strings, but it won’t hurt</td>
-</tr>
-<tr>
-<td>&gt;</td>
-<td>^&gt;</td>
-<td>May not always be required in doublequoted strings, but it won’t hurt</td>
-</tr>
-<tr>
-<td>‘</td>
-<td>^’</td>
-<td>Required only in the FOR /F “subject” (i.e. between the parenthesis), unless backqis used</td>
-</tr>
-<tr>
-<td>`</td>
-<td>^`</td>
-<td>Required only in the FOR /F “subject” (i.e. between the parenthesis), if backq is used</td>
-</tr>
-<tr>
-<td>,</td>
-<td>^,</td>
-<td>Required only in the FOR /F “subject” (i.e. between the parenthesis), even in doublequoted strings</td>
-</tr>
-<tr>
-<td>;</td>
-<td>^;</td>
-<td>Required only in the FOR /F “subject” (i.e. between the parenthesis), even in doublequoted strings</td>
-</tr>
-<tr>
-<td>=</td>
-<td>^=</td>
-<td>Required only in the FOR /F “subject” (i.e. between the parenthesis), even in doublequoted strings</td>
-</tr>
-<tr>
-<td>(</td>
-<td>^(</td>
-<td>Required only in the FOR /F “subject” (i.e. between the parenthesis), even in doublequoted strings</td>
-</tr>
-<tr>
-<td>)</td>
-<td>^)</td>
-<td>Required only in the FOR /F “subject” (i.e. between the parenthesis), even in doublequoted strings</td>
-</tr>
-<tr>
-<td>!</td>
-<td>^^!</td>
-<td>Required only when delayed variable expansion is active</td>
-</tr>
-<tr>
-<td>“</td>
-<td>“”</td>
-<td>Required only inside the search pattern of FIND</td>
-</tr>
-<tr>
-<td>\</td>
-<td>\\</td>
-<td>Required only inside the regex pattern of FINDSTR</td>
-</tr>
-<tr>
-<td>[</td>
-<td>\[</td>
-<td>Required only inside the regex pattern of FINDSTR</td>
-</tr>
-<tr>
-<td>]</td>
-<td>\]</td>
-<td>Required only inside the regex pattern of FINDSTR</td>
-</tr>
-<tr>
-<td>\</td>
-<td>\\</td>
-<td>Required only inside the regex pattern of FINDSTR</td>
-</tr>
-<tr>
-<td>.</td>
-<td>\.</td>
-<td>Required only inside the regex pattern of FINDSTR</td>
-</tr>
-<tr>
-<td>*</td>
-<td>\*</td>
-<td>Required only inside the regex pattern of FINDSTR</td>
-</tr>
-<tr>
-<td>?</td>
-<td>\?</td>
-<td>Required only inside the regex pattern of FINDSTR</td>
-</tr>
-</tbody>
-</table>
-<p>参考：<a href="http://www.robvanderwoude.com/escapechars.php" target="_blank" rel="external">http://www.robvanderwoude.com/escapechars.php</a></p>
-<p>将表格快速转换为HTML,Markdown格式：<a href="http://www.tablesgenerator.com/" target="_blank" rel="external">http://www.tablesgenerator.com/</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;cmd中复制文件&lt;code&gt;COPY&lt;/code&gt;命令一般都不会有问题，但是如果把&lt;code&gt;COPY&lt;/code&gt;放在&lt;code&gt;IF ELSE&lt;/code&gt;中可能导致批处理文件无法运行。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="码路刺客" scheme="https://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
-    
-    
-      <category term="原创" scheme="https://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
-    
-      <category term="cmd" scheme="https://c-xuan.com/tags/cmd/"/>
     
   </entry>
   

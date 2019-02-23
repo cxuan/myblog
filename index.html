@@ -382,6 +382,76 @@
 </nav>
       <div class="body-wrap ">
   
+    <article id="post-20190221001_nteract" class="article article-type-post " itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/02/21/20190221001_nteract/" class="article-date">
+      <time datetime="2019-02-21T05:40:29.000Z" itemprop="datePublished">2019-02-21</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/21/20190221001_nteract/">类Jupyter notebook编辑器桌面版nteract</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>Jupyter notebook是一款学习和科研的神奇，相信很多小伙伴已经利用它在学术科研、研究开发的道路上收获了便捷易用、可视直观的优点。我们使用的Jupyter notebook都是网页形式的，在浏览器中进行操作，保存的文件格式是<code>.ipynb</code>的。似乎在其他编辑器工具中打不开这种格式。有没有不想在网页中的Jupyter notebook编写代码，也可以直接编辑<code>.ipynb</code>格式的文件的方法呢？</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/码路刺客/">码路刺客</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原创/">原创</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/工具/">工具</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2019/02/21/20190221001_nteract/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+
+    
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-20190220002_atom_atuo_err" class="article article-type-post " itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -2076,78 +2146,6 @@
 
 
   
-    <article id="post-tree-table-store5" class="article article-type-post " itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/03/07/tree-table-store5/" class="article-date">
-      <time datetime="2017-03-07T15:44:08.000Z" itemprop="datePublished">2017-03-07</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/07/tree-table-store5/">树形结构数据存储方案（五）：区间嵌套</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>前面的一篇文章介绍了左右值编码，不知道大家注意到了没有，如果数据庞大，每次更新都需要更新差不多全表，效率较低没有更好的方式？今天我们就来研究下区间嵌套法。</p>
-<p><strong>区间嵌套法原理</strong></p>
-<p>如果节点区间<code>[clft, crgt]</code>与<code>[plft, prgt]</code>存在如下关系：<code>plft &lt;= clft and crgt &gt;= prgt</code>，则<code>[clft, crgt]</code>区间里的点是<code>[plft, prgt]</code>的子节点。基于此假设我们就可以通过对区间的不断的向下划来获取新的区间。举例：如果在区间<code>[plft, prgt]</code>中存在一个空白区间<code>[lft1, rgt1]</code>，如果要加入一个<code>[plft,lft1]</code>、<code>[rgt1,prgt]</code>同级的区间，只需插入节点：<code>[(2*lft1+rgt1)/3</code>,  <code>(rgt1+2*lft)/3]</code>。在添加完节点后我们还留下<code>[lft1,(2*lft1+rgt1)/3]</code>和 <code>[(rgt1+2*lft)/3,rgt1]</code>两个空余的空间用来添加更多的子节点。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/码路刺客/">码路刺客</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/03/07/tree-table-store5/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-
-    
-</article>
-
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -2158,7 +2156,7 @@
     <div class="outer">
         <div id="footer-info">
             <div class="footer-left">
-                Posts count:79
+                Posts count:80
             </div>
 			<!--
             <div class="footer-left">

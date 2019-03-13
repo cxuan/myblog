@@ -3,6 +3,158 @@
   
     
     <entry>
+      <title><![CDATA[【Python 3 基础】字典dict创建方法及常用操作]]></title>
+      <url>/2019/03/13/20190313001_python_dict/</url>
+      <content type="html"><![CDATA[<p>本文主要介绍Ptyhon 3中字典创建方法，以及字典排序，合并等常用操作。</p>
+<a id="more"></a>
+<h3 id="创建字典方法"><a href="#创建字典方法" class="headerlink" title="创建字典方法"></a>创建字典方法</h3><h4 id="方式"><a href="#方式" class="headerlink" title="{} 方式"></a>{} 方式</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">dict1 = &#123;&#125; <span class="comment">#创建空字典</span></div><div class="line">dict2 = &#123;<span class="string">'a'</span>:<span class="number">11</span>,<span class="string">'b'</span>:<span class="number">12</span>&#125; <span class="comment">#创建含有值得字典</span></div></pre></td></tr></table></figure>
+<h4 id="dict-函数-方式"><a href="#dict-函数-方式" class="headerlink" title="dict()函数 方式"></a>dict()函数 方式</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">dict3 = dict() <span class="comment">#创建空字典</span></div><div class="line">dict4 = dict(a=<span class="string">'11'</span>,b=<span class="string">'ddd'</span>,c=<span class="string">'ssss'</span>) <span class="comment">#创建含有值的字典，注意键值如果加引号会报错</span></div><div class="line"><span class="comment">#dict5 = dict('a'='11',b='ddd',c='ssss') # SyntaxError: keyword can't be an expression</span></div><div class="line"></div><div class="line">keys = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'d'</span>,<span class="string">'e'</span>]</div><div class="line">values = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line">dict6 = dict(zip(keys,values)) <span class="comment">#键或值的列表元素个数不必相同，以少的为准</span></div><div class="line"><span class="comment"># &#123;'a': 1, 'b': 2, 'c': 3, 'd': 4&#125;</span></div></pre></td></tr></table></figure>
+<h3 id="字典排序"><a href="#字典排序" class="headerlink" title="字典排序"></a>字典排序</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> operator</div><div class="line">test = &#123;<span class="string">'a'</span>:<span class="number">1</span>,<span class="string">'c'</span>:<span class="number">2</span>,<span class="string">'b'</span>:<span class="number">7</span>,<span class="string">'f'</span>:<span class="number">5</span>&#125;</div></pre></td></tr></table></figure>
+<h4 id="根据键排序"><a href="#根据键排序" class="headerlink" title="根据键排序"></a>根据键排序</h4><h5 id="sorted-方式"><a href="#sorted-方式" class="headerlink" title="sorted() 方式"></a>sorted() 方式</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">print(sorted(test.items())) <span class="comment">#升序</span></div><div class="line">print(sorted(test.items(),reverse=<span class="keyword">True</span>)) <span class="comment">#降序</span></div></pre></td></tr></table></figure>
+<h5 id="sorted-operator-方式"><a href="#sorted-operator-方式" class="headerlink" title="sorted + operator 方式"></a>sorted + operator 方式</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">print(sorted(test.items(),key=operator.itemgetter(<span class="number">0</span>))) <span class="comment">#升序</span></div><div class="line">print(sorted(test.items(),key=operator.itemgetter(<span class="number">0</span>),reverse=<span class="keyword">True</span>)) <span class="comment">#降序</span></div></pre></td></tr></table></figure>
+<h5 id="sorted-lambda-方式"><a href="#sorted-lambda-方式" class="headerlink" title="sorted + lambda 方式"></a>sorted + lambda 方式</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">print(sorted(test.items(),key=<span class="keyword">lambda</span> x : x[<span class="number">0</span>])) <span class="comment">#升序</span></div><div class="line">print(sorted(test.items(),key=<span class="keyword">lambda</span> x : x[<span class="number">0</span>],reverse=<span class="keyword">True</span>)) <span class="comment">#降序</span></div></pre></td></tr></table></figure>
+<h4 id="根据值排序"><a href="#根据值排序" class="headerlink" title="根据值排序"></a>根据值排序</h4><h5 id="sorted-operator-方式-1"><a href="#sorted-operator-方式-1" class="headerlink" title="sorted + operator 方式"></a>sorted + operator 方式</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">print(sorted(test.items(),key=operator.itemgetter(<span class="number">1</span>))) <span class="comment">#升序</span></div><div class="line">print(sorted(test.items(),key=operator.itemgetter(<span class="number">1</span>),reverse=<span class="keyword">True</span>)) <span class="comment">#降序</span></div></pre></td></tr></table></figure>
+<h5 id="sorted-lambda-方式-1"><a href="#sorted-lambda-方式-1" class="headerlink" title="sorted + lambda 方式"></a>sorted + lambda 方式</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">print(sorted(test.items(),key=<span class="keyword">lambda</span> x : x[<span class="number">1</span>])) <span class="comment">#升序</span></div><div class="line">print(sorted(test.items(),key=<span class="keyword">lambda</span> x : x[<span class="number">1</span>],reverse=<span class="keyword">True</span>)) <span class="comment">#降序</span></div></pre></td></tr></table></figure>
+<p><strong> 注意，如果值的数据类型不一样，以上根据值排序会报错，例如一下字典，值有int和str类型,lambda中要进行类型转换 </strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">test2 = &#123;<span class="string">'a'</span>:<span class="number">1</span>,<span class="string">'c'</span>:<span class="number">2</span>,<span class="string">'b'</span>:<span class="number">7</span>,<span class="string">'f'</span>:<span class="string">'5'</span>&#125;</div><div class="line">print(sorted(test2.items(),key=<span class="keyword">lambda</span> x : str(x[<span class="number">1</span>]))) <span class="comment">#升序</span></div><div class="line"><span class="comment">#输出 [('a', 1), ('c', 2), ('f', '5'), ('b', 7)]</span></div></pre></td></tr></table></figure></p>
+<h3 id="字典合并"><a href="#字典合并" class="headerlink" title="字典合并"></a>字典合并</h3><h4 id="update方法"><a href="#update方法" class="headerlink" title="update方法"></a>update方法</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">dictA = &#123;<span class="string">'a'</span>:<span class="number">3</span>,<span class="string">'b'</span>:<span class="number">7</span>,<span class="string">'c'</span>:<span class="string">'2'</span>&#125;</div><div class="line">dictB = &#123;<span class="string">'d'</span>:<span class="number">12</span>,<span class="string">'f'</span>:<span class="string">'44'</span>&#125;</div><div class="line">dictA.update(dictB)</div><div class="line">print(dictA) <span class="comment">#输出 &#123;'a': 3, 'b': 7, 'c': '2', 'd': 12, 'f': '44'&#125;</span></div></pre></td></tr></table></figure>
+<h4 id="方法"><a href="#方法" class="headerlink" title="**方法"></a>**方法</h4><p><strong> 高版本python中可用 </strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">dictC = &#123;**dictA,**dictB&#125;</div><div class="line">print(dictC) <span class="comment">#输出 &#123;'a': 3, 'b': 7, 'c': '2', 'd': 12, 'f': '44'&#125;</span></div></pre></td></tr></table></figure></p>
+]]></content>
+      
+        <categories>
+            
+            <category> 码路刺客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 原创 </tag>
+            
+            <tag> Python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[CSS视差效果设计]]></title>
+      <url>/2019/03/05/20190305001_css_parallax_effects/</url>
+      <content type="html"><![CDATA[<center><img src="/img/posts/20190305001-01.gif" alt="parallax effects"></center>
+
+<a id="more"></a>
+<ul>
+<li>作者：oscicen</li>
+<li>使用技术：HTML / CSS / JavaScript</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>响应式：否</li>
+<li>源码链接：<a href="https://codepen.io/oscicen/pen/zyJeJw" target="_blank" rel="external">https://codepen.io/oscicen/pen/zyJeJw</a></li>
+</ul>
+<center><img src="/img/posts/20190305001-02.gif" alt="parallax effects"></center>
+
+<ul>
+<li>作者：Guilmain Dorian</li>
+<li>使用技术：HTML (Pug) / CSS (Less) / JavaScript</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox (partial), Opera, Safari</li>
+<li>响应式：否</li>
+<li>源码链接：<a href="https://codepen.io/Craaftx/pen/yQGpwa" target="_blank" rel="external">https://codepen.io/Craaftx/pen/yQGpwa</a></li>
+</ul>
+<center><img src="/img/posts/20190305001-03.gif" alt="parallax effects"></center>
+
+<ul>
+<li>作者：Adrian Payne</li>
+<li>使用技术：HTML / CSS (SCSS) / JavaScript (Babel)</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>响应式：是</li>
+<li>源码链接：<a href="https://codepen.io/dazulu/pen/VVZrQv" target="_blank" rel="external">https://codepen.io/dazulu/pen/VVZrQv</a></li>
+</ul>
+<center><img src="/img/posts/20190305001-04.gif" alt="parallax effects"></center>
+
+<ul>
+<li>作者：Alex O’Neal</li>
+<li>使用技术：HTML / CSS</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>响应式：是</li>
+<li>源码链接：<a href="https://codepen.io/alexoneal/pen/OBqaoe" target="_blank" rel="external">https://codepen.io/alexoneal/pen/OBqaoe</a></li>
+</ul>
+<center><img src="/img/posts/20190305001-05.gif" alt="parallax effects"></center>
+
+<ul>
+<li>作者：Sil van Diepen</li>
+<li>使用技术：HTML (Pug) / CSS (SCSS)</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>响应式：是</li>
+<li>源码链接：<a href="https://codepen.io/silvandiepen/full/NOboze" target="_blank" rel="external">https://codepen.io/silvandiepen/full/NOboze</a></li>
+</ul>
+<center><img src="/img/posts/20190305001-06.gif" alt="parallax effects"></center>
+
+<ul>
+<li>作者：Yago Estévez</li>
+<li>使用技术：HTML (Pug) / CSS</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>响应式：是</li>
+<li>源码链接：<a href="https://codepen.io/yagoestevez/full/EdgRMX" target="_blank" rel="external">https://codepen.io/yagoestevez/full/EdgRMX</a></li>
+</ul>
+<center><img src="/img/posts/20190305001-07.gif" alt="parallax effects"></center>
+
+<ul>
+<li>作者：jakob-e</li>
+<li>使用技术：HTML / CSS (SCSS) / JavaScript</li>
+<li>依赖库：</li>
+<li>浏览器兼容：Chrome, Firefox, Opera, Safari</li>
+<li>响应式：是</li>
+<li>源码链接：<a href="https://codepen.io/jakob-e/pen/ELqeRM" target="_blank" rel="external">https://codepen.io/jakob-e/pen/ELqeRM</a></li>
+</ul>
+<center><img src="/img/posts/20190305001-08.gif" alt="parallax effects"></center>
+
+<ul>
+<li>作者：Casey Callis</li>
+<li>使用技术：HTML / CSS / JavaScript</li>
+<li>依赖库：jquery.js, parallax.js</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>响应式：是</li>
+<li>源码链接：<a href="https://codepen.io/caseycallis/full/pwEWxo" target="_blank" rel="external">https://codepen.io/caseycallis/full/pwEWxo</a></li>
+</ul>
+<center><img src="/img/posts/20190305001-09.gif" alt="parallax effects"></center>
+
+<ul>
+<li>作者：Ravi Dhiman</li>
+<li>使用技术：HTML (Pug) / CSS (SCSS)</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Firefox, Opera, Safari</li>
+<li>响应式：是</li>
+<li>源码链接：<a href="https://codepen.io/ravid7000/pen/LREEzv" target="_blank" rel="external">https://codepen.io/ravid7000/pen/LREEzv</a></li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> 码路刺客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 原创 </tag>
+            
+            <tag> CSS </tag>
+            
+            <tag> JavaScript </tag>
+            
+            <tag> 前端 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[类Jupyter notebook编辑器桌面版nteract]]></title>
       <url>/2019/02/21/20190221001_nteract/</url>
       <content type="html"><![CDATA[<p>Jupyter notebook是一款学习和科研的神奇，相信很多小伙伴已经利用它在学术科研、研究开发的道路上收获了便捷易用、可视直观的优点。我们使用的Jupyter notebook都是网页形式的，在浏览器中进行操作，保存的文件格式是<code>.ipynb</code>的。似乎在其他编辑器工具中打不开这种格式。有没有不想在网页中的Jupyter notebook编写代码，也可以直接编辑<code>.ipynb</code>格式的文件的方法呢？</p>
@@ -59,6 +211,39 @@
     </entry>
     
     <entry>
+      <title><![CDATA[Python多个数组合并]]></title>
+      <url>/2019/02/20/20190220001_py_list_merge/</url>
+      <content type="html"><![CDATA[<p>Python中多个数组合并为一个数组的方法整理。</p>
+<a id="more"></a>
+<h3 id="extend方法"><a href="#extend方法" class="headerlink" title="extend方法"></a>extend方法</h3><p>该方法可以扩展数组，会改变原始数组。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">7</span>,<span class="number">5</span>,<span class="number">6</span>]</div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'c'</span>]</div><div class="line">a.extend(b)</div><div class="line">a.extend(c)</div><div class="line">print(a)</div><div class="line"></div><div class="line"><span class="comment">#结果：[1, 2, 3, 4, 7, 5, 6, 'a', 'b', 'h', 12, 'c']</span></div></pre></td></tr></table></figure>
+<h3 id="直接相加"><a href="#直接相加" class="headerlink" title="直接相加"></a>直接相加</h3><p>用<code>+</code>将各数组连接起来。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">7</span>,<span class="number">5</span>,<span class="number">6</span>]</div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'c'</span>]</div><div class="line"></div><div class="line">d = a + b +c</div><div class="line">print(d)</div><div class="line"></div><div class="line"><span class="comment">#结果：[1, 2, 3, 4, 7, 5, 6, 'a', 'b', 'h', 12, 'c']</span></div></pre></td></tr></table></figure>
+<h3 id="flatten方法"><a href="#flatten方法" class="headerlink" title="flatten方法"></a>flatten方法</h3><p><code>flatten()</code>方法是numpy中array数组的方法，使用时要导入包和类型转换。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> array</div><div class="line"></div><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'k'</span>]</div><div class="line">e = [a,b,c]</div><div class="line">e = array(e)</div><div class="line">print(e.flatten())</div><div class="line"></div><div class="line"><span class="comment">#结果：['1' '2' '3' 'a' 'b' 'c' 'h' '12' 'k']</span></div></pre></td></tr></table></figure>
+<p>值得注意的是该方法不适用各数组中元素个数不同的情况。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]  <span class="comment">#元素个数不同</span></div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'k'</span>]</div><div class="line">e = [a,b,c]</div><div class="line">e = array(e)</div><div class="line">print(e.flatten())</div><div class="line"></div><div class="line"><span class="comment">#结果：[list([1, 2, 3, 4]) list(['a', 'b', 'c']) list(['h', 12, 'k'])]</span></div></pre></td></tr></table></figure>
+<h3 id="列表表达式"><a href="#列表表达式" class="headerlink" title="列表表达式"></a>列表表达式</h3><p>使用前得把多个数组放在一个数组中，应用在一个二维数组上。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>] </div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'k'</span>]</div><div class="line">e = [a,b,c]</div><div class="line">e = [y <span class="keyword">for</span> x <span class="keyword">in</span> e <span class="keyword">for</span> y <span class="keyword">in</span> x]</div><div class="line">print(e)</div><div class="line"></div><div class="line">结果：[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'h'</span>, <span class="number">12</span>, <span class="string">'k'</span>]</div></pre></td></tr></table></figure>]]></content>
+      
+        <categories>
+            
+            <category> 码路刺客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 原创 </tag>
+            
+            <tag> Python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[【Atom】autocomplete-python插件报乱码异常问题]]></title>
       <url>/2019/02/20/20190220002_atom_atuo_err/</url>
       <content type="html"><![CDATA[<p><a href="https://atom.io/packages/autocomplete-python" target="_blank" rel="external">autocomplete-python</a>插件可以帮助在写python代码时给出丰富的提示并且自动补全代码，换电脑重装该插件后发现按下键盘后，atom右上角总弹出<code>autocomplete-python traceback output:</code>的提示，提示信息还是乱码。</p>
@@ -89,39 +274,6 @@
             <tag> 工具 </tag>
             
             <tag> atom </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Python多个数组合并]]></title>
-      <url>/2019/02/20/20190220001_py_list_merge/</url>
-      <content type="html"><![CDATA[<p>Python中多个数组合并为一个数组的方法整理。</p>
-<a id="more"></a>
-<h3 id="extend方法"><a href="#extend方法" class="headerlink" title="extend方法"></a>extend方法</h3><p>该方法可以扩展数组，会改变原始数组。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">7</span>,<span class="number">5</span>,<span class="number">6</span>]</div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'c'</span>]</div><div class="line">a.extend(b)</div><div class="line">a.extend(c)</div><div class="line">print(a)</div><div class="line"></div><div class="line"><span class="comment">#结果：[1, 2, 3, 4, 7, 5, 6, 'a', 'b', 'h', 12, 'c']</span></div></pre></td></tr></table></figure>
-<h3 id="直接相加"><a href="#直接相加" class="headerlink" title="直接相加"></a>直接相加</h3><p>用<code>+</code>将各数组连接起来。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">7</span>,<span class="number">5</span>,<span class="number">6</span>]</div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'c'</span>]</div><div class="line"></div><div class="line">d = a + b +c</div><div class="line">print(d)</div><div class="line"></div><div class="line"><span class="comment">#结果：[1, 2, 3, 4, 7, 5, 6, 'a', 'b', 'h', 12, 'c']</span></div></pre></td></tr></table></figure>
-<h3 id="flatten方法"><a href="#flatten方法" class="headerlink" title="flatten方法"></a>flatten方法</h3><p><code>flatten()</code>方法是numpy中array数组的方法，使用时要导入包和类型转换。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> array</div><div class="line"></div><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'k'</span>]</div><div class="line">e = [a,b,c]</div><div class="line">e = array(e)</div><div class="line">print(e.flatten())</div><div class="line"></div><div class="line"><span class="comment">#结果：['1' '2' '3' 'a' 'b' 'c' 'h' '12' 'k']</span></div></pre></td></tr></table></figure>
-<p>值得注意的是该方法不适用各数组中元素个数不同的情况。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]  <span class="comment">#元素个数不同</span></div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'k'</span>]</div><div class="line">e = [a,b,c]</div><div class="line">e = array(e)</div><div class="line">print(e.flatten())</div><div class="line"></div><div class="line"><span class="comment">#结果：[list([1, 2, 3, 4]) list(['a', 'b', 'c']) list(['h', 12, 'k'])]</span></div></pre></td></tr></table></figure>
-<h3 id="列表表达式"><a href="#列表表达式" class="headerlink" title="列表表达式"></a>列表表达式</h3><p>使用前得把多个数组放在一个数组中，应用在一个二维数组上。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>] </div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'k'</span>]</div><div class="line">e = [a,b,c]</div><div class="line">e = [y <span class="keyword">for</span> x <span class="keyword">in</span> e <span class="keyword">for</span> y <span class="keyword">in</span> x]</div><div class="line">print(e)</div><div class="line"></div><div class="line">结果：[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'h'</span>, <span class="number">12</span>, <span class="string">'k'</span>]</div></pre></td></tr></table></figure>]]></content>
-      
-        <categories>
-            
-            <category> 码路刺客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 原创 </tag>
-            
-            <tag> Python </tag>
             
         </tags>
         
@@ -3843,47 +3995,6 @@
     </entry>
     
     <entry>
-      <title><![CDATA[放开那程序猿！构建业务导向的大数据云平台]]></title>
-      <url>/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/</url>
-      <content type="html"><![CDATA[<p>按数据处理方式及使用目标，企业级IT系统可分为OLTP和OLAP系统。简而言之，OLTP系统生产数据，OLAP系统加工数据。从数据到智慧的转换金字塔上看，OLTP系统实现了底层的数据产生和存储以及面向事务的信息整合，在这之上的各层就要依赖OLAP系统了。OLAP概念源自决策支持系统（DSS），企业中的数据仓库、数据集市、统计报表、驾驶舱、数据挖掘等都属于OLAP体系。其中，数据仓库和数据集市主要实现信息整合，一般统称为数据整合平台。统计报表、驾驶舱、数据挖掘进一步利用数据整合平台的成果，帮助用户发现知识并最终形成智慧。 </p>
-<a id="more"></a>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-1.png" alt="BuildBusinessOrientedBigDataCloudPlatform-1"></p>
-<p>OLAP系统的主要用户是分析人员和管理人员，目标是支持管理决策，依据是企业生产经营过程中产生的全量数据，是一个按目标使用场景对数据进行加工、利用的过程。这过程一般可以划分五个阶段：业务部门定义需求；IT部门根据需求获取并整合相关数据；IT部门根据需求设计分析模型；IT部门开发实施并发布；业务部门应用并衡量实际成效。在传统的数据基础和技术环境下，这个周期可能要经历较漫长的时间。还在建设OLAP体系的情况自不必多说，即便已建成OLAP体系统，要及时响应业务部门的需求也是较困难的，而且很有可能最终的交付质量不能达到需求方的预期。</p>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-2.png" alt="BuildBusinessOrientedBigDataCloudPlatform-2"></p>
-<p>下图是目前较常见的OLAP体系简图，上游系统指那些OLTP系统，是数据源。数据整合平台包括ODS、数据仓库、数据集市等，主要实现数据整合。下游系统指那些利用数据整合平台成果的系统，包括统计报表、驾驶舱、数据挖掘等。其中，数据整合平台承上启下，在整个OLAP体系中非常重要。按照目前较普遍的架构，从上游到下游的数据流向，至少分为同构层、整合层、应用层。其中同构层在模型上基本与上游接入数据源基本保持一致，整合层一般会采用高范式模型进行数据整合，应用层面向下游具体应用采用星型模型。这个架构是在Inmon帮和Kimball派十几年如一日的不断撕逼和妥协中演进出来的，应该是一种最佳实践。但随着互联网+大数据时代到来，对数据应用有着更高效、更深入的要求，这种架构本身固有的缺点被不断放大。</p>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-3.png" alt="BuildBusinessOrientedBigDataCloudPlatform-3"></p>
-<p><strong>开发周期长</strong></p>
-<p>为了避免因上游系统接入模型的变化而导致数据整合平台模型的被动调整，整合层建模时一般会采用较高范式实现高内聚、低耦合，ER实体较多、关系复杂。这样就增加了ETL设计、开发以及测试的复杂度，同时ETL程序执行效率也低。业务部门提出的需求，IT首先由下至上逐层对模型进行分析，即便只需在应用层开发，基于上述原因也需要一周以上。如果涉及要改动整合层，开发周期要一个月左右，业务部门显然是不能接受的。最后的结局不用猜都知道，苦逼的程序猿只能再一次强睁熊猫眼天天加班赶工。但是故事并没有到此结束，马上一个意想不到但细细想想又是顺理成章的伴生问题发生了。</p>
-<p><strong>架构迅速变坏</strong></p>
-<p>在日复一日的高压下，程序猿只能另辟蹊径为自己减负。既然工作量是由于数据模型和层次的复杂性引起的，那最有效的减少工作量的方法无非就是：1、绕过整合层，数据直接从同构层到应用层。2、还是从通过整合层，但使用面向应用的自建模型。无论哪种方法，都使整合层形同虚设，从同构层到应用层形成一个个数据井道。虽然单个开发任务的开发时间缩短了，但各数据井道之间无法复用，所以总的开发时间绝对要更多，而且后期的维护工作将是一场噩梦。</p>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-4.png" alt="BuildBusinessOrientedBigDataCloudPlatform-4"></p>
-<p><strong>效率低</strong></p>
-<p>架构变坏后，数据一致性无法保证，大量数据重复存储，大量指标重复计算，ETL作业数急剧上升，数据整合平台效率自然会越来越差。即便架构还能保持，但随着时间的推移，数据量及业务需求不断增加，架构上倾向分割出更多的层次，以便实现更多的复用。随着层次的增加，数据迁移的路径就变长了，长久以往也难逃低效率的宿命。</p>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-5.png" alt="BuildBusinessOrientedBigDataCloudPlatform-5"></p>
-<p>再回顾下OLAP数据应用的五个阶段，从业务提出需求到业务应用验证形成闭环，这过程是由IT导向推动的，IT首先与业务讨论分析需求，在业务模型层面中达成共识，然后再映射到系统模型，实现对来自上游系统的数据进行加工处理，最后通过OLAP系统将结果在业务语境中展现给用户，之前讨论的所有弊病都此有关。而对于像银行、保险等发展较成熟的行业，其业务语境、模型是较稳定的，支持业务开展的上游IT系统的系统模型也应该是相对稳定的，因此业务模型和系统模型间能形成较稳定的映射关系。这样只要能达到足够细的粒度，就能实现操纵业务模型来改变系统模型的目的。而业务模型又能被业务所能理解，因此这个闭环过程就可以完全由业务导向不需要IT的参与，整个过程可以简化为：业务设计模型，业务应用验证。</p>
-<p>文／season7（简书作者）<br>原文链接：<a href="http://www.jianshu.com/p/d55d8eeac219" target="_blank" rel="external">http://www.jianshu.com/p/d55d8eeac219</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> BI墨客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 转载 </tag>
-            
-            <tag> BI </tag>
-            
-            <tag> BigData </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[房地产行业商业智能解决方案分享]]></title>
       <url>/2016/06/05/RealEstateBISolutionCaseShare/</url>
       <content type="html"><![CDATA[<p>中国地产行业经过了20多年的发展，房地产行业整合已成大势所趋，逐步由区域开发转变为集团化的跨地区综合开发商。然而，对于处在超常规速度发展的房地产企业来说，其面临的挑战也是超常规的。首先，房地产企业要在有限的资金和人力条件下，同一时间，对全国区域范围内的多个项目做出科学的决策，以及进行合理地资源平衡，这是一项非常复杂的系统工程。另外，由单个区域开发到全国跨地区开发所带来的管理上的复杂程度也是呈几何级数增长的。这就对企业在项目进度控制、现金流管理等方面提出了更加精细的要求。 </p>
@@ -3920,6 +4031,47 @@
             <tag> 转载 </tag>
             
             <tag> BI </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[放开那程序猿！构建业务导向的大数据云平台]]></title>
+      <url>/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/</url>
+      <content type="html"><![CDATA[<p>按数据处理方式及使用目标，企业级IT系统可分为OLTP和OLAP系统。简而言之，OLTP系统生产数据，OLAP系统加工数据。从数据到智慧的转换金字塔上看，OLTP系统实现了底层的数据产生和存储以及面向事务的信息整合，在这之上的各层就要依赖OLAP系统了。OLAP概念源自决策支持系统（DSS），企业中的数据仓库、数据集市、统计报表、驾驶舱、数据挖掘等都属于OLAP体系。其中，数据仓库和数据集市主要实现信息整合，一般统称为数据整合平台。统计报表、驾驶舱、数据挖掘进一步利用数据整合平台的成果，帮助用户发现知识并最终形成智慧。 </p>
+<a id="more"></a>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-1.png" alt="BuildBusinessOrientedBigDataCloudPlatform-1"></p>
+<p>OLAP系统的主要用户是分析人员和管理人员，目标是支持管理决策，依据是企业生产经营过程中产生的全量数据，是一个按目标使用场景对数据进行加工、利用的过程。这过程一般可以划分五个阶段：业务部门定义需求；IT部门根据需求获取并整合相关数据；IT部门根据需求设计分析模型；IT部门开发实施并发布；业务部门应用并衡量实际成效。在传统的数据基础和技术环境下，这个周期可能要经历较漫长的时间。还在建设OLAP体系的情况自不必多说，即便已建成OLAP体系统，要及时响应业务部门的需求也是较困难的，而且很有可能最终的交付质量不能达到需求方的预期。</p>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-2.png" alt="BuildBusinessOrientedBigDataCloudPlatform-2"></p>
+<p>下图是目前较常见的OLAP体系简图，上游系统指那些OLTP系统，是数据源。数据整合平台包括ODS、数据仓库、数据集市等，主要实现数据整合。下游系统指那些利用数据整合平台成果的系统，包括统计报表、驾驶舱、数据挖掘等。其中，数据整合平台承上启下，在整个OLAP体系中非常重要。按照目前较普遍的架构，从上游到下游的数据流向，至少分为同构层、整合层、应用层。其中同构层在模型上基本与上游接入数据源基本保持一致，整合层一般会采用高范式模型进行数据整合，应用层面向下游具体应用采用星型模型。这个架构是在Inmon帮和Kimball派十几年如一日的不断撕逼和妥协中演进出来的，应该是一种最佳实践。但随着互联网+大数据时代到来，对数据应用有着更高效、更深入的要求，这种架构本身固有的缺点被不断放大。</p>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-3.png" alt="BuildBusinessOrientedBigDataCloudPlatform-3"></p>
+<p><strong>开发周期长</strong></p>
+<p>为了避免因上游系统接入模型的变化而导致数据整合平台模型的被动调整，整合层建模时一般会采用较高范式实现高内聚、低耦合，ER实体较多、关系复杂。这样就增加了ETL设计、开发以及测试的复杂度，同时ETL程序执行效率也低。业务部门提出的需求，IT首先由下至上逐层对模型进行分析，即便只需在应用层开发，基于上述原因也需要一周以上。如果涉及要改动整合层，开发周期要一个月左右，业务部门显然是不能接受的。最后的结局不用猜都知道，苦逼的程序猿只能再一次强睁熊猫眼天天加班赶工。但是故事并没有到此结束，马上一个意想不到但细细想想又是顺理成章的伴生问题发生了。</p>
+<p><strong>架构迅速变坏</strong></p>
+<p>在日复一日的高压下，程序猿只能另辟蹊径为自己减负。既然工作量是由于数据模型和层次的复杂性引起的，那最有效的减少工作量的方法无非就是：1、绕过整合层，数据直接从同构层到应用层。2、还是从通过整合层，但使用面向应用的自建模型。无论哪种方法，都使整合层形同虚设，从同构层到应用层形成一个个数据井道。虽然单个开发任务的开发时间缩短了，但各数据井道之间无法复用，所以总的开发时间绝对要更多，而且后期的维护工作将是一场噩梦。</p>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-4.png" alt="BuildBusinessOrientedBigDataCloudPlatform-4"></p>
+<p><strong>效率低</strong></p>
+<p>架构变坏后，数据一致性无法保证，大量数据重复存储，大量指标重复计算，ETL作业数急剧上升，数据整合平台效率自然会越来越差。即便架构还能保持，但随着时间的推移，数据量及业务需求不断增加，架构上倾向分割出更多的层次，以便实现更多的复用。随着层次的增加，数据迁移的路径就变长了，长久以往也难逃低效率的宿命。</p>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-5.png" alt="BuildBusinessOrientedBigDataCloudPlatform-5"></p>
+<p>再回顾下OLAP数据应用的五个阶段，从业务提出需求到业务应用验证形成闭环，这过程是由IT导向推动的，IT首先与业务讨论分析需求，在业务模型层面中达成共识，然后再映射到系统模型，实现对来自上游系统的数据进行加工处理，最后通过OLAP系统将结果在业务语境中展现给用户，之前讨论的所有弊病都此有关。而对于像银行、保险等发展较成熟的行业，其业务语境、模型是较稳定的，支持业务开展的上游IT系统的系统模型也应该是相对稳定的，因此业务模型和系统模型间能形成较稳定的映射关系。这样只要能达到足够细的粒度，就能实现操纵业务模型来改变系统模型的目的。而业务模型又能被业务所能理解，因此这个闭环过程就可以完全由业务导向不需要IT的参与，整个过程可以简化为：业务设计模型，业务应用验证。</p>
+<p>文／season7（简书作者）<br>原文链接：<a href="http://www.jianshu.com/p/d55d8eeac219" target="_blank" rel="external">http://www.jianshu.com/p/d55d8eeac219</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> BI墨客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 转载 </tag>
+            
+            <tag> BI </tag>
+            
+            <tag> BigData </tag>
             
         </tags>
         
@@ -4509,6 +4661,37 @@ $ npm install bespoke-fx
     </entry>
     
     <entry>
+      <title><![CDATA[比尔·盖茨：如果你看完了这些极其难懂的书，请给我投简历！]]></title>
+      <url>/2016/05/06/The-Art-of-Computer-Programming/</url>
+      <content type="html"><![CDATA[<p>在硅谷的世界里，有几本比《计算机编程艺术》（ “The Art of Computer Programming”）更受人认可的书，这些书也是斯坦福大学名誉教授Donald Knuth点名的非常不错的书。而在比尔盖茨的演讲中，他甚至表示：“如果你自认为是个非常优秀的程序员。那么你如果全部读完了Knuth编写的《计算机编程艺术》这本书的话。你一定要给我发份简历”。而这句好像开完笑的话，便可以说明比尔盖茨对其的高度评价，同时这些话也被收录在了这本书的第一卷的第三版的封面上。</p>
+<a id="more"></a>
+<p><img src="/img/posts/The-Art-of-Computer-Programming-1.jpg" alt="The-Art-of-Computer-Programming-1"></p>
+<p>据说，这句话是自盖茨曾经工作的辛迪加报纸专栏里流传出来的，而该专栏还称这本书非常具有传奇色彩，而它的难度更让很多人把它拒之门外，下面是其具体描述：<br>“这是一门让人难懂的学科，我花了好几个月时间去读它，看了20页之后就把书丢到一边，一星期之后又回来读另外20页。如果有人傲慢的说他看明白了书中的一切，那么Knuth将帮助他们了解世界是如何的深刻而复杂。”</p>
+<p><img src="/img/posts/The-Art-of-Computer-Programming-2.jpg" alt="The-Art-of-Computer-Programming-2"></p>
+<p>《计算机编程艺术》第一卷于1962年问世，它是第一本深入探讨编程的数学性和科学性的书籍。Knuth将这本书视为其一生的工作，并表示如果情况允许的话，这本书将共有七卷。最新的一本书于2015年12月发布。<br>旧金山企业家Carl Tashian在最近的一篇媒体文章中说道：“Donald Knuth的《计算机编程艺术》有四个精装册，每本的封面都是暗紫色，让人看起来很舒服。而书的本身也像人们透了这样的一个信息：“外行者靠边站，因为这本书是给真正从事编程工作的程序员看的。”<br>就已经跨过这个阶段的Knuth来说，他的技术能力已经成为高科技产业一个传奇。而想要超越单纯的编码深入到程序员工作底层的复杂性，程序员们必须要熟读这本书。<br>Amazon评论家在1997年写道：“如果算机科学有可兰经，圣经等等经书，那也这就是它。”<br>这本书因全面而彻底的讲述编程而闻名，当然，其同时也极大地挑战和挫伤了很多程序员的自尊心。这本书对Knuth的案例和其i严谨的数学证明即使是对于比尔盖茨来说仍是有着很大的困惑的。<br>尽管它有悠久的出版历史，Knuth通过不断更新《计算机编程艺术》的版本来获得更多的粉丝。如果你发现他的书中有任何错误，你就可能得到有名的Knuth奖励检查，总数为2.56美元的奖金。而这笔奖金还被他专门赋予了“一个十六进制的美元”的特殊意义。因此，我们可以认为这笔奖金的获得对于那些想要证明自己知道自己在说些什么的人来说是一笔宝贵的奖励。<br>当然，众所周知天下之大，我们不可能什么都知道。就像你需要开车，你并不需要知道内燃机是如何工作的这件事情一样，你也没有必要为了了解如何编写程序来强硬的读这本书，所以不要把这个事情看成一个必须的读本就好。当然，如果想要有更多的这方面探索的话，这本书还是非常不错的。</p>
+<p>原文链接：<a href="http://toutiao.com/a6279342772928119041/" target="_blank" rel="external">http://toutiao.com/a6279342772928119041/</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> IT看客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 转载 </tag>
+            
+            <tag> IT资讯 </tag>
+            
+            <tag> 计算机基原理 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[【SSIS】利用SSIS模板快速开发SSIS Package]]></title>
       <url>/2016/05/06/SSIS-Template-For-SSISPackage/</url>
       <content type="html"><![CDATA[<p>在做 ETL 项目的时候，往往很多 Package 的开发都是基于相同的模型和流程。比如在 Package 开始运行时需要向 Process Log 表中插入记录，在 Package 运行结束的时候更新运行状态。</p>
@@ -4554,31 +4737,63 @@ $ npm install bespoke-fx
     </entry>
     
     <entry>
-      <title><![CDATA[比尔·盖茨：如果你看完了这些极其难懂的书，请给我投简历！]]></title>
-      <url>/2016/05/06/The-Art-of-Computer-Programming/</url>
-      <content type="html"><![CDATA[<p>在硅谷的世界里，有几本比《计算机编程艺术》（ “The Art of Computer Programming”）更受人认可的书，这些书也是斯坦福大学名誉教授Donald Knuth点名的非常不错的书。而在比尔盖茨的演讲中，他甚至表示：“如果你自认为是个非常优秀的程序员。那么你如果全部读完了Knuth编写的《计算机编程艺术》这本书的话。你一定要给我发份简历”。而这句好像开完笑的话，便可以说明比尔盖茨对其的高度评价，同时这些话也被收录在了这本书的第一卷的第三版的封面上。</p>
-<a id="more"></a>
-<p><img src="/img/posts/The-Art-of-Computer-Programming-1.jpg" alt="The-Art-of-Computer-Programming-1"></p>
-<p>据说，这句话是自盖茨曾经工作的辛迪加报纸专栏里流传出来的，而该专栏还称这本书非常具有传奇色彩，而它的难度更让很多人把它拒之门外，下面是其具体描述：<br>“这是一门让人难懂的学科，我花了好几个月时间去读它，看了20页之后就把书丢到一边，一星期之后又回来读另外20页。如果有人傲慢的说他看明白了书中的一切，那么Knuth将帮助他们了解世界是如何的深刻而复杂。”</p>
-<p><img src="/img/posts/The-Art-of-Computer-Programming-2.jpg" alt="The-Art-of-Computer-Programming-2"></p>
-<p>《计算机编程艺术》第一卷于1962年问世，它是第一本深入探讨编程的数学性和科学性的书籍。Knuth将这本书视为其一生的工作，并表示如果情况允许的话，这本书将共有七卷。最新的一本书于2015年12月发布。<br>旧金山企业家Carl Tashian在最近的一篇媒体文章中说道：“Donald Knuth的《计算机编程艺术》有四个精装册，每本的封面都是暗紫色，让人看起来很舒服。而书的本身也像人们透了这样的一个信息：“外行者靠边站，因为这本书是给真正从事编程工作的程序员看的。”<br>就已经跨过这个阶段的Knuth来说，他的技术能力已经成为高科技产业一个传奇。而想要超越单纯的编码深入到程序员工作底层的复杂性，程序员们必须要熟读这本书。<br>Amazon评论家在1997年写道：“如果算机科学有可兰经，圣经等等经书，那也这就是它。”<br>这本书因全面而彻底的讲述编程而闻名，当然，其同时也极大地挑战和挫伤了很多程序员的自尊心。这本书对Knuth的案例和其i严谨的数学证明即使是对于比尔盖茨来说仍是有着很大的困惑的。<br>尽管它有悠久的出版历史，Knuth通过不断更新《计算机编程艺术》的版本来获得更多的粉丝。如果你发现他的书中有任何错误，你就可能得到有名的Knuth奖励检查，总数为2.56美元的奖金。而这笔奖金还被他专门赋予了“一个十六进制的美元”的特殊意义。因此，我们可以认为这笔奖金的获得对于那些想要证明自己知道自己在说些什么的人来说是一笔宝贵的奖励。<br>当然，众所周知天下之大，我们不可能什么都知道。就像你需要开车，你并不需要知道内燃机是如何工作的这件事情一样，你也没有必要为了了解如何编写程序来强硬的读这本书，所以不要把这个事情看成一个必须的读本就好。当然，如果想要有更多的这方面探索的话，这本书还是非常不错的。</p>
-<p>原文链接：<a href="http://toutiao.com/a6279342772928119041/" target="_blank" rel="external">http://toutiao.com/a6279342772928119041/</a></p>
+      <title><![CDATA[如何在没有主键的SQL Server表里删除重复行]]></title>
+      <url>/2016/04/26/Delete-duplicate-rows-with-no-primary-key/</url>
+      <content type="html"><![CDATA[<p>有没有遇到过在一个没有主键标志的表里存了重复的数据行，要把重复的行删掉保留一行的情况呢？我们可以设置SQL Server的ROWCUNT变量来限制影响的数据行数，默认的数据值是0，代表所有行，但是这个值可以在运行SQL语句之前进行设定。</p>
+<p>咱们首先建个测试用的表，插入几条条记录。</p>
+<pre><code>CREATE TABLE dbo.duplicateTest
+    (
+      [ID] [INT] ,
+      [FirstName] [VARCHAR](25) ,
+      [LastName] [VARCHAR](25)
+    )
+ON  [PRIMARY];
+
+INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;) 
+INSERT INTO dbo.duplicateTest VALUES(2, &apos;Dave&apos;,&apos;Jones&apos;) 
+INSERT INTO dbo.duplicateTest VALUES(3, &apos;Karen&apos;,&apos;White&apos;) 
+INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;)
+INSERT INTO dbo.duplicateTest VALUES(2, &apos;Dave&apos;,&apos;Jones&apos;)
+INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;) 
+</code></pre><a id="more"></a>
+<p>表内数据如下：</p>
+<pre><code>SELECT * FROM dbo.duplicateTest
+</code></pre><p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-1.jpg" alt="全部数据"></p>
+<p>我们要找到Bob Smith的记录可以用以下语句：</p>
+<pre><code>SELECT * FROM dbo.duplicateTest WHERE ID = 1 AND FirstName = &apos;Bob&apos; AND LastName = &apos;Smith&apos;
+</code></pre><p>找到三行数据</p>
+<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-2.jpg" alt="图2"></p>
+<p>在SQL Server 2000 和 2005上我们可以使用SET ROWCOUNT 命令来限制一条语句作用的行数，设置为1我们就可以删除一条重复的记录了。删除前与删除后的对比如下：</p>
+<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-3.jpg" alt="图3"></p>
+<p>在SQL Server 2005上，我们也可以用TOP命令。像下面这样：</p>
+<pre><code>SELECT * FROM dbo.duplicateTest 
+DELETE TOP(1) FROM dbo.duplicateTest WHERE ID = 1 
+SELECT * FROM dbo.duplicateTest
+</code></pre><p>删除前与删除后的对比如下：</p>
+<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-4.jpg" alt="图4"></p>
+<p><strong>总结</strong></p>
+<ul>
+<li>1、这个方法可以在表中没有明显标志字段来区分每一行的情况，但也有局限，如果一个表中不知道每行记录都有多少行重复的记录，就不能用了，TOP(1)也只是删除重复行中的一行。</li>
+<li>2、如果明确知道表里每行记录都有2行、3行……重复的记录，倒是个不错的选择。</li>
+<li>3、如果表里有个ID自增长的字段，就可以采用删掉重复行保留ID最小的那个行的方法了。</li>
+<li>4、如果表里没有ID自增长的字段，又不知道每行有多少条重复记录，重复记录行都一样，那还是先把记录DISTINCT出来存到临时表里，清空原表，再把临时表的数据插入原表，这样应该是最省事的了。</li>
+</ul>
 ]]></content>
       
         <categories>
             
-            <category> IT看客 </category>
+            <category> 码路刺客 </category>
             
         </categories>
         
         
         <tags>
             
-            <tag> 转载 </tag>
+            <tag> 数据库 </tag>
             
-            <tag> IT资讯 </tag>
+            <tag> 原创 </tag>
             
-            <tag> 计算机基原理 </tag>
+            <tag> SQL Server </tag>
             
         </tags>
         
@@ -4656,69 +4871,6 @@ $ npm install bespoke-fx
             <tag> JavaScript </tag>
             
             <tag> 设计 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[如何在没有主键的SQL Server表里删除重复行]]></title>
-      <url>/2016/04/26/Delete-duplicate-rows-with-no-primary-key/</url>
-      <content type="html"><![CDATA[<p>有没有遇到过在一个没有主键标志的表里存了重复的数据行，要把重复的行删掉保留一行的情况呢？我们可以设置SQL Server的ROWCUNT变量来限制影响的数据行数，默认的数据值是0，代表所有行，但是这个值可以在运行SQL语句之前进行设定。</p>
-<p>咱们首先建个测试用的表，插入几条条记录。</p>
-<pre><code>CREATE TABLE dbo.duplicateTest
-    (
-      [ID] [INT] ,
-      [FirstName] [VARCHAR](25) ,
-      [LastName] [VARCHAR](25)
-    )
-ON  [PRIMARY];
-
-INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;) 
-INSERT INTO dbo.duplicateTest VALUES(2, &apos;Dave&apos;,&apos;Jones&apos;) 
-INSERT INTO dbo.duplicateTest VALUES(3, &apos;Karen&apos;,&apos;White&apos;) 
-INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;)
-INSERT INTO dbo.duplicateTest VALUES(2, &apos;Dave&apos;,&apos;Jones&apos;)
-INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;) 
-</code></pre><a id="more"></a>
-<p>表内数据如下：</p>
-<pre><code>SELECT * FROM dbo.duplicateTest
-</code></pre><p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-1.jpg" alt="全部数据"></p>
-<p>我们要找到Bob Smith的记录可以用以下语句：</p>
-<pre><code>SELECT * FROM dbo.duplicateTest WHERE ID = 1 AND FirstName = &apos;Bob&apos; AND LastName = &apos;Smith&apos;
-</code></pre><p>找到三行数据</p>
-<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-2.jpg" alt="图2"></p>
-<p>在SQL Server 2000 和 2005上我们可以使用SET ROWCOUNT 命令来限制一条语句作用的行数，设置为1我们就可以删除一条重复的记录了。删除前与删除后的对比如下：</p>
-<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-3.jpg" alt="图3"></p>
-<p>在SQL Server 2005上，我们也可以用TOP命令。像下面这样：</p>
-<pre><code>SELECT * FROM dbo.duplicateTest 
-DELETE TOP(1) FROM dbo.duplicateTest WHERE ID = 1 
-SELECT * FROM dbo.duplicateTest
-</code></pre><p>删除前与删除后的对比如下：</p>
-<p><img src="/img/posts/Delete-duplicate-rows-with-no-primary-key-4.jpg" alt="图4"></p>
-<p><strong>总结</strong></p>
-<ul>
-<li>1、这个方法可以在表中没有明显标志字段来区分每一行的情况，但也有局限，如果一个表中不知道每行记录都有多少行重复的记录，就不能用了，TOP(1)也只是删除重复行中的一行。</li>
-<li>2、如果明确知道表里每行记录都有2行、3行……重复的记录，倒是个不错的选择。</li>
-<li>3、如果表里有个ID自增长的字段，就可以采用删掉重复行保留ID最小的那个行的方法了。</li>
-<li>4、如果表里没有ID自增长的字段，又不知道每行有多少条重复记录，重复记录行都一样，那还是先把记录DISTINCT出来存到临时表里，清空原表，再把临时表的数据插入原表，这样应该是最省事的了。</li>
-</ul>
-]]></content>
-      
-        <categories>
-            
-            <category> 码路刺客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 数据库 </tag>
-            
-            <tag> 原创 </tag>
-            
-            <tag> SQL Server </tag>
             
         </tags>
         

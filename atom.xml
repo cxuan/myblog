@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://c-xuan.com/"/>
-  <updated>2019-02-21T05:40:29.000Z</updated>
+  <updated>2019-03-13T10:45:41.974Z</updated>
   <id>https://c-xuan.com/</id>
   
   <author>
@@ -14,6 +14,162 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【Python 3 基础】字典dict创建方法及常用操作</title>
+    <link href="https://c-xuan.com/2019/03/13/20190313001_python_dict/"/>
+    <id>https://c-xuan.com/2019/03/13/20190313001_python_dict/</id>
+    <published>2019-03-13T10:41:12.000Z</published>
+    <updated>2019-03-13T10:45:41.974Z</updated>
+    
+    <content type="html"><![CDATA[<p>本文主要介绍Ptyhon 3中字典创建方法，以及字典排序，合并等常用操作。</p>
+<a id="more"></a>
+<h3 id="创建字典方法"><a href="#创建字典方法" class="headerlink" title="创建字典方法"></a>创建字典方法</h3><h4 id="方式"><a href="#方式" class="headerlink" title="{} 方式"></a>{} 方式</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">dict1 = &#123;&#125; <span class="comment">#创建空字典</span></div><div class="line">dict2 = &#123;<span class="string">'a'</span>:<span class="number">11</span>,<span class="string">'b'</span>:<span class="number">12</span>&#125; <span class="comment">#创建含有值得字典</span></div></pre></td></tr></table></figure>
+<h4 id="dict-函数-方式"><a href="#dict-函数-方式" class="headerlink" title="dict()函数 方式"></a>dict()函数 方式</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">dict3 = dict() <span class="comment">#创建空字典</span></div><div class="line">dict4 = dict(a=<span class="string">'11'</span>,b=<span class="string">'ddd'</span>,c=<span class="string">'ssss'</span>) <span class="comment">#创建含有值的字典，注意键值如果加引号会报错</span></div><div class="line"><span class="comment">#dict5 = dict('a'='11',b='ddd',c='ssss') # SyntaxError: keyword can't be an expression</span></div><div class="line"></div><div class="line">keys = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'d'</span>,<span class="string">'e'</span>]</div><div class="line">values = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line">dict6 = dict(zip(keys,values)) <span class="comment">#键或值的列表元素个数不必相同，以少的为准</span></div><div class="line"><span class="comment"># &#123;'a': 1, 'b': 2, 'c': 3, 'd': 4&#125;</span></div></pre></td></tr></table></figure>
+<h3 id="字典排序"><a href="#字典排序" class="headerlink" title="字典排序"></a>字典排序</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> operator</div><div class="line">test = &#123;<span class="string">'a'</span>:<span class="number">1</span>,<span class="string">'c'</span>:<span class="number">2</span>,<span class="string">'b'</span>:<span class="number">7</span>,<span class="string">'f'</span>:<span class="number">5</span>&#125;</div></pre></td></tr></table></figure>
+<h4 id="根据键排序"><a href="#根据键排序" class="headerlink" title="根据键排序"></a>根据键排序</h4><h5 id="sorted-方式"><a href="#sorted-方式" class="headerlink" title="sorted() 方式"></a>sorted() 方式</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">print(sorted(test.items())) <span class="comment">#升序</span></div><div class="line">print(sorted(test.items(),reverse=<span class="keyword">True</span>)) <span class="comment">#降序</span></div></pre></td></tr></table></figure>
+<h5 id="sorted-operator-方式"><a href="#sorted-operator-方式" class="headerlink" title="sorted + operator 方式"></a>sorted + operator 方式</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">print(sorted(test.items(),key=operator.itemgetter(<span class="number">0</span>))) <span class="comment">#升序</span></div><div class="line">print(sorted(test.items(),key=operator.itemgetter(<span class="number">0</span>),reverse=<span class="keyword">True</span>)) <span class="comment">#降序</span></div></pre></td></tr></table></figure>
+<h5 id="sorted-lambda-方式"><a href="#sorted-lambda-方式" class="headerlink" title="sorted + lambda 方式"></a>sorted + lambda 方式</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">print(sorted(test.items(),key=<span class="keyword">lambda</span> x : x[<span class="number">0</span>])) <span class="comment">#升序</span></div><div class="line">print(sorted(test.items(),key=<span class="keyword">lambda</span> x : x[<span class="number">0</span>],reverse=<span class="keyword">True</span>)) <span class="comment">#降序</span></div></pre></td></tr></table></figure>
+<h4 id="根据值排序"><a href="#根据值排序" class="headerlink" title="根据值排序"></a>根据值排序</h4><h5 id="sorted-operator-方式-1"><a href="#sorted-operator-方式-1" class="headerlink" title="sorted + operator 方式"></a>sorted + operator 方式</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">print(sorted(test.items(),key=operator.itemgetter(<span class="number">1</span>))) <span class="comment">#升序</span></div><div class="line">print(sorted(test.items(),key=operator.itemgetter(<span class="number">1</span>),reverse=<span class="keyword">True</span>)) <span class="comment">#降序</span></div></pre></td></tr></table></figure>
+<h5 id="sorted-lambda-方式-1"><a href="#sorted-lambda-方式-1" class="headerlink" title="sorted + lambda 方式"></a>sorted + lambda 方式</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">print(sorted(test.items(),key=<span class="keyword">lambda</span> x : x[<span class="number">1</span>])) <span class="comment">#升序</span></div><div class="line">print(sorted(test.items(),key=<span class="keyword">lambda</span> x : x[<span class="number">1</span>],reverse=<span class="keyword">True</span>)) <span class="comment">#降序</span></div></pre></td></tr></table></figure>
+<p><strong> 注意，如果值的数据类型不一样，以上根据值排序会报错，例如一下字典，值有int和str类型,lambda中要进行类型转换 </strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">test2 = &#123;<span class="string">'a'</span>:<span class="number">1</span>,<span class="string">'c'</span>:<span class="number">2</span>,<span class="string">'b'</span>:<span class="number">7</span>,<span class="string">'f'</span>:<span class="string">'5'</span>&#125;</div><div class="line">print(sorted(test2.items(),key=<span class="keyword">lambda</span> x : str(x[<span class="number">1</span>]))) <span class="comment">#升序</span></div><div class="line"><span class="comment">#输出 [('a', 1), ('c', 2), ('f', '5'), ('b', 7)]</span></div></pre></td></tr></table></figure></p>
+<h3 id="字典合并"><a href="#字典合并" class="headerlink" title="字典合并"></a>字典合并</h3><h4 id="update方法"><a href="#update方法" class="headerlink" title="update方法"></a>update方法</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">dictA = &#123;<span class="string">'a'</span>:<span class="number">3</span>,<span class="string">'b'</span>:<span class="number">7</span>,<span class="string">'c'</span>:<span class="string">'2'</span>&#125;</div><div class="line">dictB = &#123;<span class="string">'d'</span>:<span class="number">12</span>,<span class="string">'f'</span>:<span class="string">'44'</span>&#125;</div><div class="line">dictA.update(dictB)</div><div class="line">print(dictA) <span class="comment">#输出 &#123;'a': 3, 'b': 7, 'c': '2', 'd': 12, 'f': '44'&#125;</span></div></pre></td></tr></table></figure>
+<h4 id="方法"><a href="#方法" class="headerlink" title="**方法"></a>**方法</h4><p><strong> 高版本python中可用 </strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">dictC = &#123;**dictA,**dictB&#125;</div><div class="line">print(dictC) <span class="comment">#输出 &#123;'a': 3, 'b': 7, 'c': '2', 'd': 12, 'f': '44'&#125;</span></div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文主要介绍Ptyhon 3中字典创建方法，以及字典排序，合并等常用操作。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="码路刺客" scheme="https://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
+    
+    
+      <category term="原创" scheme="https://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+      <category term="Python" scheme="https://c-xuan.com/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CSS视差效果设计</title>
+    <link href="https://c-xuan.com/2019/03/05/20190305001_css_parallax_effects/"/>
+    <id>https://c-xuan.com/2019/03/05/20190305001_css_parallax_effects/</id>
+    <published>2019-03-05T11:16:42.000Z</published>
+    <updated>2019-03-05T11:16:42.000Z</updated>
+    
+    <content type="html"><![CDATA[<center><img src="/img/posts/20190305001-01.gif" alt="parallax effects"></center>
+
+<a id="more"></a>
+<ul>
+<li>作者：oscicen</li>
+<li>使用技术：HTML / CSS / JavaScript</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>响应式：否</li>
+<li>源码链接：<a href="https://codepen.io/oscicen/pen/zyJeJw" target="_blank" rel="external">https://codepen.io/oscicen/pen/zyJeJw</a></li>
+</ul>
+<center><img src="/img/posts/20190305001-02.gif" alt="parallax effects"></center>
+
+<ul>
+<li>作者：Guilmain Dorian</li>
+<li>使用技术：HTML (Pug) / CSS (Less) / JavaScript</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox (partial), Opera, Safari</li>
+<li>响应式：否</li>
+<li>源码链接：<a href="https://codepen.io/Craaftx/pen/yQGpwa" target="_blank" rel="external">https://codepen.io/Craaftx/pen/yQGpwa</a></li>
+</ul>
+<center><img src="/img/posts/20190305001-03.gif" alt="parallax effects"></center>
+
+<ul>
+<li>作者：Adrian Payne</li>
+<li>使用技术：HTML / CSS (SCSS) / JavaScript (Babel)</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>响应式：是</li>
+<li>源码链接：<a href="https://codepen.io/dazulu/pen/VVZrQv" target="_blank" rel="external">https://codepen.io/dazulu/pen/VVZrQv</a></li>
+</ul>
+<center><img src="/img/posts/20190305001-04.gif" alt="parallax effects"></center>
+
+<ul>
+<li>作者：Alex O’Neal</li>
+<li>使用技术：HTML / CSS</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>响应式：是</li>
+<li>源码链接：<a href="https://codepen.io/alexoneal/pen/OBqaoe" target="_blank" rel="external">https://codepen.io/alexoneal/pen/OBqaoe</a></li>
+</ul>
+<center><img src="/img/posts/20190305001-05.gif" alt="parallax effects"></center>
+
+<ul>
+<li>作者：Sil van Diepen</li>
+<li>使用技术：HTML (Pug) / CSS (SCSS)</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>响应式：是</li>
+<li>源码链接：<a href="https://codepen.io/silvandiepen/full/NOboze" target="_blank" rel="external">https://codepen.io/silvandiepen/full/NOboze</a></li>
+</ul>
+<center><img src="/img/posts/20190305001-06.gif" alt="parallax effects"></center>
+
+<ul>
+<li>作者：Yago Estévez</li>
+<li>使用技术：HTML (Pug) / CSS</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>响应式：是</li>
+<li>源码链接：<a href="https://codepen.io/yagoestevez/full/EdgRMX" target="_blank" rel="external">https://codepen.io/yagoestevez/full/EdgRMX</a></li>
+</ul>
+<center><img src="/img/posts/20190305001-07.gif" alt="parallax effects"></center>
+
+<ul>
+<li>作者：jakob-e</li>
+<li>使用技术：HTML / CSS (SCSS) / JavaScript</li>
+<li>依赖库：</li>
+<li>浏览器兼容：Chrome, Firefox, Opera, Safari</li>
+<li>响应式：是</li>
+<li>源码链接：<a href="https://codepen.io/jakob-e/pen/ELqeRM" target="_blank" rel="external">https://codepen.io/jakob-e/pen/ELqeRM</a></li>
+</ul>
+<center><img src="/img/posts/20190305001-08.gif" alt="parallax effects"></center>
+
+<ul>
+<li>作者：Casey Callis</li>
+<li>使用技术：HTML / CSS / JavaScript</li>
+<li>依赖库：jquery.js, parallax.js</li>
+<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
+<li>响应式：是</li>
+<li>源码链接：<a href="https://codepen.io/caseycallis/full/pwEWxo" target="_blank" rel="external">https://codepen.io/caseycallis/full/pwEWxo</a></li>
+</ul>
+<center><img src="/img/posts/20190305001-09.gif" alt="parallax effects"></center>
+
+<ul>
+<li>作者：Ravi Dhiman</li>
+<li>使用技术：HTML (Pug) / CSS (SCSS)</li>
+<li>依赖库：-</li>
+<li>浏览器兼容：Chrome, Firefox, Opera, Safari</li>
+<li>响应式：是</li>
+<li>源码链接：<a href="https://codepen.io/ravid7000/pen/LREEzv" target="_blank" rel="external">https://codepen.io/ravid7000/pen/LREEzv</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;center&gt;&lt;img src=&quot;/img/posts/20190305001-01.gif&quot; alt=&quot;parallax effects&quot;&gt;&lt;/img&gt;&lt;/center&gt;
+    
+    </summary>
+    
+      <category term="码路刺客" scheme="https://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
+    
+    
+      <category term="原创" scheme="https://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+      <category term="CSS" scheme="https://c-xuan.com/tags/CSS/"/>
+    
+      <category term="JavaScript" scheme="https://c-xuan.com/tags/JavaScript/"/>
+    
+      <category term="前端" scheme="https://c-xuan.com/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+  </entry>
   
   <entry>
     <title>类Jupyter notebook编辑器桌面版nteract</title>
@@ -74,6 +230,41 @@
   </entry>
   
   <entry>
+    <title>Python多个数组合并</title>
+    <link href="https://c-xuan.com/2019/02/20/20190220001_py_list_merge/"/>
+    <id>https://c-xuan.com/2019/02/20/20190220001_py_list_merge/</id>
+    <published>2019-02-20T05:40:29.000Z</published>
+    <updated>2019-02-20T05:40:29.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Python中多个数组合并为一个数组的方法整理。</p>
+<a id="more"></a>
+<h3 id="extend方法"><a href="#extend方法" class="headerlink" title="extend方法"></a>extend方法</h3><p>该方法可以扩展数组，会改变原始数组。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">7</span>,<span class="number">5</span>,<span class="number">6</span>]</div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'c'</span>]</div><div class="line">a.extend(b)</div><div class="line">a.extend(c)</div><div class="line">print(a)</div><div class="line"></div><div class="line"><span class="comment">#结果：[1, 2, 3, 4, 7, 5, 6, 'a', 'b', 'h', 12, 'c']</span></div></pre></td></tr></table></figure>
+<h3 id="直接相加"><a href="#直接相加" class="headerlink" title="直接相加"></a>直接相加</h3><p>用<code>+</code>将各数组连接起来。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">7</span>,<span class="number">5</span>,<span class="number">6</span>]</div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'c'</span>]</div><div class="line"></div><div class="line">d = a + b +c</div><div class="line">print(d)</div><div class="line"></div><div class="line"><span class="comment">#结果：[1, 2, 3, 4, 7, 5, 6, 'a', 'b', 'h', 12, 'c']</span></div></pre></td></tr></table></figure>
+<h3 id="flatten方法"><a href="#flatten方法" class="headerlink" title="flatten方法"></a>flatten方法</h3><p><code>flatten()</code>方法是numpy中array数组的方法，使用时要导入包和类型转换。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> array</div><div class="line"></div><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'k'</span>]</div><div class="line">e = [a,b,c]</div><div class="line">e = array(e)</div><div class="line">print(e.flatten())</div><div class="line"></div><div class="line"><span class="comment">#结果：['1' '2' '3' 'a' 'b' 'c' 'h' '12' 'k']</span></div></pre></td></tr></table></figure>
+<p>值得注意的是该方法不适用各数组中元素个数不同的情况。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]  <span class="comment">#元素个数不同</span></div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'k'</span>]</div><div class="line">e = [a,b,c]</div><div class="line">e = array(e)</div><div class="line">print(e.flatten())</div><div class="line"></div><div class="line"><span class="comment">#结果：[list([1, 2, 3, 4]) list(['a', 'b', 'c']) list(['h', 12, 'k'])]</span></div></pre></td></tr></table></figure>
+<h3 id="列表表达式"><a href="#列表表达式" class="headerlink" title="列表表达式"></a>列表表达式</h3><p>使用前得把多个数组放在一个数组中，应用在一个二维数组上。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>] </div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'k'</span>]</div><div class="line">e = [a,b,c]</div><div class="line">e = [y <span class="keyword">for</span> x <span class="keyword">in</span> e <span class="keyword">for</span> y <span class="keyword">in</span> x]</div><div class="line">print(e)</div><div class="line"></div><div class="line">结果：[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'h'</span>, <span class="number">12</span>, <span class="string">'k'</span>]</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Python中多个数组合并为一个数组的方法整理。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="码路刺客" scheme="https://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
+    
+    
+      <category term="原创" scheme="https://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+      <category term="Python" scheme="https://c-xuan.com/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
     <title>【Atom】autocomplete-python插件报乱码异常问题</title>
     <link href="https://c-xuan.com/2019/02/20/20190220002_atom_atuo_err/"/>
     <id>https://c-xuan.com/2019/02/20/20190220002_atom_atuo_err/</id>
@@ -109,41 +300,6 @@
       <category term="工具" scheme="https://c-xuan.com/tags/%E5%B7%A5%E5%85%B7/"/>
     
       <category term="atom" scheme="https://c-xuan.com/tags/atom/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python多个数组合并</title>
-    <link href="https://c-xuan.com/2019/02/20/20190220001_py_list_merge/"/>
-    <id>https://c-xuan.com/2019/02/20/20190220001_py_list_merge/</id>
-    <published>2019-02-20T05:40:29.000Z</published>
-    <updated>2019-02-20T05:40:29.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Python中多个数组合并为一个数组的方法整理。</p>
-<a id="more"></a>
-<h3 id="extend方法"><a href="#extend方法" class="headerlink" title="extend方法"></a>extend方法</h3><p>该方法可以扩展数组，会改变原始数组。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">7</span>,<span class="number">5</span>,<span class="number">6</span>]</div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'c'</span>]</div><div class="line">a.extend(b)</div><div class="line">a.extend(c)</div><div class="line">print(a)</div><div class="line"></div><div class="line"><span class="comment">#结果：[1, 2, 3, 4, 7, 5, 6, 'a', 'b', 'h', 12, 'c']</span></div></pre></td></tr></table></figure>
-<h3 id="直接相加"><a href="#直接相加" class="headerlink" title="直接相加"></a>直接相加</h3><p>用<code>+</code>将各数组连接起来。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">7</span>,<span class="number">5</span>,<span class="number">6</span>]</div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'c'</span>]</div><div class="line"></div><div class="line">d = a + b +c</div><div class="line">print(d)</div><div class="line"></div><div class="line"><span class="comment">#结果：[1, 2, 3, 4, 7, 5, 6, 'a', 'b', 'h', 12, 'c']</span></div></pre></td></tr></table></figure>
-<h3 id="flatten方法"><a href="#flatten方法" class="headerlink" title="flatten方法"></a>flatten方法</h3><p><code>flatten()</code>方法是numpy中array数组的方法，使用时要导入包和类型转换。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> array</div><div class="line"></div><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'k'</span>]</div><div class="line">e = [a,b,c]</div><div class="line">e = array(e)</div><div class="line">print(e.flatten())</div><div class="line"></div><div class="line"><span class="comment">#结果：['1' '2' '3' 'a' 'b' 'c' 'h' '12' 'k']</span></div></pre></td></tr></table></figure>
-<p>值得注意的是该方法不适用各数组中元素个数不同的情况。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]  <span class="comment">#元素个数不同</span></div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'k'</span>]</div><div class="line">e = [a,b,c]</div><div class="line">e = array(e)</div><div class="line">print(e.flatten())</div><div class="line"></div><div class="line"><span class="comment">#结果：[list([1, 2, 3, 4]) list(['a', 'b', 'c']) list(['h', 12, 'k'])]</span></div></pre></td></tr></table></figure>
-<h3 id="列表表达式"><a href="#列表表达式" class="headerlink" title="列表表达式"></a>列表表达式</h3><p>使用前得把多个数组放在一个数组中，应用在一个二维数组上。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>] </div><div class="line">b = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>]</div><div class="line">c = [<span class="string">'h'</span>,<span class="number">12</span>,<span class="string">'k'</span>]</div><div class="line">e = [a,b,c]</div><div class="line">e = [y <span class="keyword">for</span> x <span class="keyword">in</span> e <span class="keyword">for</span> y <span class="keyword">in</span> x]</div><div class="line">print(e)</div><div class="line"></div><div class="line">结果：[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'h'</span>, <span class="number">12</span>, <span class="string">'k'</span>]</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Python中多个数组合并为一个数组的方法整理。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="码路刺客" scheme="https://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
-    
-    
-      <category term="原创" scheme="https://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
-    
-      <category term="Python" scheme="https://c-xuan.com/tags/Python/"/>
     
   </entry>
   
@@ -1250,179 +1406,6 @@
       <category term="分布式" scheme="https://c-xuan.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
       <category term="Hbase" scheme="https://c-xuan.com/tags/Hbase/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CentOS上zookeeper集群模式安装配置</title>
-    <link href="https://c-xuan.com/2018/01/20/20180120001/"/>
-    <id>https://c-xuan.com/2018/01/20/20180120001/</id>
-    <published>2018-01-19T16:00:00.000Z</published>
-    <updated>2018-01-22T16:00:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>本篇介绍在四个节点的集群中搭建zookeeper环境，zookeeper可配置三种模式运行：单机模式，伪集群模式，集群模式，本文使用集群模式搭建。</p>
-<a id="more"></a>
-<h3 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h3><ul>
-<li>虚拟机：VMware Workstation 12 Player</li>
-<li>Linux版本：CentOS release 6.4 (Final)</li>
-<li>zookeeper版本：zookeeper-3.4.5-cdh5.7.6.tar.gz</li>
-<li>集群节点：<ul>
-<li>master:192.168.137.11 内存1G</li>
-<li>slave1:192.168.137.12 内存512M</li>
-<li>slave2:192.168.137.13 内存512M</li>
-<li>slave3:192.168.137.14 内存512M</li>
-</ul>
-</li>
-<li>前提：java已安装，已配置ssh免密登录，停掉防火墙等。</li>
-</ul>
-<h3 id="上传安装包"><a href="#上传安装包" class="headerlink" title="上传安装包"></a>上传安装包</h3><p>将下载的zookeeper-3.4.5-cdh5.7.6.tar.gz安装包上传到CentOS指定目录，例如<code>/opt</code>。<br>上传方法很多，这里在SecureCRT用rz命令。</p>
-<p>解压缩安装包：</p>
-<p><code>tar -zxf zookeeper-3.4.5-cdh5.7.6.tar.gz</code></p>
-<p>重命名文件夹：</p>
-<p><code>mv zookeeper-3.4.5-cdh5.7.6 zookeeper</code></p>
-<h3 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h3><p>配置文件在安装目录<code>conf</code>文件夹下的<code>zoo_sample.cfg</code>，需要先复制一个并且改文件名：</p>
-<figure class="highlight tap"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">[root@master conf]<span class="comment"># pwd</span></div><div class="line">/opt/zookeeper/conf</div><div class="line">[root@master conf]<span class="comment"># cp zoo_sample.cfg zoo.cfg</span></div><div class="line">[root@master conf]<span class="comment"># ll</span></div><div class="line">total 16</div><div class="line">-rw-rw-r--.<span class="number"> 1 </span>root root <span class="number"> 535 </span>Feb<span class="number"> 22 </span><span class="number"> 2017 </span>configuration.xsl</div><div class="line">-rw-rw-r--.<span class="number"> 1 </span>root root<span class="number"> 2693 </span>Feb<span class="number"> 22 </span><span class="number"> 2017 </span>log4j.properties</div><div class="line">-rw-r--r--.<span class="number"> 1 </span>root root <span class="number"> 808 </span>Jan<span class="number"> 23 </span>10:06 zoo.cfg</div><div class="line">-rw-rw-r--.<span class="number"> 1 </span>root root <span class="number"> 808 </span>Feb<span class="number"> 22 </span><span class="number"> 2017 </span>zoo_sample.cfg</div></pre></td></tr></table></figure>
-<p>修改zoo.cfg配置文件：</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">tickTime=2000</div><div class="line"><span class="comment"># The number of ticks that the initial</span></div><div class="line"><span class="comment"># synchronization phase can take</span></div><div class="line">initLimit=10</div><div class="line"><span class="comment"># The number of ticks that can pass between</span></div><div class="line"><span class="comment"># sending a request and getting an acknowledgement</span></div><div class="line">syncLimit=5</div><div class="line"><span class="comment"># the directory where the snapshot is stored.</span></div><div class="line"><span class="comment"># do not use /tmp for storage, /tmp here is just</span></div><div class="line"><span class="comment"># example sakes.</span></div><div class="line">dataDir=/opt/zookeeper/tmp</div><div class="line"><span class="comment"># the port at which the clients will connect</span></div><div class="line">clientPort=2181</div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># Be sure to read the maintenance section of the</span></div><div class="line"><span class="comment"># administrator guide before turning on autopurge.</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># http://zookeeper.apache.org/doc/current/zookeeperAdmin.html#sc_maintenance</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># The number of snapshots to retain in dataDir</span></div><div class="line"><span class="comment">#autopurge.snapRetainCount=3</span></div><div class="line"><span class="comment"># Purge task interval in hours</span></div><div class="line"><span class="comment"># Set to "0" to disable auto purge feature</span></div><div class="line"><span class="comment">#autopurge.purgeInterval=1</span></div><div class="line">dataLogDir=/opt/zookeeper/logs</div><div class="line">server.1=master:2888:3888</div><div class="line">server.2=slave1:2888:3888</div><div class="line">server.3=slave2:2888:3888</div><div class="line">server.4=slave3:2888:3888</div></pre></td></tr></table></figure>
-<p>参数说明：</p>
-<ul>
-<li>tickTime: zookeeper中使用的基本时间单位, 毫秒值.</li>
-<li>dataDir: 数据目录. 可以是任意目录.</li>
-<li>dataLogDir: log目录, 同样可以是任意目录. 如果没有设置该参数, 将使用和dataDir相同的设置.</li>
-<li>clientPort: 监听client连接的端口号.</li>
-<li>initLimit: zookeeper集群中的包含多台server, 其中一台为leader, 集群中其余的server为follower. initLimit参数配置初始化连接时, follower和leader之间的最长心跳时间. 此时该参数设置为5, 说明时间限制为5倍tickTime, 即5*2000=10000ms=10s.</li>
-<li>syncLimit: 该参数配置leader和follower之间发送消息, 请求和应答的最大时间长度. 此时该参数设置为2, 说明时间限制为2倍tickTime, 即4000ms.</li>
-<li>server.X=A:B:C 其中X是一个数字, 表示这是第几号server. A是该server所在的IP地址. B配置该server和集群中的leader交换消息所使用的端口. C配置选举leader时所使用的端口. </li>
-</ul>
-<p>由于我们修改了<code>dataDir</code>目录，在zookeeper目录中创建一个文件夹用于后面创建<code>myid</code>文件：</p>
-<p><code>mkdir /opt/zookeeper/tmp</code></p>
-<p><code>mkdir /opt/zookeeper/logs</code></p>
-<h3 id="复制安装包到其他节点"><a href="#复制安装包到其他节点" class="headerlink" title="复制安装包到其他节点"></a>复制安装包到其他节点</h3><p>将<code>zookeeper</code>文件夹复制到其他三个服务器上：</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">scp -r /opt/zookeeper/ root<span class="variable">@slave1</span><span class="symbol">:/opt</span></div><div class="line">scp -r /opt/zookeeper/ root<span class="variable">@slave2</span><span class="symbol">:/opt</span></div><div class="line">scp -r /opt/zookeeper/ root<span class="variable">@slave3</span><span class="symbol">:/opt</span></div></pre></td></tr></table></figure>
-<p>在master节点上用一下命令给每个节点上创建<code>myid</code>文件，文件中的id号与<code>zoo.cfg</code>配置文件中的对应：</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@<span class="keyword">master</span> <span class="title">zookeeper</span>]<span class="comment"># echo 1 &gt; /opt/zookeeper/tmp/myid</span></div><div class="line">[root@<span class="keyword">master</span> <span class="title">zookeeper</span>]<span class="comment"># ssh slave1 "echo 2 &gt; /opt/zookeeper/tmp/myid"</span></div><div class="line">[root@<span class="keyword">master</span> <span class="title">zookeeper</span>]<span class="comment"># ssh slave2 "echo 3 &gt; /opt/zookeeper/tmp/myid"</span></div><div class="line">[root@<span class="keyword">master</span> <span class="title">zookeeper</span>]<span class="comment"># ssh slave3 "echo 4 &gt; /opt/zookeeper/tmp/myid"</span></div></pre></td></tr></table></figure>
-<h3 id="运行启动"><a href="#运行启动" class="headerlink" title="运行启动"></a>运行启动</h3><p>由于没有配置环境变量，需要用全路径执行：</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@master zookeeper]# <span class="regexp">/opt/</span>zookeeper<span class="regexp">/bin/</span>zkServer.sh start</div><div class="line">JMX enabled by <span class="keyword">default</span></div><div class="line">Using config: <span class="regexp">/opt/</span>zookeeper<span class="regexp">/bin/</span>..<span class="regexp">/conf/</span>zoo.cfg</div><div class="line">Starting zookeeper ... STARTED</div></pre></td></tr></table></figure>
-<p>其实配置文件中修改<code>dataLogDir</code>的本意是想让启动日志输出到配置的文件夹里，但是好像并没有，日志文件<code>zookeeper.out</code>还是在zookeeper的安装目录下生成。</p>
-<p>查看<code>zookeeper.out</code>文件发现有错误：</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">2018-01-23</span> <span class="selector-tag">10</span><span class="selector-pseudo">:48</span><span class="selector-pseudo">:35</span>,<span class="selector-tag">470</span> <span class="selector-attr">[myid:]</span> <span class="selector-tag">-</span> <span class="selector-tag">INFO</span>  <span class="selector-attr">[main:QuorumPeerConfig@101]</span> <span class="selector-tag">-</span> <span class="selector-tag">Reading</span> <span class="selector-tag">configuration</span> <span class="selector-tag">from</span>: /<span class="selector-tag">opt</span>/<span class="selector-tag">zookeeper</span>/<span class="selector-tag">bin</span>/../<span class="selector-tag">conf</span>/<span class="selector-tag">zoo</span><span class="selector-class">.cfg</span></div><div class="line"><span class="selector-tag">2018-01-23</span> <span class="selector-tag">10</span><span class="selector-pseudo">:48</span><span class="selector-pseudo">:35</span>,<span class="selector-tag">484</span> <span class="selector-attr">[myid:]</span> <span class="selector-tag">-</span> <span class="selector-tag">WARN</span>  <span class="selector-attr">[main:QuorumPeerConfig@290]</span> <span class="selector-tag">-</span> <span class="selector-tag">Non-optimial</span> <span class="selector-tag">configuration</span>, <span class="selector-tag">consider</span> <span class="selector-tag">an</span> <span class="selector-tag">odd</span> <span class="selector-tag">number</span> <span class="selector-tag">of</span> <span class="selector-tag">servers</span>.</div><div class="line"><span class="selector-tag">2018-01-23</span> <span class="selector-tag">10</span><span class="selector-pseudo">:48</span><span class="selector-pseudo">:35</span>,<span class="selector-tag">484</span> <span class="selector-attr">[myid:]</span> <span class="selector-tag">-</span> <span class="selector-tag">INFO</span>  <span class="selector-attr">[main:QuorumPeerConfig@334]</span> <span class="selector-tag">-</span> <span class="selector-tag">Defaulting</span> <span class="selector-tag">to</span> <span class="selector-tag">majority</span> <span class="selector-tag">quorums</span></div><div class="line"><span class="selector-tag">2018-01-23</span> <span class="selector-tag">10</span><span class="selector-pseudo">:48</span><span class="selector-pseudo">:35</span>,<span class="selector-tag">512</span> <span class="selector-attr">[myid:4]</span> <span class="selector-tag">-</span> <span class="selector-tag">INFO</span>  <span class="selector-attr">[main:DatadirCleanupManager@78]</span> <span class="selector-tag">-</span> <span class="selector-tag">autopurge</span><span class="selector-class">.snapRetainCount</span> <span class="selector-tag">set</span> <span class="selector-tag">to</span> <span class="selector-tag">3</span></div><div class="line"><span class="selector-tag">2018-01-23</span> <span class="selector-tag">10</span><span class="selector-pseudo">:48</span><span class="selector-pseudo">:35</span>,<span class="selector-tag">513</span> <span class="selector-attr">[myid:4]</span> <span class="selector-tag">-</span> <span class="selector-tag">INFO</span>  <span class="selector-attr">[main:DatadirCleanupManager@79]</span> <span class="selector-tag">-</span> <span class="selector-tag">autopurge</span><span class="selector-class">.purgeInterval</span> <span class="selector-tag">set</span> <span class="selector-tag">to</span> <span class="selector-tag">0</span></div><div class="line"><span class="selector-tag">2018-01-23</span> <span class="selector-tag">10</span><span class="selector-pseudo">:48</span><span class="selector-pseudo">:35</span>,<span class="selector-tag">513</span> <span class="selector-attr">[myid:4]</span> <span class="selector-tag">-</span> <span class="selector-tag">INFO</span>  <span class="selector-attr">[main:DatadirCleanupManager@101]</span> <span class="selector-tag">-</span> <span class="selector-tag">Purge</span> <span class="selector-tag">task</span> <span class="selector-tag">is</span> <span class="selector-tag">not</span> <span class="selector-tag">scheduled</span>.</div><div class="line"><span class="selector-tag">2018-01-23</span> <span class="selector-tag">10</span><span class="selector-pseudo">:48</span><span class="selector-pseudo">:35</span>,<span class="selector-tag">536</span> <span class="selector-attr">[myid:4]</span> <span class="selector-tag">-</span> <span class="selector-tag">INFO</span>  <span class="selector-attr">[main:QuorumPeerMain@132]</span> <span class="selector-tag">-</span> <span class="selector-tag">Starting</span> <span class="selector-tag">quorum</span> <span class="selector-tag">peer</span></div><div class="line"><span class="selector-tag">2018-01-23</span> <span class="selector-tag">10</span><span class="selector-pseudo">:48</span><span class="selector-pseudo">:35</span>,<span class="selector-tag">587</span> <span class="selector-attr">[myid:4]</span> <span class="selector-tag">-</span> <span class="selector-tag">INFO</span>  <span class="selector-attr">[main:NIOServerCnxnFactory@94]</span> <span class="selector-tag">-</span> <span class="selector-tag">binding</span> <span class="selector-tag">to</span> <span class="selector-tag">port</span> <span class="selector-tag">0</span><span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.0</span>/<span class="selector-tag">0</span><span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-pseudo">:2181</span></div><div class="line"><span class="selector-tag">2018-01-23</span> <span class="selector-tag">10</span><span class="selector-pseudo">:48</span><span class="selector-pseudo">:35</span>,<span class="selector-tag">611</span> <span class="selector-attr">[myid:4]</span> <span class="selector-tag">-</span> <span class="selector-tag">INFO</span>  <span class="selector-attr">[main:QuorumPeer@913]</span> <span class="selector-tag">-</span> <span class="selector-tag">tickTime</span> <span class="selector-tag">set</span> <span class="selector-tag">to</span> <span class="selector-tag">2000</span></div><div class="line"><span class="selector-tag">2018-01-23</span> <span class="selector-tag">10</span><span class="selector-pseudo">:48</span><span class="selector-pseudo">:35</span>,<span class="selector-tag">612</span> <span class="selector-attr">[myid:4]</span> <span class="selector-tag">-</span> <span class="selector-tag">INFO</span>  <span class="selector-attr">[main:QuorumPeer@933]</span> <span class="selector-tag">-</span> <span class="selector-tag">minSessionTimeout</span> <span class="selector-tag">set</span> <span class="selector-tag">to</span> <span class="selector-tag">-1</span></div><div class="line"><span class="selector-tag">2018-01-23</span> <span class="selector-tag">10</span><span class="selector-pseudo">:48</span><span class="selector-pseudo">:35</span>,<span class="selector-tag">612</span> <span class="selector-attr">[myid:4]</span> <span class="selector-tag">-</span> <span class="selector-tag">INFO</span>  <span class="selector-attr">[main:QuorumPeer@944]</span> <span class="selector-tag">-</span> <span class="selector-tag">maxSessionTimeout</span> <span class="selector-tag">set</span> <span class="selector-tag">to</span> <span class="selector-tag">-1</span></div><div class="line"><span class="selector-tag">2018-01-23</span> <span class="selector-tag">10</span><span class="selector-pseudo">:48</span><span class="selector-pseudo">:35</span>,<span class="selector-tag">612</span> <span class="selector-attr">[myid:4]</span> <span class="selector-tag">-</span> <span class="selector-tag">INFO</span>  <span class="selector-attr">[main:QuorumPeer@959]</span> <span class="selector-tag">-</span> <span class="selector-tag">initLimit</span> <span class="selector-tag">set</span> <span class="selector-tag">to</span> <span class="selector-tag">10</span></div><div class="line"><span class="selector-tag">2018-01-23</span> <span class="selector-tag">10</span><span class="selector-pseudo">:48</span><span class="selector-pseudo">:35</span>,<span class="selector-tag">639</span> <span class="selector-attr">[myid:4]</span> <span class="selector-tag">-</span> <span class="selector-tag">INFO</span>  <span class="selector-attr">[main:QuorumPeer@429]</span> <span class="selector-tag">-</span> <span class="selector-tag">currentEpoch</span> <span class="selector-tag">not</span> <span class="selector-tag">found</span>! <span class="selector-tag">Creating</span> <span class="selector-tag">with</span> <span class="selector-tag">a</span> <span class="selector-tag">reasonable</span> <span class="selector-tag">default</span> <span class="selector-tag">of</span> <span class="selector-tag">0</span>. <span class="selector-tag">This</span> <span class="selector-tag">should</span> <span class="selector-tag">only</span> <span class="selector-tag">happen</span> <span class="keyword">when</span> you are upgrading your installation</div><div class="line"><span class="number">2018</span>-<span class="number">01</span>-<span class="number">23</span> <span class="number">10</span>:<span class="number">48</span>:<span class="number">35</span>,<span class="number">643</span> [<span class="attribute">myid</span>:<span class="number">4</span>] - INFO  [<span class="attribute">main</span>:QuorumPeer<span class="variable">@444</span>] - acceptedEpoch <span class="keyword">not</span> found! Creating with a reasonable default of <span class="number">0</span>. This should only happen <span class="keyword">when</span> you are upgrading your installation</div><div class="line"><span class="number">2018</span>-<span class="number">01</span>-<span class="number">23</span> <span class="number">10</span>:<span class="number">48</span>:<span class="number">35</span>,<span class="number">652</span> [<span class="attribute">myid</span>:<span class="number">4</span>] - INFO  [<span class="attribute">Thread-1</span>:QuorumCnxManager$Listener<span class="variable">@486</span>] - My election bind <span class="attribute">port</span>: <span class="number">0.0</span>.<span class="number">0.0</span>/<span class="number">0.0</span>.<span class="number">0.0</span>:<span class="number">3888</span></div><div class="line"><span class="number">2018</span>-<span class="number">01</span>-<span class="number">23</span> <span class="number">10</span>:<span class="number">48</span>:<span class="number">35</span>,<span class="number">674</span> [<span class="attribute">myid</span>:<span class="number">4</span>] - INFO  [QuorumPeer[myid=<span class="number">4</span>]/<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">2181</span>:QuorumPeer<span class="variable">@670</span>] - LOOKING</div><div class="line"><span class="number">2018</span>-<span class="number">01</span>-<span class="number">23</span> <span class="number">10</span>:<span class="number">48</span>:<span class="number">35</span>,<span class="number">679</span> [<span class="attribute">myid</span>:<span class="number">4</span>] - INFO  [QuorumPeer[myid=<span class="number">4</span>]/<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">2181</span>:FastLeaderElection<span class="variable">@740</span>] - New election. My id =  <span class="number">4</span>, proposed zxid=<span class="number">0</span>x0</div><div class="line"><span class="number">2018</span>-<span class="number">01</span>-<span class="number">23</span> <span class="number">10</span>:<span class="number">48</span>:<span class="number">35</span>,<span class="number">692</span> [<span class="attribute">myid</span>:<span class="number">4</span>] - INFO  [slave3/<span class="number">192.168</span>.<span class="number">137.14</span>:<span class="number">3888</span>:QuorumCnxManager$Listener<span class="variable">@493</span>] - Received connection request /<span class="number">192.168</span>.<span class="number">137.11</span>:<span class="number">34491</span></div><div class="line"><span class="number">2018</span>-<span class="number">01</span>-<span class="number">23</span> <span class="number">10</span>:<span class="number">48</span>:<span class="number">35</span>,<span class="number">704</span> [<span class="attribute">myid</span>:<span class="number">4</span>] - INFO  [WorkerReceiver[myid=<span class="number">4</span>]:FastLeaderElection<span class="variable">@542</span>] - <span class="attribute">Notification</span>: <span class="number">4</span> (n.leader), <span class="number">0</span>x0 (n.zxid), <span class="number">0</span>x1 (n.round), LOOKING (n.state), <span class="number">4</span> (n.sid), <span class="number">0</span>x0 (n.peerEPoch), LOOKING (my state)</div><div class="line"><span class="number">2018</span>-<span class="number">01</span>-<span class="number">23</span> <span class="number">10</span>:<span class="number">48</span>:<span class="number">35</span>,<span class="number">706</span> [<span class="attribute">myid</span>:<span class="number">4</span>] - WARN  [WorkerSender[myid=<span class="number">4</span>]:QuorumCnxManager<span class="variable">@368</span>] - Cannot open channel to <span class="number">2</span> at election address slave1/<span class="number">192.168</span>.<span class="number">137.12</span>:<span class="number">3888</span></div><div class="line">java.net.<span class="attribute">ConnectException</span>: Connection refused (Connection refused)</div><div class="line">	at java.net.PlainSocketImpl.socketConnect(Native Method)</div><div class="line">	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.<span class="attribute">java</span>:<span class="number">350</span>)</div><div class="line">	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.<span class="attribute">java</span>:<span class="number">206</span>)</div><div class="line">	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.<span class="attribute">java</span>:<span class="number">188</span>)</div><div class="line">	at java.net.SocksSocketImpl.connect(SocksSocketImpl.<span class="attribute">java</span>:<span class="number">392</span>)</div><div class="line">	at java.net.Socket.connect(Socket.<span class="attribute">java</span>:<span class="number">589</span>)</div><div class="line">	at org.apache.zookeeper.server.quorum.QuorumCnxManager.connectOne(QuorumCnxManager.<span class="attribute">java</span>:<span class="number">354</span>)</div><div class="line">	at org.apache.zookeeper.server.quorum.QuorumCnxManager.toSend(QuorumCnxManager.<span class="attribute">java</span>:<span class="number">327</span>)</div><div class="line">	at org.apache.zookeeper.server.quorum.FastLeaderElection$Messenger$WorkerSender.process(FastLeaderElection.<span class="attribute">java</span>:<span class="number">393</span>)</div><div class="line">	at org.apache.zookeeper.server.quorum.FastLeaderElection$Messenger$WorkerSender.run(FastLeaderElection.<span class="attribute">java</span>:<span class="number">365</span>)</div><div class="line">	at java.lang.Thread.run(Thread.<span class="attribute">java</span>:<span class="number">748</span>)</div></pre></td></tr></table></figure>
-<p>提示<code>Connection refused</code>的异常，其实一开始先不急着百度这个问题，其实要所有节点上都启动zookeeper后再看看运行状态，现在查看运行状态都是没运行的，也找不到相应的进程：</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[root@master zookeeper]# <span class="regexp">/opt/</span>zookeeper<span class="regexp">/bin/</span>zkServer.sh start</div><div class="line">JMX enabled by <span class="keyword">default</span></div><div class="line">Using config: <span class="regexp">/opt/</span>zookeeper<span class="regexp">/bin/</span>..<span class="regexp">/conf/</span>zoo.cfg</div><div class="line">Starting zookeeper ... STARTED</div><div class="line">[root@master zookeeper]# <span class="regexp">/opt/</span>zookeeper<span class="regexp">/bin/</span>zkServer.sh status</div><div class="line">JMX enabled by <span class="keyword">default</span></div><div class="line">Using config: <span class="regexp">/opt/</span>zookeeper<span class="regexp">/bin/</span>..<span class="regexp">/conf/</span>zoo.cfg</div><div class="line">Error contacting service. It is probably not running.</div></pre></td></tr></table></figure>
-<p>到其他节点服务器上都启动zookeeper，过一会儿后每个服务器查看状态：</p>
-<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[root@<span class="keyword">master</span> <span class="title">zookeeper</span>]<span class="comment"># /opt/zookeeper/bin/zkServer.sh status</span></div><div class="line">JMX enabled by default</div><div class="line">Using config: /opt/zookeeper/bin/../conf/zoo.cfg</div><div class="line">Mode: follower</div><div class="line">[root@<span class="keyword">master</span> <span class="title">zookeeper</span>]<span class="comment"># jps</span></div><div class="line"><span class="number">5488</span> QuorumPeerMain</div><div class="line"><span class="number">5539</span> Jps</div></pre></td></tr></table></figure>
-<p>如果有Mode和QuorumPeerMain，就说明已经启动成功了。</p>
-<p>如果要关闭zookeeper,需要在每个节点上执行：</p>
-<p><code>/opt/zookeeper/bin/zkServer.sh stop</code></p>
-<p>另外如果使用如下命令启动，就会在启动时输出日志信息：</p>
-<p><code>/opt/zookeeper/bin/zkServer.sh start-foreground</code></p>
-<h3 id="批量启动和关闭"><a href="#批量启动和关闭" class="headerlink" title="批量启动和关闭"></a>批量启动和关闭</h3><p>一台一台服务器去执行命令有点麻烦，写一个脚本批量执行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"></div><div class="line"><span class="comment">#下面变量修改zookeeper安装目录</span></div><div class="line">zooHome=/opt/zookeeper</div><div class="line"><span class="keyword">if</span>  [ <span class="variable">$1</span> != <span class="string">""</span>  ]</div><div class="line">	<span class="keyword">then</span></div><div class="line">        confFile=<span class="variable">$zooHome</span>/conf/zoo.cfg</div><div class="line">        slaves=$(cat <span class="string">"<span class="variable">$confFile</span>"</span> | sed <span class="string">'/^server/!d;s/^.*=//;s/:.*$//g;/^$/d'</span>)</div><div class="line">        <span class="keyword">for</span> salve <span class="keyword">in</span> <span class="variable">$slaves</span> ; <span class="keyword">do</span></div><div class="line">            ssh <span class="variable">$salve</span> <span class="string">"<span class="variable">$zooHome</span>/bin/zkServer.sh <span class="variable">$1</span>"</span></div><div class="line">        <span class="keyword">done</span></div><div class="line">	<span class="keyword">else</span></div><div class="line">		<span class="built_in">echo</span> <span class="string">"parameter empty! parameter:start|stop"</span></div><div class="line"><span class="keyword">fi</span></div></pre></td></tr></table></figure>
-<p>将上面脚本保存为<code>zooManager</code>文件，调用执行：</p>
-<p><code>sh zooManager start</code></p>
-<p><code>sh zooManager stop</code></p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">[root@master opt]# sh zooManager start</div><div class="line">JMX enabled by <span class="keyword">default</span></div><div class="line">Using config: <span class="regexp">/opt/</span>zookeeper<span class="regexp">/bin/</span>..<span class="regexp">/conf/</span>zoo.cfg</div><div class="line">Starting zookeeper ... STARTED</div><div class="line">JMX enabled by <span class="keyword">default</span></div><div class="line">Using config: <span class="regexp">/opt/</span>zookeeper<span class="regexp">/bin/</span>..<span class="regexp">/conf/</span>zoo.cfg</div><div class="line">Starting zookeeper ... STARTED</div><div class="line">JMX enabled by <span class="keyword">default</span></div><div class="line">Using config: <span class="regexp">/opt/</span>zookeeper<span class="regexp">/bin/</span>..<span class="regexp">/conf/</span>zoo.cfg</div><div class="line">Starting zookeeper ... STARTED</div><div class="line">JMX enabled by <span class="keyword">default</span></div><div class="line">Using config: <span class="regexp">/opt/</span>zookeeper<span class="regexp">/bin/</span>..<span class="regexp">/conf/</span>zoo.cfg</div><div class="line">Starting zookeeper ... STARTED</div></pre></td></tr></table></figure>
-<p>由于所有服务器节点都是使用root用户，所以没有考虑权限问题，实际情况要考虑的。</p>
-<p>参考：<a href="http://coolxing.iteye.com/blog/1871009" target="_blank" rel="external">http://coolxing.iteye.com/blog/1871009</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;本篇介绍在四个节点的集群中搭建zookeeper环境，zookeeper可配置三种模式运行：单机模式，伪集群模式，集群模式，本文使用集群模式搭建。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="码路刺客" scheme="https://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
-    
-    
-      <category term="原创" scheme="https://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
-    
-      <category term="zookeeper" scheme="https://c-xuan.com/tags/zookeeper/"/>
-    
-      <category term="分布式" scheme="https://c-xuan.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Markdown使用table标签创建表格的问题</title>
-    <link href="https://c-xuan.com/2017/12/10/20171210001/"/>
-    <id>https://c-xuan.com/2017/12/10/20171210001/</id>
-    <published>2017-12-09T16:00:00.000Z</published>
-    <updated>2017-12-09T16:00:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>使用Markdown写东西有时需要插入表格，方式有两种：</p>
-<ul>
-<li>1.使用Markdown的表格语法</li>
-<li>2.使用html的<code>&lt;table&gt;</code>标签来创建表格</li>
-</ul>
-<p>但是某些Markdown编辑器中使用<code>&lt;table&gt;</code>标签会出现表格前有空行的情况。</p>
-<a id="more"></a>
-<h3 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h3><p>先看使用Markdown语法创建表格：<br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="params">| Tables   |</span>      Are      <span class="params">|  Cool |</span></div><div class="line"><span class="params">|----------|</span><span class="symbol">:-------------</span><span class="symbol">:|------</span><span class="symbol">:|</span></div><div class="line"><span class="params">| col 1 is |</span>  left-aligned <span class="params">| $1600 |</span></div><div class="line"><span class="params">| col 2 is |</span>    centered   <span class="params">|   $12 |</span></div><div class="line"><span class="params">| col 3 is |</span> right-aligned <span class="params">|    $1 |</span></div></pre></td></tr></table></figure></p>
-<p>效果如下（分割线中间的表格）</p>
-<hr>
-<table>
-<thead>
-<tr>
-<th>Tables</th>
-<th style="text-align:center">Are</th>
-<th style="text-align:right">Cool</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>col 1 is</td>
-<td style="text-align:center">left-aligned</td>
-<td style="text-align:right">$1600</td>
-</tr>
-<tr>
-<td>col 2 is</td>
-<td style="text-align:center">centered</td>
-<td style="text-align:right">$12</td>
-</tr>
-<tr>
-<td>col 3 is</td>
-<td style="text-align:center">right-aligned</td>
-<td style="text-align:right">$1</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<p>同样的表格使用<code>&lt;table&gt;</code>标签创建：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">table</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">th</span>&gt;</span>Tables<span class="tag">&lt;/<span class="name">th</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">th</span>&gt;</span>Are<span class="tag">&lt;/<span class="name">th</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">th</span>&gt;</span>Cool<span class="tag">&lt;/<span class="name">th</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>col 1 is<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>left-aligned<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>$1600<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>col 2 is<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>centered<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>$12<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>col 3 is<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>right-aligned<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span>$1<span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></div></pre></td></tr></table></figure></p>
-<p>效果如下：（分割线中间的表格）</p>
-<hr>
-<p><table><br>  <tr><br>    <th>Tables</th><br>    <th>Are</th><br>    <th>Cool</th><br>  </tr><br>  <tr><br>    <td>col 1 is</td><br>    <td>left-aligned</td><br>    <td>$1600</td><br>  </tr><br>  <tr><br>    <td>col 2 is</td><br>    <td>centered</td><br>    <td>$12</td><br>  </tr><br>  <tr><br>    <td>col 3 is</td><br>    <td>right-aligned</td><br>    <td>$1</td><br>  </tr><br></table></p>
-<hr>
-<p>会发现表格前多了很多<code>&lt;/br&gt;</code>换行。</p>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>解决办法是将代码改为紧凑模式，修改代码如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;table&gt;<span class="xml"><span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">th</span>&gt;</span>Tables<span class="tag">&lt;/<span class="name">th</span>&gt;</span><span class="tag">&lt;<span class="name">th</span>&gt;</span>Are<span class="tag">&lt;/<span class="name">th</span>&gt;</span><span class="tag">&lt;<span class="name">th</span>&gt;</span>Cool<span class="tag">&lt;/<span class="name">th</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><span class="xml"><span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>col 1 is<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>left-aligned<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>$1600<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><span class="xml"><span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>col 2 is<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>centered<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>$12<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><span class="xml"><span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>col 3 is<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>right-aligned<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>$1<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span></div></pre></td></tr></table></figure></p>
-<p>效果如下：（分割线中间的表格）</p>
-<hr>
-<p><table><tr><th>Tables</th><th>Are</th><th>Cool</th></tr><tr><td>col 1 is</td><td>left-aligned</td><td>$1600</td></tr><tr><td>col 2 is</td><td>centered</td><td>$12</td></tr><tr><td>col 3 is</td><td>right-aligned</td><td>$1</td></tr></table></p>
-<hr>
-<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ul>
-<li>1由于使用Haroopad编辑器写东西再用Hexo发布到Github上，所以会有这种情况出现。如果是其他编辑器，比如简书，这个不会有，因为简书压根儿不支持<code>&lt;table&gt;</code>标签的表格，CSDN上是支持的，不会出现以上问题。</li>
-<li>2.使用哪种方式创建表格根据自己的需要而定，Markdown语法简单，但是缺点是不支持列宽度定义，表格样式定义，单元格合并等。<code>&lt;table&gt;</code>标签相比较而言灵活很多。</li>
-<li>3.很多时候直接写表格代码是很累的，比较好的方案是在Excel中编辑，再生成代码，网上搜索相应工具也有很多，比如<a href="http://www.tablesgenerator.com/" target="_blank" rel="external">Tables Generator</a>。</li>
-<li>4.笔者使用Excel自行写了个生成<code>&lt;table&gt;</code>代码的工具生成压缩的表格代码，在EXCEL中编辑好表格，生成的表格代码列宽会根据Excel中的表格列宽转成百分比，编辑后点击<code>生成表格代码</code>即在Excel文件的同一目录中出现<code>Output.txt</code>文件，将代码复制到Markdown中即可。</li>
-</ul>
-<p><a href="/download/table2code.xlsm">代码生成工具下载</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;使用Markdown写东西有时需要插入表格，方式有两种：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;1.使用Markdown的表格语法&lt;/li&gt;
-&lt;li&gt;2.使用html的&lt;code&gt;&amp;lt;table&amp;gt;&lt;/code&gt;标签来创建表格&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;但是某些Markdown编辑器中使用&lt;code&gt;&amp;lt;table&amp;gt;&lt;/code&gt;标签会出现表格前有空行的情况。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="码路刺客" scheme="https://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
-    
-    
-      <category term="原创" scheme="https://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
-    
-      <category term="Markdown" scheme="https://c-xuan.com/tags/Markdown/"/>
     
   </entry>
   

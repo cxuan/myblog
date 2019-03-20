@@ -40,9 +40,10 @@
     <entry>
       <title><![CDATA[CSS视差效果设计]]></title>
       <url>/2019/03/05/20190305001_css_parallax_effects/</url>
-      <content type="html"><![CDATA[<center><img src="/img/posts/20190305001-01.gif" alt="parallax effects"></center>
-
+      <content type="html"><![CDATA[<p>codepen上不错的视差效果设计。</p>
 <a id="more"></a>
+<center><img src="/img/posts/20190305001-01.gif" alt="parallax effects"></center>
+
 <ul>
 <li>作者：oscicen</li>
 <li>使用技术：HTML / CSS / JavaScript</li>
@@ -247,9 +248,10 @@
       <title><![CDATA[【Atom】autocomplete-python插件报乱码异常问题]]></title>
       <url>/2019/02/20/20190220002_atom_atuo_err/</url>
       <content type="html"><![CDATA[<p><a href="https://atom.io/packages/autocomplete-python" target="_blank" rel="external">autocomplete-python</a>插件可以帮助在写python代码时给出丰富的提示并且自动补全代码，换电脑重装该插件后发现按下键盘后，atom右上角总弹出<code>autocomplete-python traceback output:</code>的提示，提示信息还是乱码。</p>
+<a id="more"></a>
 <center><img src="/img/posts/20190220002-01.png" alt="pyvenv"></center>
 
-<a id="more"></a>
+
 <p>解决方式是设置<code>Python Executable Paths</code></p>
 <p>进入Atom设置<code>Packages</code>,找到该插件，进入<code>Settings</code></p>
 <center><img src="/img/posts/20190220002-02.png" alt="pyvenv"></center>
@@ -341,9 +343,10 @@
     <entry>
       <title><![CDATA[【Web前端】11个使用CSS制作产品展示卡片样例]]></title>
       <url>/2019/02/14/20190214001_product_card/</url>
-      <content type="html"><![CDATA[<center><img src="/img/posts/20190214001-01.png" alt="product card"></center>
-
+      <content type="html"><![CDATA[<p>　　</p>
 <a id="more"></a>
+<center><img src="/img/posts/20190214001-01.png" alt="product card"></center>
+
 <ul>
 <li>作者：John Mantas</li>
 <li>使用技术：HTML / CSS (SCSS)</li>
@@ -478,9 +481,10 @@
     <entry>
       <title><![CDATA[CSS制作水滴效果]]></title>
       <url>/2019/02/07/20190207001_css_water_effects/</url>
-      <content type="html"><![CDATA[<center><img src="/img/posts/20190207001-01.gif" alt="css fire"></center>
+      <content type="html"><![CDATA[<p>　　<br><a id="more"></a></p>
+<center><img src="/img/posts/20190207001-01.gif" alt="css fire"></center>
 
-<a id="more"></a>
+
 <ul>
 <li>作者：Nicholas Gratton</li>
 <li>使用技术：HTML / CSS</li>
@@ -603,9 +607,9 @@
       <title><![CDATA[SQL如何实现查找节点依赖]]></title>
       <url>/2019/01/04/20190104001_graph_sql/</url>
       <content type="html"><![CDATA[<p>SQL如何运用递归查找有向无环图的节点依赖呢？</p>
+<a id="more"></a>
 <center><img src="/img/posts/20190104001-01.png" alt="有向无环图"></center>
 
-<a id="more"></a>
 <h3 id="问题是这样的"><a href="#问题是这样的" class="headerlink" title="问题是这样的"></a>问题是这样的</h3><p>例如我有以上的两个图，节点<code>b</code>的前置节点是<code>a</code>,节点<code>c</code>的前置节点是<code>b</code>和<code>d</code>，以此类推。给出一个节点，需要找出以此节点为前置节点的所有链条节点。比如给出<code>a</code>，那出来的结果就是<code>a,b,c,d,e</code>,给出<code>f</code>,那出来的结果就是<code>f,g,h,i,j,k</code>。</p>
 <h3 id="数据准备"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备</h3><p>创建表以及插入数据，多个前置节点用<code>,</code>隔开，注意，使用的是PostgreSQL数据库。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="comment">-- Table structure for mytest</span></div><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> <span class="string">"public"</span>.<span class="string">"mytest"</span>;</div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">"public"</span>.<span class="string">"mytest"</span> (</div><div class="line"><span class="string">"node"</span> <span class="built_in">varchar</span>(<span class="number">256</span>) <span class="keyword">COLLATE</span> <span class="string">"default"</span>,</div><div class="line"><span class="string">"pre_nodes"</span> <span class="built_in">varchar</span>(<span class="number">10240</span>) <span class="keyword">COLLATE</span> <span class="string">"default"</span></div><div class="line">);</div><div class="line"></div><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="comment">-- Records of mytest</span></div><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"public"</span>.<span class="string">"mytest"</span> <span class="keyword">VALUES</span> (<span class="string">'a'</span>, <span class="literal">null</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"public"</span>.<span class="string">"mytest"</span> <span class="keyword">VALUES</span> (<span class="string">'b'</span>, <span class="string">'a'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"public"</span>.<span class="string">"mytest"</span> <span class="keyword">VALUES</span> (<span class="string">'c'</span>, <span class="string">'b,d'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"public"</span>.<span class="string">"mytest"</span> <span class="keyword">VALUES</span> (<span class="string">'d'</span>, <span class="string">'b'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"public"</span>.<span class="string">"mytest"</span> <span class="keyword">VALUES</span> (<span class="string">'e'</span>, <span class="string">'c'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"public"</span>.<span class="string">"mytest"</span> <span class="keyword">VALUES</span> (<span class="string">'f'</span>, <span class="literal">null</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"public"</span>.<span class="string">"mytest"</span> <span class="keyword">VALUES</span> (<span class="string">'g'</span>, <span class="string">'f'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"public"</span>.<span class="string">"mytest"</span> <span class="keyword">VALUES</span> (<span class="string">'h'</span>, <span class="string">'g'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"public"</span>.<span class="string">"mytest"</span> <span class="keyword">VALUES</span> (<span class="string">'i'</span>, <span class="string">'g'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"public"</span>.<span class="string">"mytest"</span> <span class="keyword">VALUES</span> (<span class="string">'j'</span>, <span class="string">'g'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"public"</span>.<span class="string">"mytest"</span> <span class="keyword">VALUES</span> (<span class="string">'k'</span>, <span class="string">'h,i,j'</span>);</div></pre></td></tr></table></figure>
@@ -718,9 +722,9 @@
     <entry>
       <title><![CDATA[Html中使用CSS制作火焰燃烧动画]]></title>
       <url>/2018/11/24/20181124001_css_fire/</url>
-      <content type="html"><![CDATA[<center><img src="/img/posts/20181124001-01.gif" alt="css fire"></center>
+      <content type="html"><![CDATA[<p>　　<br><a id="more"></a></p>
+<center><img src="/img/posts/20181124001-01.gif" alt="css fire"></center>
 
-<a id="more"></a>
 <ul>
 <li>作者：Chalda Pnuzig</li>
 <li>使用技术：HTML (Pug) / CSS (SCSS)</li>
@@ -976,9 +980,9 @@
     <entry>
       <title><![CDATA[有趣的404页面设计]]></title>
       <url>/2018/11/14/20181114001_404_pages/</url>
-      <content type="html"><![CDATA[<center><img src="/img/posts/20181114001-01.gif" alt="404page"></center>
+      <content type="html"><![CDATA[<p>　　<br><a id="more"></a></p>
+<center><img src="/img/posts/20181114001-01.gif" alt="404page"></center>
 
-<a id="more"></a>
 <ul>
 <li>作者：Andrew Hani</li>
 <li>使用技术：HTML / CSS / JavaScript</li>

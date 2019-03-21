@@ -35,7 +35,7 @@
 没有读研
 伪程序员一枚，曾梦想倚仗PHP走天涯，后来做了BI,数据仓库相关的工作
 写过VBA,JScript,Java,JS">
-<meta property="og:updated_time" content="2019-01-08T15:15:45.000Z">
+<meta property="og:updated_time" content="2019-03-21T16:04:08.478Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="About Me">
 <meta name="twitter:description" content="关于我
@@ -81,6 +81,8 @@
 
 <script src="/js/others/jquery.min.js"></script>
 <script src="/js/others/clipboard.min.js"></script>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/love.js"></script>
 
 <script>
     var yiliaConfig = {
@@ -238,6 +240,8 @@
                         
                             <li><a href="/tags/" data-hover="标签云">标签云</a></li>
                         
+                            <li><a href="/whis/" data-hover="折腾史">折腾史</a></li>
+                        
                             <li><a href="/about/" data-hover="关于我">关于我</a></li>
                         
                         </ul>
@@ -361,6 +365,8 @@
                 
                     <li><a href="/tags/">标签云</a></li>
                 
+                    <li><a href="/whis/">折腾史</a></li>
+                
                     <li><a href="/about/">关于我</a></li>
                 
                 <div class="clearfix"></div>
@@ -426,6 +432,7 @@
         
 
         
+          <div style="font-size:0.9rem;color:#696969;line-height: 2.0;">　　<i class="fa fa-pencil-square-o" aria-hidden="true"></i> 本文字数<span class="post-count">446</span> | <i class="fa fa-clock-o" aria-hidden="true"></i> 阅读时长约<span class="post-count">2</span>分钟</div>
         <div class="clearfix"></div>
       </div>
       
@@ -464,13 +471,13 @@
 <li>伪程序员一枚，曾梦想倚仗PHP走天涯，后来做了BI,数据仓库相关的工作</li>
 <li>写过VBA,JScript,Java,JS,CSS,Python等，工作也没有固定一直用哪种语言</li>
 <li>现就职于某证券软件公司，致力于Hadoop生态圈的行业数据仓库、大数据分析平台的构建</li>
-<li>不追星，酷狗听歌时长9116+分钟，最近听得挺频的一首歌：Let Her Go-Passenger</li>
-<li>喝酸奶不舔盖，粘多少都不掀开</li>
+<li>不追星，酷狗听歌时长9810+分钟，最近听得挺频的一首歌：Let Her Go-Passenger</li>
+<li>喝酸奶不爱舔盖，粘多少都不掀开</li>
 <li>脾气不暴躁，除非你削我，要不不跟你吵吵(<em>^▽^</em>)</li>
 </ul>
 <h4 id="关于博客"><a href="#关于博客" class="headerlink" title="关于博客"></a>关于博客</h4><p>折腾博客始于2015年，买了一年云服务器，部署WordPress，一年下来也没写几篇。后改用<a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>生成静态博客托管于<a href="https://pages.github.com/" target="_blank" rel="external">GitHub</a>，于2016-08-20首次提交。<br>不管使用何种方式，回归博客的本身:分享，总结，坚持，记录自己的成长。</p>
 <h4 id="关于友链"><a href="#关于友链" class="headerlink" title="关于友链"></a>关于友链</h4><p>博客本身也没什么访问量，也不追求这个，看到好多博主都设置了友链，如有需要可以相互添加。由于主题的关系，友链不太明显，在左侧菜单<code>首页</code>上方的小房子里。</p>
-<h4 id="关于未来"><a href="#关于未来" class="headerlink" title="关于未来"></a>关于未来</h4><p>愿你三冬暖，愿你春不寒，愿你天黑有灯，下雨有伞，愿你一路上，有良人相伴</p>
+<h4 id="关于未来"><a href="#关于未来" class="headerlink" title="关于未来"></a>关于未来</h4><p>愿你三冬暖，愿你春不寒，愿你天黑有灯，下雨有伞，愿你一路上，有良人相伴。</p>
 
       
     </div>
@@ -596,7 +603,8 @@
     <div class="outer">
         <div id="footer-info">
             <div class="footer-left">
-                Posts count:82
+                <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+                <!-- Posts count:82 -->
             </div>
 			<!--
             <div class="footer-left">
@@ -629,6 +637,22 @@
         
     </div>
 </footer>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("2016-08-20 04:18:00");//在此处修改你的建站时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "运行"+dnum+"天";
+        document.getElementById("times").innerHTML = hnum + "时" + mnum + "分" + snum + "秒";
+    }
+    setInterval("createtime()",250);
+</script>
     </div>
     
 <script data-main="/js/main.js" src="/js/others/require.min.js"></script>
@@ -717,5 +741,5 @@ MathJax.Hub.Queue(function() {
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 </script>
   </div>
-</body>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/izumi.model.json"},"display":{"superSample":1,"width":150,"height":300,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
 </html>

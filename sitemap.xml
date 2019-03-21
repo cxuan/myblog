@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://c-xuan.com/whis/index.html</loc>
+    
+    <lastmod>2019-03-21T17:07:50.152Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://c-xuan.com/about/index.html</loc>
+    
+    <lastmod>2019-03-21T16:04:08.478Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://c-xuan.com/2019/01/04/20190104001_graph_sql/</loc>
     
     <lastmod>2019-03-20T15:51:45.798Z</lastmod>
@@ -82,13 +96,6 @@
     <loc>https://c-xuan.com/2019/01/15/20190115001_python_db_select_to_df/</loc>
     
     <lastmod>2019-01-15T13:59:34.439Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://c-xuan.com/about/index.html</loc>
-    
-    <lastmod>2019-01-08T15:15:45.000Z</lastmod>
     
   </url>
   

@@ -145,11 +145,11 @@
             
             <tag> 原创 </tag>
             
+            <tag> 前端 </tag>
+            
             <tag> CSS </tag>
             
             <tag> JavaScript </tag>
-            
-            <tag> 前端 </tag>
             
         </tags>
         
@@ -468,11 +468,11 @@
             
             <tag> 原创 </tag>
             
+            <tag> 前端 </tag>
+            
             <tag> CSS </tag>
             
             <tag> JavaScript </tag>
-            
-            <tag> 前端 </tag>
             
         </tags>
         
@@ -559,11 +559,11 @@
             
             <tag> 原创 </tag>
             
+            <tag> 前端 </tag>
+            
             <tag> CSS </tag>
             
             <tag> JavaScript </tag>
-            
-            <tag> 前端 </tag>
             
         </tags>
         
@@ -817,11 +817,11 @@
             
             <tag> 原创 </tag>
             
+            <tag> 前端 </tag>
+            
             <tag> CSS </tag>
             
             <tag> JavaScript </tag>
-            
-            <tag> 前端 </tag>
             
         </tags>
         
@@ -967,11 +967,11 @@
             
             <tag> 原创 </tag>
             
+            <tag> 前端 </tag>
+            
             <tag> CSS </tag>
             
             <tag> JavaScript </tag>
-            
-            <tag> 前端 </tag>
             
         </tags>
         
@@ -1075,11 +1075,11 @@
             
             <tag> 原创 </tag>
             
+            <tag> 前端 </tag>
+            
             <tag> CSS </tag>
             
             <tag> JavaScript </tag>
-            
-            <tag> 前端 </tag>
             
         </tags>
         
@@ -1177,9 +1177,9 @@
             
             <tag> 原创 </tag>
             
-            <tag> 数据仓库 </tag>
-            
             <tag> Hive </tag>
+            
+            <tag> 数据仓库 </tag>
             
         </tags>
         
@@ -2022,9 +2022,9 @@
         
         <tags>
             
-            <tag> 数据库 </tag>
-            
             <tag> 转载 </tag>
+            
+            <tag> 数据库 </tag>
             
         </tags>
         
@@ -2092,9 +2092,9 @@
         
         <tags>
             
-            <tag> 数据库 </tag>
-            
             <tag> 转载 </tag>
+            
+            <tag> 数据库 </tag>
             
         </tags>
         
@@ -2144,9 +2144,9 @@
         
         <tags>
             
-            <tag> 数据库 </tag>
-            
             <tag> 转载 </tag>
+            
+            <tag> 数据库 </tag>
             
         </tags>
         
@@ -2187,9 +2187,9 @@
         
         <tags>
             
-            <tag> 数据库 </tag>
-            
             <tag> 转载 </tag>
+            
+            <tag> 数据库 </tag>
             
         </tags>
         
@@ -2231,9 +2231,9 @@
         
         <tags>
             
-            <tag> 数据库 </tag>
-            
             <tag> 转载 </tag>
+            
+            <tag> 数据库 </tag>
             
         </tags>
         
@@ -2374,9 +2374,9 @@
         
         <tags>
             
-            <tag> 数据库 </tag>
-            
             <tag> 转载 </tag>
+            
+            <tag> 数据库 </tag>
             
             <tag> SQL Server </tag>
             
@@ -3919,45 +3919,6 @@
     </entry>
     
     <entry>
-      <title><![CDATA[【T-SQL】group by 和grouping sets]]></title>
-      <url>/2016/06/13/SQL-GroupByAndGroupingSets/</url>
-      <content type="html"><![CDATA[<p>遇到一个情况，需要在内网系统中出一个统计报表。需要根据不同条件使用多个group by语句，需要将所有聚合的数据进行union操作来完成不同维度的统计查看。<br>知道发现了在SQL  Server 2008之后引入了grouping sets这个对于group by的增强后，上面的需求实现起来就简单的多，下面我们用AdventureWork中的表作为demo来解释一下grouping sets.</p>
-<a id="more"></a>
-<p>假设我现在需要两个维度查询我的销售额度，查询T-SQL如下：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-1.png" alt="SQL-GroupByAndGroupingSets-1"></p>
-<p>而使用SQL Server 2008之后新增的grouping sets语句，仅仅需要这样写：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-3.png" alt="SQL-GroupByAndGroupingSets-3"></p>
-<p>值得注意的是，虽然上面使用grouping sets语句和多个group by语句差生的结果完全一样，但顺序完全不同。</p>
-<p>grouping  sets，仅仅是语法糖？</p>
-<p>从上面的结果来看，使用grouping  sets仅仅是一个可以少写代码的语法糖，但实际情况是，group sets在遇到多个条件时，聚合是一次性从数据库中取出所有需要的操作的数据，在内存中对数据库进行聚合操作并生成结果。而union all是多次扫描表，将返回的结果进行union操作。这也就是为什么grouping  sets和union操作所返回的数据顺序是不同的原因。</p>
-<p>下面通过查看上面两个语句的IO和CPU来进行对比：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-5.png" alt="SQL-GroupByAndGroupingSets-5"></p>
-<p>通过上面的图来看grouping sets不仅仅只是语法糖，而是从执行原理做出了改变</p>
-<p>对于grouping sets来说，还经常和grouping函数联合使用，这个函数是反应目标列是否聚合，如果聚合则返回1，否则返回0，如下：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-6.png" alt="SQL-GroupByAndGroupingSets-6"></p>
-<p>转自：<a href="http://www.cnblogs.com/CareySon/archive/2011/12/19/2293245.html" target="_blank" rel="external">http://www.cnblogs.com/CareySon/archive/2011/12/19/2293245.html</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> 码路刺客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 数据库 </tag>
-            
-            <tag> 转载 </tag>
-            
-            <tag> SQL Server </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[【SSIS】几个通用属性]]></title>
       <url>/2016/06/13/SSIS-GeneralAttribures/</url>
       <content type="html"><![CDATA[<p>记录几个简单常用SSIS包常用属性，都是通用属性：</p>
@@ -3993,6 +3954,86 @@
             <tag> BI </tag>
             
             <tag> SSIS </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[【T-SQL】group by 和grouping sets]]></title>
+      <url>/2016/06/13/SQL-GroupByAndGroupingSets/</url>
+      <content type="html"><![CDATA[<p>遇到一个情况，需要在内网系统中出一个统计报表。需要根据不同条件使用多个group by语句，需要将所有聚合的数据进行union操作来完成不同维度的统计查看。<br>知道发现了在SQL  Server 2008之后引入了grouping sets这个对于group by的增强后，上面的需求实现起来就简单的多，下面我们用AdventureWork中的表作为demo来解释一下grouping sets.</p>
+<a id="more"></a>
+<p>假设我现在需要两个维度查询我的销售额度，查询T-SQL如下：</p>
+<p><img src="/img/posts/SQL-GroupByAndGroupingSets-1.png" alt="SQL-GroupByAndGroupingSets-1"></p>
+<p>而使用SQL Server 2008之后新增的grouping sets语句，仅仅需要这样写：</p>
+<p><img src="/img/posts/SQL-GroupByAndGroupingSets-3.png" alt="SQL-GroupByAndGroupingSets-3"></p>
+<p>值得注意的是，虽然上面使用grouping sets语句和多个group by语句差生的结果完全一样，但顺序完全不同。</p>
+<p>grouping  sets，仅仅是语法糖？</p>
+<p>从上面的结果来看，使用grouping  sets仅仅是一个可以少写代码的语法糖，但实际情况是，group sets在遇到多个条件时，聚合是一次性从数据库中取出所有需要的操作的数据，在内存中对数据库进行聚合操作并生成结果。而union all是多次扫描表，将返回的结果进行union操作。这也就是为什么grouping  sets和union操作所返回的数据顺序是不同的原因。</p>
+<p>下面通过查看上面两个语句的IO和CPU来进行对比：</p>
+<p><img src="/img/posts/SQL-GroupByAndGroupingSets-5.png" alt="SQL-GroupByAndGroupingSets-5"></p>
+<p>通过上面的图来看grouping sets不仅仅只是语法糖，而是从执行原理做出了改变</p>
+<p>对于grouping sets来说，还经常和grouping函数联合使用，这个函数是反应目标列是否聚合，如果聚合则返回1，否则返回0，如下：</p>
+<p><img src="/img/posts/SQL-GroupByAndGroupingSets-6.png" alt="SQL-GroupByAndGroupingSets-6"></p>
+<p>转自：<a href="http://www.cnblogs.com/CareySon/archive/2011/12/19/2293245.html" target="_blank" rel="external">http://www.cnblogs.com/CareySon/archive/2011/12/19/2293245.html</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> 码路刺客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 转载 </tag>
+            
+            <tag> 数据库 </tag>
+            
+            <tag> SQL Server </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[放开那程序猿！构建业务导向的大数据云平台]]></title>
+      <url>/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/</url>
+      <content type="html"><![CDATA[<p>按数据处理方式及使用目标，企业级IT系统可分为OLTP和OLAP系统。简而言之，OLTP系统生产数据，OLAP系统加工数据。从数据到智慧的转换金字塔上看，OLTP系统实现了底层的数据产生和存储以及面向事务的信息整合，在这之上的各层就要依赖OLAP系统了。OLAP概念源自决策支持系统（DSS），企业中的数据仓库、数据集市、统计报表、驾驶舱、数据挖掘等都属于OLAP体系。其中，数据仓库和数据集市主要实现信息整合，一般统称为数据整合平台。统计报表、驾驶舱、数据挖掘进一步利用数据整合平台的成果，帮助用户发现知识并最终形成智慧。 </p>
+<a id="more"></a>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-1.png" alt="BuildBusinessOrientedBigDataCloudPlatform-1"></p>
+<p>OLAP系统的主要用户是分析人员和管理人员，目标是支持管理决策，依据是企业生产经营过程中产生的全量数据，是一个按目标使用场景对数据进行加工、利用的过程。这过程一般可以划分五个阶段：业务部门定义需求；IT部门根据需求获取并整合相关数据；IT部门根据需求设计分析模型；IT部门开发实施并发布；业务部门应用并衡量实际成效。在传统的数据基础和技术环境下，这个周期可能要经历较漫长的时间。还在建设OLAP体系的情况自不必多说，即便已建成OLAP体系统，要及时响应业务部门的需求也是较困难的，而且很有可能最终的交付质量不能达到需求方的预期。</p>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-2.png" alt="BuildBusinessOrientedBigDataCloudPlatform-2"></p>
+<p>下图是目前较常见的OLAP体系简图，上游系统指那些OLTP系统，是数据源。数据整合平台包括ODS、数据仓库、数据集市等，主要实现数据整合。下游系统指那些利用数据整合平台成果的系统，包括统计报表、驾驶舱、数据挖掘等。其中，数据整合平台承上启下，在整个OLAP体系中非常重要。按照目前较普遍的架构，从上游到下游的数据流向，至少分为同构层、整合层、应用层。其中同构层在模型上基本与上游接入数据源基本保持一致，整合层一般会采用高范式模型进行数据整合，应用层面向下游具体应用采用星型模型。这个架构是在Inmon帮和Kimball派十几年如一日的不断撕逼和妥协中演进出来的，应该是一种最佳实践。但随着互联网+大数据时代到来，对数据应用有着更高效、更深入的要求，这种架构本身固有的缺点被不断放大。</p>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-3.png" alt="BuildBusinessOrientedBigDataCloudPlatform-3"></p>
+<p><strong>开发周期长</strong></p>
+<p>为了避免因上游系统接入模型的变化而导致数据整合平台模型的被动调整，整合层建模时一般会采用较高范式实现高内聚、低耦合，ER实体较多、关系复杂。这样就增加了ETL设计、开发以及测试的复杂度，同时ETL程序执行效率也低。业务部门提出的需求，IT首先由下至上逐层对模型进行分析，即便只需在应用层开发，基于上述原因也需要一周以上。如果涉及要改动整合层，开发周期要一个月左右，业务部门显然是不能接受的。最后的结局不用猜都知道，苦逼的程序猿只能再一次强睁熊猫眼天天加班赶工。但是故事并没有到此结束，马上一个意想不到但细细想想又是顺理成章的伴生问题发生了。</p>
+<p><strong>架构迅速变坏</strong></p>
+<p>在日复一日的高压下，程序猿只能另辟蹊径为自己减负。既然工作量是由于数据模型和层次的复杂性引起的，那最有效的减少工作量的方法无非就是：1、绕过整合层，数据直接从同构层到应用层。2、还是从通过整合层，但使用面向应用的自建模型。无论哪种方法，都使整合层形同虚设，从同构层到应用层形成一个个数据井道。虽然单个开发任务的开发时间缩短了，但各数据井道之间无法复用，所以总的开发时间绝对要更多，而且后期的维护工作将是一场噩梦。</p>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-4.png" alt="BuildBusinessOrientedBigDataCloudPlatform-4"></p>
+<p><strong>效率低</strong></p>
+<p>架构变坏后，数据一致性无法保证，大量数据重复存储，大量指标重复计算，ETL作业数急剧上升，数据整合平台效率自然会越来越差。即便架构还能保持，但随着时间的推移，数据量及业务需求不断增加，架构上倾向分割出更多的层次，以便实现更多的复用。随着层次的增加，数据迁移的路径就变长了，长久以往也难逃低效率的宿命。</p>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-5.png" alt="BuildBusinessOrientedBigDataCloudPlatform-5"></p>
+<p>再回顾下OLAP数据应用的五个阶段，从业务提出需求到业务应用验证形成闭环，这过程是由IT导向推动的，IT首先与业务讨论分析需求，在业务模型层面中达成共识，然后再映射到系统模型，实现对来自上游系统的数据进行加工处理，最后通过OLAP系统将结果在业务语境中展现给用户，之前讨论的所有弊病都此有关。而对于像银行、保险等发展较成熟的行业，其业务语境、模型是较稳定的，支持业务开展的上游IT系统的系统模型也应该是相对稳定的，因此业务模型和系统模型间能形成较稳定的映射关系。这样只要能达到足够细的粒度，就能实现操纵业务模型来改变系统模型的目的。而业务模型又能被业务所能理解，因此这个闭环过程就可以完全由业务导向不需要IT的参与，整个过程可以简化为：业务设计模型，业务应用验证。</p>
+<p>文／season7（简书作者）<br>原文链接：<a href="http://www.jianshu.com/p/d55d8eeac219" target="_blank" rel="external">http://www.jianshu.com/p/d55d8eeac219</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> BI墨客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 转载 </tag>
+            
+            <tag> BI </tag>
+            
+            <tag> BigData </tag>
             
         </tags>
         
@@ -4035,47 +4076,6 @@
             <tag> 转载 </tag>
             
             <tag> BI </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[放开那程序猿！构建业务导向的大数据云平台]]></title>
-      <url>/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/</url>
-      <content type="html"><![CDATA[<p>按数据处理方式及使用目标，企业级IT系统可分为OLTP和OLAP系统。简而言之，OLTP系统生产数据，OLAP系统加工数据。从数据到智慧的转换金字塔上看，OLTP系统实现了底层的数据产生和存储以及面向事务的信息整合，在这之上的各层就要依赖OLAP系统了。OLAP概念源自决策支持系统（DSS），企业中的数据仓库、数据集市、统计报表、驾驶舱、数据挖掘等都属于OLAP体系。其中，数据仓库和数据集市主要实现信息整合，一般统称为数据整合平台。统计报表、驾驶舱、数据挖掘进一步利用数据整合平台的成果，帮助用户发现知识并最终形成智慧。 </p>
-<a id="more"></a>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-1.png" alt="BuildBusinessOrientedBigDataCloudPlatform-1"></p>
-<p>OLAP系统的主要用户是分析人员和管理人员，目标是支持管理决策，依据是企业生产经营过程中产生的全量数据，是一个按目标使用场景对数据进行加工、利用的过程。这过程一般可以划分五个阶段：业务部门定义需求；IT部门根据需求获取并整合相关数据；IT部门根据需求设计分析模型；IT部门开发实施并发布；业务部门应用并衡量实际成效。在传统的数据基础和技术环境下，这个周期可能要经历较漫长的时间。还在建设OLAP体系的情况自不必多说，即便已建成OLAP体系统，要及时响应业务部门的需求也是较困难的，而且很有可能最终的交付质量不能达到需求方的预期。</p>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-2.png" alt="BuildBusinessOrientedBigDataCloudPlatform-2"></p>
-<p>下图是目前较常见的OLAP体系简图，上游系统指那些OLTP系统，是数据源。数据整合平台包括ODS、数据仓库、数据集市等，主要实现数据整合。下游系统指那些利用数据整合平台成果的系统，包括统计报表、驾驶舱、数据挖掘等。其中，数据整合平台承上启下，在整个OLAP体系中非常重要。按照目前较普遍的架构，从上游到下游的数据流向，至少分为同构层、整合层、应用层。其中同构层在模型上基本与上游接入数据源基本保持一致，整合层一般会采用高范式模型进行数据整合，应用层面向下游具体应用采用星型模型。这个架构是在Inmon帮和Kimball派十几年如一日的不断撕逼和妥协中演进出来的，应该是一种最佳实践。但随着互联网+大数据时代到来，对数据应用有着更高效、更深入的要求，这种架构本身固有的缺点被不断放大。</p>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-3.png" alt="BuildBusinessOrientedBigDataCloudPlatform-3"></p>
-<p><strong>开发周期长</strong></p>
-<p>为了避免因上游系统接入模型的变化而导致数据整合平台模型的被动调整，整合层建模时一般会采用较高范式实现高内聚、低耦合，ER实体较多、关系复杂。这样就增加了ETL设计、开发以及测试的复杂度，同时ETL程序执行效率也低。业务部门提出的需求，IT首先由下至上逐层对模型进行分析，即便只需在应用层开发，基于上述原因也需要一周以上。如果涉及要改动整合层，开发周期要一个月左右，业务部门显然是不能接受的。最后的结局不用猜都知道，苦逼的程序猿只能再一次强睁熊猫眼天天加班赶工。但是故事并没有到此结束，马上一个意想不到但细细想想又是顺理成章的伴生问题发生了。</p>
-<p><strong>架构迅速变坏</strong></p>
-<p>在日复一日的高压下，程序猿只能另辟蹊径为自己减负。既然工作量是由于数据模型和层次的复杂性引起的，那最有效的减少工作量的方法无非就是：1、绕过整合层，数据直接从同构层到应用层。2、还是从通过整合层，但使用面向应用的自建模型。无论哪种方法，都使整合层形同虚设，从同构层到应用层形成一个个数据井道。虽然单个开发任务的开发时间缩短了，但各数据井道之间无法复用，所以总的开发时间绝对要更多，而且后期的维护工作将是一场噩梦。</p>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-4.png" alt="BuildBusinessOrientedBigDataCloudPlatform-4"></p>
-<p><strong>效率低</strong></p>
-<p>架构变坏后，数据一致性无法保证，大量数据重复存储，大量指标重复计算，ETL作业数急剧上升，数据整合平台效率自然会越来越差。即便架构还能保持，但随着时间的推移，数据量及业务需求不断增加，架构上倾向分割出更多的层次，以便实现更多的复用。随着层次的增加，数据迁移的路径就变长了，长久以往也难逃低效率的宿命。</p>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-5.png" alt="BuildBusinessOrientedBigDataCloudPlatform-5"></p>
-<p>再回顾下OLAP数据应用的五个阶段，从业务提出需求到业务应用验证形成闭环，这过程是由IT导向推动的，IT首先与业务讨论分析需求，在业务模型层面中达成共识，然后再映射到系统模型，实现对来自上游系统的数据进行加工处理，最后通过OLAP系统将结果在业务语境中展现给用户，之前讨论的所有弊病都此有关。而对于像银行、保险等发展较成熟的行业，其业务语境、模型是较稳定的，支持业务开展的上游IT系统的系统模型也应该是相对稳定的，因此业务模型和系统模型间能形成较稳定的映射关系。这样只要能达到足够细的粒度，就能实现操纵业务模型来改变系统模型的目的。而业务模型又能被业务所能理解，因此这个闭环过程就可以完全由业务导向不需要IT的参与，整个过程可以简化为：业务设计模型，业务应用验证。</p>
-<p>文／season7（简书作者）<br>原文链接：<a href="http://www.jianshu.com/p/d55d8eeac219" target="_blank" rel="external">http://www.jianshu.com/p/d55d8eeac219</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> BI墨客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 转载 </tag>
-            
-            <tag> BI </tag>
-            
-            <tag> BigData </tag>
             
         </tags>
         
@@ -4380,13 +4380,13 @@ $ npm install bespoke-fx
             
             <tag> jQuery </tag>
             
+            <tag> 前端 </tag>
+            
             <tag> CSS </tag>
             
             <tag> JavaScript </tag>
             
             <tag> 设计 </tag>
-            
-            <tag> 前端 </tag>
             
         </tags>
         
@@ -4881,6 +4881,58 @@ SELECT * FROM dbo.duplicateTest
     </entry>
     
     <entry>
+      <title><![CDATA[SQL Server 2014的BI开发工具SSDT(以前的BIDS)安装]]></title>
+      <url>/2016/04/24/SQL-Server-2014-SSDT-Install/</url>
+      <content type="html"><![CDATA[<p>当我们安装好SQL Server 2014以后，会发现以前随数据库安装的BI开发套件SQL Server Reporting Services (SSRS), SQL Server Analysis Services (SSAS), 和 SQL Server Integration Services (SSIS)都不见了，怎么弄回来呢？</p>
+<p>在安装开发版或者企业版的SQL Server 2014的时候，你可能已经注意到以前被我们熟知的Business Intelligence Development Studio (BIDS) 已经没有了。从SQL Server 2012开始，这套BI应用工具集已经变成了SQL Server Data Tools)(SSDT)，在SQL Server 2014中，SSDT已经完全在SQL Server的安装过程里消失了。但是，要把Business Intelligence (BI)应用工具安装回来也是很容易的。</p>
+<a id="more"></a>
+<h3 id="安装SQL-Server-2014-BI-Tools"><a href="#安装SQL-Server-2014-BI-Tools" class="headerlink" title="安装SQL Server 2014 BI Tools"></a>安装SQL Server 2014 BI Tools</h3><p>在以前版本的SQL Server里，用来开发SSIS,SSAS,SSRS的BI解决方案都是包含在SQL Server的安装过程里的，在特性部分里可以进行勾选，如下图所示：</p>
+<p><img src="/img/posts/SQL-Server-2014-SSDT-Install-1.jpg" alt="SQL-Server-2014-SSDT-Install-1"></p>
+<p>但是，当你安装SQL Server 2014的时候，你会发现选项没有了，如下图：</p>
+<p><img src="/img/posts/SQL-Server-2014-SSDT-Install-2.jpg" alt="SQL-Server-2014-SSDT-Install-2"></p>
+<h3 id="SQL-Server-Data-Tools-SSDT和SSDT-BI-的演变"><a href="#SQL-Server-Data-Tools-SSDT和SSDT-BI-的演变" class="headerlink" title="SQL Server Data Tools (SSDT和SSDT-BI)的演变"></a>SQL Server Data Tools (SSDT和SSDT-BI)的演变</h3><p>由于微软公司在这方面的说明较少，让情况变得有点复杂。事实上，SQL Server 2014的SSDT已经成为了Visual Studio的插件为数据库重构，架构比较以及各种诸如视图、存储过程等对象的创建提供服务支持。而SSDT-BI这个工具也已经成为Visual Studio的一个组件，它才是开发SSIS,SSAS,SSRS解决方案的真正的开发工具。</p>
+<p>以上两个工具都可以在<a href="http://msdn.microsoft.com/en-us/hh297027.aspx" target="_blank" rel="external">http://msdn.microsoft.com/en-us/hh297027.aspx</a> 下载到。每个工具各提供两个版本，一个是Visual Studio 2012的，一个是 Visual Studio 2013的。</p>
+<p><img src="/img/posts/SQL-Server-2014-SSDT-Install-3.jpg" alt="SQL-Server-2014-SSDT-Install-3"></p>
+<p><img src="/img/posts/SQL-Server-2014-SSDT-Install-4.jpg" alt="SQL-Server-2014-SSDT-Install-4"></p>
+<h3 id="安装SQL-Server-Data-Tools-SSDT"><a href="#安装SQL-Server-Data-Tools-SSDT" class="headerlink" title="安装SQL Server Data Tools(SSDT)"></a>安装SQL Server Data Tools(SSDT)</h3><p>微软已经完全把SSDT的安装从SQL Server安装中独立出来了。安装过程也是非常简单，你只需要决定是否让BI工具成为Visual Studio 2013或者Visual Studio 2012的一部分就可以了。</p>
+<p>我们以Visual Studio 2013版本的为例。注意下，咱们不需要先安装Visual Studio 2013在电脑上然后再安装SSDT-BI。安装程序会安装Visual Studio 2013 shell然后提供BI工具作为一个组件。SSDT-BI安装将会添加以下组件：</p>
+<ul>
+<li>Microsoft .NET Framework 4.5.1,</li>
+<li>Microsoft Visual Studio 2012 Shell (Isolated) Redistributable Package,</li>
+<li>Microsoft Visual Studio 2012 Shell (Integrated) Redistributable Package,</li>
+<li>Microsoft Visual Studio 2013 Shell (Isolated) Redistributable Package,</li>
+<li>Microsoft Visual Studio 2013 Shell (Integrated) Redistributable Package,</li>
+<li>Microsoft Visual Studio Tools for Applications 2012,</li>
+<li>Microsoft Report Viewer 2014 Runtime.</li>
+</ul>
+<p>正式的安装过程跟SQL Server安装过程也很像。注意不管是否安装SQL Server 2014数据库程序，以下界面都选择全新安装。我安装的文件名称：SSDTBI_x86_CHS.exe，你可能会去找x64版本的，但是没有这个版本，官网下载的都是x86的，但是不影响安装。</p>
+<p><img src="/img/posts/SQL-Server-2014-SSDT-Install-8.jpg" alt="SQL-Server-2014-SSDT-Install-8"></p>
+<p>安装过程的以下界面勾选SQL Server Data Tools - Business Intelligence就可以了。</p>
+<p><img src="/img/posts/SQL-Server-2014-SSDT-Install-5.jpg" alt="SQL-Server-2014-SSDT-Install-5"></p>
+<p>安装好以后，在开始菜单出现 SQL Server Data Tools for Visual Studio 2013选项。</p>
+<p><img src="/img/posts/SQL-Server-2014-SSDT-Install-6.jpg" alt="SQL-Server-2014-SSDT-Install-6"></p>
+<p>现在，我们可以打开SSDT for Visual Studio 2013来创建SSIS,SSAS,SSRS项目方案了。</p>
+<p><img src="/img/posts/SQL-Server-2014-SSDT-Install-7.jpg" alt="SQL-Server-2014-SSDT-Install-7"></p>
+]]></content>
+      
+        <categories>
+            
+            <category> BI墨客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 原创 </tag>
+            
+            <tag> BI </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[学习制作CSS3 3D旋转透视效果]]></title>
       <url>/2016/04/24/CSS3-transform-style-3D-Cool/</url>
       <content type="html"><![CDATA[<p>之前学习 react+webpack ，偶然路过 webpack 官网 ，看到顶部的 LOGO ，就很感兴趣。</p>
@@ -5010,58 +5062,6 @@ SELECT * FROM dbo.duplicateTest
             <tag> CSS </tag>
             
             <tag> 设计 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[SQL Server 2014的BI开发工具SSDT(以前的BIDS)安装]]></title>
-      <url>/2016/04/24/SQL-Server-2014-SSDT-Install/</url>
-      <content type="html"><![CDATA[<p>当我们安装好SQL Server 2014以后，会发现以前随数据库安装的BI开发套件SQL Server Reporting Services (SSRS), SQL Server Analysis Services (SSAS), 和 SQL Server Integration Services (SSIS)都不见了，怎么弄回来呢？</p>
-<p>在安装开发版或者企业版的SQL Server 2014的时候，你可能已经注意到以前被我们熟知的Business Intelligence Development Studio (BIDS) 已经没有了。从SQL Server 2012开始，这套BI应用工具集已经变成了SQL Server Data Tools)(SSDT)，在SQL Server 2014中，SSDT已经完全在SQL Server的安装过程里消失了。但是，要把Business Intelligence (BI)应用工具安装回来也是很容易的。</p>
-<a id="more"></a>
-<h3 id="安装SQL-Server-2014-BI-Tools"><a href="#安装SQL-Server-2014-BI-Tools" class="headerlink" title="安装SQL Server 2014 BI Tools"></a>安装SQL Server 2014 BI Tools</h3><p>在以前版本的SQL Server里，用来开发SSIS,SSAS,SSRS的BI解决方案都是包含在SQL Server的安装过程里的，在特性部分里可以进行勾选，如下图所示：</p>
-<p><img src="/img/posts/SQL-Server-2014-SSDT-Install-1.jpg" alt="SQL-Server-2014-SSDT-Install-1"></p>
-<p>但是，当你安装SQL Server 2014的时候，你会发现选项没有了，如下图：</p>
-<p><img src="/img/posts/SQL-Server-2014-SSDT-Install-2.jpg" alt="SQL-Server-2014-SSDT-Install-2"></p>
-<h3 id="SQL-Server-Data-Tools-SSDT和SSDT-BI-的演变"><a href="#SQL-Server-Data-Tools-SSDT和SSDT-BI-的演变" class="headerlink" title="SQL Server Data Tools (SSDT和SSDT-BI)的演变"></a>SQL Server Data Tools (SSDT和SSDT-BI)的演变</h3><p>由于微软公司在这方面的说明较少，让情况变得有点复杂。事实上，SQL Server 2014的SSDT已经成为了Visual Studio的插件为数据库重构，架构比较以及各种诸如视图、存储过程等对象的创建提供服务支持。而SSDT-BI这个工具也已经成为Visual Studio的一个组件，它才是开发SSIS,SSAS,SSRS解决方案的真正的开发工具。</p>
-<p>以上两个工具都可以在<a href="http://msdn.microsoft.com/en-us/hh297027.aspx" target="_blank" rel="external">http://msdn.microsoft.com/en-us/hh297027.aspx</a> 下载到。每个工具各提供两个版本，一个是Visual Studio 2012的，一个是 Visual Studio 2013的。</p>
-<p><img src="/img/posts/SQL-Server-2014-SSDT-Install-3.jpg" alt="SQL-Server-2014-SSDT-Install-3"></p>
-<p><img src="/img/posts/SQL-Server-2014-SSDT-Install-4.jpg" alt="SQL-Server-2014-SSDT-Install-4"></p>
-<h3 id="安装SQL-Server-Data-Tools-SSDT"><a href="#安装SQL-Server-Data-Tools-SSDT" class="headerlink" title="安装SQL Server Data Tools(SSDT)"></a>安装SQL Server Data Tools(SSDT)</h3><p>微软已经完全把SSDT的安装从SQL Server安装中独立出来了。安装过程也是非常简单，你只需要决定是否让BI工具成为Visual Studio 2013或者Visual Studio 2012的一部分就可以了。</p>
-<p>我们以Visual Studio 2013版本的为例。注意下，咱们不需要先安装Visual Studio 2013在电脑上然后再安装SSDT-BI。安装程序会安装Visual Studio 2013 shell然后提供BI工具作为一个组件。SSDT-BI安装将会添加以下组件：</p>
-<ul>
-<li>Microsoft .NET Framework 4.5.1,</li>
-<li>Microsoft Visual Studio 2012 Shell (Isolated) Redistributable Package,</li>
-<li>Microsoft Visual Studio 2012 Shell (Integrated) Redistributable Package,</li>
-<li>Microsoft Visual Studio 2013 Shell (Isolated) Redistributable Package,</li>
-<li>Microsoft Visual Studio 2013 Shell (Integrated) Redistributable Package,</li>
-<li>Microsoft Visual Studio Tools for Applications 2012,</li>
-<li>Microsoft Report Viewer 2014 Runtime.</li>
-</ul>
-<p>正式的安装过程跟SQL Server安装过程也很像。注意不管是否安装SQL Server 2014数据库程序，以下界面都选择全新安装。我安装的文件名称：SSDTBI_x86_CHS.exe，你可能会去找x64版本的，但是没有这个版本，官网下载的都是x86的，但是不影响安装。</p>
-<p><img src="/img/posts/SQL-Server-2014-SSDT-Install-8.jpg" alt="SQL-Server-2014-SSDT-Install-8"></p>
-<p>安装过程的以下界面勾选SQL Server Data Tools - Business Intelligence就可以了。</p>
-<p><img src="/img/posts/SQL-Server-2014-SSDT-Install-5.jpg" alt="SQL-Server-2014-SSDT-Install-5"></p>
-<p>安装好以后，在开始菜单出现 SQL Server Data Tools for Visual Studio 2013选项。</p>
-<p><img src="/img/posts/SQL-Server-2014-SSDT-Install-6.jpg" alt="SQL-Server-2014-SSDT-Install-6"></p>
-<p>现在，我们可以打开SSDT for Visual Studio 2013来创建SSIS,SSAS,SSRS项目方案了。</p>
-<p><img src="/img/posts/SQL-Server-2014-SSDT-Install-7.jpg" alt="SQL-Server-2014-SSDT-Install-7"></p>
-]]></content>
-      
-        <categories>
-            
-            <category> BI墨客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 原创 </tag>
-            
-            <tag> BI </tag>
             
         </tags>
         
@@ -5347,111 +5347,15 @@ $layer = $(&apos;div[class*=&quot;layer-&quot;]’);
         
         <tags>
             
-            <tag> 翻译 </tag>
-            
             <tag> 前端编程 </tag>
             
             <tag> jQuery </tag>
             
+            <tag> 翻译 </tag>
+            
             <tag> CSS </tag>
             
             <tag> JavaScript </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[有道笔记支持Markdown啦]]></title>
-      <url>/2016/03/23/YouDaoNoteMarkdownSupport/</url>
-      <content type="html"><![CDATA[<p>继有道云协作率先支持markdown语法之后，令人振奋的markdown编辑功能现已在web版有道云笔记优雅上线，移动端也已支持预览！<br>不要着急，PC客户端也将随后支持markdown的编辑预览！</p>
-<h2 id="何为Markdown？"><a href="#何为Markdown？" class="headerlink" title="何为Markdown？"></a>何为Markdown？</h2><p>Markdown是一种轻量级的<strong>「标记语言」</strong>，通常为程序员群体所用，目前它已是全球最大的技术分享网站GitHub和技术问答网站StackOverFlow的御用书写格式。</p>
-<a id="more"></a>
-<p>非技术类笔记用户，千万不要被<strong>「标记」</strong>、<strong>「语言」</strong>吓到，markdown的语法十分简单，常用的标记符号不超过十个，用于日常写作记录绰绰有余，不到半小时就能完全掌握。</p>
-<p>就是这十个不到的标记符号，却能让人优雅地沉浸式记录，专注内容而不是纠结排版，达到<strong>「心中无尘，码字入神」</strong>的境界。</p>
-<h2 id="Markdown有哪些优点？"><a href="#Markdown有哪些优点？" class="headerlink" title="Markdown有哪些优点？"></a>Markdown有哪些优点？</h2><ul>
-<li>易写：纵使文科出身的你，半小时也能完全掌握常用的markdown基本语法.</li>
-<li>易读：兼顾「什么人都能打开」和「排版样式不变」。所谓「什么人都能打开」是指，Markdown属于兼容性极强的纯文本，可以用所有文本编辑器打开，避免了「用Windows的人打不开.pages文件」的情况发生;Markdown文本轻松可转成HTML、电子书等格式，而HTML是整个万维网（web）的标记语言，也是目前主流电子书格式（EPUB、mobi、Kindle专有格式.azw）所用的标记语言。人们如果采用Markdown标注格式，对日后的文件转换工作将大有裨益。所谓「排版样式不变」是指，在转化为富文本/HTML等格式后依然可以保留原本的排版和阅读体验。不会出现「我这篇稿子是用旧版Word写的，你用新版Word看可能格式会有点问题」的情况。</li>
-</ul>
-<h2 id="利用新增markdown功能做什么？"><a href="#利用新增markdown功能做什么？" class="headerlink" title="利用新增markdown功能做什么？"></a>利用新增markdown功能做什么？</h2><ul>
-<li><strong>1.代码高亮</strong></li>
-</ul>
-<center><img src="/img/posts/24.jpg"></center>
-
-<ul>
-<li><strong>2.制作待办事项Todo list</strong></li>
-</ul>
-<center><img src="/img/posts/25.jpg"></center>
-
-<ul>
-<li><strong>3.高效绘制 流程图、序列图、甘特图、表格</strong></li>
-</ul>
-<p><strong>流程图：</strong></p>
-<center><img src="/img/posts/26.jpg"></center>
-
-<p><strong>序列图：</strong></p>
-<center><img src="/img/posts/27.jpg"></center>
-
-<p><strong>甘特图：</strong></p>
-<center><img src="/img/posts/28.jpg"></center>
-
-<p><strong>表格：</strong></p>
-<center><img src="/img/posts/29.jpg"></center>
-
-<ul>
-<li><strong>4.书写LaTeX公式</strong></li>
-</ul>
-<center><img src="/img/posts/30.jpg"></center>
-
-<p>够酷吗？？</p>
-<p>如果你是<strong>程序员</strong>，你可以用来写日志、技术文稿、记录代码片段、起草邮件</p>
-<p>如果你是<strong>科研人员/工科学生</strong>，你可以用来撰写科技论文，记录工科笔记</p>
-<p>如果你是<strong>文字工作者/热爱文字</strong>的人，你可以用来写作</p>
-<p>如果你是<strong>微信运营人员</strong>，你可以用来替微信编辑器编写微信文章</p>
-<h2 id="web版有道云笔记做到了什么？"><a href="#web版有道云笔记做到了什么？" class="headerlink" title="web版有道云笔记做到了什么？"></a>web版有道云笔记做到了什么？</h2><ul>
-<li><strong>1.实时同步预览，即看即所得</strong></li>
-</ul>
-<p>我们将笔记编辑界面一分为二，左边为编辑区，右边为预览区，两区滚动条同步。在编辑区的操作能够实时反映在预览区，方便及时调整和查看最终版面效果。</p>
-<ul>
-<li><strong>2.工具栏内置markdown语法，方便新手学习</strong></li>
-</ul>
-<p>编辑页面顶端的工具栏有对应代码，如果你是一个不熟悉markdown语法的新手，可以先尝试用编辑栏辅助操作。也可以在网上搜索「markdown语法指南」进行学习。</p>
-<p>当然，如果你觉得工具栏太打扰，点击下方分界条即可隐藏工具栏，切换到极简编辑环境。</p>
-<ul>
-<li><strong>3.实时云端保存</strong></li>
-</ul>
-<p>markdown模式继承了有道云笔记的优良传统，你每一次击键的内容都会实时保存在云端，无需担心浏览器崩溃、设备没电、突然断网等情况。对于写作者来说，更是再也不用担心因为各种原因痛失文稿的情况了。</p>
-<h2 id="web版Markdown实操指南"><a href="#web版Markdown实操指南" class="headerlink" title="web版Markdown实操指南"></a>web版Markdown实操指南</h2><ul>
-<li>1.点击“新建”按钮，可选择新建markdown文件</li>
-</ul>
-<center><img src="/img/posts/31.jpg"></center>
-
-<ul>
-<li>2.可直接通过markdown语句编辑文件，也可以使用编辑器实现格式调整</li>
-</ul>
-<center><img src="/img/posts/32.jpg"></center>
-
-<ul>
-<li>3.界面大小可点击分界条调整。<br>点击“1”处，编辑器收起；<br>点击“2”处，左侧编辑区域全屏。</li>
-</ul>
-<center><img src="/img/posts/33.jpg"></center>
-
-<p>点击后效果如配图4</p>
-<center><img src="/img/posts/34.jpg"></center>
-
-<p>转自 <a href="http://toutiao.com/a6265175131246657794/" target="_blank" rel="external">http://toutiao.com/a6265175131246657794/</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> IT看客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> IT资讯 </tag>
             
         </tags>
         
@@ -5664,6 +5568,102 @@ $elem.otherStuff();
     </entry>
     
     <entry>
+      <title><![CDATA[有道笔记支持Markdown啦]]></title>
+      <url>/2016/03/23/YouDaoNoteMarkdownSupport/</url>
+      <content type="html"><![CDATA[<p>继有道云协作率先支持markdown语法之后，令人振奋的markdown编辑功能现已在web版有道云笔记优雅上线，移动端也已支持预览！<br>不要着急，PC客户端也将随后支持markdown的编辑预览！</p>
+<h2 id="何为Markdown？"><a href="#何为Markdown？" class="headerlink" title="何为Markdown？"></a>何为Markdown？</h2><p>Markdown是一种轻量级的<strong>「标记语言」</strong>，通常为程序员群体所用，目前它已是全球最大的技术分享网站GitHub和技术问答网站StackOverFlow的御用书写格式。</p>
+<a id="more"></a>
+<p>非技术类笔记用户，千万不要被<strong>「标记」</strong>、<strong>「语言」</strong>吓到，markdown的语法十分简单，常用的标记符号不超过十个，用于日常写作记录绰绰有余，不到半小时就能完全掌握。</p>
+<p>就是这十个不到的标记符号，却能让人优雅地沉浸式记录，专注内容而不是纠结排版，达到<strong>「心中无尘，码字入神」</strong>的境界。</p>
+<h2 id="Markdown有哪些优点？"><a href="#Markdown有哪些优点？" class="headerlink" title="Markdown有哪些优点？"></a>Markdown有哪些优点？</h2><ul>
+<li>易写：纵使文科出身的你，半小时也能完全掌握常用的markdown基本语法.</li>
+<li>易读：兼顾「什么人都能打开」和「排版样式不变」。所谓「什么人都能打开」是指，Markdown属于兼容性极强的纯文本，可以用所有文本编辑器打开，避免了「用Windows的人打不开.pages文件」的情况发生;Markdown文本轻松可转成HTML、电子书等格式，而HTML是整个万维网（web）的标记语言，也是目前主流电子书格式（EPUB、mobi、Kindle专有格式.azw）所用的标记语言。人们如果采用Markdown标注格式，对日后的文件转换工作将大有裨益。所谓「排版样式不变」是指，在转化为富文本/HTML等格式后依然可以保留原本的排版和阅读体验。不会出现「我这篇稿子是用旧版Word写的，你用新版Word看可能格式会有点问题」的情况。</li>
+</ul>
+<h2 id="利用新增markdown功能做什么？"><a href="#利用新增markdown功能做什么？" class="headerlink" title="利用新增markdown功能做什么？"></a>利用新增markdown功能做什么？</h2><ul>
+<li><strong>1.代码高亮</strong></li>
+</ul>
+<center><img src="/img/posts/24.jpg"></center>
+
+<ul>
+<li><strong>2.制作待办事项Todo list</strong></li>
+</ul>
+<center><img src="/img/posts/25.jpg"></center>
+
+<ul>
+<li><strong>3.高效绘制 流程图、序列图、甘特图、表格</strong></li>
+</ul>
+<p><strong>流程图：</strong></p>
+<center><img src="/img/posts/26.jpg"></center>
+
+<p><strong>序列图：</strong></p>
+<center><img src="/img/posts/27.jpg"></center>
+
+<p><strong>甘特图：</strong></p>
+<center><img src="/img/posts/28.jpg"></center>
+
+<p><strong>表格：</strong></p>
+<center><img src="/img/posts/29.jpg"></center>
+
+<ul>
+<li><strong>4.书写LaTeX公式</strong></li>
+</ul>
+<center><img src="/img/posts/30.jpg"></center>
+
+<p>够酷吗？？</p>
+<p>如果你是<strong>程序员</strong>，你可以用来写日志、技术文稿、记录代码片段、起草邮件</p>
+<p>如果你是<strong>科研人员/工科学生</strong>，你可以用来撰写科技论文，记录工科笔记</p>
+<p>如果你是<strong>文字工作者/热爱文字</strong>的人，你可以用来写作</p>
+<p>如果你是<strong>微信运营人员</strong>，你可以用来替微信编辑器编写微信文章</p>
+<h2 id="web版有道云笔记做到了什么？"><a href="#web版有道云笔记做到了什么？" class="headerlink" title="web版有道云笔记做到了什么？"></a>web版有道云笔记做到了什么？</h2><ul>
+<li><strong>1.实时同步预览，即看即所得</strong></li>
+</ul>
+<p>我们将笔记编辑界面一分为二，左边为编辑区，右边为预览区，两区滚动条同步。在编辑区的操作能够实时反映在预览区，方便及时调整和查看最终版面效果。</p>
+<ul>
+<li><strong>2.工具栏内置markdown语法，方便新手学习</strong></li>
+</ul>
+<p>编辑页面顶端的工具栏有对应代码，如果你是一个不熟悉markdown语法的新手，可以先尝试用编辑栏辅助操作。也可以在网上搜索「markdown语法指南」进行学习。</p>
+<p>当然，如果你觉得工具栏太打扰，点击下方分界条即可隐藏工具栏，切换到极简编辑环境。</p>
+<ul>
+<li><strong>3.实时云端保存</strong></li>
+</ul>
+<p>markdown模式继承了有道云笔记的优良传统，你每一次击键的内容都会实时保存在云端，无需担心浏览器崩溃、设备没电、突然断网等情况。对于写作者来说，更是再也不用担心因为各种原因痛失文稿的情况了。</p>
+<h2 id="web版Markdown实操指南"><a href="#web版Markdown实操指南" class="headerlink" title="web版Markdown实操指南"></a>web版Markdown实操指南</h2><ul>
+<li>1.点击“新建”按钮，可选择新建markdown文件</li>
+</ul>
+<center><img src="/img/posts/31.jpg"></center>
+
+<ul>
+<li>2.可直接通过markdown语句编辑文件，也可以使用编辑器实现格式调整</li>
+</ul>
+<center><img src="/img/posts/32.jpg"></center>
+
+<ul>
+<li>3.界面大小可点击分界条调整。<br>点击“1”处，编辑器收起；<br>点击“2”处，左侧编辑区域全屏。</li>
+</ul>
+<center><img src="/img/posts/33.jpg"></center>
+
+<p>点击后效果如配图4</p>
+<center><img src="/img/posts/34.jpg"></center>
+
+<p>转自 <a href="http://toutiao.com/a6265175131246657794/" target="_blank" rel="external">http://toutiao.com/a6265175131246657794/</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> IT看客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> IT资讯 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[用CSS创建翻转动画]]></title>
       <url>/2016/03/19/CSS-For-Flip-Effect/</url>
       <content type="html"><![CDATA[<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CSS动画是非常有意思的，用一些简单的属性就可以创建出来，从优雅的淡入到更加惊艳的效果都可以，翻页效果就是其中之一，它通过在容器的正面跟反面包含不同的内容来加以实现。本文就是用尽可能简单的方法来实现这种效果。</p>
@@ -5844,9 +5844,9 @@ $elem.otherStuff();
         
         <tags>
             
-            <tag> 翻译 </tag>
-            
             <tag> 前端编程 </tag>
+            
+            <tag> 翻译 </tag>
             
             <tag> CSS </tag>
             
@@ -6117,9 +6117,9 @@ function update (){
         
         <tags>
             
-            <tag> 翻译 </tag>
-            
             <tag> 前端编程 </tag>
+            
+            <tag> 翻译 </tag>
             
             <tag> CSS </tag>
             

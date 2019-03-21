@@ -27,4 +27,12 @@
 - 2018-12-29:无耻地添加了打赏 O(∩_∩)O
 - 2019-01-05:评论系统[来必力](https://livere.com/)国内访问太慢了，改社会化评论为[Valine](https://valine.js.org/)
 - 2019-03-20:解决百度分享插件不支持Https的问题，参考[这里](https://github.com/hrwhisper/baiduShare)
+- 2019-03-21:
+  - 增加板娘live2d插件，右下角那个小姑娘，参考[hexo-helper-live2d](https://github.com/EYHN/hexo-helper-live2d)
+  - 文章增加字数统计，阅读时长预计，参考[hexo-wordcount](https://www.npmjs.com/package/hexo-wordcount)
+  - 鼠标增加点击效果，参考[博客](https://blog.csdn.net/qq_36759224/article/details/85420403)
+  - 添加博客修改记录，访客位置地球标记[RevolverMaps](https://www.revolvermaps.com/?target=setupgl)
+  - 添加运行天数
+
+
 [c-xuan.com](https://c-xuan.com)

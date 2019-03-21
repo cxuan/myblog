@@ -26,5 +26,5 @@
 - 2018-11-08:修复[不蒜子](http://busuanzi.ibruce.info/)域名更换导致站点访问失效问题.
 - 2018-12-29:无耻地添加了打赏 O(∩_∩)O
 - 2019-01-05:评论系统[来必力](https://livere.com/)国内访问太慢了，改社会化评论为[Valine](https://valine.js.org/)
-
+- 2019-03-20:解决百度分享插件不支持Https的问题，参考[这里](https://github.com/hrwhisper/baiduShare)
 [c-xuan.com](https://c-xuan.com)

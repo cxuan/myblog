@@ -779,7 +779,7 @@ a {
   text-transform: uppercase;
   float: none;
   min-height: 6rem;
-  max-height: 10rem;
+  max-height: 11rem;
   overflow: auto;
   text-align: center;
 /*display: -webkit-box;*/
@@ -876,10 +876,9 @@ a {
   transform: translate(-100%, 0);
 }
 #header .header-nav {
-  margin-top: 0px;
+  margin-top: 8%;
   width: 100%;
   position: absolute;
-  bottom: -56%;
   -webkit-transition: -webkit-transform 0.3s ease-in;
   -moz-transition: -moz-transform 0.3s ease-in;
   -ms-transition: -ms-transform 0.3s ease-in;

@@ -388,6 +388,79 @@
 </nav>
       <div class="body-wrap ">
   
+    <article id="post-Datawarehouse-10Dimension-principle" class="article article-type-post " itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/08/23/Datawarehouse-10Dimension-principle/" class="article-date">
+      <time datetime="2016-08-22T16:03:24.000Z" itemprop="datePublished">2016-08-23</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/23/Datawarehouse-10Dimension-principle/">数据仓库维度建模10大基本原则</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h3 id="原则1"><a href="#原则1" class="headerlink" title="原则1"></a>原则1</h3><p><strong>载入详细的原子数据到维度结构中</strong></p>
+<blockquote>
+<p>维度建模应该使用最基础的原子数据进行填充，以支持不可预知的来自用户查询的过滤和分组请求，用户通常不希望每次只看到一个单一的记录，但是你无法预测 用户想要掩盖哪些数据，想要显示哪些数据，如果只有汇总数据，那么你已经设定了数据的使用模式，当用户想要深入挖掘数据时他们就会遇到障碍。当然，原子数据也可以通过概要维度建模进行补充，但企业用户无法只在汇总数据上工作，他们需要原始数据回答不断变化的问题。</p>
+</blockquote>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/BI墨客/">BI墨客</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BI/">BI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据仓库/">数据仓库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016/08/23/Datawarehouse-10Dimension-principle/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+
+    
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-MarkDown教程" class="article article-type-post " itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -541,6 +614,76 @@
 
 
   
+    <article id="post-SQL-GroupByAndGroupingSets" class="article article-type-post " itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/06/13/SQL-GroupByAndGroupingSets/" class="article-date">
+      <time datetime="2016-06-12T16:00:00.000Z" itemprop="datePublished">2016-06-13</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/13/SQL-GroupByAndGroupingSets/">【T-SQL】group by 和grouping sets</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>遇到一个情况，需要在内网系统中出一个统计报表。需要根据不同条件使用多个group by语句，需要将所有聚合的数据进行union操作来完成不同维度的统计查看。<br>知道发现了在SQL  Server 2008之后引入了grouping sets这个对于group by的增强后，上面的需求实现起来就简单的多，下面我们用AdventureWork中的表作为demo来解释一下grouping sets.</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/码路刺客/">码路刺客</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL-Server/">SQL Server</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016/06/13/SQL-GroupByAndGroupingSets/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+
+    
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-SSIS-GeneralAttribures" class="article article-type-post " itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -618,11 +761,11 @@
 
 
   
-    <article id="post-SQL-GroupByAndGroupingSets" class="article article-type-post " itemscope itemprop="blogPost">
+    <article id="post-BuildBusinessOrientedBigDataCloudPlatform" class="article article-type-post " itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/06/13/SQL-GroupByAndGroupingSets/" class="article-date">
-      <time datetime="2016-06-12T16:00:00.000Z" itemprop="datePublished">2016-06-13</time>
+      <a href="/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/" class="article-date">
+      <time datetime="2016-06-04T16:00:00.000Z" itemprop="datePublished">2016-06-05</time>
 </a>
 
 
@@ -637,7 +780,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/13/SQL-GroupByAndGroupingSets/">【T-SQL】group by 和grouping sets</a>
+      <a class="article-title" href="/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/">放开那程序猿！构建业务导向的大数据云平台</a>
     </h1>
   
 
@@ -647,7 +790,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>遇到一个情况，需要在内网系统中出一个统计报表。需要根据不同条件使用多个group by语句，需要将所有聚合的数据进行union操作来完成不同维度的统计查看。<br>知道发现了在SQL  Server 2008之后引入了grouping sets这个对于group by的增强后，上面的需求实现起来就简单的多，下面我们用AdventureWork中的表作为demo来解释一下grouping sets.</p>
+              <p>按数据处理方式及使用目标，企业级IT系统可分为OLTP和OLAP系统。简而言之，OLTP系统生产数据，OLAP系统加工数据。从数据到智慧的转换金字塔上看，OLTP系统实现了底层的数据产生和存储以及面向事务的信息整合，在这之上的各层就要依赖OLAP系统了。OLAP概念源自决策支持系统（DSS），企业中的数据仓库、数据集市、统计报表、驾驶舱、数据挖掘等都属于OLAP体系。其中，数据仓库和数据集市主要实现信息整合，一般统称为数据整合平台。统计报表、驾驶舱、数据挖掘进一步利用数据整合平台的成果，帮助用户发现知识并最终形成智慧。 </p>
           
       
     </div>
@@ -656,18 +799,18 @@
       
       
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/码路刺客/">码路刺客</a>
+    <a class="article-category-link" href="/categories/BI墨客/">BI墨客</a>
     </div>
 
 
       
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL-Server/">SQL Server</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BI/">BI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BigData/">BigData</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
     </div>
 
       
         <p class="article-more-link">
-          <a href="/2016/06/13/SQL-GroupByAndGroupingSets/#more">阅读全文 >></a>
+          <a href="/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -738,76 +881,6 @@
       
         <p class="article-more-link">
           <a href="/2016/06/05/RealEstateBISolutionCaseShare/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-
-    
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-BuildBusinessOrientedBigDataCloudPlatform" class="article article-type-post " itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/" class="article-date">
-      <time datetime="2016-06-04T16:00:00.000Z" itemprop="datePublished">2016-06-05</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/">放开那程序猿！构建业务导向的大数据云平台</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>按数据处理方式及使用目标，企业级IT系统可分为OLTP和OLAP系统。简而言之，OLTP系统生产数据，OLAP系统加工数据。从数据到智慧的转换金字塔上看，OLTP系统实现了底层的数据产生和存储以及面向事务的信息整合，在这之上的各层就要依赖OLAP系统了。OLAP概念源自决策支持系统（DSS），企业中的数据仓库、数据集市、统计报表、驾驶舱、数据挖掘等都属于OLAP体系。其中，数据仓库和数据集市主要实现信息整合，一般统称为数据整合平台。统计报表、驾驶舱、数据挖掘进一步利用数据整合平台的成果，帮助用户发现知识并最终形成智慧。 </p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/BI墨客/">BI墨客</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BI/">BI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BigData/">BigData</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -1322,76 +1395,6 @@
 
 
   
-    <article id="post-SSIS-Template-For-SSISPackage" class="article article-type-post " itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/06/SSIS-Template-For-SSISPackage/" class="article-date">
-      <time datetime="2016-05-05T16:00:00.000Z" itemprop="datePublished">2016-05-06</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/06/SSIS-Template-For-SSISPackage/">【SSIS】利用SSIS模板快速开发SSIS Package</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>在做 ETL 项目的时候，往往很多 Package 的开发都是基于相同的模型和流程。比如在 Package 开始运行时需要向 Process Log 表中插入记录，在 Package 运行结束的时候更新运行状态。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/BI墨客/">BI墨客</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BI/">BI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSIS/">SSIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/05/06/SSIS-Template-For-SSISPackage/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-
-    
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-The-Art-of-Computer-Programming" class="article article-type-post " itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -1442,6 +1445,76 @@
       
         <p class="article-more-link">
           <a href="/2016/05/06/The-Art-of-Computer-Programming/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+
+    
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-SSIS-Template-For-SSISPackage" class="article article-type-post " itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/06/SSIS-Template-For-SSISPackage/" class="article-date">
+      <time datetime="2016-05-05T16:00:00.000Z" itemprop="datePublished">2016-05-06</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/06/SSIS-Template-For-SSISPackage/">【SSIS】利用SSIS模板快速开发SSIS Package</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>在做 ETL 项目的时候，往往很多 Package 的开发都是基于相同的模型和流程。比如在 Package 开始运行时需要向 Process Log 表中插入记录，在 Package 运行结束的时候更新运行状态。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/BI墨客/">BI墨客</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BI/">BI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSIS/">SSIS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016/05/06/SSIS-Template-For-SSISPackage/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -1972,6 +2045,76 @@ INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;)
 
 
   
+    <article id="post-IconForEveryday" class="article article-type-post " itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/23/IconForEveryday/" class="article-date">
+      <time datetime="2016-03-22T16:00:00.000Z" itemprop="datePublished">2016-03-23</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/23/IconForEveryday/">365cons：每天一枚图标，可免费下载</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>大家都听过“An apple a day keeps the doctor away”这句俚语，现在网络上也开始流行养成习惯持续去做某一件事情，例如先前介绍过的100 Days UI百日设计挑战每天发布一个全新使用者界面设计来启发灵感，当然你也可以为自己设定一个习惯养成目标，HabitRPG甚至让生活变成游戏，让你通过每日任务来建立好的生活习惯，这些想法都值得我们好好思考如何在一成不变的工作中产生更多价值。</p>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/IT看客/">IT看客</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计/">设计</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2016/03/23/IconForEveryday/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+
+    
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-17JqueryTips" class="article article-type-post " itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -2048,147 +2191,6 @@ INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;)
 
 
   
-    <article id="post-IconForEveryday" class="article article-type-post " itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/03/23/IconForEveryday/" class="article-date">
-      <time datetime="2016-03-22T16:00:00.000Z" itemprop="datePublished">2016-03-23</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/23/IconForEveryday/">365cons：每天一枚图标，可免费下载</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>大家都听过“An apple a day keeps the doctor away”这句俚语，现在网络上也开始流行养成习惯持续去做某一件事情，例如先前介绍过的100 Days UI百日设计挑战每天发布一个全新使用者界面设计来启发灵感，当然你也可以为自己设定一个习惯养成目标，HabitRPG甚至让生活变成游戏，让你通过每日任务来建立好的生活习惯，这些想法都值得我们好好思考如何在一成不变的工作中产生更多价值。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/IT看客/">IT看客</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计/">设计</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/03/23/IconForEveryday/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-
-    
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-CSS-For-Flip-Effect" class="article article-type-post " itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/03/19/CSS-For-Flip-Effect/" class="article-date">
-      <time datetime="2016-03-18T16:00:00.000Z" itemprop="datePublished">2016-03-19</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/19/CSS-For-Flip-Effect/">用CSS创建翻转动画</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CSS动画是非常有意思的，用一些简单的属性就可以创建出来，从优雅的淡入到更加惊艳的效果都可以，翻页效果就是其中之一，它通过在容器的正面跟反面包含不同的内容来加以实现。本文就是用尽可能简单的方法来实现这种效果。</p>
-<center><img src="/img/posts/CSS-For-Flip-Effect.png"></img></center>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/码路刺客/">码路刺客</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSS/">CSS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端编程/">前端编程</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/翻译/">翻译</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2016/03/19/CSS-For-Flip-Effect/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-
-    
-</article>
-
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
@@ -2200,7 +2202,7 @@ INSERT INTO dbo.duplicateTest VALUES(1, &apos;Bob&apos;,&apos;Smith&apos;)
         <div id="footer-info">
             <div class="footer-left">
                 <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
-                <!-- Posts count:82 -->
+                <!-- Posts count:83 -->
             </div>
 			<!--
             <div class="footer-left">

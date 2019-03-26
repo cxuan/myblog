@@ -3,6 +3,58 @@
   
     
     <entry>
+      <title><![CDATA[Python日期时间操作总结]]></title>
+      <url>/2019/03/26/20190326001_python_datetime/</url>
+      <content type="html"><![CDATA[<p>本文主要介绍Ptyhon 3中datetime, time模块相关函数用法及常用操作。datetime模块主要是用来表示日期的，就是我们常说的年月日时分秒，time模块主要侧重点在时分秒。</p>
+<a id="more"></a>
+<h3 id="时间相关概念"><a href="#时间相关概念" class="headerlink" title="时间相关概念"></a>时间相关概念</h3><h4 id="epoch"><a href="#epoch" class="headerlink" title="epoch"></a>epoch</h4><p>假设我们要将时间表示成毫秒数，比方说1000000毫秒，那有一个问题必须解决，这个1000000毫秒的起点是什么时间，也就是我们的时间基准点是什么时间？好比我说你身高1.8米，那这个身高是指相对于你站立的地面说的。这个时间基准点就是epoch，在Unix系统中，这个基准点就是1970年1月1日0点整那个时间点。</p>
+<h4 id="GMT-UTC"><a href="#GMT-UTC" class="headerlink" title="GMT, UTC"></a>GMT, UTC</h4><p>上面我们说epoch表示1970年的起始点，那这个1970年又是相对于哪个基准时间呢？一般来说，就是相对于格林尼治时间，也叫做GMT(Greenwich Mean Time)时间，还叫做UTC(Coordinated Universal Time)，为啥一个时间基准有两个名字？历史上，先有的GMT,后有的UTC.UTC是我们现在用的时间标准，GMT是老的时间计量标准。UTC是根据原子钟来计算时间，而GMT是根据地球的自转和公转来计算时间。所以，可以认为UTC是真正的基准时间，GMT相对UTC的偏差为0。在实际中，我们的计算机中有一个硬件模块RCT，里面会实时记录UTC 时间，该模块有单独的电池供电，即使关机也不影响。有了epoch这个时间基准，又有了UTC这个基准的基准，我们就可以精确地表示一个时间了。</p>
+<h4 id="DST-tzoneDST-tzone"><a href="#DST-tzoneDST-tzone" class="headerlink" title="DST, tzoneDST, tzone"></a>DST, tzoneDST, tzone</h4><p>尽管我们已经可以精确地表示一个时间，很多情况下，我们还是要根据地区实际情况对时间进行一个调整，最常见的就是时区，tzone，相信大家都比较熟悉。此时，当我们说5点5分这个时间时，还需加上是哪个时区的5点5分才能精确说明一个时间。另外一个对时间做出调整的就是DST.DST 全称是Daylight Saving Time，是说，为了充分利用日光，减少用电，人为地对时间做出一个调整，这取决于不同国家和地区的政策法规。比如说，假设你冬天7点天亮起床，但夏天6点天亮，那么在夏天到来时人为将时间加1个小时，这样就可以让你还是觉得7点起床，但实际上是提前一个小时了。</p>
+<h3 id="time模块"><a href="#time模块" class="headerlink" title="time模块"></a>time模块</h3><h4 id="获取时间"><a href="#获取时间" class="headerlink" title="获取时间"></a>获取时间</h4><p><code>time()</code>方法获取当前时间距离epoch的秒数，用的是UTC时间，这个函数没有参数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> time</div><div class="line">t = time.time()</div><div class="line"><span class="comment">#结果：1553614051.5006864</span></div></pre></td></tr></table></figure>
+<h4 id="时间转换"><a href="#时间转换" class="headerlink" title="时间转换"></a>时间转换</h4><p>将上面的秒数转换为年月日时分秒的形式，可以用<code>time. gmtime()</code>，<code>time.localtime()</code>方法。两个函数返回的都是struct_time类的实例。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">time.gmtime()</div><div class="line"><span class="comment">#结果：time.struct_time(tm_year=2019, tm_mon=3, tm_mday=26, tm_hour=15, tm_min=35, tm_sec=9, tm_wday=1, tm_yday=85, tm_isdst=0)</span></div><div class="line"><span class="comment">#</span></div><div class="line">time.localtime()</div><div class="line"><span class="comment">#结果：time.struct_time(tm_year=2019, tm_mon=3, tm_mday=26, tm_hour=23, tm_min=37, tm_sec=15, tm_wday=1, tm_yday=85, tm_isdst=0)</span></div></pre></td></tr></table></figure>
+<p>如果要将上述元组形式的时间转换成秒数，可以用<code>time.mktime()</code>方法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">now_struct = time.localtime()</div><div class="line">time.mktime(now_struct)</div><div class="line"><span class="comment">#结果：1553615106.0</span></div></pre></td></tr></table></figure>
+<p>将时间的元组转换为字符串形式，可以用<code>time.strftime()</code>,将特定格式的时间转成时间元组格式用<code>time.strptime()</code>方法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">time.strftime(<span class="string">"%Y-%m-%d %H:%M:%S"</span>, time.localtime()) </div><div class="line">time.strftime(<span class="string">"%Y-%m-%d %H:%M:%S"</span>) <span class="comment">#等效，默认是当前时间</span></div><div class="line"><span class="comment">#结果：'2019-03-26 23:52:32'</span></div><div class="line"><span class="comment">#</span></div><div class="line">time.strptime(<span class="string">'2019-03-26 11:56:21'</span>,<span class="string">'%Y-%m-%d %H:%M:%S'</span>)</div><div class="line"><span class="comment">#结果：time.struct_time(tm_year=2019, tm_mon=3, tm_mday=26, tm_hour=11, tm_min=56, tm_sec=21, tm_wday=1, tm_yday=85, tm_isdst=-1)</span></div></pre></td></tr></table></figure>
+<p><code>time.asctime()</code>、<code>time.ctime()</code>方法则会将时间转换为标准24字符的字符串，前者参数是时间元组，后者参数是秒数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">now_struct = time.localtime()</div><div class="line">time.asctime(now_struct)</div><div class="line"><span class="comment">#结果：'Wed Mar 27 00:03:07 2019'</span></div><div class="line"><span class="comment">#</span></div><div class="line">time.ctime(time.time())</div><div class="line"><span class="comment">#结果：'Wed Mar 27 00:03:07 2019'</span></div></pre></td></tr></table></figure>
+<p>下图可以比较清楚的描述时间秒数、时间元组、字符串之间的转换关系。</p>
+<center><img src="/img/posts/20190326001-01.png" alt="time时间转换"></center>
+
+<h3 id="datetime模块"><a href="#datetime模块" class="headerlink" title="datetime模块"></a>datetime模块</h3><p><code>time</code>模块解决了时间的获取和表示，<code>datetime</code>模块则进一步解决了快速获取并操作时间中的年月日时分秒信息的能力。<br>简单说，该模块核心的类就三个，date类表示年月日，time类表示时分秒毫秒，这里不要和time模块搞混淆了。请记住一点，date中是没有时区信息的。</p>
+<h4 id="对象创建"><a href="#对象创建" class="headerlink" title="对象创建"></a>对象创建</h4><p>常用<code>datetime.today()</code>、<code>datetime.now()</code>方法创建当前时区的对象。<code>datetime.fromtimestamp()</code>方法接收秒数参数。如果要获得utc的datetime对象，使用datetime. utcfromtimestamp()、datetime. utcnow()方法。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> datetime</div><div class="line"><span class="comment">#</span></div><div class="line">datetime.datetime.fromtimestamp(time.time())</div><div class="line"><span class="comment">#</span></div><div class="line">datetime.datetime.today()</div><div class="line">datetime.datetime.now()</div><div class="line"><span class="comment">#结果：datetime.datetime(2019, 3, 27, 0, 9, 18, 312810)</span></div><div class="line"></div><div class="line">datetime.datetime. utcnow()</div><div class="line"><span class="comment">#结果：datetime.datetime(2019, 3, 26, 16, 12, 22, 71628)</span></div></pre></td></tr></table></figure></p>
+<p>以特定格式字符串创建，使用<code>datetime.strptime()</code>方法。给定时间元组也可以创建datetime对象。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">datetime.datetime.strptime(<span class="string">'2015-6-1 18:19:59'</span>,<span class="string">'%Y-%m-%d %H:%M:%S'</span>)</div><div class="line"><span class="comment">#结果：datetime.datetime(2015, 6, 1, 18, 19, 59)</span></div><div class="line"><span class="comment">#</span></div><div class="line">datetime.datetime(<span class="number">2015</span>, <span class="number">4</span>, <span class="number">19</span>, <span class="number">12</span>, <span class="number">20</span>)</div><div class="line"><span class="comment">#结果：datetime.datetime(2015, 4, 19, 12, 20)</span></div></pre></td></tr></table></figure></p>
+<h4 id="格式转换"><a href="#格式转换" class="headerlink" title="格式转换"></a>格式转换</h4><p>datetime对象转换为时间戳。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dt = datetime.datetime.now()</div><div class="line">dt.timestamp()</div><div class="line"><span class="comment">#结果：1553617278.690061</span></div></pre></td></tr></table></figure></p>
+<p>datetime对象转换为字符串。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dt = datetime.datetime.now()</div><div class="line">datetime.datetime.strftime(dt,<span class="string">'%Y-%m-%d %H:%M:%S'</span>)</div><div class="line"><span class="comment">#结果：'2019-03-27 00:24:01'</span></div></pre></td></tr></table></figure></p>
+<p>datetime对象转换为time时间元组。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dt = datetime.datetime.now()</div><div class="line">time.localtime(dt.timestamp())</div><div class="line"><span class="comment">#结果：time.struct_time(tm_year=2019, tm_mon=3, tm_mday=27, tm_hour=0, tm_min=28, tm_sec=51, tm_wday=2, tm_yday=86, tm_isdst=0)</span></div></pre></td></tr></table></figure></p>
+<h3 id="日期计算"><a href="#日期计算" class="headerlink" title="日期计算"></a>日期计算</h3><p>基于某日期，向前或向后计算某段时间后的日期。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">dt</span> = datetime<span class="selector-class">.datetime</span><span class="selector-class">.now</span>() #当前日期</div><div class="line"><span class="selector-tag">dt</span> = datetime<span class="selector-class">.datetime</span><span class="selector-class">.now</span>()</div><div class="line"><span class="selector-tag">dt</span> - datetime.timedelta(days=<span class="number">1</span>) #当前日期向前减一天</div><div class="line"><span class="selector-tag">dt</span> + datetime.timedelta(days=<span class="number">1</span>) #当前日期向后加一天</div><div class="line"><span class="selector-tag">dt</span> + datetime.timedelta(days=<span class="number">11</span>,hours=<span class="number">3</span>,minutes=<span class="number">20</span>) #当前日期向后推<span class="number">11</span>天<span class="number">3</span>小时<span class="number">20</span>分</div></pre></td></tr></table></figure></p>
+<p>计算两个日期的时间差<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">start</span> = datetime.datetime.strptime(<span class="string">'2015-6-1 18:19:59'</span>,<span class="string">'%Y-%m-%d %H:%M:%S'</span>)</div><div class="line"><span class="function"><span class="keyword">end</span> = <span class="title">datetime</span>.<span class="title">datetime</span>.<span class="title">now</span>()</span></div><div class="line">dlt = <span class="keyword">end</span>-<span class="built_in">start</span></div><div class="line">dlt.days <span class="comment">#相差天数</span></div><div class="line">dlt.<span class="built_in">seconds</span> <span class="comment">#相差秒数</span></div></pre></td></tr></table></figure></p>
+<p>以下函数实现计算自从某一时间到当前时间经过了多少年，多少天，多少秒。<br><figure class="highlight perl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">def cal_time_past(start_time = <span class="string">'2016-08-12 05:10:45'</span>):</div><div class="line">    now_str = time.strftime(<span class="string">"%Y-%m-%d %H:%M:%S"</span>) <span class="comment">#当前时间字符串</span></div><div class="line">    now_obj = datetime.datetime.now() <span class="comment">#当前时间datetime对象</span></div><div class="line">    years_end = now_str[:<span class="number">4</span>]+start_time[<span class="number">4</span>:] <span class="comment">#开始时间年份替换为当年</span></div><div class="line">    <span class="keyword">if</span> now_str &gt;= years_end:</div><div class="line">        ynum = <span class="keyword">int</span>(years_end[:<span class="number">4</span>])-<span class="keyword">int</span>(start_time[<span class="number">0</span>:<span class="number">4</span>]) <span class="comment">#过了几个整年</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        ynum = <span class="keyword">int</span>(years_end[:<span class="number">4</span>])-<span class="keyword">int</span>(start_time[<span class="number">0</span>:<span class="number">4</span>])-<span class="number">1</span> <span class="comment">#最后不满一年</span></div><div class="line">        years_end = str(<span class="keyword">int</span>(years_end[:<span class="number">4</span>])-<span class="number">1</span>)+years_end[<span class="number">4</span>:]</div><div class="line">    years_end_obj = datetime.datetime.strptime(years_end,<span class="string">'%Y-%m-%d %H:%M:%S'</span>)</div><div class="line">    delta = now_obj-years_end_obj</div><div class="line">    dnum = delta.days <span class="comment">#去掉整年后过去的天数 </span></div><div class="line">    hnum = <span class="keyword">int</span>(delta.seconds/<span class="number">3600</span>) <span class="comment">#过去的小时数</span></div><div class="line">    mnum = <span class="keyword">int</span>((delta.seconds-<span class="number">3600</span>*hnum)/<span class="number">60</span>) <span class="comment">#过去的分钟数</span></div><div class="line">    snum = delta.seconds-<span class="number">3600</span>*hnum-<span class="number">60</span>*mnum <span class="comment">#过去的描述</span></div><div class="line">    <span class="keyword">print</span>(<span class="string">"%d年%d天%d小时%d分%d秒"</span> % (ynum,dnum,hnum,mnum,snum))</div><div class="line"><span class="comment">#</span></div><div class="line">cal_time_past(<span class="string">'1990-04-18 04:18:00'</span>)</div><div class="line"><span class="comment">#结果：28年342天20小时38分21秒</span></div></pre></td></tr></table></figure></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="https://www.jianshu.com/p/a035a564b248" target="_blank" rel="external">https://www.jianshu.com/p/a035a564b248</a></li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> 码路刺客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 原创 </tag>
+            
+            <tag> Python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[【Python 3 基础】字典dict创建方法及常用操作]]></title>
       <url>/2019/03/13/20190313001_python_dict/</url>
       <content type="html"><![CDATA[<p>本文主要介绍Ptyhon 3中字典创建方法，以及字典排序，合并等常用操作。</p>
@@ -3919,6 +3971,45 @@
     </entry>
     
     <entry>
+      <title><![CDATA[【T-SQL】group by 和grouping sets]]></title>
+      <url>/2016/06/13/SQL-GroupByAndGroupingSets/</url>
+      <content type="html"><![CDATA[<p>遇到一个情况，需要在内网系统中出一个统计报表。需要根据不同条件使用多个group by语句，需要将所有聚合的数据进行union操作来完成不同维度的统计查看。<br>知道发现了在SQL  Server 2008之后引入了grouping sets这个对于group by的增强后，上面的需求实现起来就简单的多，下面我们用AdventureWork中的表作为demo来解释一下grouping sets.</p>
+<a id="more"></a>
+<p>假设我现在需要两个维度查询我的销售额度，查询T-SQL如下：</p>
+<p><img src="/img/posts/SQL-GroupByAndGroupingSets-1.png" alt="SQL-GroupByAndGroupingSets-1"></p>
+<p>而使用SQL Server 2008之后新增的grouping sets语句，仅仅需要这样写：</p>
+<p><img src="/img/posts/SQL-GroupByAndGroupingSets-3.png" alt="SQL-GroupByAndGroupingSets-3"></p>
+<p>值得注意的是，虽然上面使用grouping sets语句和多个group by语句差生的结果完全一样，但顺序完全不同。</p>
+<p>grouping  sets，仅仅是语法糖？</p>
+<p>从上面的结果来看，使用grouping  sets仅仅是一个可以少写代码的语法糖，但实际情况是，group sets在遇到多个条件时，聚合是一次性从数据库中取出所有需要的操作的数据，在内存中对数据库进行聚合操作并生成结果。而union all是多次扫描表，将返回的结果进行union操作。这也就是为什么grouping  sets和union操作所返回的数据顺序是不同的原因。</p>
+<p>下面通过查看上面两个语句的IO和CPU来进行对比：</p>
+<p><img src="/img/posts/SQL-GroupByAndGroupingSets-5.png" alt="SQL-GroupByAndGroupingSets-5"></p>
+<p>通过上面的图来看grouping sets不仅仅只是语法糖，而是从执行原理做出了改变</p>
+<p>对于grouping sets来说，还经常和grouping函数联合使用，这个函数是反应目标列是否聚合，如果聚合则返回1，否则返回0，如下：</p>
+<p><img src="/img/posts/SQL-GroupByAndGroupingSets-6.png" alt="SQL-GroupByAndGroupingSets-6"></p>
+<p>转自：<a href="http://www.cnblogs.com/CareySon/archive/2011/12/19/2293245.html" target="_blank" rel="external">http://www.cnblogs.com/CareySon/archive/2011/12/19/2293245.html</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> 码路刺客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 数据库 </tag>
+            
+            <tag> 转载 </tag>
+            
+            <tag> SQL Server </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[【SSIS】几个通用属性]]></title>
       <url>/2016/06/13/SSIS-GeneralAttribures/</url>
       <content type="html"><![CDATA[<p>记录几个简单常用SSIS包常用属性，都是通用属性：</p>
@@ -3960,39 +4051,41 @@
     </entry>
     
     <entry>
-      <title><![CDATA[【T-SQL】group by 和grouping sets]]></title>
-      <url>/2016/06/13/SQL-GroupByAndGroupingSets/</url>
-      <content type="html"><![CDATA[<p>遇到一个情况，需要在内网系统中出一个统计报表。需要根据不同条件使用多个group by语句，需要将所有聚合的数据进行union操作来完成不同维度的统计查看。<br>知道发现了在SQL  Server 2008之后引入了grouping sets这个对于group by的增强后，上面的需求实现起来就简单的多，下面我们用AdventureWork中的表作为demo来解释一下grouping sets.</p>
+      <title><![CDATA[放开那程序猿！构建业务导向的大数据云平台]]></title>
+      <url>/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/</url>
+      <content type="html"><![CDATA[<p>按数据处理方式及使用目标，企业级IT系统可分为OLTP和OLAP系统。简而言之，OLTP系统生产数据，OLAP系统加工数据。从数据到智慧的转换金字塔上看，OLTP系统实现了底层的数据产生和存储以及面向事务的信息整合，在这之上的各层就要依赖OLAP系统了。OLAP概念源自决策支持系统（DSS），企业中的数据仓库、数据集市、统计报表、驾驶舱、数据挖掘等都属于OLAP体系。其中，数据仓库和数据集市主要实现信息整合，一般统称为数据整合平台。统计报表、驾驶舱、数据挖掘进一步利用数据整合平台的成果，帮助用户发现知识并最终形成智慧。 </p>
 <a id="more"></a>
-<p>假设我现在需要两个维度查询我的销售额度，查询T-SQL如下：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-1.png" alt="SQL-GroupByAndGroupingSets-1"></p>
-<p>而使用SQL Server 2008之后新增的grouping sets语句，仅仅需要这样写：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-3.png" alt="SQL-GroupByAndGroupingSets-3"></p>
-<p>值得注意的是，虽然上面使用grouping sets语句和多个group by语句差生的结果完全一样，但顺序完全不同。</p>
-<p>grouping  sets，仅仅是语法糖？</p>
-<p>从上面的结果来看，使用grouping  sets仅仅是一个可以少写代码的语法糖，但实际情况是，group sets在遇到多个条件时，聚合是一次性从数据库中取出所有需要的操作的数据，在内存中对数据库进行聚合操作并生成结果。而union all是多次扫描表，将返回的结果进行union操作。这也就是为什么grouping  sets和union操作所返回的数据顺序是不同的原因。</p>
-<p>下面通过查看上面两个语句的IO和CPU来进行对比：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-5.png" alt="SQL-GroupByAndGroupingSets-5"></p>
-<p>通过上面的图来看grouping sets不仅仅只是语法糖，而是从执行原理做出了改变</p>
-<p>对于grouping sets来说，还经常和grouping函数联合使用，这个函数是反应目标列是否聚合，如果聚合则返回1，否则返回0，如下：</p>
-<p><img src="/img/posts/SQL-GroupByAndGroupingSets-6.png" alt="SQL-GroupByAndGroupingSets-6"></p>
-<p>转自：<a href="http://www.cnblogs.com/CareySon/archive/2011/12/19/2293245.html" target="_blank" rel="external">http://www.cnblogs.com/CareySon/archive/2011/12/19/2293245.html</a></p>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-1.png" alt="BuildBusinessOrientedBigDataCloudPlatform-1"></p>
+<p>OLAP系统的主要用户是分析人员和管理人员，目标是支持管理决策，依据是企业生产经营过程中产生的全量数据，是一个按目标使用场景对数据进行加工、利用的过程。这过程一般可以划分五个阶段：业务部门定义需求；IT部门根据需求获取并整合相关数据；IT部门根据需求设计分析模型；IT部门开发实施并发布；业务部门应用并衡量实际成效。在传统的数据基础和技术环境下，这个周期可能要经历较漫长的时间。还在建设OLAP体系的情况自不必多说，即便已建成OLAP体系统，要及时响应业务部门的需求也是较困难的，而且很有可能最终的交付质量不能达到需求方的预期。</p>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-2.png" alt="BuildBusinessOrientedBigDataCloudPlatform-2"></p>
+<p>下图是目前较常见的OLAP体系简图，上游系统指那些OLTP系统，是数据源。数据整合平台包括ODS、数据仓库、数据集市等，主要实现数据整合。下游系统指那些利用数据整合平台成果的系统，包括统计报表、驾驶舱、数据挖掘等。其中，数据整合平台承上启下，在整个OLAP体系中非常重要。按照目前较普遍的架构，从上游到下游的数据流向，至少分为同构层、整合层、应用层。其中同构层在模型上基本与上游接入数据源基本保持一致，整合层一般会采用高范式模型进行数据整合，应用层面向下游具体应用采用星型模型。这个架构是在Inmon帮和Kimball派十几年如一日的不断撕逼和妥协中演进出来的，应该是一种最佳实践。但随着互联网+大数据时代到来，对数据应用有着更高效、更深入的要求，这种架构本身固有的缺点被不断放大。</p>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-3.png" alt="BuildBusinessOrientedBigDataCloudPlatform-3"></p>
+<p><strong>开发周期长</strong></p>
+<p>为了避免因上游系统接入模型的变化而导致数据整合平台模型的被动调整，整合层建模时一般会采用较高范式实现高内聚、低耦合，ER实体较多、关系复杂。这样就增加了ETL设计、开发以及测试的复杂度，同时ETL程序执行效率也低。业务部门提出的需求，IT首先由下至上逐层对模型进行分析，即便只需在应用层开发，基于上述原因也需要一周以上。如果涉及要改动整合层，开发周期要一个月左右，业务部门显然是不能接受的。最后的结局不用猜都知道，苦逼的程序猿只能再一次强睁熊猫眼天天加班赶工。但是故事并没有到此结束，马上一个意想不到但细细想想又是顺理成章的伴生问题发生了。</p>
+<p><strong>架构迅速变坏</strong></p>
+<p>在日复一日的高压下，程序猿只能另辟蹊径为自己减负。既然工作量是由于数据模型和层次的复杂性引起的，那最有效的减少工作量的方法无非就是：1、绕过整合层，数据直接从同构层到应用层。2、还是从通过整合层，但使用面向应用的自建模型。无论哪种方法，都使整合层形同虚设，从同构层到应用层形成一个个数据井道。虽然单个开发任务的开发时间缩短了，但各数据井道之间无法复用，所以总的开发时间绝对要更多，而且后期的维护工作将是一场噩梦。</p>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-4.png" alt="BuildBusinessOrientedBigDataCloudPlatform-4"></p>
+<p><strong>效率低</strong></p>
+<p>架构变坏后，数据一致性无法保证，大量数据重复存储，大量指标重复计算，ETL作业数急剧上升，数据整合平台效率自然会越来越差。即便架构还能保持，但随着时间的推移，数据量及业务需求不断增加，架构上倾向分割出更多的层次，以便实现更多的复用。随着层次的增加，数据迁移的路径就变长了，长久以往也难逃低效率的宿命。</p>
+<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-5.png" alt="BuildBusinessOrientedBigDataCloudPlatform-5"></p>
+<p>再回顾下OLAP数据应用的五个阶段，从业务提出需求到业务应用验证形成闭环，这过程是由IT导向推动的，IT首先与业务讨论分析需求，在业务模型层面中达成共识，然后再映射到系统模型，实现对来自上游系统的数据进行加工处理，最后通过OLAP系统将结果在业务语境中展现给用户，之前讨论的所有弊病都此有关。而对于像银行、保险等发展较成熟的行业，其业务语境、模型是较稳定的，支持业务开展的上游IT系统的系统模型也应该是相对稳定的，因此业务模型和系统模型间能形成较稳定的映射关系。这样只要能达到足够细的粒度，就能实现操纵业务模型来改变系统模型的目的。而业务模型又能被业务所能理解，因此这个闭环过程就可以完全由业务导向不需要IT的参与，整个过程可以简化为：业务设计模型，业务应用验证。</p>
+<p>文／season7（简书作者）<br>原文链接：<a href="http://www.jianshu.com/p/d55d8eeac219" target="_blank" rel="external">http://www.jianshu.com/p/d55d8eeac219</a></p>
 ]]></content>
       
         <categories>
             
-            <category> 码路刺客 </category>
+            <category> BI墨客 </category>
             
         </categories>
         
         
         <tags>
             
-            <tag> 数据库 </tag>
-            
             <tag> 转载 </tag>
             
-            <tag> SQL Server </tag>
+            <tag> BI </tag>
+            
+            <tag> BigData </tag>
             
         </tags>
         
@@ -4035,47 +4128,6 @@
             <tag> 转载 </tag>
             
             <tag> BI </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[放开那程序猿！构建业务导向的大数据云平台]]></title>
-      <url>/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/</url>
-      <content type="html"><![CDATA[<p>按数据处理方式及使用目标，企业级IT系统可分为OLTP和OLAP系统。简而言之，OLTP系统生产数据，OLAP系统加工数据。从数据到智慧的转换金字塔上看，OLTP系统实现了底层的数据产生和存储以及面向事务的信息整合，在这之上的各层就要依赖OLAP系统了。OLAP概念源自决策支持系统（DSS），企业中的数据仓库、数据集市、统计报表、驾驶舱、数据挖掘等都属于OLAP体系。其中，数据仓库和数据集市主要实现信息整合，一般统称为数据整合平台。统计报表、驾驶舱、数据挖掘进一步利用数据整合平台的成果，帮助用户发现知识并最终形成智慧。 </p>
-<a id="more"></a>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-1.png" alt="BuildBusinessOrientedBigDataCloudPlatform-1"></p>
-<p>OLAP系统的主要用户是分析人员和管理人员，目标是支持管理决策，依据是企业生产经营过程中产生的全量数据，是一个按目标使用场景对数据进行加工、利用的过程。这过程一般可以划分五个阶段：业务部门定义需求；IT部门根据需求获取并整合相关数据；IT部门根据需求设计分析模型；IT部门开发实施并发布；业务部门应用并衡量实际成效。在传统的数据基础和技术环境下，这个周期可能要经历较漫长的时间。还在建设OLAP体系的情况自不必多说，即便已建成OLAP体系统，要及时响应业务部门的需求也是较困难的，而且很有可能最终的交付质量不能达到需求方的预期。</p>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-2.png" alt="BuildBusinessOrientedBigDataCloudPlatform-2"></p>
-<p>下图是目前较常见的OLAP体系简图，上游系统指那些OLTP系统，是数据源。数据整合平台包括ODS、数据仓库、数据集市等，主要实现数据整合。下游系统指那些利用数据整合平台成果的系统，包括统计报表、驾驶舱、数据挖掘等。其中，数据整合平台承上启下，在整个OLAP体系中非常重要。按照目前较普遍的架构，从上游到下游的数据流向，至少分为同构层、整合层、应用层。其中同构层在模型上基本与上游接入数据源基本保持一致，整合层一般会采用高范式模型进行数据整合，应用层面向下游具体应用采用星型模型。这个架构是在Inmon帮和Kimball派十几年如一日的不断撕逼和妥协中演进出来的，应该是一种最佳实践。但随着互联网+大数据时代到来，对数据应用有着更高效、更深入的要求，这种架构本身固有的缺点被不断放大。</p>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-3.png" alt="BuildBusinessOrientedBigDataCloudPlatform-3"></p>
-<p><strong>开发周期长</strong></p>
-<p>为了避免因上游系统接入模型的变化而导致数据整合平台模型的被动调整，整合层建模时一般会采用较高范式实现高内聚、低耦合，ER实体较多、关系复杂。这样就增加了ETL设计、开发以及测试的复杂度，同时ETL程序执行效率也低。业务部门提出的需求，IT首先由下至上逐层对模型进行分析，即便只需在应用层开发，基于上述原因也需要一周以上。如果涉及要改动整合层，开发周期要一个月左右，业务部门显然是不能接受的。最后的结局不用猜都知道，苦逼的程序猿只能再一次强睁熊猫眼天天加班赶工。但是故事并没有到此结束，马上一个意想不到但细细想想又是顺理成章的伴生问题发生了。</p>
-<p><strong>架构迅速变坏</strong></p>
-<p>在日复一日的高压下，程序猿只能另辟蹊径为自己减负。既然工作量是由于数据模型和层次的复杂性引起的，那最有效的减少工作量的方法无非就是：1、绕过整合层，数据直接从同构层到应用层。2、还是从通过整合层，但使用面向应用的自建模型。无论哪种方法，都使整合层形同虚设，从同构层到应用层形成一个个数据井道。虽然单个开发任务的开发时间缩短了，但各数据井道之间无法复用，所以总的开发时间绝对要更多，而且后期的维护工作将是一场噩梦。</p>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-4.png" alt="BuildBusinessOrientedBigDataCloudPlatform-4"></p>
-<p><strong>效率低</strong></p>
-<p>架构变坏后，数据一致性无法保证，大量数据重复存储，大量指标重复计算，ETL作业数急剧上升，数据整合平台效率自然会越来越差。即便架构还能保持，但随着时间的推移，数据量及业务需求不断增加，架构上倾向分割出更多的层次，以便实现更多的复用。随着层次的增加，数据迁移的路径就变长了，长久以往也难逃低效率的宿命。</p>
-<p><img src="/img/posts/BuildBusinessOrientedBigDataCloudPlatform-5.png" alt="BuildBusinessOrientedBigDataCloudPlatform-5"></p>
-<p>再回顾下OLAP数据应用的五个阶段，从业务提出需求到业务应用验证形成闭环，这过程是由IT导向推动的，IT首先与业务讨论分析需求，在业务模型层面中达成共识，然后再映射到系统模型，实现对来自上游系统的数据进行加工处理，最后通过OLAP系统将结果在业务语境中展现给用户，之前讨论的所有弊病都此有关。而对于像银行、保险等发展较成熟的行业，其业务语境、模型是较稳定的，支持业务开展的上游IT系统的系统模型也应该是相对稳定的，因此业务模型和系统模型间能形成较稳定的映射关系。这样只要能达到足够细的粒度，就能实现操纵业务模型来改变系统模型的目的。而业务模型又能被业务所能理解，因此这个闭环过程就可以完全由业务导向不需要IT的参与，整个过程可以简化为：业务设计模型，业务应用验证。</p>
-<p>文／season7（简书作者）<br>原文链接：<a href="http://www.jianshu.com/p/d55d8eeac219" target="_blank" rel="external">http://www.jianshu.com/p/d55d8eeac219</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> BI墨客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 转载 </tag>
-            
-            <tag> BI </tag>
-            
-            <tag> BigData </tag>
             
         </tags>
         
@@ -4665,6 +4717,37 @@ $ npm install bespoke-fx
     </entry>
     
     <entry>
+      <title><![CDATA[比尔·盖茨：如果你看完了这些极其难懂的书，请给我投简历！]]></title>
+      <url>/2016/05/06/The-Art-of-Computer-Programming/</url>
+      <content type="html"><![CDATA[<p>在硅谷的世界里，有几本比《计算机编程艺术》（ “The Art of Computer Programming”）更受人认可的书，这些书也是斯坦福大学名誉教授Donald Knuth点名的非常不错的书。而在比尔盖茨的演讲中，他甚至表示：“如果你自认为是个非常优秀的程序员。那么你如果全部读完了Knuth编写的《计算机编程艺术》这本书的话。你一定要给我发份简历”。而这句好像开完笑的话，便可以说明比尔盖茨对其的高度评价，同时这些话也被收录在了这本书的第一卷的第三版的封面上。</p>
+<a id="more"></a>
+<p><img src="/img/posts/The-Art-of-Computer-Programming-1.jpg" alt="The-Art-of-Computer-Programming-1"></p>
+<p>据说，这句话是自盖茨曾经工作的辛迪加报纸专栏里流传出来的，而该专栏还称这本书非常具有传奇色彩，而它的难度更让很多人把它拒之门外，下面是其具体描述：<br>“这是一门让人难懂的学科，我花了好几个月时间去读它，看了20页之后就把书丢到一边，一星期之后又回来读另外20页。如果有人傲慢的说他看明白了书中的一切，那么Knuth将帮助他们了解世界是如何的深刻而复杂。”</p>
+<p><img src="/img/posts/The-Art-of-Computer-Programming-2.jpg" alt="The-Art-of-Computer-Programming-2"></p>
+<p>《计算机编程艺术》第一卷于1962年问世，它是第一本深入探讨编程的数学性和科学性的书籍。Knuth将这本书视为其一生的工作，并表示如果情况允许的话，这本书将共有七卷。最新的一本书于2015年12月发布。<br>旧金山企业家Carl Tashian在最近的一篇媒体文章中说道：“Donald Knuth的《计算机编程艺术》有四个精装册，每本的封面都是暗紫色，让人看起来很舒服。而书的本身也像人们透了这样的一个信息：“外行者靠边站，因为这本书是给真正从事编程工作的程序员看的。”<br>就已经跨过这个阶段的Knuth来说，他的技术能力已经成为高科技产业一个传奇。而想要超越单纯的编码深入到程序员工作底层的复杂性，程序员们必须要熟读这本书。<br>Amazon评论家在1997年写道：“如果算机科学有可兰经，圣经等等经书，那也这就是它。”<br>这本书因全面而彻底的讲述编程而闻名，当然，其同时也极大地挑战和挫伤了很多程序员的自尊心。这本书对Knuth的案例和其i严谨的数学证明即使是对于比尔盖茨来说仍是有着很大的困惑的。<br>尽管它有悠久的出版历史，Knuth通过不断更新《计算机编程艺术》的版本来获得更多的粉丝。如果你发现他的书中有任何错误，你就可能得到有名的Knuth奖励检查，总数为2.56美元的奖金。而这笔奖金还被他专门赋予了“一个十六进制的美元”的特殊意义。因此，我们可以认为这笔奖金的获得对于那些想要证明自己知道自己在说些什么的人来说是一笔宝贵的奖励。<br>当然，众所周知天下之大，我们不可能什么都知道。就像你需要开车，你并不需要知道内燃机是如何工作的这件事情一样，你也没有必要为了了解如何编写程序来强硬的读这本书，所以不要把这个事情看成一个必须的读本就好。当然，如果想要有更多的这方面探索的话，这本书还是非常不错的。</p>
+<p>原文链接：<a href="http://toutiao.com/a6279342772928119041/" target="_blank" rel="external">http://toutiao.com/a6279342772928119041/</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> IT看客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 转载 </tag>
+            
+            <tag> IT资讯 </tag>
+            
+            <tag> 计算机基原理 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[【SSIS】利用SSIS模板快速开发SSIS Package]]></title>
       <url>/2016/05/06/SSIS-Template-For-SSISPackage/</url>
       <content type="html"><![CDATA[<p>在做 ETL 项目的时候，往往很多 Package 的开发都是基于相同的模型和流程。比如在 Package 开始运行时需要向 Process Log 表中插入记录，在 Package 运行结束的时候更新运行状态。</p>
@@ -4704,37 +4787,6 @@ $ npm install bespoke-fx
             <tag> BI </tag>
             
             <tag> SSIS </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[比尔·盖茨：如果你看完了这些极其难懂的书，请给我投简历！]]></title>
-      <url>/2016/05/06/The-Art-of-Computer-Programming/</url>
-      <content type="html"><![CDATA[<p>在硅谷的世界里，有几本比《计算机编程艺术》（ “The Art of Computer Programming”）更受人认可的书，这些书也是斯坦福大学名誉教授Donald Knuth点名的非常不错的书。而在比尔盖茨的演讲中，他甚至表示：“如果你自认为是个非常优秀的程序员。那么你如果全部读完了Knuth编写的《计算机编程艺术》这本书的话。你一定要给我发份简历”。而这句好像开完笑的话，便可以说明比尔盖茨对其的高度评价，同时这些话也被收录在了这本书的第一卷的第三版的封面上。</p>
-<a id="more"></a>
-<p><img src="/img/posts/The-Art-of-Computer-Programming-1.jpg" alt="The-Art-of-Computer-Programming-1"></p>
-<p>据说，这句话是自盖茨曾经工作的辛迪加报纸专栏里流传出来的，而该专栏还称这本书非常具有传奇色彩，而它的难度更让很多人把它拒之门外，下面是其具体描述：<br>“这是一门让人难懂的学科，我花了好几个月时间去读它，看了20页之后就把书丢到一边，一星期之后又回来读另外20页。如果有人傲慢的说他看明白了书中的一切，那么Knuth将帮助他们了解世界是如何的深刻而复杂。”</p>
-<p><img src="/img/posts/The-Art-of-Computer-Programming-2.jpg" alt="The-Art-of-Computer-Programming-2"></p>
-<p>《计算机编程艺术》第一卷于1962年问世，它是第一本深入探讨编程的数学性和科学性的书籍。Knuth将这本书视为其一生的工作，并表示如果情况允许的话，这本书将共有七卷。最新的一本书于2015年12月发布。<br>旧金山企业家Carl Tashian在最近的一篇媒体文章中说道：“Donald Knuth的《计算机编程艺术》有四个精装册，每本的封面都是暗紫色，让人看起来很舒服。而书的本身也像人们透了这样的一个信息：“外行者靠边站，因为这本书是给真正从事编程工作的程序员看的。”<br>就已经跨过这个阶段的Knuth来说，他的技术能力已经成为高科技产业一个传奇。而想要超越单纯的编码深入到程序员工作底层的复杂性，程序员们必须要熟读这本书。<br>Amazon评论家在1997年写道：“如果算机科学有可兰经，圣经等等经书，那也这就是它。”<br>这本书因全面而彻底的讲述编程而闻名，当然，其同时也极大地挑战和挫伤了很多程序员的自尊心。这本书对Knuth的案例和其i严谨的数学证明即使是对于比尔盖茨来说仍是有着很大的困惑的。<br>尽管它有悠久的出版历史，Knuth通过不断更新《计算机编程艺术》的版本来获得更多的粉丝。如果你发现他的书中有任何错误，你就可能得到有名的Knuth奖励检查，总数为2.56美元的奖金。而这笔奖金还被他专门赋予了“一个十六进制的美元”的特殊意义。因此，我们可以认为这笔奖金的获得对于那些想要证明自己知道自己在说些什么的人来说是一笔宝贵的奖励。<br>当然，众所周知天下之大，我们不可能什么都知道。就像你需要开车，你并不需要知道内燃机是如何工作的这件事情一样，你也没有必要为了了解如何编写程序来强硬的读这本书，所以不要把这个事情看成一个必须的读本就好。当然，如果想要有更多的这方面探索的话，这本书还是非常不错的。</p>
-<p>原文链接：<a href="http://toutiao.com/a6279342772928119041/" target="_blank" rel="external">http://toutiao.com/a6279342772928119041/</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> IT看客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 转载 </tag>
-            
-            <tag> IT资讯 </tag>
-            
-            <tag> 计算机基原理 </tag>
             
         </tags>
         
@@ -5458,6 +5510,48 @@ $layer = $(&apos;div[class*=&quot;layer-&quot;]’);
     </entry>
     
     <entry>
+      <title><![CDATA[365cons：每天一枚图标，可免费下载]]></title>
+      <url>/2016/03/23/IconForEveryday/</url>
+      <content type="html"><![CDATA[<p>大家都听过“An apple a day keeps the doctor away”这句俚语，现在网络上也开始流行养成习惯持续去做某一件事情，例如先前介绍过的100 Days UI百日设计挑战每天发布一个全新使用者界面设计来启发灵感，当然你也可以为自己设定一个习惯养成目标，HabitRPG甚至让生活变成游戏，让你通过每日任务来建立好的生活习惯，这些想法都值得我们好好思考如何在一成不变的工作中产生更多价值。</p>
+<a id="more"></a>
+<center><img src="/img/posts/21.jpg"></center>
+
+
+<p>最近发现一个很棒的项目365cons，由一位西雅图视觉设计师Amy开发，网站每天会更新释出一个免费图标让使用者下载！Amy给自己立下一个目标：在2016年的每一天都发布一款全新图标，借此探索各种风格及练习设计相关技术。这些图标都与设计师生活息息相关，不局限于特定主题。</p>
+<p>365cons提供的图标格式包括：SVG、PNG两种版本，每一个图标都能在网页预览，无须注册就能免费下载使用。图标授权方式采MIT License，可被免费下载使用于任何地方。</p>
+<p>站点名称：<strong>365cons</strong></p>
+<p>网站连接：<a href="http://www.365cons.com/" target="_blank" rel="external">http://www.365cons.com/</a></p>
+<p><strong>使用教学</strong></p>
+<p><strong>STEP 1</strong></p>
+<p>开启365cons网站后，可以看到网站收录的免费图标项目，这些图标都是由设计师亲自设计开发，每日更新，不过网站没有提供订阅方式，如果你想追踪更新，那么可以定时回到网站来逛逛。</p>
+<center><img src="/img/posts/22.jpg"></center>
+
+<p><strong>STEP 2</strong></p>
+<p>在每一个图标下方，会有该图标编号、名称，以及SVG和PNG档案下载连接。</p>
+<center><img src="/img/posts/23.jpg"></center>
+
+<p>如果你有任何想法或建议，都可以通过网站上的网址与设计师联系，这些图标设计都非常可爱，也跟一般在外面看到的图标集不太一样，多了那么一点独特与天真浪漫！喜欢的话能将它下载下来使用，完全免费。</p>
+<p>转自 <a href="http://toutiao.com/a6262086085100273922/" target="_blank" rel="external">http://toutiao.com/a6262086085100273922/</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> IT看客 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 转载 </tag>
+            
+            <tag> 设计 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[17个jQuery实用技巧]]></title>
       <url>/2016/03/23/17JqueryTips/</url>
       <content type="html"><![CDATA[<h2 id="检查-jQuery-是否加载"><a href="#检查-jQuery-是否加载" class="headerlink" title="检查 jQuery 是否加载"></a>检查 jQuery 是否加载</h2><p>在使用 jQuery 进行任何操作之前，你需要先确认它已经加载：</p>
@@ -5616,48 +5710,6 @@ $elem.otherStuff();
             <tag> 前端编程 </tag>
             
             <tag> jQuery </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[365cons：每天一枚图标，可免费下载]]></title>
-      <url>/2016/03/23/IconForEveryday/</url>
-      <content type="html"><![CDATA[<p>大家都听过“An apple a day keeps the doctor away”这句俚语，现在网络上也开始流行养成习惯持续去做某一件事情，例如先前介绍过的100 Days UI百日设计挑战每天发布一个全新使用者界面设计来启发灵感，当然你也可以为自己设定一个习惯养成目标，HabitRPG甚至让生活变成游戏，让你通过每日任务来建立好的生活习惯，这些想法都值得我们好好思考如何在一成不变的工作中产生更多价值。</p>
-<a id="more"></a>
-<center><img src="/img/posts/21.jpg"></center>
-
-
-<p>最近发现一个很棒的项目365cons，由一位西雅图视觉设计师Amy开发，网站每天会更新释出一个免费图标让使用者下载！Amy给自己立下一个目标：在2016年的每一天都发布一款全新图标，借此探索各种风格及练习设计相关技术。这些图标都与设计师生活息息相关，不局限于特定主题。</p>
-<p>365cons提供的图标格式包括：SVG、PNG两种版本，每一个图标都能在网页预览，无须注册就能免费下载使用。图标授权方式采MIT License，可被免费下载使用于任何地方。</p>
-<p>站点名称：<strong>365cons</strong></p>
-<p>网站连接：<a href="http://www.365cons.com/" target="_blank" rel="external">http://www.365cons.com/</a></p>
-<p><strong>使用教学</strong></p>
-<p><strong>STEP 1</strong></p>
-<p>开启365cons网站后，可以看到网站收录的免费图标项目，这些图标都是由设计师亲自设计开发，每日更新，不过网站没有提供订阅方式，如果你想追踪更新，那么可以定时回到网站来逛逛。</p>
-<center><img src="/img/posts/22.jpg"></center>
-
-<p><strong>STEP 2</strong></p>
-<p>在每一个图标下方，会有该图标编号、名称，以及SVG和PNG档案下载连接。</p>
-<center><img src="/img/posts/23.jpg"></center>
-
-<p>如果你有任何想法或建议，都可以通过网站上的网址与设计师联系，这些图标设计都非常可爱，也跟一般在外面看到的图标集不太一样，多了那么一点独特与天真浪漫！喜欢的话能将它下载下来使用，完全免费。</p>
-<p>转自 <a href="http://toutiao.com/a6262086085100273922/" target="_blank" rel="external">http://toutiao.com/a6262086085100273922/</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> IT看客 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 转载 </tag>
-            
-            <tag> 设计 </tag>
             
         </tags>
         

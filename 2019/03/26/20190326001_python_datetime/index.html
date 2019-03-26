@@ -15,26 +15,18 @@
 
 
 
-<meta name="description" content="codepen上不错的视差效果设计。">
+<meta name="description" content="本文主要介绍Ptyhon 3中datetime, time模块相关函数用法及常用操作。datetime模块主要是用来表示日期的，就是我们常说的年月日时分秒，time模块主要侧重点在时分秒。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CSS视差效果设计">
-<meta property="og:url" content="https://c-xuan.com/2019/03/05/20190305001_css_parallax_effects/index.html">
+<meta property="og:title" content="Python日期时间操作总结">
+<meta property="og:url" content="https://c-xuan.com/2019/03/26/20190326001_python_datetime/index.html">
 <meta property="og:site_name" content="靛青">
-<meta property="og:description" content="codepen上不错的视差效果设计。">
-<meta property="og:image" content="https://c-xuan.com/img/posts/20190305001-01.gif">
-<meta property="og:image" content="https://c-xuan.com/img/posts/20190305001-02.gif">
-<meta property="og:image" content="https://c-xuan.com/img/posts/20190305001-03.gif">
-<meta property="og:image" content="https://c-xuan.com/img/posts/20190305001-04.gif">
-<meta property="og:image" content="https://c-xuan.com/img/posts/20190305001-05.gif">
-<meta property="og:image" content="https://c-xuan.com/img/posts/20190305001-06.gif">
-<meta property="og:image" content="https://c-xuan.com/img/posts/20190305001-07.gif">
-<meta property="og:image" content="https://c-xuan.com/img/posts/20190305001-08.gif">
-<meta property="og:image" content="https://c-xuan.com/img/posts/20190305001-09.gif">
-<meta property="og:updated_time" content="2019-03-05T11:16:42.000Z">
+<meta property="og:description" content="本文主要介绍Ptyhon 3中datetime, time模块相关函数用法及常用操作。datetime模块主要是用来表示日期的，就是我们常说的年月日时分秒，time模块主要侧重点在时分秒。">
+<meta property="og:image" content="https://c-xuan.com/img/posts/20190326001-01.png">
+<meta property="og:updated_time" content="2019-03-26T15:36:28.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CSS视差效果设计">
-<meta name="twitter:description" content="codepen上不错的视差效果设计。">
-<meta name="twitter:image" content="https://c-xuan.com/img/posts/20190305001-01.gif">
+<meta name="twitter:title" content="Python日期时间操作总结">
+<meta name="twitter:description" content="本文主要介绍Ptyhon 3中datetime, time模块相关函数用法及常用操作。datetime模块主要是用来表示日期的，就是我们常说的年月日时分秒，time模块主要侧重点在时分秒。">
+<meta name="twitter:image" content="https://c-xuan.com/img/posts/20190326001-01.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -66,7 +58,7 @@
 <link href="/js/others/font-awesome.min.css" rel="stylesheet">
 
 
-<title>CSS视差效果设计 | 靛青</title>
+<title>Python日期时间操作总结 | 靛青</title>
 
 <script src="/js/others/jquery.min.js"></script>
 <script src="/js/others/clipboard.min.js"></script>
@@ -392,11 +384,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap "><article id="post-20190305001_css_parallax_effects" class="article article-type-post  animated pulse " itemscope itemprop="blogPost">
+      <div class="body-wrap "><article id="post-20190326001_python_datetime" class="article article-type-post  animated pulse " itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/03/05/20190305001_css_parallax_effects/" class="article-date">
-      <time datetime="2019-03-05T11:16:42.000Z" itemprop="datePublished">2019-03-05</time>
+      <a href="/2019/03/26/20190326001_python_datetime/" class="article-date">
+      <time datetime="2019-03-26T15:36:28.000Z" itemprop="datePublished">2019-03-26</time>
 </a>
 
 
@@ -411,7 +403,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      CSS视差效果设计
+      Python日期时间操作总结
     </h1>
   
 
@@ -426,10 +418,10 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSS/">CSS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端/">前端</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原创/">原创</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原创/">原创</a></li></ul>
     </div>
 
-          <div style="font-size:0.9rem;color:#696969;line-height: 2.0;">　　<i class="fa fa-pencil-square-o" aria-hidden="true"></i> 本文字数<span class="post-count">365</span> | <i class="fa fa-clock-o" aria-hidden="true"></i> 阅读时长约<span class="post-count">2</span>分钟</div>
+          <div style="font-size:0.9rem;color:#696969;line-height: 2.0;">　　<i class="fa fa-pencil-square-o" aria-hidden="true"></i> 本文字数<span class="post-count">1,769</span> | <i class="fa fa-clock-o" aria-hidden="true"></i> 阅读时长约<span class="post-count">7</span>分钟</div>
         <div class="clearfix"></div>
       </div>
       
@@ -437,97 +429,35 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>codepen上不错的视差效果设计。</p>
+        <p>本文主要介绍Ptyhon 3中datetime, time模块相关函数用法及常用操作。datetime模块主要是用来表示日期的，就是我们常说的年月日时分秒，time模块主要侧重点在时分秒。</p>
 <a id="more"></a>
-<center><img src="/img/posts/20190305001-01.gif" alt="parallax effects"></center>
+<h3 id="时间相关概念"><a href="#时间相关概念" class="headerlink" title="时间相关概念"></a>时间相关概念</h3><h4 id="epoch"><a href="#epoch" class="headerlink" title="epoch"></a>epoch</h4><p>假设我们要将时间表示成毫秒数，比方说1000000毫秒，那有一个问题必须解决，这个1000000毫秒的起点是什么时间，也就是我们的时间基准点是什么时间？好比我说你身高1.8米，那这个身高是指相对于你站立的地面说的。这个时间基准点就是epoch，在Unix系统中，这个基准点就是1970年1月1日0点整那个时间点。</p>
+<h4 id="GMT-UTC"><a href="#GMT-UTC" class="headerlink" title="GMT, UTC"></a>GMT, UTC</h4><p>上面我们说epoch表示1970年的起始点，那这个1970年又是相对于哪个基准时间呢？一般来说，就是相对于格林尼治时间，也叫做GMT(Greenwich Mean Time)时间，还叫做UTC(Coordinated Universal Time)，为啥一个时间基准有两个名字？历史上，先有的GMT,后有的UTC.UTC是我们现在用的时间标准，GMT是老的时间计量标准。UTC是根据原子钟来计算时间，而GMT是根据地球的自转和公转来计算时间。所以，可以认为UTC是真正的基准时间，GMT相对UTC的偏差为0。在实际中，我们的计算机中有一个硬件模块RCT，里面会实时记录UTC 时间，该模块有单独的电池供电，即使关机也不影响。有了epoch这个时间基准，又有了UTC这个基准的基准，我们就可以精确地表示一个时间了。</p>
+<h4 id="DST-tzoneDST-tzone"><a href="#DST-tzoneDST-tzone" class="headerlink" title="DST, tzoneDST, tzone"></a>DST, tzoneDST, tzone</h4><p>尽管我们已经可以精确地表示一个时间，很多情况下，我们还是要根据地区实际情况对时间进行一个调整，最常见的就是时区，tzone，相信大家都比较熟悉。此时，当我们说5点5分这个时间时，还需加上是哪个时区的5点5分才能精确说明一个时间。另外一个对时间做出调整的就是DST.DST 全称是Daylight Saving Time，是说，为了充分利用日光，减少用电，人为地对时间做出一个调整，这取决于不同国家和地区的政策法规。比如说，假设你冬天7点天亮起床，但夏天6点天亮，那么在夏天到来时人为将时间加1个小时，这样就可以让你还是觉得7点起床，但实际上是提前一个小时了。</p>
+<h3 id="time模块"><a href="#time模块" class="headerlink" title="time模块"></a>time模块</h3><h4 id="获取时间"><a href="#获取时间" class="headerlink" title="获取时间"></a>获取时间</h4><p><code>time()</code>方法获取当前时间距离epoch的秒数，用的是UTC时间，这个函数没有参数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> time</div><div class="line">t = time.time()</div><div class="line"><span class="comment">#结果：1553614051.5006864</span></div></pre></td></tr></table></figure>
+<h4 id="时间转换"><a href="#时间转换" class="headerlink" title="时间转换"></a>时间转换</h4><p>将上面的秒数转换为年月日时分秒的形式，可以用<code>time. gmtime()</code>，<code>time.localtime()</code>方法。两个函数返回的都是struct_time类的实例。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">time.gmtime()</div><div class="line"><span class="comment">#结果：time.struct_time(tm_year=2019, tm_mon=3, tm_mday=26, tm_hour=15, tm_min=35, tm_sec=9, tm_wday=1, tm_yday=85, tm_isdst=0)</span></div><div class="line"><span class="comment">#</span></div><div class="line">time.localtime()</div><div class="line"><span class="comment">#结果：time.struct_time(tm_year=2019, tm_mon=3, tm_mday=26, tm_hour=23, tm_min=37, tm_sec=15, tm_wday=1, tm_yday=85, tm_isdst=0)</span></div></pre></td></tr></table></figure>
+<p>如果要将上述元组形式的时间转换成秒数，可以用<code>time.mktime()</code>方法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">now_struct = time.localtime()</div><div class="line">time.mktime(now_struct)</div><div class="line"><span class="comment">#结果：1553615106.0</span></div></pre></td></tr></table></figure>
+<p>将时间的元组转换为字符串形式，可以用<code>time.strftime()</code>,将特定格式的时间转成时间元组格式用<code>time.strptime()</code>方法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">time.strftime(<span class="string">"%Y-%m-%d %H:%M:%S"</span>, time.localtime()) </div><div class="line">time.strftime(<span class="string">"%Y-%m-%d %H:%M:%S"</span>) <span class="comment">#等效，默认是当前时间</span></div><div class="line"><span class="comment">#结果：'2019-03-26 23:52:32'</span></div><div class="line"><span class="comment">#</span></div><div class="line">time.strptime(<span class="string">'2019-03-26 11:56:21'</span>,<span class="string">'%Y-%m-%d %H:%M:%S'</span>)</div><div class="line"><span class="comment">#结果：time.struct_time(tm_year=2019, tm_mon=3, tm_mday=26, tm_hour=11, tm_min=56, tm_sec=21, tm_wday=1, tm_yday=85, tm_isdst=-1)</span></div></pre></td></tr></table></figure>
+<p><code>time.asctime()</code>、<code>time.ctime()</code>方法则会将时间转换为标准24字符的字符串，前者参数是时间元组，后者参数是秒数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">now_struct = time.localtime()</div><div class="line">time.asctime(now_struct)</div><div class="line"><span class="comment">#结果：'Wed Mar 27 00:03:07 2019'</span></div><div class="line"><span class="comment">#</span></div><div class="line">time.ctime(time.time())</div><div class="line"><span class="comment">#结果：'Wed Mar 27 00:03:07 2019'</span></div></pre></td></tr></table></figure>
+<p>下图可以比较清楚的描述时间秒数、时间元组、字符串之间的转换关系。</p>
+<center><img src="/img/posts/20190326001-01.png" alt="time时间转换"></center>
 
-<ul>
-<li>作者：oscicen</li>
-<li>使用技术：HTML / CSS / JavaScript</li>
-<li>依赖库：-</li>
-<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
-<li>响应式：否</li>
-<li>源码链接：<a href="https://codepen.io/oscicen/pen/zyJeJw" target="_blank" rel="external">https://codepen.io/oscicen/pen/zyJeJw</a></li>
-</ul>
-<center><img src="/img/posts/20190305001-02.gif" alt="parallax effects"></center>
-
-<ul>
-<li>作者：Guilmain Dorian</li>
-<li>使用技术：HTML (Pug) / CSS (Less) / JavaScript</li>
-<li>依赖库：-</li>
-<li>浏览器兼容：Chrome, Edge, Firefox (partial), Opera, Safari</li>
-<li>响应式：否</li>
-<li>源码链接：<a href="https://codepen.io/Craaftx/pen/yQGpwa" target="_blank" rel="external">https://codepen.io/Craaftx/pen/yQGpwa</a></li>
-</ul>
-<center><img src="/img/posts/20190305001-03.gif" alt="parallax effects"></center>
-
-<ul>
-<li>作者：Adrian Payne</li>
-<li>使用技术：HTML / CSS (SCSS) / JavaScript (Babel)</li>
-<li>依赖库：-</li>
-<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
-<li>响应式：是</li>
-<li>源码链接：<a href="https://codepen.io/dazulu/pen/VVZrQv" target="_blank" rel="external">https://codepen.io/dazulu/pen/VVZrQv</a></li>
-</ul>
-<center><img src="/img/posts/20190305001-04.gif" alt="parallax effects"></center>
-
-<ul>
-<li>作者：Alex O’Neal</li>
-<li>使用技术：HTML / CSS</li>
-<li>依赖库：-</li>
-<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
-<li>响应式：是</li>
-<li>源码链接：<a href="https://codepen.io/alexoneal/pen/OBqaoe" target="_blank" rel="external">https://codepen.io/alexoneal/pen/OBqaoe</a></li>
-</ul>
-<center><img src="/img/posts/20190305001-05.gif" alt="parallax effects"></center>
-
-<ul>
-<li>作者：Sil van Diepen</li>
-<li>使用技术：HTML (Pug) / CSS (SCSS)</li>
-<li>依赖库：-</li>
-<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
-<li>响应式：是</li>
-<li>源码链接：<a href="https://codepen.io/silvandiepen/full/NOboze" target="_blank" rel="external">https://codepen.io/silvandiepen/full/NOboze</a></li>
-</ul>
-<center><img src="/img/posts/20190305001-06.gif" alt="parallax effects"></center>
-
-<ul>
-<li>作者：Yago Estévez</li>
-<li>使用技术：HTML (Pug) / CSS</li>
-<li>依赖库：-</li>
-<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
-<li>响应式：是</li>
-<li>源码链接：<a href="https://codepen.io/yagoestevez/full/EdgRMX" target="_blank" rel="external">https://codepen.io/yagoestevez/full/EdgRMX</a></li>
-</ul>
-<center><img src="/img/posts/20190305001-07.gif" alt="parallax effects"></center>
-
-<ul>
-<li>作者：jakob-e</li>
-<li>使用技术：HTML / CSS (SCSS) / JavaScript</li>
-<li>依赖库：</li>
-<li>浏览器兼容：Chrome, Firefox, Opera, Safari</li>
-<li>响应式：是</li>
-<li>源码链接：<a href="https://codepen.io/jakob-e/pen/ELqeRM" target="_blank" rel="external">https://codepen.io/jakob-e/pen/ELqeRM</a></li>
-</ul>
-<center><img src="/img/posts/20190305001-08.gif" alt="parallax effects"></center>
-
-<ul>
-<li>作者：Casey Callis</li>
-<li>使用技术：HTML / CSS / JavaScript</li>
-<li>依赖库：jquery.js, parallax.js</li>
-<li>浏览器兼容：Chrome, Edge, Firefox, Opera, Safari</li>
-<li>响应式：是</li>
-<li>源码链接：<a href="https://codepen.io/caseycallis/full/pwEWxo" target="_blank" rel="external">https://codepen.io/caseycallis/full/pwEWxo</a></li>
-</ul>
-<center><img src="/img/posts/20190305001-09.gif" alt="parallax effects"></center>
-
-<ul>
-<li>作者：Ravi Dhiman</li>
-<li>使用技术：HTML (Pug) / CSS (SCSS)</li>
-<li>依赖库：-</li>
-<li>浏览器兼容：Chrome, Firefox, Opera, Safari</li>
-<li>响应式：是</li>
-<li>源码链接：<a href="https://codepen.io/ravid7000/pen/LREEzv" target="_blank" rel="external">https://codepen.io/ravid7000/pen/LREEzv</a></li>
+<h3 id="datetime模块"><a href="#datetime模块" class="headerlink" title="datetime模块"></a>datetime模块</h3><p><code>time</code>模块解决了时间的获取和表示，<code>datetime</code>模块则进一步解决了快速获取并操作时间中的年月日时分秒信息的能力。<br>简单说，该模块核心的类就三个，date类表示年月日，time类表示时分秒毫秒，这里不要和time模块搞混淆了。请记住一点，date中是没有时区信息的。</p>
+<h4 id="对象创建"><a href="#对象创建" class="headerlink" title="对象创建"></a>对象创建</h4><p>常用<code>datetime.today()</code>、<code>datetime.now()</code>方法创建当前时区的对象。<code>datetime.fromtimestamp()</code>方法接收秒数参数。如果要获得utc的datetime对象，使用datetime. utcfromtimestamp()、datetime. utcnow()方法。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> datetime</div><div class="line"><span class="comment">#</span></div><div class="line">datetime.datetime.fromtimestamp(time.time())</div><div class="line"><span class="comment">#</span></div><div class="line">datetime.datetime.today()</div><div class="line">datetime.datetime.now()</div><div class="line"><span class="comment">#结果：datetime.datetime(2019, 3, 27, 0, 9, 18, 312810)</span></div><div class="line"></div><div class="line">datetime.datetime. utcnow()</div><div class="line"><span class="comment">#结果：datetime.datetime(2019, 3, 26, 16, 12, 22, 71628)</span></div></pre></td></tr></table></figure></p>
+<p>以特定格式字符串创建，使用<code>datetime.strptime()</code>方法。给定时间元组也可以创建datetime对象。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">datetime.datetime.strptime(<span class="string">'2015-6-1 18:19:59'</span>,<span class="string">'%Y-%m-%d %H:%M:%S'</span>)</div><div class="line"><span class="comment">#结果：datetime.datetime(2015, 6, 1, 18, 19, 59)</span></div><div class="line"><span class="comment">#</span></div><div class="line">datetime.datetime(<span class="number">2015</span>, <span class="number">4</span>, <span class="number">19</span>, <span class="number">12</span>, <span class="number">20</span>)</div><div class="line"><span class="comment">#结果：datetime.datetime(2015, 4, 19, 12, 20)</span></div></pre></td></tr></table></figure></p>
+<h4 id="格式转换"><a href="#格式转换" class="headerlink" title="格式转换"></a>格式转换</h4><p>datetime对象转换为时间戳。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dt = datetime.datetime.now()</div><div class="line">dt.timestamp()</div><div class="line"><span class="comment">#结果：1553617278.690061</span></div></pre></td></tr></table></figure></p>
+<p>datetime对象转换为字符串。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dt = datetime.datetime.now()</div><div class="line">datetime.datetime.strftime(dt,<span class="string">'%Y-%m-%d %H:%M:%S'</span>)</div><div class="line"><span class="comment">#结果：'2019-03-27 00:24:01'</span></div></pre></td></tr></table></figure></p>
+<p>datetime对象转换为time时间元组。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dt = datetime.datetime.now()</div><div class="line">time.localtime(dt.timestamp())</div><div class="line"><span class="comment">#结果：time.struct_time(tm_year=2019, tm_mon=3, tm_mday=27, tm_hour=0, tm_min=28, tm_sec=51, tm_wday=2, tm_yday=86, tm_isdst=0)</span></div></pre></td></tr></table></figure></p>
+<h3 id="日期计算"><a href="#日期计算" class="headerlink" title="日期计算"></a>日期计算</h3><p>基于某日期，向前或向后计算某段时间后的日期。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">dt</span> = datetime<span class="selector-class">.datetime</span><span class="selector-class">.now</span>() #当前日期</div><div class="line"><span class="selector-tag">dt</span> = datetime<span class="selector-class">.datetime</span><span class="selector-class">.now</span>()</div><div class="line"><span class="selector-tag">dt</span> - datetime.timedelta(days=<span class="number">1</span>) #当前日期向前减一天</div><div class="line"><span class="selector-tag">dt</span> + datetime.timedelta(days=<span class="number">1</span>) #当前日期向后加一天</div><div class="line"><span class="selector-tag">dt</span> + datetime.timedelta(days=<span class="number">11</span>,hours=<span class="number">3</span>,minutes=<span class="number">20</span>) #当前日期向后推<span class="number">11</span>天<span class="number">3</span>小时<span class="number">20</span>分</div></pre></td></tr></table></figure></p>
+<p>计算两个日期的时间差<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">start</span> = datetime.datetime.strptime(<span class="string">'2015-6-1 18:19:59'</span>,<span class="string">'%Y-%m-%d %H:%M:%S'</span>)</div><div class="line"><span class="function"><span class="keyword">end</span> = <span class="title">datetime</span>.<span class="title">datetime</span>.<span class="title">now</span>()</span></div><div class="line">dlt = <span class="keyword">end</span>-<span class="built_in">start</span></div><div class="line">dlt.days <span class="comment">#相差天数</span></div><div class="line">dlt.<span class="built_in">seconds</span> <span class="comment">#相差秒数</span></div></pre></td></tr></table></figure></p>
+<p>以下函数实现计算自从某一时间到当前时间经过了多少年，多少天，多少秒。<br><figure class="highlight perl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">def cal_time_past(start_time = <span class="string">'2016-08-12 05:10:45'</span>):</div><div class="line">    now_str = time.strftime(<span class="string">"%Y-%m-%d %H:%M:%S"</span>) <span class="comment">#当前时间字符串</span></div><div class="line">    now_obj = datetime.datetime.now() <span class="comment">#当前时间datetime对象</span></div><div class="line">    years_end = now_str[:<span class="number">4</span>]+start_time[<span class="number">4</span>:] <span class="comment">#开始时间年份替换为当年</span></div><div class="line">    <span class="keyword">if</span> now_str &gt;= years_end:</div><div class="line">        ynum = <span class="keyword">int</span>(years_end[:<span class="number">4</span>])-<span class="keyword">int</span>(start_time[<span class="number">0</span>:<span class="number">4</span>]) <span class="comment">#过了几个整年</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        ynum = <span class="keyword">int</span>(years_end[:<span class="number">4</span>])-<span class="keyword">int</span>(start_time[<span class="number">0</span>:<span class="number">4</span>])-<span class="number">1</span> <span class="comment">#最后不满一年</span></div><div class="line">        years_end = str(<span class="keyword">int</span>(years_end[:<span class="number">4</span>])-<span class="number">1</span>)+years_end[<span class="number">4</span>:]</div><div class="line">    years_end_obj = datetime.datetime.strptime(years_end,<span class="string">'%Y-%m-%d %H:%M:%S'</span>)</div><div class="line">    delta = now_obj-years_end_obj</div><div class="line">    dnum = delta.days <span class="comment">#去掉整年后过去的天数 </span></div><div class="line">    hnum = <span class="keyword">int</span>(delta.seconds/<span class="number">3600</span>) <span class="comment">#过去的小时数</span></div><div class="line">    mnum = <span class="keyword">int</span>((delta.seconds-<span class="number">3600</span>*hnum)/<span class="number">60</span>) <span class="comment">#过去的分钟数</span></div><div class="line">    snum = delta.seconds-<span class="number">3600</span>*hnum-<span class="number">60</span>*mnum <span class="comment">#过去的描述</span></div><div class="line">    <span class="keyword">print</span>(<span class="string">"%d年%d天%d小时%d分%d秒"</span> % (ynum,dnum,hnum,mnum,snum))</div><div class="line"><span class="comment">#</span></div><div class="line">cal_time_past(<span class="string">'1990-04-18 04:18:00'</span>)</div><div class="line"><span class="comment">#结果：28年342天20小时38分21秒</span></div></pre></td></tr></table></figure></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="https://www.jianshu.com/p/a035a564b248" target="_blank" rel="external">https://www.jianshu.com/p/a035a564b248</a></li>
 </ul>
 
       
@@ -537,13 +467,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/03/05/20190305001_css_parallax_effects/">CSS视差效果设计</a></p>
+        <p><span>本文标题:</span><a href="/2019/03/26/20190326001_python_datetime/">Python日期时间操作总结</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">c-xuan</a></p>
-        <p><span>发布时间:</span>2019-03-05, 19:16:42</p>
-        <p><span>最后更新:</span>2019-03-05, 19:16:42</p>
+        <p><span>发布时间:</span>2019-03-26, 23:36:28</p>
+        <p><span>最后更新:</span>2019-03-26, 23:36:28</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/03/05/20190305001_css_parallax_effects/" title="CSS视差效果设计">https://c-xuan.com/2019/03/05/20190305001_css_parallax_effects/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://c-xuan.com/2019/03/05/20190305001_css_parallax_effects/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2019/03/26/20190326001_python_datetime/" title="Python日期时间操作总结">https://c-xuan.com/2019/03/26/20190326001_python_datetime/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://c-xuan.com/2019/03/26/20190326001_python_datetime/　　作者: c-xuan" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -555,16 +485,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2019/03/13/20190313001_python_dict/">
-                    【Python 3 基础】字典dict创建方法及常用操作
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2019/02/21/20190221001_nteract/">
-                    类Jupyter notebook编辑器桌面版nteract
+                <a href="/2019/03/13/20190313001_python_dict/">
+                    【Python 3 基础】字典dict创建方法及常用操作
                 </a>
             </div>
         
@@ -614,7 +538,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#时间相关概念"><span class="toc-number">1.</span> <span class="toc-text">时间相关概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#epoch"><span class="toc-number">1.1.</span> <span class="toc-text">epoch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GMT-UTC"><span class="toc-number">1.2.</span> <span class="toc-text">GMT, UTC</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DST-tzoneDST-tzone"><span class="toc-number">1.3.</span> <span class="toc-text">DST, tzoneDST, tzone</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#time模块"><span class="toc-number">2.</span> <span class="toc-text">time模块</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#获取时间"><span class="toc-number">2.1.</span> <span class="toc-text">获取时间</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#时间转换"><span class="toc-number">2.2.</span> <span class="toc-text">时间转换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#datetime模块"><span class="toc-number">3.</span> <span class="toc-text">datetime模块</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#对象创建"><span class="toc-number">3.1.</span> <span class="toc-text">对象创建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#格式转换"><span class="toc-number">3.2.</span> <span class="toc-text">格式转换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#日期计算"><span class="toc-number">4.</span> <span class="toc-text">日期计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考"><span class="toc-number">5.</span> <span class="toc-text">参考</span></a></li></ol>
         
     </div>
     <style>
@@ -652,7 +576,7 @@
     </div>
     <script>
         window._bd_share_config={
-            "common":{"bdSnsKey":{},"bdText":"CSS视差效果设计　| 靛青　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='https://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+            "common":{"bdSnsKey":{},"bdText":"Python日期时间操作总结　| 靛青　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='https://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
     </script>
     -->
     
@@ -702,15 +626,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019/03/13/20190313001_python_dict/" title="上一篇: 【Python 3 基础】字典dict创建方法及常用操作">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2019/02/21/20190221001_nteract/" title="下一篇: 类Jupyter notebook编辑器桌面版nteract">
+            <a href="/2019/03/13/20190313001_python_dict/" title="下一篇: 【Python 3 基础】字典dict创建方法及常用操作">
                 <i class="fa fa-angle-right"></i>
             </a>
         

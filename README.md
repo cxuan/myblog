@@ -33,6 +33,6 @@
   - 鼠标增加点击效果，参考[博客](https://blog.csdn.net/qq_36759224/article/details/85420403)
   - 添加博客修改记录，访客位置地球标记[RevolverMaps](https://www.revolvermaps.com/?target=setupgl)
   - 添加运行天数
-
+- 2019-03-27:采用[gulp.js](https://github.com/gulpjs/gulp/tree/master/docs)压缩静态页面及资源文件
 
 [c-xuan.com](https://c-xuan.com)

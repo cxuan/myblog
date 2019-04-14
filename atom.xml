@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://c-xuan.com/"/>
-  <updated>2019-03-27T15:36:28.000Z</updated>
+  <updated>2019-04-05T05:40:29.000Z</updated>
   <id>https://c-xuan.com/</id>
   
   <author>
@@ -14,6 +14,61 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Jupyter notebook/nteract/Atom中配置scala交互式编程环境</title>
+    <link href="https://c-xuan.com/2019/04/05/20190405001_atom_scala/"/>
+    <id>https://c-xuan.com/2019/04/05/20190405001_atom_scala/</id>
+    <published>2019-04-05T05:40:29.000Z</published>
+    <updated>2019-04-05T05:40:29.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Jupyter notebook是一款学习和科研的神奇，相信很多小伙伴已经利用它在学术科研、研究开发的道路上收获了便捷易用、可视直观的优点。大部分时候我们都是Jupyter notebook中编写python脚本，其实，可以额外安装相关语言的Kernel，让Jupyter notebook支持交互式执行相关语言代码，本文中介绍配置运行Scala代码的过程。</p>
+<a id="more"></a>
+<h3 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a>前提条件</h3><ul>
+<li>安装<a href="https://www.scala-lang.org/download/" target="_blank" rel="external">Scala</a>,找到<code>Other ways to install Scala</code>，选择<code>Download the Scala binaries for windows</code>，因为我是Windows 10环境，安装<code>scala-2.12.8.msi</code></li>
+<li>安装有<a href="https://www.anaconda.com/" target="_blank" rel="external">Anaconda</a></li>
+<li>安装有<a href="https://atom.io/" target="_blank" rel="external">Atom</a>,Atom中安装了<a href="https://nteract.gitbooks.io/hydrogen/" target="_blank" rel="external">Hydrogen</a>插件</li>
+</ul>
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><h4 id="安装scala-kernel"><a href="#安装scala-kernel" class="headerlink" title="安装scala kernel"></a>安装scala kernel</h4><p>在电脑硬盘根目录创建文件夹<code>almond</code>,比如我的是<code>G:\almond</code>，进入文件夹。</p>
+<p>按住<code>shift</code>单击鼠标右键，选择<code>在此处打开Powershell窗口</code>。</p>
+<p>在命令行中依次执行如下命令</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">set SCALA_VERSION=<span class="number">2.12</span>.<span class="number">8</span></div><div class="line">set ALMOND_VERSION=<span class="number">0</span>.<span class="number">4.0</span></div><div class="line">　　　</div><div class="line">bitsadmin /transfer downloadCoursierCli <span class="symbol">https:</span>/<span class="regexp">/git.io/coursier</span>-cli <span class="string">"%cd%\coursier"</span></div><div class="line">bitsadmin /transfer downloadCoursierBat <span class="symbol">https:</span>/<span class="regexp">/git.io/coursier</span>-bat <span class="string">"%cd%\coursier.bat"</span></div><div class="line">　　　</div><div class="line">.\coursier bootstrap -r jitpack -i user -I <span class="symbol">user:</span>sh.<span class="symbol">almond:</span>scala-kernel-api<span class="number">_</span>%SCALA_VERSION%<span class="symbol">:%ALMOND_VERSION%</span> sh.<span class="symbol">almond:</span>scala-kernel<span class="number">_</span>%SCALA_VERSION%<span class="symbol">:%ALMOND_VERSION%</span> -o almond</div><div class="line">　　　</div><div class="line">.\almond --install</div></pre></td></tr></table></figure>
+<p>上述命令会在文件夹中下载这样几个文件：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">almond</span></div><div class="line"><span class="selector-tag">almond</span><span class="selector-class">.bat</span></div><div class="line"><span class="selector-tag">coursier</span></div><div class="line"><span class="selector-tag">coursier</span><span class="selector-class">.bat</span></div></pre></td></tr></table></figure></p>
+<p>最后提示scala-kernel成功就可以。</p>
+<p>打开Anaconda Prompt,输入<code>jupyter kernelspec list</code>，看到已经出现scala内核了。</p>
+<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(base) C:<span class="symbol">\U</span>sers<span class="symbol">\A</span>dministrator&gt;jupyter kernelspec list</div><div class="line">Available kernels:</div><div class="line">  scala       C:<span class="symbol">\U</span>sers<span class="symbol">\A</span>dministrator<span class="symbol">\A</span>ppData<span class="symbol">\R</span>oaming<span class="symbol">\j</span>upyter<span class="symbol">\k</span>ernels<span class="symbol">\s</span>cala</div><div class="line">  python3     E:<span class="symbol">\P</span>rogramData<span class="symbol">\A</span>naconda3<span class="symbol">\s</span>hare<span class="symbol">\j</span>upyter<span class="symbol">\k</span>ernels<span class="symbol">\p</span>ython3</div><div class="line">  anaconda    C:<span class="symbol">\P</span>rogramData<span class="symbol">\j</span>upyter<span class="symbol">\k</span>ernels<span class="symbol">\a</span>naconda</div></pre></td></tr></table></figure>
+<h4 id="安装language-scala"><a href="#安装language-scala" class="headerlink" title="安装language-scala"></a>安装language-scala</h4><p>Atom中，进入设置界面，在安装插件界面中搜索<code>scala</code>，选择安装<code>language-scala</code>.</p>
+<h4 id="运行代码"><a href="#运行代码" class="headerlink" title="运行代码"></a>运行代码</h4><p>创建scala为扩展名的文件，在每一行代码上按<code>shift+回车</code>键执行代码，可以看到代码后面有运行结果了。</p>
+<center><img src="/img/posts/20190405001-01.png" alt="scala"></center>
+
+<p>如果打开Jupyter Notebook,可以看到新建中出现Scala选项。</p>
+<center><img src="/img/posts/20190405001-02.png" alt="scala"></center>
+
+<p>在Notebook中就可以像写Python一样进行交互运行代码了。</p>
+<center><img src="/img/posts/20190405001-03.png" alt="scala"></center>
+
+<p>如果使用<a href="https://nteract.io/" target="_blank" rel="external">nteract</a>,也是可以执行的，<a href="/2019/02/21/20190221001_nteract/">类Jupyter notebook编辑器桌面版nteract</a></p>
+<center><img src="/img/posts/20190405001-04.png" alt="scala"></center>
+
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://almond.sh/docs/quick-start-install" target="_blank" rel="external">https://almond.sh/docs/quick-start-install</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Jupyter notebook是一款学习和科研的神奇，相信很多小伙伴已经利用它在学术科研、研究开发的道路上收获了便捷易用、可视直观的优点。大部分时候我们都是Jupyter notebook中编写python脚本，其实，可以额外安装相关语言的Kernel，让Jupyter notebook支持交互式执行相关语言代码，本文中介绍配置运行Scala代码的过程。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="码路刺客" scheme="https://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
+    
+    
+      <category term="原创" scheme="https://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+      <category term="Atom" scheme="https://c-xuan.com/tags/Atom/"/>
+    
+      <category term="Scala" scheme="https://c-xuan.com/tags/Scala/"/>
+    
+  </entry>
   
   <entry>
     <title>PDI设计转换任务</title>
@@ -1350,66 +1405,6 @@
       <category term="Hive" scheme="https://c-xuan.com/tags/Hive/"/>
     
       <category term="工具" scheme="https://c-xuan.com/tags/%E5%B7%A5%E5%85%B7/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【Hive】日期从整形转为Date类型</title>
-    <link href="https://c-xuan.com/2018/07/24/20180724001_hive_date_trans/"/>
-    <id>https://c-xuan.com/2018/07/24/20180724001_hive_date_trans/</id>
-    <published>2018-07-24T08:15:01.000Z</published>
-    <updated>2018-07-24T08:15:01.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>在建表的时候我们常将日期字段设置为INT类型，将诸如<code>20180601</code>这样的数字值来表示日期，这样在做日期比较等操作时没有问题，但是要进行某些日期计算，就要先转成日期类型才能进行计算了，怎么转换呢？</p>
-<a id="more"></a>
-<h3 id="数据准备"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备</h3><p>下面在Hive中先建一个表，含有一个INT类型的日期字段，插入两行数据。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">table</span> tb (dt <span class="built_in">INT</span>);</div><div class="line"><span class="keyword">insert</span> <span class="keyword">into</span> tb <span class="keyword">values</span> (<span class="number">20180701</span>);</div><div class="line"><span class="keyword">insert</span> <span class="keyword">into</span> tb <span class="keyword">values</span> (<span class="number">20180715</span>);</div></pre></td></tr></table></figure>
-<h3 id="转换类型"><a href="#转换类型" class="headerlink" title="转换类型"></a>转换类型</h3><p>这里第一种方法是将<code>INT</code>类型的日期值转成<code>STRING</code>类型，用Hive内置的<code>unix_timestamp</code>函数转成时间戳类型，最后将时间戳用<code>from_unixtime</code>转成<code>yyyy-MM-dd</code>的日期类型。</p>
-<p>第二种就比较直接，将<code>INT</code>类型的日期值转成<code>STRING</code>类型，再对字符串进行截取处理，用<code>-</code>拼接起来。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> dt,</div><div class="line">from_unixtime(<span class="keyword">unix_timestamp</span>(<span class="keyword">cast</span>(dt <span class="keyword">as</span> <span class="keyword">string</span>),<span class="string">'yyyyMMdd'</span>),<span class="string">'yyyy-MM-dd'</span>) <span class="keyword">as</span> a,</div><div class="line"><span class="keyword">concat</span>(<span class="keyword">substr</span>(<span class="keyword">cast</span>(dt <span class="keyword">as</span> <span class="keyword">string</span>),<span class="number">1</span>,<span class="number">4</span>), <span class="string">'-'</span>,<span class="keyword">substr</span>(<span class="keyword">cast</span>(dt <span class="keyword">as</span> <span class="keyword">string</span>),<span class="number">5</span>,<span class="number">2</span>), <span class="string">'-'</span>,<span class="keyword">substr</span>(<span class="keyword">cast</span>(dt <span class="keyword">as</span> <span class="keyword">string</span>),<span class="number">7</span>,<span class="number">2</span>)) <span class="keyword">as</span> b</div><div class="line"><span class="keyword">from</span> tb;</div></pre></td></tr></table></figure>
-<p>运行结果</p>
-<table>
-<thead>
-<tr>
-<th>dt</th>
-<th>a</th>
-<th>b</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>20180701</td>
-<td>2018-07-01</td>
-<td>2018-07-01</td>
-</tr>
-<tr>
-<td>20180715</td>
-<td>2018-07-15</td>
-<td>2018-07-15</td>
-</tr>
-</tbody>
-</table>
-<p>当然，每次都这样写有些费劲，可以在Hive中创建UDF或者宏，转换时进行调用就好了。</p>
-<h3 id="创建宏命令"><a href="#创建宏命令" class="headerlink" title="创建宏命令"></a>创建宏命令</h3><p>宏命令相对于UDF要简单方便些，但是<strong>宏只能是临时宏，只在本次会话中可见、有效。因此你需要将宏脚本放在SQL脚本的头部</strong>。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">DROP</span> <span class="keyword">TEMPORARY</span> MACRO <span class="keyword">IF</span> <span class="keyword">EXISTS</span> date_trans;</div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TEMPORARY</span> MACRO date_trans(dt <span class="built_in">int</span>)</div><div class="line">    <span class="keyword">if</span>(dt <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">null</span> <span class="keyword">and</span> <span class="keyword">length</span>(dt)=<span class="number">8</span>,</div><div class="line">       <span class="keyword">concat</span>(<span class="keyword">substr</span>(<span class="keyword">cast</span>(dt <span class="keyword">as</span> <span class="keyword">string</span>),<span class="number">1</span>,<span class="number">4</span>), <span class="string">'-'</span>,<span class="keyword">substr</span>(<span class="keyword">cast</span>(dt <span class="keyword">as</span> <span class="keyword">string</span>),<span class="number">5</span>,<span class="number">2</span>), <span class="string">'-'</span>,<span class="keyword">substr</span>(<span class="keyword">cast</span>(dt <span class="keyword">as</span> <span class="keyword">string</span>),<span class="number">7</span>,<span class="number">2</span>)), </div><div class="line">	   <span class="literal">null</span>);</div><div class="line"></div><div class="line"><span class="comment">--调用</span></div><div class="line"><span class="keyword">select</span> dt,date_trans(dt) <span class="keyword">as</span> a <span class="keyword">from</span> tb;</div></pre></td></tr></table></figure>
-<p>如果同一个功能的函数或宏命令被多次调用，那维护起来就很方便，语句也简洁很多。</p>
-<h3 id="Hive内置日期函数一览"><a href="#Hive内置日期函数一览" class="headerlink" title="Hive内置日期函数一览"></a>Hive内置日期函数一览</h3><table><tr><th width="9.51%">Return Type</th><th width="21.33%">Name(Signature)</th><th width="34.03%">Description</th><th width="35.19%">说明</th></tr><tr><td>string</td><td>from_unixtime(bigint unixtime[, string format])</td><td>Converts the number of seconds from unix epoch (1970-01-01 00:00:00 UTC) to a string representing the timestamp of that moment in the current system time zone in the format of “1970-01-01 00:00:00”.</td><td>将时间的秒值转换成format格式（format可为“yyyy-MM-dd hh:mm:ss”,“yyyy-MM-dd hh”,“yyyy-MM-dd hh:mm”等等）如from_unixtime(1250111000,”yyyy-MM-dd”) 得到2009-03-12</td></tr><tr><td>bigint</td><td>unix_timestamp()</td><td>Gets current Unix timestamp in seconds.</td><td>获取本地时区下的时间戳</td></tr><tr><td>bigint</td><td>unix_timestamp(string date)</td><td>Converts time string in format?yyyy-MM-dd HH:mm:ss?to Unix timestamp (in seconds), using the default timezone and the default locale, return 0 if fail: unix_timestamp(‘2009-03-20 11:30:01’) = 1237573801</td><td>将格式为yyyy-MM-dd HH:mm:ss的时间字符串转换成时间戳 ?如unix_timestamp(‘2009-03-20 11:30:01’) = 1237573801</td></tr><tr><td>bigint</td><td>unix_timestamp(string date, string pattern)</td><td>Convert time string with given pattern (see [<a href="http://docs.oracle.com/javase/tutorial/i18n/format/simpleDateFormat.html" target="_blank" rel="external">http://docs.oracle.com/javase/tutorial/i18n/format/simpleDateFormat.html</a>]) to Unix time stamp (in seconds), return 0 if fail: unix_timestamp(‘2009-03-20’, ‘yyyy-MM-dd’) = 1237532400.</td><td>将指定时间字符串格式字符串转换成Unix时间戳，如果格式不对返回0 如：unix_timestamp(‘2009-03-20’, ‘yyyy-MM-dd’) = 1237532400</td></tr><tr><td>string</td><td>to_date(string timestamp)</td><td>Returns the date part of a timestamp string: to_date(“1970-01-01 00:00:00”) = “1970-01-01”.</td><td>返回时间字符串的日期部分</td></tr><tr><td>int</td><td>year(string date)</td><td>Returns the year part of a date or a timestamp string: year(“1970-01-01 00:00:00”) = 1970, year(“1970-01-01”) = 1970.</td><td>返回时间字符串的年份部分</td></tr><tr><td>int</td><td>quarter(date/timestamp/string)</td><td>Returns the quarter of the year for a date, timestamp, or string in the range 1 to 4 (as of Hive?1.3.0). Example: quarter(‘2015-04-08’) = 2.</td><td>返回当前时间属性哪个季度 如quarter(‘2015-04-08’) = 2</td></tr><tr><td>int</td><td>month(string date)</td><td>Returns the month part of a date or a timestamp string: month(“1970-11-01 00:00:00”) = 11, month(“1970-11-01”) = 11.</td><td>返回时间字符串的月份部分</td></tr><tr><td>int</td><td>day(string date) dayofmonth(date)</td><td>Returns the day part of a date or a timestamp string: day(“1970-11-01 00:00:00”) = 1, day(“1970-11-01”) = 1.</td><td>返回时间字符串的天</td></tr><tr><td>int</td><td>hour(string date)</td><td>Returns the hour of the timestamp: hour(‘2009-07-30 12:58:59’) = 12, hour(‘12:58:59’) = 12.</td><td>返回时间字符串的小时</td></tr><tr><td>int</td><td>minute(string date)</td><td>Returns the minute of the timestamp.</td><td>返回时间字符串的分钟</td></tr><tr><td>int</td><td>second(string date)</td><td>Returns the second of the timestamp.</td><td>返回时间字符串的秒</td></tr><tr><td>int</td><td>weekofyear(string date)</td><td>Returns the week number of a timestamp string: weekofyear(“1970-11-01 00:00:00”) = 44, weekofyear(“1970-11-01”) = 44.</td><td>返回时间字符串位于一年中的第几个周内 ?如weekofyear(“1970-11-01 00:00:00”) = 44, weekofyear(“1970-11-01”) = 44</td></tr><tr><td>int</td><td>datediff(string enddate, string startdate)</td><td>Returns the number of days from startdate to enddate: datediff(‘2009-03-01’, ‘2009-02-27’) = 2.</td><td>计算开始时间startdate到结束时间enddate相差的天数</td></tr><tr><td>string</td><td>date_add(string startdate, int days)</td><td>Adds a number of days to startdate: date_add(‘2008-12-31’, 1) = ‘2009-01-01’.</td><td>从开始时间startdate加上days</td></tr><tr><td>string</td><td>date_sub(string startdate, int days)</td><td>Subtracts a number of days to startdate: date_sub(‘2008-12-31’, 1) = ‘2008-12-30’.</td><td>从开始时间startdate减去days</td></tr><tr><td>timestamp</td><td>from_utc_timestamp(timestamp, string timezone)</td><td>Assumes given timestamp is UTC and converts to given timezone (as of Hive?0.8.0). For example, from_utc_timestamp(‘1970-01-01 08:00:00’,’PST’) returns 1970-01-01 00:00:00.</td><td>如果给定的时间戳并非UTC，则将其转化成指定的时区下时间戳</td></tr><tr><td>timestamp</td><td>to_utc_timestamp(timestamp, string timezone)</td><td>Assumes given timestamp is in given timezone and converts to UTC (as of Hive?0.8.0). For example, to_utc_timestamp(‘1970-01-01 00:00:00’,’PST’) returns 1970-01-01 08:00:00.</td><td>如果给定的时间戳指定的时区下时间戳，则将其转化成UTC下的时间戳</td></tr><tr><td>date</td><td>current_date</td><td>Returns the current date at the start of query evaluation (as of Hive?1.2.0). All calls of current_date within the same query return the same value.</td><td>返回当前时间日期</td></tr><tr><td>timestamp</td><td>current_timestamp</td><td>Returns the current timestamp at the start of query evaluation?(as of Hive?1.2.0). All calls of current_timestamp within the same query return the same value.</td><td>返回当前时间戳</td></tr><tr><td>string</td><td>add_months(string start_date, int num_months)</td><td>Returns the date that is num_months after start_date?(as of Hive?1.1.0). start_date is a string, date or timestamp. num_months is an integer. The time part of start_date is ignored.?If start_date is the last day of the month or if the resulting month has fewer days than the day component of start_date, then the result is the last day of the resulting month. Otherwise, the result has the same day component as start_date.</td><td>返回当前时间下再增加num_months个月的日期</td></tr><tr><td>string</td><td>last_day(string date)</td><td>Returns the last day of the month which the date belongs to?(as of Hive?1.1.0). date is a string in the format ‘yyyy-MM-dd HH:mm:ss’ or ‘yyyy-MM-dd’.?The time part of date is ignored.</td><td>返回这个月的最后一天的日期，忽略时分秒部分（HH:mm:ss）</td></tr><tr><td>string</td><td>next_day(string start_date, string day_of_week)</td><td>Returns the first date which is later than start_date and named as day_of_week?(as of Hive1.2.0).?start_date is a string/date/timestamp. day_of_week is 2 letters, 3 letters or full name of the day of the week (e.g. Mo, tue, FRIDAY). The time part of start_date is ignored. Example: next_day(‘2015-01-14’, ‘TU’) = 2015-01-20.</td><td>返回当前时间的下一个星期X所对应的日期 如：next_day(‘2015-01-14’, ‘TU’) = 2015-01-20 ?以2015-01-14为开始时间，其下一个星期二所对应的日期为2015-01-20</td></tr><tr><td>string</td><td>trunc(string date, string format)</td><td>Returns date truncated to the unit specified by the format?(as of Hive?1.2.0). Supported formats: MONTH/MON/MM, YEAR/YYYY/YY. Example: trunc(‘2015-03-17’, ‘MM’) = 2015-03-01.</td><td>返回时间的最开始年份或月份 ?如trunc(“2016-06-26”,“MM”)=2016-06-01 ?trunc(“2016-06-26”,“YY”)=2016-01-01 ? 注意所支持的格式为MONTH/MON/MM, YEAR/YYYY/YY</td></tr><tr><td>double</td><td>months_between(date1, date2)</td><td>Returns number of months between dates date1 and date2 (as of Hive?1.2.0). If date1 is later than date2, then the result is positive. If date1 is earlier than date2, then the result is negative. If date1 and date2 are either the same days of the month or both last days of months, then the result is always an integer. Otherwise the UDF calculates the fractional portion of the result based on a 31-day month and considers the difference in time components date1 and date2. date1 and date2 type can be date, timestamp or string in the format ‘yyyy-MM-dd’ or ‘yyyy-MM-dd HH:mm:ss’. The result is rounded to 8 decimal places. Example: months_between(‘1997-02-28 10:30:00’, ‘1996-10-30’) = 3.94959677</td><td>返回date1与date2之间相差的月份，如date1&gt;date2，则返回正，如果date1<date2,则返回负，否则返回0.0 ?如：months_between('1997-02-28="" 10:30:00',="" '1996-10-30')="3.94959677" ?1997-02-28="" 10:30:00与1996-10-30相差3.94959677个月<="" td=""></date2,则返回负，否则返回0.0></td></tr><tr><td>string</td><td>date_format(date/timestamp/string ts, string fmt)</td><td>Converts a date/timestamp/string to a value of string in the format specified by the date format fmt (as of Hive?1.2.0). Supported formats are Java SimpleDateFormat formats?–<a href="https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html" target="_blank" rel="external">https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html</a>. The second argument fmt should be constant. Example: date_format(‘2015-04-08’, ‘y’) = ‘2015’.date_format can be used to implement other UDFs, e.g.:dayname(date) is date_format(date, ‘EEEE’)<br>dayofyear(date) is date_format(date, ‘D’)</td><td>按指定格式返回时间date 如：date_format(“2016-06-22”,”MM-dd”)=06-22</td></tr></table>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;在建表的时候我们常将日期字段设置为INT类型，将诸如&lt;code&gt;20180601&lt;/code&gt;这样的数字值来表示日期，这样在做日期比较等操作时没有问题，但是要进行某些日期计算，就要先转成日期类型才能进行计算了，怎么转换呢？&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="码路刺客" scheme="https://c-xuan.com/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/"/>
-    
-    
-      <category term="原创" scheme="https://c-xuan.com/tags/%E5%8E%9F%E5%88%9B/"/>
-    
-      <category term="数据仓库" scheme="https://c-xuan.com/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/"/>
-    
-      <category term="Hive" scheme="https://c-xuan.com/tags/Hive/"/>
     
   </entry>
   

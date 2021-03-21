@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="c-xuan" />
+
+
+
+<meta name="description" content="前言在之前的章节中，我们已经不依赖jQuery，单纯地用JavaScript封装了很多方法，这个时候，你一定会想，这些经常使用的方法能不能单独整理成一个js文件呢？ 当然可以，封装本来就是干这个用的。放在一个单独js文件里固然不错，其实我们也可以单独整一个js类库，一方面可以锻炼一下自己封装方法的能力，另一方面，也可以将自己学到的东西做一个整理。 出于这个目的，本文将介绍如何封装一个简单的js类库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript :零基础打造自己的类库">
+<meta property="og:url" content="https://c-xuan.com/2016/10/29/JS-BuildBaseClassLib/index.html">
+<meta property="og:site_name" content="靛青">
+<meta property="og:description" content="前言在之前的章节中，我们已经不依赖jQuery，单纯地用JavaScript封装了很多方法，这个时候，你一定会想，这些经常使用的方法能不能单独整理成一个js文件呢？ 当然可以，封装本来就是干这个用的。放在一个单独js文件里固然不错，其实我们也可以单独整一个js类库，一方面可以锻炼一下自己封装方法的能力，另一方面，也可以将自己学到的东西做一个整理。 出于这个目的，本文将介绍如何封装一个简单的js类库">
+<meta property="og:locale">
+<meta property="og:image" content="https://c-xuan.com/img/posts/JS-BuildBaseClassLib-1.gif">
+<meta property="og:image" content="https://c-xuan.com/img/posts/JS-BuildBaseClassLib-2.gif">
+<meta property="og:image" content="https://c-xuan.com/img/posts/JS-BuildBaseClassLib-3.gif">
+<meta property="article:published_time" content="2016-10-29T05:31:39.000Z">
+<meta property="article:modified_time" content="2016-10-29T14:22:45.060Z">
+<meta property="article:author" content="c-xuan">
+<meta property="article:tag" content="转载">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://c-xuan.com/img/posts/JS-BuildBaseClassLib-1.gif">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="靛青" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="/js/others/animate.css" rel="stylesheet">
+
+
+
+    <link href="/js/others/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="/js/others/pace.min.js"></script>
+    <link href="/js/others/pace-theme-minimal.css" rel="stylesheet">
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+
+<link href="/js/others/font-awesome.min.css" rel="stylesheet">
+
+
+<title>JavaScript :零基础打造自己的类库 | 靛青</title>
+
+<script src="/js/others/jquery.min.js"></script>
+<script src="/js/others/clipboard.min.js"></script>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/love.js"></script>
+
+<script>
+    var yiliaConfig = {
+    fancybox: true,
+    animate: true,
+    isHome: false,
+    isPost: true,
+    isArchive: false,
+    isTag: false,
+    isCategory: false,
+    fancybox_js: "/js/others/jquery.fancybox.min.js",
+    scrollreveal: "/js/others/scrollreveal.min.js",
+    search: true
+    };
+
+
+    yiliaConfig.jquery_ui = [true, "/js/others/jquery-ui.min.js", "/js/others/jquery-ui.min.css"];
+
+
+
+    yiliaConfig.rootUrl = "\/";
+
+</script>
+
+
+
+<script>
+    
+    var isIgnoreHost = false;
+
+    if (window && window.location && window.location.host){
+        var isIgnoreHostList = 'localhost/127.0.0.1' ;
+        var hostArray = isIgnoreHostList.split("/");
+        for (x in hostArray) {
+            isIgnoreHost = (0 === window.location.host.indexOf(hostArray[x]));
+            if(isIgnoreHost) {
+                break;
+            }
+        }
+    }
+    var _hmt = _hmt || [];
+    if (!isIgnoreHost) {
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?151b99902d872273b4e9352c57d3dff4";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    }
+
+</script>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111421027-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-111421027-1');
+</script>
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+        
+        <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="搜索本站..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <!-- <i class="fa fa-times" onclick="resetSearch()"></i> -->
+        </form>
+        <div id="local-search-result"></div>
+        <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+    
+
+<!-- <div class="overlay"></div> -->
+
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/cxuan.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/" data-hover=""></a></h1>
+        </hgroup>
+
+        
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/" data-hover="主页">主页</a></li>
+                        
+                            <li><a href="/archives/" data-hover="所有文章">所有文章</a></li>
+                        
+                            <li><a href="/tags/" data-hover="标签云">标签云</a></li>
+                        
+                            <li><a href="/whis/" data-hover="折腾史">折腾史</a></li>
+                        
+                            <li><a href="/about/" data-hover="关于我">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:c-xuan@foxmail.com" title="Email">
+                                    
+                                </a>
+                            
+                                <a class="fa 新浪微博" target="_blank" rel="noopener" href="http://weibo.com/u/1794820305" title="新浪微博">
+                                    
+                                </a>
+                            
+                                <a class="fa GitHub" target="_blank" rel="noopener" href="https://github.com/cxuan" title="GitHub">
+                                    
+                                    <svg height="37" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="37" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
+                                    
+                                </a>
+                            
+                                <a class="fa 简书" target="_blank" rel="noopener" href="http://www.jianshu.com/users/2e80e903099c/latest_articles" title="简书">
+                                    
+                                </a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS">
+                                    
+                                </a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Atom/" rel="tag">Atom</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BI/" rel="tag">BI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BigData/" rel="tag">BigData</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ETL/" rel="tag">ETL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flask/" rel="tag">Flask</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hbase/" rel="tag">Hbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hive/" rel="tag">Hive</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IT%E8%B5%84%E8%AE%AF/" rel="tag">IT资讯</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JScript/" rel="tag">JScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MSBI/" rel="tag">MSBI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/" rel="tag">Markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/" rel="tag">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ORACLE/" rel="tag">ORACLE</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PDI/" rel="tag">PDI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Play-Framework/" rel="tag">Play Framework</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PostgreSQL/" rel="tag">PostgreSQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL-Server/" rel="tag">SQL Server</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSIS/" rel="tag">SSIS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/" rel="tag">Scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Test/" rel="tag">Test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/atom/" rel="tag">atom</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cmd/" rel="tag">cmd</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jQuery/" rel="tag">jQuery</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kettle/" rel="tag">kettle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pentaho/" rel="tag">pentaho</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zookeeper/" rel="tag">zookeeper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/" rel="tag">分布式</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E7%BC%96%E7%A8%8B/" rel="tag">前端编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag">原创</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E6%BA%90/" rel="tag">开源</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag">数学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93/" rel="tag">数据仓库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%89%A9%E5%8C%96%E8%A7%86%E5%9B%BE/" rel="tag">物化视图</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%94%9F%E6%B4%BB%E8%B6%A3%E8%AE%B0/" rel="tag">生活趣记</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86/" rel="tag">知识管理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BB%B4%E5%BA%A6%E5%BB%BA%E6%A8%A1/" rel="tag">维度建模</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag">翻译</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%A7%86%E8%A7%89%E5%9B%BE%E7%89%87/" rel="tag">视觉图片</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E5%8E%9F%E7%90%86/" rel="tag">计算机基原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%BE%E8%AE%A1/" rel="tag">设计</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%BD%AC%E8%BD%BD/" rel="tag">转载</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://opiece.me/">Chillax&#39;s Blog</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://ask.hellobi.com/blog/biwork">BIWORK</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://blog.iwangyu.cn/">Wang Yu&#39;s Blog</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://www.domeyi.com/">小忆</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://www.sfantree.com/">水番林</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://www.netcan666.com/">Netcan</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://www.ykksmile.top/">Ykk</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://luuman.github.io/">世平阜康</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://www.blog67.cn/">67&#39;s Blog</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://hubojing.github.io/">胡博靖</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://deserts.io">Deserts</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://www.liyebk.com">李野博客</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://xlesun.com/">Lesun&#39;s Blog</a>
+                    
+                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://blog.codinglabs.org/">CodingLabs</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于DW&amp;BI</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+<footer id="left-col-footer">
+	<div class="footer-center">
+		<i class="fa fa-copyright"></i> 
+		2016-2021  c-xuan
+	</div>
+</footer>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic" width="20%">
+                <img src="/img/cxuan.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/whis/">折腾史</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:c-xuan@foxmail.com" title="Email">
+                                    
+                                </a>
+                            
+                                <a class="fa 新浪微博" target="_blank" href="http://weibo.com/u/1794820305" title="新浪微博">
+                                    
+                                </a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/cxuan" title="GitHub">
+                                    
+                                        <svg height="37" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" width="37" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
+                                    
+                                </a>
+                            
+                                <a class="fa 简书" target="_blank" href="http://www.jianshu.com/users/2e80e903099c/latest_articles" title="简书">
+                                    
+                                </a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS">
+                                    
+                                </a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap "><article id="post-JS-BuildBaseClassLib" class="article article-type-post  animated pulse " itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/10/29/JS-BuildBaseClassLib/" class="article-date">
+      <time datetime="2016-10-29T05:31:39.000Z" itemprop="datePublished">2016-10-29</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JavaScript :零基础打造自己的类库
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/%E7%A0%81%E8%B7%AF%E5%88%BA%E5%AE%A2/">码路刺客</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%BD%AC%E8%BD%BD/" rel="tag">转载</a></li></ul>
+    </div>
+
+          <div style="font-size:0.9rem;color:#696969;line-height: 2.0;">　　<i class="fa fa-pencil-square-o" aria-hidden="true"></i> 本文字数<span class="post-count">6.3k</span> | <i class="fa fa-clock-o" aria-hidden="true"></i> 阅读时长约<span class="post-count">29</span>分钟</div>
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>在之前的章节中，我们已经不依赖jQuery，单纯地用JavaScript封装了很多方法，这个时候，你一定会想，这些经常使用的方法能不能单独整理成一个js文件呢？</p>
+<p>当然可以，封装本来就是干这个用的。放在一个单独js文件里固然不错，其实我们也可以单独整一个js类库，一方面可以锻炼一下自己封装方法的能力，另一方面，也可以将自己学到的东西做一个整理。</p>
+<p>出于这个目的，本文将介绍如何封装一个简单的js类库。（当然，只是开一个头，熟悉一下js基础而已。实际使用的话我感觉完全没有必要，因为jQuery已经很强大了，直接使用第三方的就可以）</p>
+<span id="more"></span>
+
+<h3 id="总体设计"><a href="#总体设计" class="headerlink" title="总体设计"></a>总体设计</h3><p>所谓的js库，其实也就是一个js文件，我思前想后，决定取个名字叫“miniQuery”,是不是山寨的味道十足呢？哈，请不要在意这些小细节。</p>
+<p>大概的设计如下：</p>
+<ul>
+<li>1.扩展方法的兼容（主要写一些兼容的扩展方法，比如 forEach 方法等）</li>
+<li>2.工具包定义 （就是之前封装的utils.js，我们的miniQuery需要依赖这个工具包，为了方便，就干脆写在一个文件里面了。）</li>
+<li>3.miniQuery定义</li>
+</ul>
+<h3 id="扩展方法的兼容"><a href="#扩展方法的兼容" class="headerlink" title="扩展方法的兼容"></a>扩展方法的兼容</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ------------------------ 基本扩展, 字符串,数组等-------------------------------//</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">extend_base</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">String</span>.prototype.format )&#123;</span><br><span class="line">        <span class="built_in">String</span>.prototype.format = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> e = <span class="built_in">arguments</span>;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">this</span>.replace(<span class="regexp">/&#123;(\d+)&#125;/g</span>,<span class="function"><span class="keyword">function</span>(<span class="params">t, n</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">typeof</span> e[n] != <span class="string">&quot;undefined&quot;</span> ? e[n] : t</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">Array</span>.prototype.forEach &amp;&amp; <span class="keyword">typeof</span> <span class="built_in">Array</span>.prototype.forEach !== <span class="string">&quot;function&quot;</span>) &#123;</span><br><span class="line">        <span class="built_in">Array</span>.prototype.forEach = <span class="function"><span class="keyword">function</span>(<span class="params">callback, context</span>) </span>&#123;</span><br><span class="line">           <span class="comment">// 遍历数组,在每一项上调用回调函数，这里使用原生方法验证数组。</span></span><br><span class="line">           <span class="keyword">if</span> (<span class="built_in">Object</span>.prototype.toString.call(<span class="built_in">this</span>) === <span class="string">&quot;[object Array]&quot;</span>) &#123;</span><br><span class="line">               <span class="keyword">var</span> i,len;</span><br><span class="line">               <span class="comment">//遍历该数组所有的元素</span></span><br><span class="line">               <span class="keyword">for</span> (i = <span class="number">0</span>, len = <span class="built_in">this</span>.length; i &lt; len; i++) &#123;</span><br><span class="line">                   <span class="keyword">if</span> (<span class="keyword">typeof</span> callback === <span class="string">&quot;function&quot;</span>  &amp;&amp; <span class="built_in">Object</span>.prototype.hasOwnProperty.call(<span class="built_in">this</span>, i)) &#123;</span><br><span class="line">                       <span class="keyword">if</span> (callback.call(context, <span class="built_in">this</span>[i], i, <span class="built_in">this</span>) === <span class="literal">false</span>) &#123;</span><br><span class="line">                           <span class="keyword">break</span>; <span class="comment">// or return;</span></span><br><span class="line">                       &#125;</span><br><span class="line">                   &#125;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">String</span>.prototype.format )&#123;</span><br><span class="line">        <span class="built_in">Array</span>.isArray = <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> obj.constructor.toString().indexOf(<span class="string">&#x27;Array&#x27;</span>) != -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//待补充 ...</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们定义一个extend_base方法，里面主要对js内置对象的api做了一些兼容性补充，目前还不完善，只有寥寥几个方法。当然，如果你不考虑IE678的话，那么基本上不需要这一部分了。</p>
+<p>定义完成后立即调用。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">extend_base(); </span><br></pre></td></tr></table></figure>
+
+<h3 id="工具包整合"><a href="#工具包整合" class="headerlink" title="工具包整合"></a>工具包整合</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ------------------------ 工具包---------------------------------//</span></span><br><span class="line"><span class="keyword">var</span> utils = &#123;</span><br><span class="line">            center : <span class="function"><span class="keyword">function</span>(<span class="params">dom</span>)</span>&#123;</span><br><span class="line">                dom.style.position = <span class="string">&#x27;absolute&#x27;</span>;</span><br><span class="line">                dom.style.top = <span class="string">&#x27;50%&#x27;</span>;</span><br><span class="line">                dom.style.left = <span class="string">&#x27;50%&#x27;</span>;</span><br><span class="line">                dom.style[<span class="string">&#x27;margin-top&#x27;</span>] = - dom.offsetHeight / <span class="number">2</span> + <span class="string">&#x27;px&#x27;</span>;</span><br><span class="line">                dom.style[<span class="string">&#x27;margin-left&#x27;</span>] = - dom.offsetWidth / <span class="number">2</span> + <span class="string">&#x27;px&#x27;</span>;</span><br><span class="line">            &#125;,</span><br><span class="line">        </span><br><span class="line">            <span class="comment">/** dom相关 * */</span></span><br><span class="line">            isDom : ( <span class="keyword">typeof</span> HTMLElement === <span class="string">&#x27;object&#x27;</span> ) ?</span><br><span class="line">                <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">                    <span class="keyword">return</span> obj <span class="keyword">instanceof</span> HTMLElement;</span><br><span class="line">                &#125; :</span><br><span class="line">                <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">                    <span class="keyword">return</span> obj &amp;&amp; <span class="keyword">typeof</span> obj === <span class="string">&#x27;object&#x27;</span> &amp;&amp; obj.nodeType === <span class="number">1</span> &amp;&amp; <span class="keyword">typeof</span> obj.nodeName === <span class="string">&#x27;string&#x27;</span>;</span><br><span class="line">                &#125; ,</span><br><span class="line">             </span><br><span class="line">            <span class="comment">/** 数组相关 * */</span></span><br><span class="line">            isArray : <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> obj.constructor.toString().indexOf(<span class="string">&#x27;Array&#x27;</span>) != -<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>center ：控制dom元素相对于父盒子居中</li>
+<li>isDom ：判断是否为dom元素</li>
+<li>isArray ：判断是否为数组</li>
+</ul>
+<h3 id="miniQuery总体设计"><a href="#miniQuery总体设计" class="headerlink" title="miniQuery总体设计"></a>miniQuery总体设计</h3><p>终于到miniQuery了，在写代码之前，先简单说一下自执行函数。<br>可能你在很多书上，或者下载的源码里面，经常会看到这样的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+
+<p>这样子你或许觉得很奇怪，没事，我们一起来分析。</p>
+<p>在js中，你如果把函数看作一个数据类型，和其他语言中的 Integer， Float ， String等等一样，就会理解很多事情了。当然，其实在js中，函数本身就是一个对象，不然的话就不会出现call方法了。因为只有对象才可以调用方法嘛。不过，大部分情况下，你把函数理解为数据类型就可以了。</p>
+<p>匿名函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>不过，因为js语法的关系，这样子是不能执行的，你需要用一对圆括号来包一下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(  </span><br><span class="line">    <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;你好！&quot;</span>);</span><br><span class="line">    &#125;()  </span><br><span class="line">) ;</span><br></pre></td></tr></table></figure>
+
+<p>这样就可以了，下面是另一种写法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(  </span><br><span class="line">    <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">&quot;你好！&quot;</span>);</span><br><span class="line">    &#125;  </span><br><span class="line">)();</span><br></pre></td></tr></table></figure>
+
+<p>这样也可以，这种写法会更多一点。它的意思就是说，我不关心你这个函数叫什么名字，反正你在被定义的时候就要给我执行，这就是所谓的自执行函数。</p>
+<p>好，问题来了，怎么加参数呢？</p>
+<p>以前我们习惯于这么写：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">say</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">    alert(str);</span><br><span class="line"> &#125; </span><br><span class="line"></span><br><span class="line">say(<span class="string">&quot;你好！&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>依葫芦画瓢</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(  </span><br><span class="line">    <span class="function"><span class="keyword">function</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">       alert(str);</span><br><span class="line">    &#125;  </span><br><span class="line">)(<span class="string">&quot;你好！&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>OK了。</p>
+<p>是不是一样的意思呢？</p>
+<p>没啥区别，以前怎么做，现在还怎么做，无非就是一个函数传参的事情罢了。</p>
+<p>我们将圆括号的位置调整一下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">( <span class="function"><span class="keyword">function</span>(<span class="params">str</span>)</span>&#123;</span><br><span class="line">    alert(str);</span><br><span class="line">&#125; )(<span class="string">&quot;你好！&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这样差不多就是最终的版本了，我记得初学js的时候，看这种代码很吃力，好像在看外星语言一样，后来看多了也就习惯了。</p>
+<p>自执行函数就是这么一回事，没什么大不了的。</p>
+<p>有了上面的解释，以后如果你再遇到这种写法，就 so easy 啦。</p>
+<p>所以，不要再恐惧了，它就是这么回事，没什么大不了的，我这么后知后觉的人都能写，你也可以。我花了半年的时间才看明白，我相信你现在只需要几分钟。我的意思是，如果你之前不知道这些的话。</p>
+<p>那么，什么时候用自执行函数呢？</p>
+<p><strong>当你觉得某个函数只需要执行一次，而且不需要在其他地方调用的时候，就用。</strong></p>
+<p>你可能会问了，我干嘛要这样写啊，反正就执行一次，我直接把实现代码写在外面不就行了？</p>
+<p><strong>原因很简单，因为那样的话，你定义的变量就会是全局的，而一般来说我们设计的原则是尽量不要使用全局变量。</strong></p>
+<p>而采用这种方式，我们就形成了一个匿名函数，函数的定义又会形成闭包，所以比较安全和简洁。</p>
+<p>你可能还会觉得疑惑，我干嘛要这些写，如果我非要给函数取一个名字，然后马上调用呢？</p>
+<p>额，其实我个人认为这也是没有问题的，但是你得费一番心思去给函数取名字，取 a,b,c,d 这样的名字肯定是不好的。那么，我私以为，还不如干脆就用匿名函数算了，省得麻烦。</p>
+<p>如果这部分知识你以前就不知道，那么我建议你把这篇文章多看几遍，反正就是那么回事，没什么大不了的。我当初就是走了很多弯路，也没有人教我，只有靠自己在那瞎摸索和各种百度，当然，现在想想很简单了。</p>
+<p>我们的miniQuery的定义就放在这个自执行函数里面，这样一来，只要有人调用了这个js文件，就能调用miniQuery函数了。</p>
+<p>当然，你直接放在外面其实也没事，因为反正就一个方法，而且这个方法本来就是要暴露出去的。</p>
+<p>这边为了说明自执行函数，就硬加进来了。</p>
+<p>我们把miniQuery的定义丢进去。</p>
+<p>比如，像这样子的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">var</span> miniQuery = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">&#x27;Hello miniQuery!&#x27;</span>);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+
+<p>我们尝试在外面调用：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">miniQuery();</span><br></pre></td></tr></table></figure>
+
+<p>很遗憾，调不到。</p>
+<p>我们再回顾一下代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">var</span> miniQuery = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        alert(<span class="string">&#x27;Hello miniQuery!&#x27;</span>);</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line">miniQuery();</span><br></pre></td></tr></table></figure>
+
+<p>原来，miniQuery是存在于一个闭包中的，它可以访问到父级作用域的变量，但是反过来就不行，除非函数自己用 return 的方式将私有数据暴露出去。这些在之前的关于闭包的文章里面已经解释过了，这里不再赘述。</p>
+<p>解决方法有很多，比如，最简单的，我们直接把var去掉，这样就会发生一次变量提升，miniQuery被升级为全局变量，挂在window对象上面。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   </span><br><span class="line">   miniQuery = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">&#x27;Hello miniQuery!&#x27;</span>);</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line">miniQuery();</span><br></pre></td></tr></table></figure>
+
+<p>成了，简单明了，干干净净。</p>
+<p>虽然我觉得很有道理，但是我看别人的代码，他们封装自己的js库的时候，几乎没有这样做的，因此我们也采用一种大众的做法。</p>
+<p>即，我们把window作为参数传进去，然后手动将miniQuery挂上去。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">win</span>)</span>&#123;</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">var</span> miniQuery = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">&#x27;Hello miniQuery!&#x27;</span>);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   win.miniQuery = miniQuery;</span><br><span class="line">   </span><br><span class="line">&#125;)(<span class="built_in">window</span>);</span><br><span class="line"></span><br><span class="line">miniQuery();</span><br></pre></td></tr></table></figure>
+
+<p>是不是也可以呢？</p>
+<p>如果你觉得每次写miniQuery太麻烦，那么我们可以给它换一个名字，比如 $</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">win</span>)</span>&#123;</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">var</span> miniQuery = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">&#x27;Hello miniQuery!&#x27;</span>);</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   </span><br><span class="line">   win.$ = miniQuery;</span><br><span class="line">   </span><br><span class="line">&#125;)(<span class="built_in">window</span>);</span><br><span class="line"></span><br><span class="line">$();</span><br></pre></td></tr></table></figure>
+
+<p>这样就差不多了。</p>
+<h3 id="miniQuery-包裹对象"><a href="#miniQuery-包裹对象" class="headerlink" title="miniQuery 包裹对象"></a>miniQuery 包裹对象</h3><p>我们先弄来一个测试用的网页：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.wrap</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>:<span class="number">80px</span>;</span><br><span class="line">    <span class="attribute">height</span>:<span class="number">80px</span>;</span><br><span class="line">    <span class="attribute">background</span>:darkslateblue;</span><br><span class="line">    <span class="attribute">margin</span>:<span class="number">20px</span>;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">2px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&#x27;boxes&#x27;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&#x27;box1&#x27;</span> <span class="attr">class</span>=<span class="string">&#x27;wrap&#x27;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&#x27;box2&#x27;</span> <span class="attr">class</span>=<span class="string">&#x27;wrap&#x27;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&#x27;box3&#x27;</span> <span class="attr">class</span>=<span class="string">&#x27;wrap&#x27;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>举一个例子，现在我们要获取id为box1的盒子，并把它的背景色改为红色。</p>
+<p>用js代码，我们会这样做：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> box2 = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;box2&#x27;</span>);</span><br><span class="line">box2.style.backgroundColor = <span class="string">&#x27;red&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>思路很清晰，分为简单的两步：</p>
+<p>第一步：获取dom对象。<br>第二部：设置其背景色为红色。</p>
+<p>同样的，我们的 miniQuery 也要这么做，首先得获取对象，然后进行操作。就好像你做饭，首先得有米面吧。所谓巧妇难为，无米之炊。</p>
+<p>于是，我们有了下面的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> miniQuery = <span class="function"><span class="keyword">function</span>(<span class="params">selector</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">var</span> miniQuery = <span class="built_in">document</span>.getElementById(selector);</span><br><span class="line">   <span class="built_in">console</span>.log(miniQuery);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>selector 代表选择器，它只是一个参数名字，参数列表的名称是可以自己定义的。你写 aaa , bbb , ccc 都没问题，只要你愿意的话。</p>
+<p>我以前经常看别人写的代码，参数里面有callback，现在我知道是回调函数的意思。可是我以前不知道，然后就觉得很困惑，作为一个英语比日语还差的js玩家，我感到很那个啥。</p>
+<p>其实无所谓，只是一个名字而已，你写什么都行，只要符合标识符的命名规范就成。</p>
+<p>总有人觉得，看到参数里边写了context（上下文），callback（回调函数）这样的词汇，就觉得很困惑。</p>
+<p>不要困惑啦，不要再惊恐啦，它就是一个名称罢了！</p>
+<p>。。。</p>
+<p>额，扯远了，继续回来。</p>
+<p>我们在外面调用miniQuery ~</p>
+<p>window 上面挂的是 $ , 其实就是 miniQuery</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&#x27;box1&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>接下里，我们给dom元素变更背景色为红色。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> miniQuery = <span class="function"><span class="keyword">function</span>(<span class="params">selector</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">var</span> miniQuery = <span class="built_in">document</span>.getElementById(selector);</span><br><span class="line">   miniQuery.style.backgroundColor = <span class="string">&#x27;red&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果确实出来了。</p>
+<p>可是呢，如果用户过几天又来个需求，说我要把box1的宽度变为之前的两倍，你怎么办？</p>
+<p>总不可能去修改源码吧！</p>
+<p>这时候，我们就可以考虑能不能通过一个什么办法，我先用miniQuery把你传进来的东西包装成dom元素，保存起来返回给你，同时再给你返回一大堆方法，比如改变高度啊，添加背景色啊等等。那么，操作的就是之前保存的元素了。也就是你一开始希望操作的元素。</p>
+<p>这是一个很好的想法，我们经过代码的重写，最终产生了这样的一个miniQuery函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> miniQuery = <span class="function"><span class="keyword">function</span>(<span class="params">selector</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> miniQuery = <span class="built_in">document</span>.getElementById(selector);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        obj : miniQuery , <span class="comment">//将dom元素保存起来，再返回给你</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">// ------------------------ css 相关 ------------------------//</span></span><br><span class="line">        backgroundColor : <span class="function"><span class="keyword">function</span>(<span class="params">color</span>)</span>&#123;</span><br><span class="line">            <span class="built_in">this</span>.obj.style.backgroundColor = color;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">   </span><br><span class="line">   win.$ = miniQuery;</span><br><span class="line">   </span><br><span class="line">&#125;)(<span class="built_in">window</span>);</span><br></pre></td></tr></table></figure>
+<p>我们再调用一次，看看这回它给我们返回的是什么东东？</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> $box = $(<span class="string">&#x27;box1&#x27;</span>);</span><br><span class="line"><span class="built_in">console</span>.log($box);</span><br></pre></td></tr></table></figure>
+
+<center><img src="/img/posts/JS-BuildBaseClassLib-1.gif"></img></center>
+
+<p>可见，它给我们返回的是一个json对象，里面有 obj 变量和 backgroundColor 函数。这样的好处就是极大的扩展了我们的miniQuery，你给我一个选择器，我就包起来，然后不仅把它返回给你，而且还给你各种api方法！</p>
+<p>于是我们就可以直接调用 backgroundColor 函数了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> $box = $(<span class="string">&#x27;box1&#x27;</span>);</span><br><span class="line">$box.backgroundColor(<span class="string">&#x27;red&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<center><img src="/img/posts/JS-BuildBaseClassLib-2.gif"></img></center>
+
+<p>成了。</p>
+<p>我们现在返回的，不是一个单纯的dom元素，dom元素只是它的一部分。可以说，我们返回给用户的是一个miniQuery对象！</p>
+<p>经过改进，我已经陆陆续续地给miniQuery添加了很多方法，大部分是模拟的jQuery：</p>
+<center><img src="/img/posts/JS-BuildBaseClassLib-3.gif"></img></center>
+
+<p>顺便弄了两个小型的组件，一个是按钮，另一个是简单的数据列表。</p>
+<p>按钮使用：</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">link</span> rel=<span class="string">&quot;stylesheet&quot;</span> type=<span class="string">&quot;text/css&quot;</span> href=<span class="string">&quot;css/mui.css&quot;</span>/&gt;</span><br><span class="line">&lt;div class=<span class="string">&#x27;box&#x27;</span>&gt;&lt;/div&gt;</span><br><span class="line">var $box = $(<span class="string">&#x27;.box&#x27;</span>).e<span class="string">q(0)</span>;</span><br><span class="line">$box.linkbutton();</span><br></pre></td></tr></table></figure>
+
+<p>按钮的样式就出来了，然后我们来设置按钮的属性。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> $box = $(<span class="string">&#x27;.box&#x27;</span>).eq(<span class="number">0</span>);</span><br><span class="line">$box.linkbutton(&#123;</span><br><span class="line">    text : <span class="string">&#x27;保存&#x27;</span> ,</span><br><span class="line">    click : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        alert(<span class="string">&#x27;保存成功！&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>按钮的大小也自动变大了。</p>
+<p>对应的css：</p>
+<p>mui.css</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.linkbutton</span> &#123;</span><br><span class="line">    <span class="attribute">padding</span>: .<span class="number">4em</span> .<span class="number">9em</span>; <span class="comment">/*em的好处就是随着父元素的字体大小而变化，当该元素的字体变化时，会自适应*/</span></span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,.<span class="number">1</span>);</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#ac0</span>;</span><br><span class="line">    <span class="attribute">border-radius</span>: .<span class="number">2em</span>;</span><br><span class="line">    <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">5px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,.<span class="number">5</span>);</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">    <span class="attribute">text-shadow</span>: <span class="number">0</span> -.<span class="number">06em</span> .<span class="number">24em</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,.<span class="number">5</span>); <span class="comment">/*将阴影设置为半透明，就无所谓底色了，都能很好地适应*/</span></span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">130%</span>; </span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">1.5</span>; <span class="comment">/*行高是字号的1.5倍*/</span></span><br><span class="line">    <span class="attribute">display</span>:inline-block;</span><br><span class="line">    <span class="attribute">cursor</span>:pointer;</span><br><span class="line">    <span class="attribute">font-family</span>: <span class="string">&quot;微软雅黑&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>数据列表简单演示：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span> <span class="attr">href</span>=<span class="string">&quot;css/mui.css&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;js/miniQuery.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">id</span>=<span class="string">&#x27;btn0&#x27;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        </span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&#x27;grid0&#x27;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">        $(<span class="string">&#x27;#btn0&#x27;</span>).linkbutton(&#123;</span></span><br><span class="line"><span class="javascript">            text : <span class="string">&#x27;测试&#x27;</span> ,</span></span><br><span class="line"><span class="javascript">            click : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line">                if(grid0.getSize() &lt; 1)&#123;</span><br><span class="line"><span class="javascript">                    alert(<span class="string">&#x27;请选择一条数据！&#x27;</span>);</span></span><br><span class="line"><span class="javascript">                    <span class="keyword">return</span>;</span></span><br><span class="line">                &#125;</span><br><span class="line"><span class="javascript">                alert(<span class="string">&#x27;您选择的是&#x27;</span> + <span class="built_in">JSON</span>.stringify(grid0.getSelected()));</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> grid0 = mui.get(<span class="string">&#x27;#grid0&#x27;</span>).dataGrid(&#123;</span></span><br><span class="line">            header : [</span><br><span class="line"><span class="javascript">                &#123;<span class="attr">name</span>:<span class="string">&#x27;ID&#x27;</span> ,  <span class="attr">width</span>:<span class="number">10</span> , <span class="attr">type</span> : <span class="string">&#x27;checkColumn&#x27;</span> &#125; ,</span></span><br><span class="line"><span class="javascript">                &#123;<span class="attr">name</span>:<span class="string">&#x27;标题&#x27;</span> , <span class="attr">type</span> : <span class="string">&#x27;column&#x27;</span> , <span class="attr">field</span> : <span class="string">&#x27;title&#x27;</span>&#125; ,</span></span><br><span class="line"><span class="javascript">                &#123;<span class="attr">name</span>:<span class="string">&#x27;分类&#x27;</span> , <span class="attr">type</span> : <span class="string">&#x27;column&#x27;</span> , <span class="attr">field</span> : <span class="string">&#x27;type&#x27;</span>&#125; ,</span></span><br><span class="line"><span class="javascript">                &#123;<span class="attr">name</span>:<span class="string">&#x27;作者&#x27;</span> ,  <span class="attr">type</span> : <span class="string">&#x27;column&#x27;</span> , <span class="attr">field</span> : <span class="string">&#x27;author&#x27;</span>&#125; ,</span></span><br><span class="line"><span class="javascript">                &#123;<span class="attr">name</span>:<span class="string">&#x27;时间&#x27;</span> ,  <span class="attr">type</span> : <span class="string">&#x27;column&#x27;</span> , <span class="attr">field</span> : <span class="string">&#x27;time&#x27;</span>&#125; ,</span></span><br><span class="line">            ] ,</span><br><span class="line">            </span><br><span class="line">        &#125;);</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        grid0.load([</span><br><span class="line"><span class="javascript">            &#123;<span class="attr">title</span> : <span class="string">&#x27;111&#x27;</span> , <span class="attr">type</span> : <span class="string">&#x27;A&#x27;</span> , <span class="attr">author</span> : <span class="string">&#x27;张三&#x27;</span> , <span class="attr">time</span> : <span class="string">&#x27;2015&#x27;</span>&#125; ,</span></span><br><span class="line"><span class="javascript">            &#123;<span class="attr">title</span> : <span class="string">&#x27;222&#x27;</span> , <span class="attr">type</span> : <span class="string">&#x27;B&#x27;</span> , <span class="attr">author</span> : <span class="string">&#x27;李四&#x27;</span> , <span class="attr">time</span> : <span class="string">&#x27;2015&#x27;</span>&#125; ,</span></span><br><span class="line"><span class="javascript">            &#123;<span class="attr">title</span> : <span class="string">&#x27;333&#x27;</span> , <span class="attr">type</span> : <span class="string">&#x27;C&#x27;</span> , <span class="attr">author</span> : <span class="string">&#x27;王五&#x27;</span> , <span class="attr">time</span> : <span class="string">&#x27;2015&#x27;</span>&#125; ,</span></span><br><span class="line"><span class="javascript">            &#123;<span class="attr">title</span> : <span class="string">&#x27;444&#x27;</span> , <span class="attr">type</span> : <span class="string">&#x27;D&#x27;</span> , <span class="attr">author</span> : <span class="string">&#x27;赵六&#x27;</span> , <span class="attr">time</span> : <span class="string">&#x27;2015&#x27;</span>&#125; ,</span></span><br><span class="line">        ]);</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>当然，好多组件都还不够完善，我主要也是自己尝试一下，不过并不打算再拓展了。</p>
+<p>自己做个小类库主要用于学习，以后还是用jQuery吧。</p>
+<p>附录A</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br><span class="line">515</span><br><span class="line">516</span><br><span class="line">517</span><br><span class="line">518</span><br><span class="line">519</span><br><span class="line">520</span><br><span class="line">521</span><br><span class="line">522</span><br><span class="line">523</span><br><span class="line">524</span><br><span class="line">525</span><br><span class="line">526</span><br><span class="line">527</span><br><span class="line">528</span><br><span class="line">529</span><br><span class="line">530</span><br><span class="line">531</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&quot;use strict&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * miniQuery 和 工具类库</span></span><br><span class="line"><span class="comment"> * 版本 1.1 (修正了一部分Bug，增加了一些方法)</span></span><br><span class="line"><span class="comment"> * 作者：剽悍一小兔</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ------------------------ 基本扩展, 字符串,数组等---------------------------------//</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">extend_base</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">String</span>.prototype.format )&#123;</span><br><span class="line">        <span class="built_in">String</span>.prototype.format = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> e = <span class="built_in">arguments</span>;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">this</span>.replace(<span class="regexp">/&#123;(\d+)&#125;/g</span>,<span class="function"><span class="keyword">function</span>(<span class="params">t, n</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">typeof</span> e[n] != <span class="string">&quot;undefined&quot;</span> ? e[n] : t</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">Array</span>.prototype.forEach &amp;&amp; <span class="keyword">typeof</span> <span class="built_in">Array</span>.prototype.forEach !== <span class="string">&quot;function&quot;</span>) &#123;</span><br><span class="line">        <span class="built_in">Array</span>.prototype.forEach = <span class="function"><span class="keyword">function</span>(<span class="params">callback, context</span>) </span>&#123;</span><br><span class="line">           <span class="comment">// 遍历数组,在每一项上调用回调函数，这里使用原生方法验证数组。</span></span><br><span class="line">           <span class="keyword">if</span> (<span class="built_in">Object</span>.prototype.toString.call(<span class="built_in">this</span>) === <span class="string">&quot;[object Array]&quot;</span>) &#123;</span><br><span class="line">               <span class="keyword">var</span> i,len;</span><br><span class="line">               <span class="comment">//遍历该数组所有的元素</span></span><br><span class="line">               <span class="keyword">for</span> (i = <span class="number">0</span>, len = <span class="built_in">this</span>.length; i &lt; len; i++) &#123;</span><br><span class="line">                   <span class="keyword">if</span> (<span class="keyword">typeof</span> callback === <span class="string">&quot;function&quot;</span>  &amp;&amp; <span class="built_in">Object</span>.prototype.hasOwnProperty.call(<span class="built_in">this</span>, i)) &#123;</span><br><span class="line">                       <span class="keyword">if</span> (callback.call(context, <span class="built_in">this</span>[i], i, <span class="built_in">this</span>) === <span class="literal">false</span>) &#123;</span><br><span class="line">                           <span class="keyword">break</span>; <span class="comment">// or return;</span></span><br><span class="line">                       &#125;</span><br><span class="line">                   &#125;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">String</span>.prototype.format )&#123;</span><br><span class="line">        <span class="built_in">Array</span>.isArray = <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> obj.constructor.toString().indexOf(<span class="string">&#x27;Array&#x27;</span>) != -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">extend_base(); </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// ------------------------ 工具包---------------------------------//</span></span><br><span class="line"><span class="keyword">var</span> utils = &#123;</span><br><span class="line">            center : <span class="function"><span class="keyword">function</span>(<span class="params">dom</span>)</span>&#123;</span><br><span class="line">                dom.style.position = <span class="string">&#x27;absolute&#x27;</span>;</span><br><span class="line">                dom.style.top = <span class="string">&#x27;50%&#x27;</span>;</span><br><span class="line">                dom.style.left = <span class="string">&#x27;50%&#x27;</span>;</span><br><span class="line">                dom.style[<span class="string">&#x27;margin-top&#x27;</span>] = - dom.offsetHeight / <span class="number">2</span> + <span class="string">&#x27;px&#x27;</span>;</span><br><span class="line">                dom.style[<span class="string">&#x27;margin-left&#x27;</span>] = - dom.offsetWidth / <span class="number">2</span> + <span class="string">&#x27;px&#x27;</span>;</span><br><span class="line">            &#125;,</span><br><span class="line">        </span><br><span class="line">            <span class="comment">/** dom相关 * */</span></span><br><span class="line">            isDom : ( <span class="keyword">typeof</span> HTMLElement === <span class="string">&#x27;object&#x27;</span> ) ?</span><br><span class="line">                <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">                    <span class="keyword">return</span> obj <span class="keyword">instanceof</span> HTMLElement;</span><br><span class="line">                &#125; :</span><br><span class="line">                <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">                    <span class="keyword">return</span> obj &amp;&amp; <span class="keyword">typeof</span> obj === <span class="string">&#x27;object&#x27;</span> &amp;&amp; obj.nodeType === <span class="number">1</span> &amp;&amp; <span class="keyword">typeof</span> obj.nodeName === <span class="string">&#x27;string&#x27;</span>;</span><br><span class="line">                &#125; ,</span><br><span class="line">             </span><br><span class="line">            <span class="comment">/** 数组相关 * */</span></span><br><span class="line">            isArray : <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> obj.constructor.toString().indexOf(<span class="string">&#x27;Array&#x27;</span>) != -<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// ------------------------ miniQuery.js ---------------------------------//</span></span><br><span class="line">;(<span class="function"><span class="keyword">function</span>(<span class="params">win</span>)</span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">var</span> miniQuery = <span class="function"><span class="keyword">function</span>(<span class="params">selector</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> miniQuery = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">var</span> length = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">var</span> children = [];</span><br><span class="line">        <span class="keyword">if</span>(!selector) <span class="keyword">return</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">/** 1. 传入的是id * */</span></span><br><span class="line">        <span class="keyword">if</span>(selector.toString().indexOf(<span class="string">&#x27;#&#x27;</span>) != -<span class="number">1</span>) &#123;</span><br><span class="line">            selector = selector.replace(<span class="string">&#x27;#&#x27;</span>,<span class="string">&#x27;&#x27;</span>);</span><br><span class="line">            miniQuery = <span class="built_in">document</span>.getElementById(selector);</span><br><span class="line">        &#125; </span><br><span class="line">        </span><br><span class="line">        <span class="comment">/** 2. 传入的是class * */</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(selector.toString().indexOf(<span class="string">&#x27;.&#x27;</span>) != -<span class="number">1</span>)&#123;</span><br><span class="line">            selector = selector.replace(<span class="string">&#x27;.&#x27;</span>,<span class="string">&#x27;&#x27;</span>);</span><br><span class="line">            miniQuery = <span class="built_in">document</span>.getElementsByClassName(selector);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        <span class="comment">/** 3. 传入的是dom元素 * */</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(utils.isDom(selector))&#123;</span><br><span class="line">            miniQuery = selector;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">         <span class="comment">/** 4. 传入的是标签 * */</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(<span class="keyword">typeof</span> selector === <span class="string">&#x27;string&#x27;</span>)&#123;</span><br><span class="line">            miniQuery = <span class="built_in">document</span>.getElementsByTagName(selector);</span><br><span class="line">            <span class="keyword">return</span> miniQuery;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(!miniQuery) <span class="keyword">return</span>; <span class="comment">//如果本类库包装不了，就返回</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(miniQuery.length)&#123;   <span class="comment">//如果是一个类数组元素的话，就获取他的长度</span></span><br><span class="line">            length = miniQuery.length; </span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            length = <span class="number">1</span>; <span class="comment">//这种情况，说明成功包裹了元素，但是该元素还是存在的，就将长度设定为1</span></span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        children = miniQuery.children; <span class="comment">//取得所有的孩子节点</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">/** 属性区 */</span></span><br><span class="line">            obj : miniQuery,    <span class="comment">//返回的dom元素</span></span><br><span class="line">            index : <span class="number">0</span> ,         <span class="comment">//默认的角标（假如 miniquery 是一个类数组的话）</span></span><br><span class="line">            length : length,    <span class="comment">//元素的个数（假如 miniquery 是一个类数组的话）</span></span><br><span class="line">            children : children,<span class="comment">//所有孩子节点</span></span><br><span class="line">            </span><br><span class="line">            </span><br><span class="line">            <span class="comment">/** 方法区 */</span></span><br><span class="line">            </span><br><span class="line">            <span class="comment">// ------------------------ dom 相关 ---------------------------------//</span></span><br><span class="line">            </span><br><span class="line">            <span class="comment">/**获取dom对象本身,返回纯粹的dom元素，而非miniQuery元素*/</span></span><br><span class="line">            getObj : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">this</span>.obj;</span><br><span class="line">            &#125; ,</span><br><span class="line">            </span><br><span class="line">            <span class="comment">/**获取元素的长度*/</span></span><br><span class="line">            size : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">this</span>.length;</span><br><span class="line">            &#125; ,</span><br><span class="line">            </span><br><span class="line">            <span class="comment">/** 假如 miniquery 是一个类数组的话，用于返回其中一个元素 */</span></span><br><span class="line">            eq : <span class="function"><span class="keyword">function</span>(<span class="params">index</span>)</span>&#123;</span><br><span class="line">                <span class="keyword">if</span>(length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="keyword">return</span> $(<span class="built_in">this</span>.obj[index]); <span class="comment">//eq返回的还是miniQuery对象</span></span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; ,</span><br><span class="line">            </span><br><span class="line">            <span class="comment">/** 获得第一个匹配元素 */</span></span><br><span class="line">            first : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> $(<span class="built_in">this</span>.obj[<span class="number">0</span>]);</span><br><span class="line">            &#125; ,</span><br><span class="line">            </span><br><span class="line">            <span class="comment">/** 获得最后一个匹配元素 */</span></span><br><span class="line">            last : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> $(<span class="built_in">this</span>.obj[<span class="built_in">this</span>.length - <span class="number">1</span>]);</span><br><span class="line">            &#125; ,</span><br><span class="line">            </span><br><span class="line">            <span class="comment">/** 获得最后一个匹配元素 */</span></span><br><span class="line">            getChildren : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">this</span>.obj.children;</span><br><span class="line">            &#125; ,</span><br><span class="line">            </span><br><span class="line">            <span class="comment">/** 获得某一个孩子节点 */</span></span><br><span class="line">            getChild : <span class="function"><span class="keyword">function</span>(<span class="params">i</span>)</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> $(<span class="built_in">this</span>.children[i]);</span><br><span class="line">            &#125; ,</span><br><span class="line">            </span><br><span class="line">            <span class="comment">/** 获得父节点 */</span></span><br><span class="line">            getParent : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> $(<span class="built_in">this</span>.obj.parentElement);</span><br><span class="line">            &#125; ,</span><br><span class="line">            </span><br><span class="line">            <span class="comment">/** 获得上一个节点 */</span></span><br><span class="line">            previous : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                <span class="keyword">var</span> parent = <span class="built_in">this</span>.getParent();</span><br><span class="line">                <span class="keyword">var</span> children = parent.children;</span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; children.length; i++)&#123;</span><br><span class="line">                    <span class="keyword">if</span>(<span class="built_in">this</span>.obj == children[i]) &#123;</span><br><span class="line">                        <span class="keyword">return</span> $(children[i - <span class="number">1</span>]);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">            &#125; ,</span><br><span class="line">            </span><br><span class="line">            <span class="comment">/** 获得下一个节点 */</span></span><br><span class="line">            next : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                <span class="keyword">var</span> parent = <span class="built_in">this</span>.getParent();</span><br><span class="line">                <span class="keyword">var</span> children = parent.children;</span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; children.length; i++)&#123;</span><br><span class="line">                    <span class="keyword">if</span>(<span class="built_in">this</span>.obj == children[i]) &#123;</span><br><span class="line">                        <span class="keyword">return</span> $(children[i + <span class="number">1</span>]);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">            &#125; ,</span><br><span class="line">            </span><br><span class="line">            findClassDom : <span class="function"><span class="keyword">function</span>(<span class="params">className</span>)</span>&#123;</span><br><span class="line">                 <span class="built_in">this</span>.obj = <span class="built_in">this</span>.obj.getElementsByClassName(className) ;</span><br><span class="line">                 <span class="keyword">return</span> <span class="built_in">this</span> ;</span><br><span class="line">            &#125; ,</span><br><span class="line">            </span><br><span class="line">            findIdDom : <span class="function"><span class="keyword">function</span>(<span class="params">id</span>)</span>&#123;</span><br><span class="line">                 <span class="keyword">var</span> $this = <span class="built_in">this</span>; </span><br><span class="line">                 <span class="keyword">var</span> children = <span class="built_in">this</span>.getChildren();</span><br><span class="line">                 children = <span class="built_in">Array</span>.prototype.slice.call(children); <span class="comment">//obj 转  []</span></span><br><span class="line">                 children.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>)</span>&#123;</span><br><span class="line">                    <span class="comment">//console.log(item.id);</span></span><br><span class="line">                    (id === item.id) &amp;&amp; ($this = item) ;</span><br><span class="line">                 &#125;);</span><br><span class="line">                 <span class="keyword">return</span> <span class="built_in">this</span> ;</span><br><span class="line">            &#125; ,</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// ------------------------ css 相关 ---------------------------------//</span></span><br><span class="line">            <span class="comment">/** 添加背景色 */</span></span><br><span class="line">            backgroundColor : <span class="function"><span class="keyword">function</span>(<span class="params">color</span>)</span>&#123;</span><br><span class="line">                <span class="built_in">this</span>.obj.style.backgroundColor = color;</span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">            &#125; ,</span><br><span class="line">            </span><br><span class="line">            <span class="comment">/** 获取style */</span></span><br><span class="line">            getStyle : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                <span class="keyword">var</span> styleEle = <span class="literal">null</span>;</span><br><span class="line">                <span class="keyword">if</span>(<span class="built_in">window</span>.getComputedStyle)&#123;</span><br><span class="line">                    styleEle = <span class="built_in">window</span>.getComputedStyle(<span class="built_in">this</span>.obj,<span class="literal">null</span>);</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    styleEle = ht.currentStyle;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> styleEle;</span><br><span class="line">             &#125; ,</span><br><span class="line">            </span><br><span class="line">            <span class="comment">/** 设置或者拿到高度 */</span> </span><br><span class="line">            height : <span class="function"><span class="keyword">function</span>(<span class="params">h</span>)</span>&#123;</span><br><span class="line">                <span class="keyword">if</span>(!h) <span class="keyword">return</span> <span class="built_in">this</span>.getStyle().getPropertyValue(<span class="string">&#x27;height&#x27;</span>);</span><br><span class="line">                (<span class="keyword">typeof</span> h == <span class="string">&#x27;number&#x27;</span>) &amp;&amp; (h = h + <span class="string">&#x27;px&#x27;</span>);</span><br><span class="line">                <span class="built_in">this</span>.obj.style.height = h;</span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">            &#125; ,</span><br><span class="line">            </span><br><span class="line">            <span class="comment">/** 设置或者拿到宽度 */</span> </span><br><span class="line">            width : <span class="function"><span class="keyword">function</span>(<span class="params">w</span>)</span>&#123;</span><br><span class="line">                <span class="keyword">if</span>(!w) <span class="keyword">return</span> <span class="built_in">this</span>.getStyle().getPropertyValue(<span class="string">&#x27;width&#x27;</span>);</span><br><span class="line">                (<span class="keyword">typeof</span> w == <span class="string">&#x27;number&#x27;</span>) &amp;&amp; (w = w + <span class="string">&#x27;px&#x27;</span>);</span><br><span class="line">                <span class="built_in">this</span>.obj.style.width = w;</span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">            &#125; ,</span><br><span class="line">            </span><br><span class="line">            <span class="comment">/** 设置自定义样式 */</span></span><br><span class="line">            css : <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">                <span class="keyword">if</span>(!obj) <span class="keyword">return</span>;</span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> obj)&#123;</span><br><span class="line">                    <span class="comment">//console.log(key + &#x27;=========&#x27; + obj[key]);</span></span><br><span class="line">                    <span class="built_in">this</span>.obj.style[key] = <span class="keyword">typeof</span> obj[key] === <span class="string">&#x27;number&#x27;</span> ? obj[key] + <span class="string">&#x27;px&#x27;</span> : obj[key];</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">            &#125; ,</span><br><span class="line">            </span><br><span class="line">            <span class="comment">/** 设置放大 倍数*/</span></span><br><span class="line">            scale : <span class="function"><span class="keyword">function</span>(<span class="params">scaleNumber</span>)</span>&#123;</span><br><span class="line">                <span class="built_in">this</span>.css(&#123;</span><br><span class="line">                    scale : scaleNumber</span><br><span class="line">                &#125;);</span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">            &#125; ,</span><br><span class="line">            </span><br><span class="line">            </span><br><span class="line">            hasClass : <span class="function"><span class="keyword">function</span>(<span class="params">cls</span>) </span>&#123;  </span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">this</span>.obj.className.match(<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">&#x27;(\\s|^)&#x27;</span> + cls + <span class="string">&#x27;(\\s|$)&#x27;</span>));  </span><br><span class="line">            &#125;  ,</span><br><span class="line">            </span><br><span class="line">            addClass : <span class="function"><span class="keyword">function</span>(<span class="params">cls</span>)</span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (!<span class="built_in">this</span>.hasClass(cls)) <span class="built_in">this</span>.obj.className += <span class="string">&quot; &quot;</span> + cls;  </span><br><span class="line">            &#125; ,</span><br><span class="line">            </span><br><span class="line">            removeClass : <span class="function"><span class="keyword">function</span>(<span class="params">cls</span>) </span>&#123;  </span><br><span class="line">                <span class="keyword">if</span> (<span class="built_in">this</span>.hasClass(cls)) &#123;  </span><br><span class="line">                    <span class="comment">//console.log(this.obj);</span></span><br><span class="line">                    <span class="keyword">var</span> reg = <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">&#x27;(\\s|^)&#x27;</span> + cls + <span class="string">&#x27;(\\s|$)&#x27;</span>);  </span><br><span class="line">                    <span class="built_in">this</span>.obj.className = <span class="built_in">this</span>.obj.className.replace(reg, <span class="string">&#x27; &#x27;</span>);  <span class="comment">//修正bug，之前右边少了一个this</span></span><br><span class="line">                &#125;  </span><br><span class="line">            &#125; ,</span><br><span class="line">            </span><br><span class="line">            toggleClass : <span class="function"><span class="keyword">function</span>(<span class="params">cls</span>)</span>&#123;  </span><br><span class="line">                <span class="keyword">if</span>(<span class="built_in">this</span>.hasClass(cls))&#123;  </span><br><span class="line">                    <span class="built_in">this</span>.removeClass(cls);  </span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;  </span><br><span class="line">                    <span class="built_in">this</span>.addClass(cls);  </span><br><span class="line">                &#125;  </span><br><span class="line">            &#125;  ,</span><br><span class="line">            </span><br><span class="line">            </span><br><span class="line">            </span><br><span class="line">            <span class="comment">// ------------------------ 动画 相关 ---------------------------------//</span></span><br><span class="line">            </span><br><span class="line">            <span class="comment">//TODO</span></span><br><span class="line">            animate : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                </span><br><span class="line">            &#125; ,</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// ------------------------ 事件相关 ---------------------------------//</span></span><br><span class="line">            </span><br><span class="line">            on : <span class="function"><span class="keyword">function</span>(<span class="params">eventName,callback</span>)</span>&#123;</span><br><span class="line">                <span class="keyword">var</span> $this = <span class="built_in">this</span>;</span><br><span class="line">                <span class="built_in">this</span>.obj[<span class="string">&#x27;on&#x27;</span> + eventName] = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                    callback.call($this,$this.obj); <span class="comment">//context指向$this，参数传入dom对象</span></span><br><span class="line">                &#125;;</span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">            &#125; ,</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// ------------------------ 属性相关 ---------------------------------//</span></span><br><span class="line">            </span><br><span class="line">            attr : <span class="function"><span class="keyword">function</span>(<span class="params">attr</span>)</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">this</span>.obj.attributes[attr];</span><br><span class="line">            &#125; ,</span><br><span class="line">            </span><br><span class="line">            </span><br><span class="line">            <span class="comment">// ------------------------ ajax相关 ---------------------------------//</span></span><br><span class="line">            </span><br><span class="line">            ajax : <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</span><br><span class="line">                <span class="keyword">var</span> defaults = &#123;</span><br><span class="line">                    type : <span class="string">&#x27;post&#x27;</span> ,</span><br><span class="line">                    data : &#123;&#125; ,</span><br><span class="line">                    success : <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">                        </span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;;</span><br><span class="line">                </span><br><span class="line">                </span><br><span class="line">                <span class="comment">// 创建一个ajax对象</span></span><br><span class="line">                <span class="keyword">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">                <span class="comment">//开始和后台的upload.jsp页面进行交换</span></span><br><span class="line">                xhr.open(<span class="string">&quot;post&quot;</span>, basePath+<span class="string">&quot;/upload/file.do&quot;</span>, <span class="literal">true</span>);</span><br><span class="line">                <span class="comment">//上传成功进入的毁掉函数</span></span><br><span class="line">                xhr.onreadystatechange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                    <span class="keyword">if</span>(xhr.readyState==<span class="number">4</span> &amp;&amp; xhr.status==<span class="number">200</span>)&#123;<span class="comment">//状态4和200代表和服务器端交互成功</span></span><br><span class="line">                        <span class="comment">//获取上传成功的返回数据</span></span><br><span class="line">                        <span class="keyword">var</span> data = xhr.responseText.trim();</span><br><span class="line">                        <span class="keyword">var</span> jdata = <span class="built_in">eval</span>(<span class="string">&quot;(&quot;</span>+data+<span class="string">&quot;)&quot;</span>);</span><br><span class="line">                        jdata[<span class="string">&quot;target&quot;</span>]=uploadTo;</span><br><span class="line">                        tz_uploadsuccess($(uploadTo),jdata);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;;</span><br><span class="line">                <span class="comment">//监听文件上传的进度</span></span><br><span class="line">                xhr.upload.addEventListener(<span class="string">&quot;progress&quot;</span>, progressFunction, <span class="literal">false</span>);</span><br><span class="line">                <span class="comment">//发送文件上传的进度</span></span><br><span class="line">                xhr.send(form);</span><br><span class="line">            &#125; ,</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// ------------------------ ui ---------------------------------//</span></span><br><span class="line">            </span><br><span class="line">            <span class="comment">/** 按钮 * */</span></span><br><span class="line">            linkbutton : <span class="function"><span class="keyword">function</span>(<span class="params">opts</span>)</span>&#123;</span><br><span class="line">                <span class="keyword">var</span> opts = opts || &#123;&#125;;</span><br><span class="line">                <span class="comment">/**添加基本样式* */</span></span><br><span class="line">                <span class="built_in">this</span>.addClass(<span class="string">&#x27;linkbutton&#x27;</span>);</span><br><span class="line">                <span class="built_in">this</span>.on(<span class="string">&#x27;mouseover&#x27;</span> , <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">                    <span class="comment">//console.log(e);</span></span><br><span class="line">                    <span class="built_in">this</span>.css(&#123;</span><br><span class="line">                        backgroundColor: <span class="string">&#x27;#d4ef50&#x27;</span></span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;).on(<span class="string">&#x27;mouseout&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">                    <span class="built_in">this</span>.css(&#123;</span><br><span class="line">                        backgroundColor: <span class="string">&#x27;#ac0&#x27;</span></span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;);</span><br><span class="line">                </span><br><span class="line">                opts.text &amp;&amp; (<span class="built_in">this</span>.obj.innerText = opts.text);</span><br><span class="line">                opts.click &amp;&amp; (<span class="built_in">this</span>.on(<span class="string">&#x27;click&#x27;</span> , opts.click));</span><br><span class="line">            &#125; ,</span><br><span class="line">            </span><br><span class="line">            <span class="comment">/** 数据列表 * */</span></span><br><span class="line">            dataGrid : <span class="function"><span class="keyword">function</span>(<span class="params">opts</span>)</span>&#123;</span><br><span class="line">                <span class="keyword">var</span> $this = <span class="built_in">this</span>;</span><br><span class="line">                <span class="keyword">var</span> opts = opts || &#123;&#125;;</span><br><span class="line">                <span class="keyword">var</span> header = <span class="literal">null</span>; <span class="comment">//表头</span></span><br><span class="line">                <span class="keyword">var</span> id = <span class="literal">null</span>; <span class="comment">//grid的id，唯一</span></span><br><span class="line">                <span class="keyword">var</span> tb_id = <span class="literal">null</span>;</span><br><span class="line">                <span class="keyword">var</span> tbody_id = <span class="literal">null</span>;</span><br><span class="line">                <span class="keyword">var</span> count = <span class="number">0</span>; <span class="comment">//为了防止id重复</span></span><br><span class="line">                <span class="keyword">var</span> columns = []; <span class="comment">//存放field</span></span><br><span class="line">                <span class="keyword">var</span> types = [];</span><br><span class="line">                <span class="keyword">if</span>(!<span class="built_in">this</span>.obj.id) <span class="keyword">return</span>;</span><br><span class="line">                <span class="keyword">else</span> id = <span class="built_in">this</span>.obj.id;</span><br><span class="line">                </span><br><span class="line">                <span class="keyword">if</span>(!opts.header) <span class="keyword">return</span>;</span><br><span class="line">                <span class="keyword">else</span> header = opts.header;</span><br><span class="line">                </span><br><span class="line">                <span class="comment">/**添加基本样式* */</span></span><br><span class="line">                <span class="built_in">this</span>.addClass(<span class="string">&#x27;tableBox&#x27;</span>);</span><br><span class="line">                </span><br><span class="line">                <span class="comment">//初始化表头</span></span><br><span class="line">                <span class="function"><span class="keyword">function</span> <span class="title">initHeader</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                    <span class="keyword">var</span> time = <span class="keyword">new</span> <span class="built_in">Date</span>().getTime();</span><br><span class="line">                    tb_id = <span class="string">&#x27;mui-table_&#x27;</span> + time + <span class="string">&#x27;_&#x27;</span> + count++;</span><br><span class="line">                    <span class="keyword">var</span> html = <span class="string">&quot; &lt;table id=&#x27;&quot;</span>+tb_id+<span class="string">&quot;&#x27;&gt;&lt;thead&gt;&quot;</span> ;</span><br><span class="line">                    </span><br><span class="line">                    <span class="comment">//拼接表头</span></span><br><span class="line">                    html += <span class="string">&#x27;&lt;tr&gt;&#x27;</span> ;</span><br><span class="line">                    header.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>)</span>&#123;</span><br><span class="line">                        columns.push(item.field); <span class="comment">//添加字段名</span></span><br><span class="line">                        types.push(item.type);    <span class="comment">//添加列类型</span></span><br><span class="line">                        <span class="keyword">var</span> width = <span class="literal">null</span>;</span><br><span class="line">                        <span class="keyword">if</span>(item.width) width = item.width + <span class="string">&#x27;px&#x27;</span>; <span class="comment">//设置宽度</span></span><br><span class="line">                        <span class="keyword">if</span>(width) width = <span class="string">&quot;width=&#x27;&quot;</span>+width+<span class="string">&quot;&#x27; &quot;</span>;</span><br><span class="line">                        html += <span class="string">&quot;&lt;th &quot;</span>+width+<span class="string">&quot;&gt;&quot;</span> + item.name + <span class="string">&#x27;&lt;/th&gt;&#x27;</span></span><br><span class="line">                    &#125;);</span><br><span class="line">                    tbody_id = <span class="string">&#x27;mui-table-tbody_&#x27;</span> + time + <span class="string">&#x27;_&#x27;</span> + count++;</span><br><span class="line">                    html += <span class="string">&quot;&lt;/tr&gt;&lt;/thread&gt;&lt;tbody id=&#x27;&quot;</span>+tbody_id+<span class="string">&quot;&#x27;&gt;&lt;/tbody&gt;&quot;</span> ;</span><br><span class="line">                    html += <span class="string">&#x27;&lt;/table&gt;&#x27;</span> ;</span><br><span class="line">                    </span><br><span class="line">                    $this.obj.innerHTML = html;</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">                </span><br><span class="line">                <span class="comment">//</span></span><br><span class="line">                initHeader();</span><br><span class="line">                </span><br><span class="line">                <span class="keyword">return</span> &#123;</span><br><span class="line">                    tbody_id : tbody_id ,</span><br><span class="line">                    allData : <span class="literal">null</span> ,</span><br><span class="line">                    ids : [], <span class="comment">//保存每一行的id</span></span><br><span class="line">                    index : <span class="number">0</span>,<span class="comment">//作为行号和id</span></span><br><span class="line">                    <span class="comment">//加载数据</span></span><br><span class="line">                    load : <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">                        <span class="built_in">this</span>.allData = data;</span><br><span class="line">                        <span class="keyword">var</span> html = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">                        <span class="comment">//console.log($(&#x27;#&#x27; + tbody_id));</span></span><br><span class="line">                        <span class="keyword">var</span> len = data.length; <span class="comment">//总行数</span></span><br><span class="line">                        <span class="keyword">var</span> columnSize = columns.length;<span class="comment">//总列数</span></span><br><span class="line">                        <span class="comment">//alert(len);</span></span><br><span class="line">                        <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>;i &lt; len ; i++)&#123;</span><br><span class="line">                            <span class="built_in">this</span>.ids.push(<span class="string">&#x27;mui-dataGrid-tr_&#x27;</span> + ( <span class="keyword">new</span> <span class="built_in">Date</span>().getTime() ) + <span class="string">&#x27;_&#x27;</span> + <span class="built_in">this</span>.index++) ;</span><br><span class="line">                            <span class="comment">//console.log(this.ids[this.index - 1]);</span></span><br><span class="line">                            <span class="comment">//console.log(this.ids[this.index - 1].substring(this.ids[this.index - 1].length - 1 )); //获取行号</span></span><br><span class="line">                            html += <span class="string">&quot;&lt;tr id=&#x27;&quot;</span>+<span class="built_in">this</span>.ids[<span class="built_in">this</span>.index - <span class="number">1</span>]+<span class="string">&quot;&#x27;&gt;&quot;</span>; <span class="comment">/*之前在这里少了一个单引号，最终显示的数据只有全部的一半，现在已经更正*/</span></span><br><span class="line">                            <span class="comment">//遍历列</span></span><br><span class="line">                            <span class="comment">//console.log(types);</span></span><br><span class="line">                            <span class="keyword">for</span>(<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; columnSize ; j++)&#123;</span><br><span class="line">                                <span class="keyword">var</span> columnName = columns[j];</span><br><span class="line">                                <span class="keyword">if</span>(data[i][columnName])&#123;</span><br><span class="line">                                    html += <span class="string">&#x27;&lt;td&gt;&#x27;</span> + data[i][columnName] + <span class="string">&#x27;&lt;/td&gt;&#x27;</span>;</span><br><span class="line">                                &#125;<span class="keyword">else</span> <span class="keyword">if</span>(types[j] == <span class="string">&#x27;checkColumn&#x27;</span>)&#123;</span><br><span class="line">                                    html += <span class="string">&#x27;&lt;td&gt;&lt;input type=&quot;checkbox&quot; value=&quot;&quot;/&gt;&lt;/td&gt;&#x27;</span>;</span><br><span class="line">                                &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                                    html += <span class="string">&#x27;&lt;td&gt;&lt;/td&gt;&#x27;</span>;</span><br><span class="line">                                &#125;</span><br><span class="line">                                </span><br><span class="line">                            &#125;</span><br><span class="line">                            <span class="comment">//列遍历完后，这一行才结束</span></span><br><span class="line">                            html += <span class="string">&#x27;&lt;/tr&gt;&#x27;</span></span><br><span class="line">                            </span><br><span class="line">                        &#125;</span><br><span class="line">                        </span><br><span class="line">                        <span class="comment">//展示数据</span></span><br><span class="line">                        win.$(<span class="string">&#x27;#&#x27;</span> + <span class="built_in">this</span>.tbody_id).obj.innerHTML = html;</span><br><span class="line">                        </span><br><span class="line">                        <span class="comment">//给每一行添加事件</span></span><br><span class="line">                        <span class="built_in">this</span>.ids.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">rowId</span>)</span>&#123;</span><br><span class="line">                            win.$(<span class="string">&#x27;#&#x27;</span> + rowId).on(<span class="string">&#x27;click&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                                <span class="built_in">this</span>.toggleClass(<span class="string">&#x27;selected&#x27;</span>);</span><br><span class="line">                                <span class="keyword">if</span>(<span class="built_in">this</span>.hasClass(<span class="string">&#x27;selected&#x27;</span>))&#123;</span><br><span class="line">                                    <span class="built_in">this</span>.obj.getElementsByTagName(<span class="string">&#x27;input&#x27;</span>)[<span class="number">0</span>].checked = <span class="literal">true</span>;</span><br><span class="line">                                &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                                    <span class="built_in">this</span>.obj.getElementsByTagName(<span class="string">&#x27;input&#x27;</span>)[<span class="number">0</span>].checked = <span class="literal">false</span>;</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;);</span><br><span class="line">                        &#125;);</span><br><span class="line">                        </span><br><span class="line">                        </span><br><span class="line">                            </span><br><span class="line">                    &#125; ,</span><br><span class="line">                    </span><br><span class="line">                    <span class="comment">//获取所有数据</span></span><br><span class="line">                    getData : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                        <span class="keyword">return</span> <span class="built_in">this</span>.allData;</span><br><span class="line">                    &#125; ,</span><br><span class="line">                    </span><br><span class="line">                    <span class="comment">//根据行号获取某一行</span></span><br><span class="line">                    </span><br><span class="line">                    getRow : <span class="function"><span class="keyword">function</span>(<span class="params">rowIndex</span>)</span>&#123;</span><br><span class="line">                        <span class="keyword">return</span> <span class="built_in">this</span>.getData()[rowIndex];</span><br><span class="line">                    &#125; ,</span><br><span class="line">                    </span><br><span class="line">                    <span class="comment">//获取所有的行号</span></span><br><span class="line">                    getSize : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                        <span class="keyword">var</span> len = <span class="number">0</span>;</span><br><span class="line">                        <span class="built_in">this</span>.getSelected &amp;&amp; (len = <span class="built_in">this</span>.getSelected().length) ;</span><br><span class="line">                        <span class="keyword">return</span> len;</span><br><span class="line">                    &#125; ,</span><br><span class="line">                    </span><br><span class="line">                    <span class="comment">//返回选中的行，一条或者多条</span></span><br><span class="line">                    getSelected : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                        <span class="keyword">var</span> rows = win.$(<span class="string">&#x27;.selected&#x27;</span>).obj; <span class="comment">//获取所有选中行</span></span><br><span class="line">                        <span class="keyword">var</span> len = <span class="number">0</span>;</span><br><span class="line">                        len = rows.length;</span><br><span class="line">                        <span class="keyword">var</span> arr = [];</span><br><span class="line">                        <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>;i &lt; len;i++)&#123;</span><br><span class="line">                            <span class="comment">//console.log(rows[i].id.substring(rows[i].id.length - 1));</span></span><br><span class="line">                            arr.push(<span class="built_in">this</span>.getRow(rows[i].id.split(<span class="string">&#x27;_&#x27;</span>)[<span class="number">2</span>])) ;</span><br><span class="line">                        &#125;</span><br><span class="line">                        </span><br><span class="line">                        arr.length == <span class="number">1</span> &amp;&amp; ( arr = arr[<span class="number">0</span>] );</span><br><span class="line">                        </span><br><span class="line">                        <span class="keyword">return</span> arr;</span><br><span class="line">                        </span><br><span class="line">                        <span class="comment">//this.ids[this.index - 1].substring(this.ids[this.index - 1].length - 1 )</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    </span><br><span class="line">                    </span><br><span class="line">                    </span><br><span class="line">                    </span><br><span class="line">                &#125;;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    win.$ = miniQuery;</span><br><span class="line">    </span><br><span class="line">    win.mui = &#123;</span><br><span class="line">        get : <span class="function"><span class="keyword">function</span>(<span class="params">sel</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> miniQuery(sel);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;)(<span class="built_in">window</span>);</span><br></pre></td></tr></table></figure>
+<p>附录B mui.css</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.linkbutton</span> &#123;</span><br><span class="line">    <span class="attribute">padding</span>: .<span class="number">4em</span> .<span class="number">9em</span>; <span class="comment">/*em的好处就是随着父元素的字体大小而变化，当该元素的字体变化时，会自适应*/</span></span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,.<span class="number">1</span>);</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#ac0</span>;</span><br><span class="line">    <span class="attribute">border-radius</span>: .<span class="number">2em</span>;</span><br><span class="line">    <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">5px</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,.<span class="number">5</span>);</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">    <span class="attribute">text-shadow</span>: <span class="number">0</span> -.<span class="number">06em</span> .<span class="number">24em</span> <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,.<span class="number">5</span>); <span class="comment">/*将阴影设置为半透明，就无所谓底色了，都能很好地适应*/</span></span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">130%</span>; </span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">1.5</span>; <span class="comment">/*行高是字号的1.5倍*/</span></span><br><span class="line">    <span class="attribute">display</span>:inline-block;</span><br><span class="line">    <span class="attribute">cursor</span>:pointer;</span><br><span class="line">    <span class="attribute">font-family</span>: <span class="string">&quot;微软雅黑&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.tableBox</span>&#123;</span><br><span class="line">    <span class="attribute">width</span>:<span class="number">1200px</span>;</span><br><span class="line">    <span class="attribute">background</span>:<span class="number">#f9f9f9</span>;</span><br><span class="line">    <span class="attribute">margin</span>:<span class="number">20px</span> auto <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">padding</span>:<span class="number">6px</span>;</span><br><span class="line">    <span class="attribute">position</span>:relative;</span><br><span class="line">    <span class="attribute">font-family</span>: 微软雅黑;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.tableBox</span> <span class="selector-tag">table</span>&#123;</span><br><span class="line">    <span class="attribute">width</span>:<span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">border</span>:<span class="number">2px</span> solid <span class="number">#fff</span>;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.tableBox</span> <span class="selector-tag">table</span> <span class="selector-tag">tr</span> &#123;</span><br><span class="line">    <span class="attribute">border-collapse</span>: separate;   </span><br><span class="line">    <span class="attribute">border-spacing</span>: <span class="number">1px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*选中行*/</span></span><br><span class="line"><span class="selector-class">.tableBox</span> <span class="selector-tag">table</span> <span class="selector-tag">tr</span><span class="selector-class">.selected</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>:<span class="number">#cce4f3</span>;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="comment">/*表头*/</span></span><br><span class="line"><span class="selector-class">.tableBox</span>  <span class="selector-tag">th</span>&#123;  </span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#eaeaea</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">6px</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#666</span>;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">14px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.tableBox</span>  <span class="selector-tag">td</span> &#123;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">13px</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">4px</span> <span class="number">10px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>毕竟是自己DIY出来的，所以没仔细测试，肯定还有一些BUG。不过不管怎么说，都算是一次尝试吧，呵呵。</p>
+<p>转自<a target="_blank" rel="noopener" href="http://www.cnblogs.com/skyblue-li/p/6010625.html">http://www.cnblogs.com/skyblue-li/p/6010625.html</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/10/29/JS-BuildBaseClassLib/">JavaScript :零基础打造自己的类库</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
+        <p><span>发布时间:</span>2016-10-29, 13:31:39</p>
+        <p><span>最后更新:</span>2016-10-29, 22:22:45</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/10/29/JS-BuildBaseClassLib/" title="JavaScript :零基础打造自己的类库">https://c-xuan.com/2016/10/29/JS-BuildBaseClassLib/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://c-xuan.com/2016/10/29/JS-BuildBaseClassLib/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/11/28/HardSayGoodby/">
+                    再见Solo，谢谢!
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/10/15/WhyDifficultOnETLJob/">
+                    为什么ETL任务困难
+                </a>
+            </div>
+        
+    </nav>
+
+  
+
+    
+    <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           ↑<br>
+            有所帮助？赏包辣条！
+        </span>
+        <br>
+    </div>
+    <div id="donate_guide" class="donate_bar center hidden animated bounceIn" >
+        <!-- 方式一：
+            ![](/img/Alipay.jpg)
+            ![](/img/WeChatpay.jpg)
+        -->
+        <!-- 方式二；
+            step1：在_config.yml中添加配置
+                Alipay: /img/Alipay.jpg
+                WeChatpay: /img/WeChatpay.jpg
+            step2：此处两张图片的路径分别设置为如下
+                <img src="/img/Alipay.png"
+                <img src="/img/WeChatpay.png"
+        -->
+        <!-- 支付宝打赏图案 -->
+        <img src="/img/Alipay.png" alt="支付宝打赏">
+        <!-- 微信打赏图案 -->
+        <img src="/img/WeChatpay.png" alt="微信打赏">
+    </div>
+    <script type="text/javascript">
+        document.getElementById('btn_donate').onclick = function(){
+            $('#donate_board').addClass('hidden');
+            $('#donate_guide').removeClass('hidden');
+        }
+    </script>
+</div>
+    
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E4%BD%93%E8%AE%BE%E8%AE%A1"><span class="toc-number">2.</span> <span class="toc-text">总体设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E6%96%B9%E6%B3%95%E7%9A%84%E5%85%BC%E5%AE%B9"><span class="toc-number">3.</span> <span class="toc-text">扩展方法的兼容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7%E5%8C%85%E6%95%B4%E5%90%88"><span class="toc-number">4.</span> <span class="toc-text">工具包整合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#miniQuery%E6%80%BB%E4%BD%93%E8%AE%BE%E8%AE%A1"><span class="toc-number">5.</span> <span class="toc-text">miniQuery总体设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#miniQuery-%E5%8C%85%E8%A3%B9%E5%AF%B9%E8%B1%A1"><span class="toc-number">6.</span> <span class="toc-text">miniQuery 包裹对象</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-4 i,
+        .toc-level-4 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"true"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"6","bdPos":"right","bdTop":"100"},"image":{"viewList":["qzone","tsina","weixin","youdao","fbook","twi"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","weixin","youdao","fbook","twi"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+    <!--
+    <div class="bdsharebuttonbox">
+        <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+        <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+        <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+        <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+        <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+        <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+    </div>
+    <script>
+        window._bd_share_config={
+            "common":{"bdSnsKey":{},"bdText":"JavaScript :零基础打造自己的类库　| 靛青　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='https://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+    -->
+    
+
+    
+</div>
+
+
+
+
+
+    
+        <section id="comments" class="valine" style="width:85%; margin:0 auto;background:rgba(255, 255, 255, 0.7);padding:1% 1% 0 1%;-webkit-border-radius: 8px;-moz-border-radius: 8px;border-radius: 8px;">
+	<div id="vcomment"></div>
+	<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+	<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+	<script>
+		var notify = 'false' == true ? true : false;
+		var verify = 'false' == true ? true : false;
+		window.onload = function() {
+			new Valine({
+				el: '#vcomment',
+				notify: notify,
+				verify: verify,
+				app_id: "wKQ5QBjSGMEviU0fVawpBJo0-gzGzoHsz",
+				app_key: "1zPWBxCFNb0UPr85TMeCNLOK",
+				placeholder: "说点什么吧... ps:昵称/邮箱/网址都可以选填哦",
+				avatar: "wavatar",
+				pageSize: "20",
+				meta: ['nick','mail','link']
+			});
+		}
+	</script>
+</section>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/11/28/HardSayGoodby/" title="上一篇: 再见Solo，谢谢!">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/10/15/WhyDifficultOnETLJob/" title="下一篇: 为什么ETL任务困难">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/04/05/20190405001_atom_scala/">Jupyter notebook/nteract/Atom中配置scala交互式编程环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/27/20190327001_pdi_case/">PDI设计转换任务</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/26/20190326001_python_datetime/">Python日期时间操作总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/13/20190313001_python_dict/">【Python 3 基础】字典dict创建方法及常用操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/05/20190305001_css_parallax_effects/">CSS视差效果设计</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/21/20190221001_nteract/">类Jupyter notebook编辑器桌面版nteract</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/20/20190220001_py_list_merge/">Python多个数组合并</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/20/20190220002_atom_atuo_err/">【Atom】autocomplete-python插件报乱码异常问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/18/20190218001_hydrogen_venv/">Atom编辑器中使用Hydrogen切换Python虚拟环境</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/14/20190214001_product_card/">【Web前端】11个使用CSS制作产品展示卡片样例</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/07/20190207001_css_water_effects/">CSS制作水滴效果</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/15/20190115001_python_db_select_to_df/">Python连接数据库将查询结果转换为DataFrame(列名和表字段一致)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/04/20190104001_graph_sql/">SQL如何实现查找节点依赖</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/23/20181223001_flask_intranet_visit/">Flask服务本机之外不能访问</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/21/20181221001_atom_aligner/">Atom插件aligner冒号(:)对齐的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/24/20181124001_css_fire/">Html中使用CSS制作火焰燃烧动画</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/18/20181118001_403_pages/">有趣的403页面设计</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/14/20181114001_404_pages/">有趣的404页面设计</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/13/20180813001_py_clousure/">理解Python函数闭包</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/26/20180726001_aqua_hive_go/">Aqua Data Studio 执行HiveSql的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/24/20180724001_hive_date_trans/">【Hive】日期从整形转为Date类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/02/20180602001_jscript/">有用的JScript代码整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/26/20180126001/">【Python 3 基础】循环</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/24/20180124001/">CentOS Hbase-1.2.0 安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/20/20180120001/">CentOS上zookeeper集群模式安装配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/10/20171210001/">Markdown使用table标签创建表格的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/28/20171128001/">【cmd】IF ELSE 复制(copy)文件问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/19/20171119001/">【ORACLE】导致物化视图快速刷新变慢的原因和解决</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/15/20170815001/">【ORACLE】常用物化视图相关元数据查询语句</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/08/13/20170813001/">【ORACLE】物化视图相关元数据视图字段说明</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/13/20170713001/">【ORACLE】物化视图快速刷新限制条件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/07/tree-table-store5/">树形结构数据存储方案（五）：区间嵌套</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/07/tree-table-store4/">树形结构数据存储方案（四）：左右值编码</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/06/tree-table-store3/">树形结构数据存储方案（三）：闭包表</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/06/tree-table-store2/">树形结构数据存储方案（二）： 物化路径</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/06/tree-table-store1/">树型结构数据存储方案（一）：邻接列表模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/05/KimballDimModing/">Kimball维度建模技术总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/03/wide-table-thinking/">宽表和窄表的建设该如何选择？</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/02/SQLAddColumnNote/">【SQL Server】编辑、修改字段说明（备注）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/01/BenifitOfWritingBlog/">从事技术，坚持写博客的好处？</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/28/HardSayGoodby/">再见Solo，谢谢!</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/29/JS-BuildBaseClassLib/">JavaScript :零基础打造自己的类库</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/15/WhyDifficultOnETLJob/">为什么ETL任务困难</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/15/DecisionThoughtOnBigdata/">从大数据负责人招聘看决策思维</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/TimeForPKM/">是时候管理你的知识了</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/21/NoWeChatBefore/">那些年，我们没有微信</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/21/PlayFrameworkInit2/">Play Framework 2.5 环境搭建与新建项目（二）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/20/PlayFrameworkInit/">Play Framework 2.5 环境搭建与新建项目（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/17/PCProblemRightKeyItem/">电脑右键菜单中没有新建和在此处打开命令行选项的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/12/ConstraintNameUniquenessProblem/">【PowerDesigner】Constraint name uniqueness问题及处理</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/06/21RulesForDataWarehousing/">数据仓库设计的7个步骤，7个禁忌和7种思路</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/06/SSISCodePageProblem/">SSIS中代码页(Code Page)问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/26/DataWarehouseSchemeCompare/">深入对比数据仓库模式：Kimball vs Inmon</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/23/Datawarehouse-10Dimension-principle/">数据仓库维度建模10大基本原则</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/20/MarkDown%E6%95%99%E7%A8%8B/">Markdown教程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/29/Foumula-TOP10/">改变世界的公式TOP10,最后一个一看就蒙圈了</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/13/SQL-GroupByAndGroupingSets/">【T-SQL】group by 和grouping sets</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/13/SSIS-GeneralAttribures/">【SSIS】几个通用属性</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/">放开那程序猿！构建业务导向的大数据云平台</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/05/RealEstateBISolutionCaseShare/">房地产行业商业智能解决方案分享</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/27/SQL-SERVER-RPC-FUNCTION-CALL/">【SQL SERVER】OPENQUERY远程函数引用及参数传值问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/26/Linked-Server-RPC/">【SQL SERVER】链接数据库“无法启动分布式事务”的问题及解决</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/25/30-Astonishing-Nature-Places-on-Earth/">令人惊叹的30个自然奇观</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/22/JS-AddIn-PPTSlideEffect/">JS插件:类似PPT翻页过渡动画效果</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/21/SSIS-Precedence-Constraint/">【SSIS】中Precedence Constraint 优先约束的使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/16/SSIS-XMLTask-ProcessArrays/">【SSIS】中Foreach循环容器处理XML数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/15/SSIS-Web-Service/">【SSIS】使用 Web Service 以及 解析XML 数据</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/06/SSIS-Template-For-SSISPackage/">【SSIS】利用SSIS模板快速开发SSIS Package</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/06/The-Art-of-Computer-Programming/">比尔·盖茨：如果你看完了这些极其难懂的书，请给我投简历！</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/26/Delete-duplicate-rows-with-no-primary-key/">如何在没有主键的SQL Server表里删除重复行</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/26/codepen-top-10/">CodePen上碉堡的前端设计和代码</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/24/CSS3-transform-style-3D-Cool/">学习制作CSS3 3D旋转透视效果</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/24/SQL-Server-2014-SSDT-Install/">SQL Server 2014的BI开发工具SSDT(以前的BIDS)安装</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/04/07/SSIS-Pivot/">【SSIS】进行列转行格式的转换</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/27/AppleTV-Poster-Like/">用CSS3 & jQuery创建apple TV海报视差效果</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/23/17JqueryTips/">17个jQuery实用技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/23/IconForEveryday/">365cons：每天一枚图标，可免费下载</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/23/YouDaoNoteMarkdownSupport/">有道笔记支持Markdown啦</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/19/CSS-For-Flip-Effect/">用CSS创建翻转动画</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/17/Web-Cloud-Effect/">Web蓝天白云的极致体验</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/15/CSS-3D-Cloud/">怎样用CSS做出3D效果的云</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/13/SQL-Merge/">SQL强大的关键字Merge</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/12/AlphaGo/">关于李世石大战AlphaGo，看这一篇就足够了</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/09/Paper-Folding/">18种折纸，一起来怀念小时候吧</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/08/pentaho6-install/">Pentaho 6.0 安装与启动教程</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/12/03/hello-world/">Hello World</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+                <!-- Posts count:86 -->
+            </div>
+			<!--
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2021 c-xuan
+            </div>
+			-->
+            <div class="footer-right">
+                Based on <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("2016-08-20 04:18:00");//在此处修改你的建站时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "运行"+dnum+"天";
+        document.getElementById("times").innerHTML = hnum + "时" + mnum + "分" + snum + "秒";
+    }
+    setInterval("createtime()",250);
+</script>
+    </div>
+    
+<script data-main="/js/main.js" src="/js/others/require.min.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 2;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-111421027-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</script>
+  </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"live2d-widget-model-izumi"},"display":{"superSample":1,"width":150,"height":300,"position":"right","hOffset":0,"vOffset":-20},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
+</html>

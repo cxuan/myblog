@@ -1,0 +1,700 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="sitemap.xsl"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    <url>
+        <loc>https://c-xuan.com/</loc>
+        <changefreq>daily</changefreq>
+        <priority>1</priority>
+    </url>
+
+
+    <url>
+        <loc>https://c-xuan.com/2019/04/05/20190405001_atom_scala/</loc>
+        <lastmod>2019-04-05T05:40:29.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2019/03/27/20190327001_pdi_case/</loc>
+        <lastmod>2019-03-27T15:36:28.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2019/03/26/20190326001_python_datetime/</loc>
+        <lastmod>2019-03-26T15:36:28.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2019/01/04/20190104001_graph_sql/</loc>
+        <lastmod>2019-03-20T15:51:45.798Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2018/11/14/20181114001_404_pages/</loc>
+        <lastmod>2019-03-20T15:49:58.985Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2019/03/13/20190313001_python_dict/</loc>
+        <lastmod>2019-03-13T10:41:12.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2019/03/05/20190305001_css_parallax_effects/</loc>
+        <lastmod>2019-03-05T11:16:42.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2019/02/21/20190221001_nteract/</loc>
+        <lastmod>2019-02-21T05:40:29.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2019/02/20/20190220001_py_list_merge/</loc>
+        <lastmod>2019-02-20T05:40:29.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2019/02/20/20190220002_atom_atuo_err/</loc>
+        <lastmod>2019-02-20T05:40:29.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2019/02/18/20190218001_hydrogen_venv/</loc>
+        <lastmod>2019-02-18T10:12:24.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2019/02/14/20190214001_product_card/</loc>
+        <lastmod>2019-02-14T11:16:42.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2019/02/07/20190207001_css_water_effects/</loc>
+        <lastmod>2019-02-07T15:00:48.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2018/11/18/20181118001_403_pages/</loc>
+        <lastmod>2019-01-22T13:59:08.580Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2019/01/15/20190115001_python_db_select_to_df/</loc>
+        <lastmod>2019-01-15T13:59:34.440Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/04/24/SQL-Server-2014-SSDT-Install/</loc>
+        <lastmod>2019-01-08T15:09:55.871Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2018/12/21/20181221001_atom_aligner/</loc>
+        <lastmod>2018-12-23T16:33:10.201Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2018/12/23/20181223001_flask_intranet_visit/</loc>
+        <lastmod>2018-12-23T15:42:01.470Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2018/11/24/20181124001_css_fire/</loc>
+        <lastmod>2018-11-24T11:16:42.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2018/08/13/20180813001_py_clousure/</loc>
+        <lastmod>2018-08-13T15:36:28.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/03/19/CSS-For-Flip-Effect/</loc>
+        <lastmod>2018-07-26T15:50:14.178Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/03/08/pentaho6-install/</loc>
+        <lastmod>2018-07-26T15:46:48.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2018/07/26/20180726001_aqua_hive_go/</loc>
+        <lastmod>2018-07-26T03:15:01.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2018/07/24/20180724001_hive_date_trans/</loc>
+        <lastmod>2018-07-24T08:15:01.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2018/06/02/20180602001_jscript/</loc>
+        <lastmod>2018-06-02T07:16:06.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2018/01/26/20180126001/</loc>
+        <lastmod>2018-01-26T03:49:37.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2018/01/24/20180124001/</loc>
+        <lastmod>2018-01-23T16:00:00.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2018/01/20/20180120001/</loc>
+        <lastmod>2018-01-22T16:00:00.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2017/12/10/20171210001/</loc>
+        <lastmod>2017-12-09T16:00:00.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2017/11/19/20171119001/</loc>
+        <lastmod>2017-11-28T17:07:48.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2017/11/28/20171128001/</loc>
+        <lastmod>2017-11-27T16:00:00.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/03/13/SQL-Merge/</loc>
+        <lastmod>2017-11-11T05:37:33.191Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2017/08/15/20170815001/</loc>
+        <lastmod>2017-08-14T16:00:00.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2017/08/13/20170813001/</loc>
+        <lastmod>2017-08-12T16:00:00.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2017/07/13/20170713001/</loc>
+        <lastmod>2017-07-12T16:00:00.000Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2017/02/05/KimballDimModing/</loc>
+        <lastmod>2017-03-12T15:06:59.497Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2017/03/07/tree-table-store4/</loc>
+        <lastmod>2017-03-07T16:12:54.037Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2017/03/07/tree-table-store5/</loc>
+        <lastmod>2017-03-07T16:11:16.129Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2017/03/06/tree-table-store3/</loc>
+        <lastmod>2017-03-06T16:05:44.651Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2017/03/06/tree-table-store2/</loc>
+        <lastmod>2017-03-06T15:58:06.312Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2017/03/06/tree-table-store1/</loc>
+        <lastmod>2017-03-06T15:43:21.565Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/11/28/HardSayGoodby/</loc>
+        <lastmod>2017-02-26T10:30:45.708Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2017/01/03/wide-table-thinking/</loc>
+        <lastmod>2017-02-26T10:14:26.853Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/12/02/SQLAddColumnNote/</loc>
+        <lastmod>2016-12-01T16:13:05.594Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/12/01/BenifitOfWritingBlog/</loc>
+        <lastmod>2016-12-01T15:55:20.678Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/10/29/JS-BuildBaseClassLib/</loc>
+        <lastmod>2016-10-29T14:22:45.060Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/10/15/WhyDifficultOnETLJob/</loc>
+        <lastmod>2016-10-15T15:12:08.872Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/10/15/DecisionThoughtOnBigdata/</loc>
+        <lastmod>2016-10-15T14:59:06.346Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/10/08/TimeForPKM/</loc>
+        <lastmod>2016-10-09T14:48:25.336Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/03/09/Paper-Folding/</loc>
+        <lastmod>2016-09-25T13:19:08.196Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/03/12/AlphaGo/</loc>
+        <lastmod>2016-09-25T13:14:28.515Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/03/17/Web-Cloud-Effect/</loc>
+        <lastmod>2016-09-25T12:59:16.553Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/03/15/CSS-3D-Cloud/</loc>
+        <lastmod>2016-09-25T12:57:03.579Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/03/23/IconForEveryday/</loc>
+        <lastmod>2016-09-25T12:39:00.860Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/03/23/17JqueryTips/</loc>
+        <lastmod>2016-09-25T12:35:05.191Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/03/23/YouDaoNoteMarkdownSupport/</loc>
+        <lastmod>2016-09-25T12:28:54.164Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/03/27/AppleTV-Poster-Like/</loc>
+        <lastmod>2016-09-25T12:27:15.906Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/04/07/SSIS-Pivot/</loc>
+        <lastmod>2016-09-25T12:21:52.607Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/04/24/CSS3-transform-style-3D-Cool/</loc>
+        <lastmod>2016-09-25T12:17:33.980Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/04/26/Delete-duplicate-rows-with-no-primary-key/</loc>
+        <lastmod>2016-09-25T12:12:50.922Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/04/26/codepen-top-10/</loc>
+        <lastmod>2016-09-25T12:10:39.359Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/05/06/The-Art-of-Computer-Programming/</loc>
+        <lastmod>2016-09-25T12:07:27.217Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/05/06/SSIS-Template-For-SSISPackage/</loc>
+        <lastmod>2016-09-25T12:04:32.877Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/05/16/SSIS-XMLTask-ProcessArrays/</loc>
+        <lastmod>2016-09-25T12:01:04.252Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/05/15/SSIS-Web-Service/</loc>
+        <lastmod>2016-09-25T11:59:55.603Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/09/21/PlayFrameworkInit2/</loc>
+        <lastmod>2016-09-24T16:32:41.539Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/09/20/PlayFrameworkInit/</loc>
+        <lastmod>2016-09-24T15:33:17.947Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/05/21/SSIS-Precedence-Constraint/</loc>
+        <lastmod>2016-09-23T17:12:57.474Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/06/13/SSIS-GeneralAttribures/</loc>
+        <lastmod>2016-09-22T16:17:02.471Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/09/06/SSISCodePageProblem/</loc>
+        <lastmod>2016-09-22T16:16:56.016Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/05/27/SQL-SERVER-RPC-FUNCTION-CALL/</loc>
+        <lastmod>2016-09-22T16:16:46.648Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/06/13/SQL-GroupByAndGroupingSets/</loc>
+        <lastmod>2016-09-22T16:16:38.628Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/06/05/RealEstateBISolutionCaseShare/</loc>
+        <lastmod>2016-09-22T16:16:30.350Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/09/17/PCProblemRightKeyItem/</loc>
+        <lastmod>2016-09-22T16:15:58.083Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/09/21/NoWeChatBefore/</loc>
+        <lastmod>2016-09-22T16:15:38.595Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/08/20/MarkDown%E6%95%99%E7%A8%8B/</loc>
+        <lastmod>2016-09-22T16:15:26.507Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/05/26/Linked-Server-RPC/</loc>
+        <lastmod>2016-09-22T16:14:24.740Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/05/22/JS-AddIn-PPTSlideEffect/</loc>
+        <lastmod>2016-09-22T16:14:15.501Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2015/12/03/hello-world/</loc>
+        <lastmod>2016-09-22T16:14:07.184Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/06/29/Foumula-TOP10/</loc>
+        <lastmod>2016-09-22T16:13:58.675Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/08/26/DataWarehouseSchemeCompare/</loc>
+        <lastmod>2016-09-22T16:13:49.915Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/08/23/Datawarehouse-10Dimension-principle/</loc>
+        <lastmod>2016-09-22T16:13:39.585Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/09/12/ConstraintNameUniquenessProblem/</loc>
+        <lastmod>2016-09-22T16:13:27.609Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/06/05/BuildBusinessOrientedBigDataCloudPlatform/</loc>
+        <lastmod>2016-09-22T16:13:16.702Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/05/25/30-Astonishing-Nature-Places-on-Earth/</loc>
+        <lastmod>2016-09-22T16:13:02.076Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://c-xuan.com/2016/09/06/21RulesForDataWarehousing/</loc>
+        <lastmod>2016-09-22T16:12:25.019Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+</urlset>
+<!-- XML Sitemap generated by Hexo SEO Friendly Sitemap Generator -->

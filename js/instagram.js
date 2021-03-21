@@ -1,1 +1,138 @@
-var Instagram=function(){var a=[],m=function(t){for(var i in t){for(var a="",e=0,n=t[i].srclist.length;e<n;e++)a+='<li>\t\t\t\t\t\t\t\t<div class="img-box">\t\t\t\t\t\t\t\t\t<a class="img-bg" rel="example_group" href="'+t[i].bigSrclist[e]+'" title="'+t[i].text[e]+'"></a>\t\t\t\t\t\t\t\t\t<img lazy-src="'+t[i].srclist[e]+'" alt="">\t\t\t\t\t\t\t\t</div>\t\t\t\t\t\t\t</li>';$('<section class="archives album"><h1 class="year">'+t[i].year+"<em>"+t[i].month+'月</em></h1>\t\t\t\t<ul class="img-box-ul">'+a+"</ul>\t\t\t\t</section>").appendTo($(".instagram"))}$(".instagram").lazyload(),r(),setTimeout(function(){!function(t){for(var i in t)for(var a=0,e=t[i].srclist.length;a<e;a++){var n=t[i].bigSrclist[a];(new Image).src=n}}(t)},3e3),$("a[rel=example_group]").fancybox()},g=function(t){if(0<=t.indexOf("outbound-distilleryimage"))return"http://distilleryimage"+t.match(/outbound-distilleryimage([\s\S]*?)\//)[1]+".ak.instagram.com/"+(i=t.split("/"))[i.length-1];var i;return"http://photos-g.ak.instagram.com/hphotos-ak-xpf1/"+(i=t.split("/"))[i.length-1]},e=function(t){$(".open-ins").html("图片来自instagram，正在加载中…"),$.ajax({url:t,type:"GET",dataType:"jsonp",success:function(t){if(200==t.meta.code){a=a.concat(t.data);var i=t.pagination.next_url;i?e(i):($(".open-ins").html("图片来自instagram，点此访问"),function(t){for(var i={},a=0,e=t.length;a<e;a++){var n=new Date(1e3*t[a].created_time),r=n.getFullYear(),s=n.getMonth()+1,o=g(t[a].images.low_resolution.url),l=g(t[a].images.standard_resolution.url),c=t[a].caption?t[a].caption.text:"",u=r+"-"+s;i[u]?(i[u].srclist.push(o),i[u].bigSrclist.push(l),i[u].text.push(c)):i[u]={year:r,month:s,srclist:[l],bigSrclist:[l],text:[c]}}m(i)}(a))}else alert("access_token timeout!")}})},r=function(){if($(document).width()<=600)$(".img-box").css({width:"auto",height:"auto"});else{var t=$(".img-box-ul").width(),i=Math.max(.26*t,157);$(".img-box").width(i).height(i)}};return{init:function(){var t=$(".instagram").attr("data-client-id"),i=$(".instagram").attr("data-user-id");if(!t)return alert("Didn't set your instagram client_id.\nPlease see the info on the console of your brower."),void console.log("Please open 'http://instagram.com/developer/clients/manage/' to get your client-id.");e("https://api.instagram.com/v1/users/"+i+"/media/recent/?client_id="+t+"&count=100"),$(window).resize(function(){r()})}}}();$(function(){Instagram.init()});
+var Instagram = (function(){
+
+	var _collection = [];
+
+	var preLoad = function(data){
+		for(var em in data){
+			for(var i=0,len=data[em].srclist.length;i<len;i++){
+				var src = data[em].bigSrclist[i];
+				var img = new Image();
+				img.src = src;
+			}
+		}
+	}
+
+	var render = function(data){
+		for(var em in data){
+			var liTmpl = "";
+			for(var i=0,len=data[em].srclist.length;i<len;i++){
+				liTmpl += '<li>\
+								<div class="img-box">\
+									<a class="img-bg" rel="example_group" href="'+data[em].bigSrclist[i]+'" title="'+data[em].text[i]+'"></a>\
+									<img lazy-src="'+data[em].srclist[i]+'" alt="">\
+								</div>\
+							</li>';
+			}
+			$('<section class="archives album"><h1 class="year">'+data[em].year+'<em>'+data[em].month+'月</em></h1>\
+				<ul class="img-box-ul">'+liTmpl+'</ul>\
+				</section>').appendTo($(".instagram"));
+		}
+
+		$(".instagram").lazyload();
+		changeSize();
+
+		setTimeout(function(){
+			preLoad(data);
+		},3000);
+		
+		$("a[rel=example_group]").fancybox();
+	}
+
+	var replacer = function(str){
+		if(str.indexOf("outbound-distilleryimage") >= 0 ){
+			var cdnNum = str.match(/outbound-distilleryimage([\s\S]*?)\//)[1];
+			var arr = str.split("/");
+			return "http://distilleryimage"+cdnNum+".ak.instagram.com/"+arr[arr.length-1];
+		}else{
+			var url = "http://photos-g.ak.instagram.com/hphotos-ak-xpf1/";
+			var arr = str.split("/");
+			return url+arr[arr.length-1];
+		}
+	}
+
+	var ctrler = function(data){
+		var imgObj = {};
+		for(var i=0,len=data.length;i<len;i++){
+			var d = new Date(data[i].created_time*1000);
+			var y = d.getFullYear();
+			var m = d.getMonth()+1;
+			var src = replacer(data[i].images.low_resolution.url);
+			var bigSrc = replacer(data[i].images.standard_resolution.url);
+			var text = data[i].caption ? data[i].caption.text : ''; // data[i].caption 有可能为 null
+			var key = y+"-"+m;
+			if(imgObj[key]){
+				imgObj[key].srclist.push(src);
+				imgObj[key].bigSrclist.push(bigSrc);
+				imgObj[key].text.push(text);
+			}else{
+				imgObj[key] = {
+					year:y,
+					month:m,
+					srclist:[bigSrc],
+					bigSrclist:[bigSrc],
+					text:[text]
+				}
+			}
+		}
+		render(imgObj);
+	}
+
+	var getList = function(url){
+		$(".open-ins").html("图片来自instagram，正在加载中…");
+		$.ajax({
+			url: url,
+			type:"GET",
+			dataType:"jsonp",
+			success:function(re){
+				if(re.meta.code == 200){
+					_collection = _collection.concat(re.data);
+					var next = re.pagination.next_url;
+					if(next){
+						getList(next);
+					}else{
+						$(".open-ins").html("图片来自instagram，点此访问");
+						ctrler(_collection);
+					}
+				}else{
+					alert("access_token timeout!");
+				}
+			}
+		});
+	}
+	
+
+	var changeSize = function(){	
+		if($(document).width() <= 600){
+			$(".img-box").css({"width":"auto", "height":"auto"});
+		}else{
+			var width = $(".img-box-ul").width();
+			var size = Math.max(width*0.26, 157);
+			$(".img-box").width(size).height(size);
+		}
+	}
+
+	var bind = function(){
+		$(window).resize(function(){
+			changeSize();
+		});
+	}
+
+	return {
+		init:function(){
+			//getList("https://api.instagram.com/v1/users/438522285/media/recent/?access_token=438522285.2082eef.ead70f432f444a2e8b1b341617637bf6&count=100");
+			var insid = $(".instagram").attr("data-client-id");
+            var userId = $(".instagram").attr("data-user-id");
+
+			if(!insid){
+				alert("Didn't set your instagram client_id.\nPlease see the info on the console of your brower.");
+				console.log("Please open 'http://instagram.com/developer/clients/manage/' to get your client-id.");
+				return;
+			}
+			getList("https://api.instagram.com/v1/users/"+ userId +"/media/recent/?client_id="+insid+"&count=100");
+			bind();
+		}
+	}
+})();
+$(function(){
+	Instagram.init();
+})
